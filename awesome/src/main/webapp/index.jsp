@@ -5,6 +5,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<!--  maven settings 파일, maven 경로, 톰캣, buildpath 경로 잡아주기 -->
+
+
 <link ref="shortcut icon" type="image/x-icon" href="resources/images/sitelogo.png"/>
 <style>
 	*{
