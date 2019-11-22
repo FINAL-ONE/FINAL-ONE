@@ -16,6 +16,13 @@ public class MemberController {
 	@Autowired
 	private MemberService mService;
 
+	
+	@RequestMapping("loginView.do")
+	public String loginView() {
+		return "member/loginView";
+	}
+	
+	
 	@RequestMapping(value = "login.me", method = RequestMethod.POST)
 	public String memberLogin(Member m, Model model, HttpSession session) {
 		
@@ -36,6 +43,15 @@ public class MemberController {
 		
 	}
 	
+	
+	
+	
+	
+	
+	@RequestMapping("enrollView.do")
+	public String enrollView() {
+		return "member/memberJoin";
+	}
 	
 
 }

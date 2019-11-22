@@ -9,14 +9,16 @@
 	<title>Home</title>
 </head>
 <body>
-	<jsp:include page ="common/header.jsp"/>
-	<jsp:include page ="common/mainHome.jsp"/>
+	<%-- <jsp:include page ="common/header.jsp"/>
+	<jsp:include page ="common/mainHome.jsp"/> --%>
+
+<jsp:include page ="common/menubar.jsp"/>
+<div id="container" style="overflow: auto; height: 800px;" ><!-- container -->
 
 
-
-
-
-
-
+</div>
 </body>
+<footer>
+	<jsp:include page ="common/footer.jsp"/>
+</footer>
 </html>
