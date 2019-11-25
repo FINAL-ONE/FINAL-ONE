@@ -22,7 +22,7 @@
 		SELECT *
 		FROM SELL_GOODS
 		ORDER BY SELL_NUM DESC
-		<!-- ORDER BY N_CREATE_DATE DESC -->
+		<!-- ORDER BY N_CREATE_DATE DESC a-->
 	</select>
 
 	<insert id ="insertSellgoods" parameterType="Admin">
