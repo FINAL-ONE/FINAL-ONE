@@ -22,10 +22,12 @@
   	WHERE STATUS='Y'AND CATEGORY = 2
   </select>
   
-  <select id="selectList" resultMap="boardResultSet">
+  <select id="selectFList" resultMap="boardResultSet">
   	SELECT *
   	FROM D_BOARD
+  	WHERE CATEGORY = 2
   	ORDER BY BID DESC
+  	
   </select>
   
   <insert id="insertBoard" parameterType="Board">

@@ -21,7 +21,7 @@ public class BoardDao {
 		return sqlSession.selectOne("boardMapper.getFboardListCount");
 	}
 
-	public ArrayList<Board> selectList(PageInfo pi) {
+	public ArrayList<Board> selectFList(PageInfo pi) {
 		
 		//pageInfo가 넘어왔을때 rowBounds 설정 방법 
 		// 현재 페이지 전까지의 모든 게시글. 
@@ -29,7 +29,7 @@ public class BoardDao {
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		
 		
-		return (ArrayList)sqlSession.selectList("boardMapper.selectList", null, rowBounds);
+		return (ArrayList)sqlSession.selectList("boardMapper.selectFList", null, rowBounds);
 	}
 
 	public int insertBoard(Board b) {

@@ -1,6 +1,6 @@
 package com.kh.awesome.common;
 
-import com.kh.awesome.member.model.vo.PageInfo;
+import com.kh.awesome.board.model.vo.PageInfo;
 
 // 각 어노테이션 다 달고 나서 작성
 public class Pagination {

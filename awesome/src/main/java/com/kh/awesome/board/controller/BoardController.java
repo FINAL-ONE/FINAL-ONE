@@ -36,15 +36,19 @@ public class BoardController {
 		}
 		
 		int listCount = bService.getFboardListCount();
-		System.out.println("BoardController, listCount: " + listCount);
 		
+		System.out.println("boarController, listCount : " + listCount );
+
 		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
 		
-		ArrayList<Board> list = bService.selectList(pi);
-		System.out.println("BoardController, list" + list.get(4));
+		ArrayList<Board> flist = bService.selectFList(pi);
+		// ArrayList<Board> flist = bService.selectList(pi);
 		
-		if(list != null && list.size() > 0) {	// 게시글이 있다면
-			mv.addObject("list",list);
+		
+		System.out.println("BoardController, flist" + flist.get(4));
+		
+		if(flist != null && flist.size() > 0) {	// 게시글이 있다면
+			mv.addObject("flist", flist);
 			mv.addObject("pi", pi);
 			mv.setViewName("board/fboardListView");
 		}else {

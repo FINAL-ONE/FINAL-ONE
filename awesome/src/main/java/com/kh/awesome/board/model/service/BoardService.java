@@ -14,7 +14,7 @@ public interface BoardService {
 	/*
 	 * 1_2. 게시판 전체 조회
 	 */
-	public ArrayList<Board> selectList(PageInfo pi);
+	public ArrayList<Board> selectFList(PageInfo pi);
 	
 	/*
 	 * 2. 게시판 등록
