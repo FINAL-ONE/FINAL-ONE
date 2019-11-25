@@ -86,7 +86,7 @@ public class MemberController {
 		 *  
 		 *  스프링은 이 bCrypt 암호화 방식을 스프링 시큐리티 모듈에서 제공하고 있다.
 		 *  
-		 *  bCrypt 암호화방식
+		 *  bCrypt 암호화방식 ㅁ
 		 *   1. salt + hashCode + salt + 시간설정
 		 *   2. 양방향 암호화 (암호화 <-> 복호화) 가능
 		 *   
