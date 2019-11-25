@@ -1,0 +1,318 @@
+--- SYSTEM 권한 부여 -- 
+create user awesome identified by awesome;
+grant connect to awesome;
+grant resource to awesome;
+grant create view to awesome;
+
+
+-- drop문----
+
+DROP TABLE N_BOARD;
+DROP TABLE D_BOARD;
+DROP TABLE N_ATTACH;
+DROP TABLE D_ATTACH;
+DROP TABLE D_REPLY;
+DROP TABLE D_ANSWER;
+DROP TABLE B_GOOD; 
+DROP TABLE R_GOOD; 
+
+drop table member; 
+
+drop table SELL_GOODS; 
+drop table SELL_REPLY;
+drop table SELL_ANSWER;
+
+
+drop table DIARY;
+drop table CART;
+
+
+DROP SEQUENCE SEQ_NBNO; 
+DROP SEQUENCE SEQ_DBNO; 
+DROP SEQUENCE SEQ_NAFID; 
+DROP SEQUENCE SEQ_DAFID; 
+DROP SEQUENCE SEQ_DRID; 
+DROP SEQUENCE SEQ_DAID; 
+DROP SEQUENCE SEQ_BGNO; 
+DROP SEQUENCE  SEQ_RGNO;
+ 
+drop sequence seq_mid;
+
+drop sequence SEQ_SELG;
+drop sequence seq_uno;
+drop sequence SEQ_ONUM;
+drop sequence RID;
+drop sequence AID;
+
+drop sequence DID;
+
+
+-- 유저시퀀스
+CREATE SEQUENCE  "SEQ_MID"  MINVALUE 1 MAXVALUE 10000 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE ; 	
+
+--하정-- 
+----멤버 테이블 -- 
+CREATE TABLE MEMBER (
+	MID	NUMBER	NOT NULL PRIMARY KEY,
+	USER_ID	VARCHAR2(12)	NOT NULL,
+	USER_PWD	VARCHAR2(100)	NOT NULL,
+	USER_NAME	VARCHAR2(15)	NOT NULL,
+	GENDER	VARCHAR2(3)	 DEFAULT '여',
+	BIRTHDAY	VARCHAR2(8)	NULL,
+	PHONE	VARCHAR2(13)	NOT NULL,
+	EMAIL	VARCHAR2(100)	NOT NULL,
+	ADDRESS	VARCHAR2(100)	NOT NULL,
+	POINT NUMBER	DEFAULT 1000,
+	ENROLL_DATE	DATE	NOT NULL,
+	MODIFY_DATE	DATE	NOT NULL,
+  	 ADMIN VARCHAR2(1) DEFAULT 'N' NOT NULL,  
+	STATUS	VARCHAR2(1)	 DEFAULT 'Y'	NOT NULL,
+    	
+	CONSTRAINT MEMBER_GENDER_CK CHECK (GENDER in ('남', '여'))
+);
+
+-- 관리자 생성 -- 
+insert into member values(SEQ_MID.NEXTVAL, 'admin', '11', '관리자', '남', '19920423', '01046867423','hokwan92@naver.com','서대문구',default, sysdate, sysdate, 'Y',default);
+
+
+-- 호관--
+
+
+
+
+--공지사항 시퀀스  
+CREATE SEQUENCE SEQ_NBNO;
+
+--다이어트게시판 시퀀스 
+CREATE SEQUENCE SEQ_DBNO; 
+
+-- 공지사항 첨부파일 시퀀스
+CREATE SEQUENCE SEQ_NAFID;
+
+-- 공지사항 첨부파일 시퀀스
+CREATE SEQUENCE SEQ_DAFID;
+
+-- 다이어트 게시판 리플 시퀀스 	
+CREATE SEQUENCE SEQ_DRID;  
+
+-- 다이어트 게시판 답글 시퀀스 	
+CREATE SEQUENCE SEQ_DAID;  
+
+-- 게시판 좋아요 시퀀스 
+CREATE SEQUENCE SEQ_BGNO; 
+
+-- 리플 좋아요 시퀀스 
+CREATE SEQUENCE SEQ_RGNO; 
+
+
+
+
+-- 공지사항 --
+CREATE TABLE N_BOARD(
+	BID	NUMBER PRIMARY KEY,
+	MID NUMBER NOT NULL REFERENCES MEMBER(MID),
+    	BTITLE VARCHAR2(100) NOT NULL,
+	BTYPE VARCHAR2(1) DEFAULT 1,
+   	BCONTENT CLOB NOT NULL,
+	BCOUNT	 NUMBER DEFAULT 0,
+	CREATE_DATE	DATE DEFAULT SYSDATE,
+	MODIFY_DATE	 DATE DEFAULT SYSDATE,
+	STATUS	VARCHAR2(1) DEFAULT 'Y',
+    	BLEVEL NUMBER DEFAULT 1
+);
+
+
+-- 다이어트 게시판 --
+CREATE TABLE D_BOARD(
+	BID	NUMBER PRIMARY KEY,
+	MID NUMBER NOT NULL REFERENCES MEMBER(MID),
+	CATEGORY NUMBER, 
+    	BTITLE VARCHAR2(100) NOT NULL,
+	BTYPE VARCHAR2(1) DEFAULT 1,
+   	BCONTENT CLOB NOT NULL,
+	BCOUNT	 NUMBER DEFAULT 0,
+	CREATE_DATE	DATE DEFAULT SYSDATE,
+	MODIFY_DATE	 DATE DEFAULT SYSDATE,
+	STATUS	VARCHAR2(1) DEFAULT 'Y',
+    	BLEVEL NUMBER DEFAULT 1
+);
+
+
+
+-- 공지사항 첨부파일 --
+CREATE TABLE N_ATTACH(
+  	FID NUMBER PRIMARY KEY,
+  	BID NUMBER NOT NULL,
+  	ORIGIN_NAME VARCHAR2(255) NOT NULL,
+  	CHANGE_NAME VARCHAR2(255) NOT NULL,
+  	FILE_PATH VARCHAR2(1000) NOT NULL,
+  	UPLOAD_DATE DATE DEFAULT SYSDATE,
+  	FILE_LEVEL NUMBER,
+  	DOWNLOAD_COUNT NUMBER DEFAULT 0,
+  	STATUS VARCHAR2(1) DEFAULT 'Y',
+  	FOREIGN KEY (BID) REFERENCES N_BOARD
+);
+
+
+-- 다이어트 게시판 첨부파일 --
+CREATE TABLE D_ATTACH(
+  	FID NUMBER PRIMARY KEY,
+  	BID NUMBER NOT NULL,
+  	ORIGIN_NAME VARCHAR2(255) NOT NULL,
+  	CHANGE_NAME VARCHAR2(255) NOT NULL,
+  	FILE_PATH VARCHAR2(1000) NOT NULL,
+  	UPLOAD_DATE DATE DEFAULT SYSDATE,
+  	FILE_LEVEL NUMBER,
+  	DOWNLOAD_COUNT NUMBER DEFAULT 0,
+  	STATUS VARCHAR2(1) DEFAULT 'Y',
+  	FOREIGN KEY (BID) REFERENCES N_BOARD
+);
+
+
+
+-- 다이어트게시판 리플  --
+CREATE TABLE D_REPLY(
+  	RID NUMBER PRIMARY KEY,
+  	BID NUMBER,
+	MID NUMBER,
+	RCONTENT VARCHAR2(400),
+ 	CREATE_DATE DATE,
+  	MODIFY_DATE DATE,
+ 	STATUS VARCHAR2(1) DEFAULT 'Y' CHECK (STATUS IN ('Y', 'N')),
+ 	FOREIGN KEY (BID) REFERENCES D_BOARD(BID),
+  	FOREIGN KEY (MID) REFERENCES MEMBER(MID)
+);
+
+
+-- 다이어트게시판 대댓글(답글)  --
+CREATE TABLE D_ANSWER(
+  	AID NUMBER PRIMARY KEY,
+	RID NUMBER,
+	MID NUMBER,
+  	ACONTENT VARCHAR2(400),	
+  	CREATE_DATE DATE,
+  	MODIFY_DATE DATE,
+ 	STATUS VARCHAR2(1) DEFAULT 'Y' CHECK (STATUS IN ('Y', 'N')),
+  	FOREIGN KEY (RID) REFERENCES D_REPLY(RID),
+  	FOREIGN KEY (MID) REFERENCES MEMBER(MID)
+);
+
+
+--게시판 좋아요 --
+CREATE TABLE B_GOOD(
+      GID NUMBER PRIMARY KEY,
+      BID NUMBER REFERENCES D_BOARD(BID), 
+      MID NUMBER REFERENCES MEMBER(MID), 
+      STATUS VARCHAR2(1)DEFAULT 'Y'
+);
+
+
+
+---- 리플  좋아요 --
+CREATE TABLE R_GOOD(
+      GID NUMBER PRIMARY KEY,
+      RID NUMBER REFERENCES D_REPLY(RID), 
+      MID NUMBER REFERENCES MEMBER(MID), 
+      STATUS VARCHAR2(1)DEFAULT 'Y'
+);
+
+
+--더미데이터 --
+insert into d_board values(SEQ_DBNO.NEXTVAL, 1, 2, '자유게시판1', default, '자유게시판1', default, sysdate,sysdate, default, default); 
+insert into d_board values(SEQ_DBNO.NEXTVAL, 1, 2, '자유게시판2', default, '자유게시판2', default, sysdate,sysdate, default, default);
+insert into d_board values(SEQ_DBNO.NEXTVAL, 1, 2, '자유게시판3', default, '자유게시판3', default, sysdate,sysdate, default, default); 
+insert into d_board values(SEQ_DBNO.NEXTVAL, 1, 2, '자유게시판4', default, '자유게시판4', default, sysdate,sysdate, default, default); 
+insert into d_board values(SEQ_DBNO.NEXTVAL, 1, 2, '자유게시판5', default, '자유게시판5', default, sysdate,sysdate, default, default); 
+insert into d_board values(SEQ_DBNO.NEXTVAL, 1, 2, '자유게시판6', default, '자유게시판6', default, sysdate,sysdate, default, default); 
+insert into d_board values(SEQ_DBNO.NEXTVAL, 1, 2, '자유게시판7', default, '자유게시판7', default, sysdate,sysdate, default, default); 
+insert into d_board values(SEQ_DBNO.NEXTVAL, 1, 2, '자유게시판8', default, '자유게시판8', default, sysdate,sysdate, default, default); 
+insert into d_board values(SEQ_DBNO.NEXTVAL, 1, 2, '자유게시판9', default, '자유게시판9', default, sysdate,sysdate, default, default); 
+insert into d_board values(SEQ_DBNO.NEXTVAL, 1, 2, '자유게시판10', default, '자유게시판10', default, sysdate,sysdate, default, default); 
+insert into d_board values(SEQ_DBNO.NEXTVAL, 1, 2, '자유게시판11', default, '자유게시판11', default, sysdate,sysdate, default, default); 
+insert into d_board values(SEQ_DBNO.NEXTVAL, 1, 2, '자유게시판12', default, '자유게시판12', default, sysdate,sysdate, default, default); 
+insert into d_board values(SEQ_DBNO.NEXTVAL, 1, 2, '자유게시판13', default, '자유게시판13', default, sysdate,sysdate, default, default); 
+insert into d_board values(SEQ_DBNO.NEXTVAL, 1, 2, '자유게시판14', default, '자유게시판14', default, sysdate,sysdate, default, default); 
+insert into d_board values(SEQ_DBNO.NEXTVAL, 1, 2, '자유게시판15', default, '자유게시판15', default, sysdate,sysdate, default, default); 
+insert into d_board values(SEQ_DBNO.NEXTVAL, 1, 2, '자유게시판16', default, '자유게시판16', default, sysdate,sysdate, default, default); 
+insert into d_board values(SEQ_DBNO.NEXTVAL, 1, 2, '자유게시판17', default, '자유게시판17', default, sysdate,sysdate, default, default); 
+insert into d_board values(SEQ_DBNO.NEXTVAL, 1, 2, '자유게시판18', default, '자유게시판18', default, sysdate,sysdate, default, default); 
+insert into d_board values(SEQ_DBNO.NEXTVAL, 1, 2, '자유게시판19', default, '자유게시판19', default, sysdate,sysdate, default, default); 
+insert into d_board values(SEQ_DBNO.NEXTVAL, 1, 2, '자유게시판20', default, '자유게시판20', default, sysdate,sysdate, default, default); 
+insert into d_board values(SEQ_DBNO.NEXTVAL, 1, 2, '자유게시판21', default, '자유게시판21', default, sysdate,sysdate, default, default); 
+insert into d_board values(SEQ_DBNO.NEXTVAL, 1, 2, '자유게시판22', default, '자유게시판22', default, sysdate,sysdate, default, default); 
+
+
+
+-----------동복 준배 ----------------------
+
+
+
+CREATE TABLE    SELL_GOODS    (
+      SELL_NUM      NUMBER      NULL,
+      GID      NUMBER      NOT NULL,
+      GOODS_TITLE      VARCHAR2(30)      NOT NULL,
+      GOODS_CONTENT      CLOB      NULL,
+      GOODS_IMAGE      VARCHAR2(30)      NOT NULL,
+      ORIGIN_NAME      VARCHAR2(300)      NOT NULL,
+      CHANGER_NAME      VARCHAR2(300)      NOT NULL,
+      FILE_PATH      CLOB      NOT NULL,
+      SELL_DATE      DATE   DEFAULT SYSDATE   NOT NULL,
+      MODIFY_DATE      DATE      NULL,
+      STATUS      VARCHAR2(1)   DEFAULT 'Y'   NOT NULL
+);
+
+---- 상품 판매 댓글/별점 -- 
+CREATE TABLE    SELL_REPLY    (
+      RID      NUMBER      NOT NULL,
+      SELL_NUM      NUMBER      NULL,
+      GID      NUMBER      NOT NULL,
+      MID      NUMBER      NOT NULL,
+      RCONTENT      VARCHAR2(400)      NOT NULL,
+      SELL_START      NUMBER   DEFAULT 0   NOT NULL,
+      CREATE_DATE      DATE      NOT NULL,
+      MODIFY_DATE      DATE      NOT NULL,
+      STATUS      VARCHAR2(1)   DEFAULT 'Y'   NOT NULL
+);
+
+----상품 판매 대댓글 -- 
+CREATE TABLE    SELL_ANSWER    (
+      AID      NUMBER      NOT NULL,
+      RID      NUMBER      NOT NULL,
+      SELL_NUM      NUMBER      NULL,
+      GID      NUMBER      NOT NULL,
+      MID2      NUMBER      NOT NULL,
+      ACONTENT      VARCHAR2(400)      NOT NULL,
+      CREATE_DATE      DATE      NOT NULL,
+      MODIFY_DATE      DATE      NOT NULL,
+      STATUS      VARCHAR2(1)   DEFAULT 'Y'   NOT NULL
+);
+
+
+
+-- 미진--
+
+-- 다이어트 일지 테이블
+CREATE TABLE DIARY(
+	DID	NUMBER	NOT NULL,
+	MID	NUMBER	NOT NULL,
+	WRITE_DATE	DATE	NOT NULL,
+	WEIGHT	NUMBER	NOT NULL,
+	BREAKFAST	VARCHAR2(100)	NOT NULL,
+	LUNCH	VARCHAR2(100)	NOT NULL,
+	DINNER	VARCHAR2(100)	NOT NULL,
+	SNACK	VARCHAR2(100)	NULL,
+	DRINK_WATER	VARCHAR2(100)	NULL,
+	EXCERCISE	VARCHAR2(100)	NULL,
+	MEMO	VARCHAR2(100)	NULL,
+	STATUS VARCHAR2(1) DEFAULT 'Y'
+);
+
+
+-- 장바구니 테이블
+CREATE TABLE CART (
+	MID	NUMBER	NOT NULL,
+	GID	NUMBER	NOT NULL,
+	GOODS_NAME	VARCHAR2(30)	NOT NULL,
+	GOODS_PRICE	NUMBER	NOT NULL,
+	COUNT	NUMBER	NOT NULL
+);

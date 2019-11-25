@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+     
 <!DOCTYPE html>
 <html>
 <head>
@@ -68,27 +70,27 @@ input:focus { outline: none; }
 
 
 <div class= loginDiv >
-<b style="font-size:36px">LOGIN</b>	
-<br><br>
-<p style="font-size: 13px; color:#888888; font-weight: bold;line-height:1.5">
-	AWESOME의 다양한 서비스를 이용하시려면 로그인을 해주세요.<br>
-	회원가입을 하시면 다양한 서비스를 받으실 수 있습니다<br><br>
-</p>
-
-<input class= "loginInput" style="margin-bottom:10px;"placeholder="아이디 입력	"> <br>
-<input class= "loginInput" style="margin-bottom:5px;" placeholder="비밀번호 입력" type="password"><br>
-<button class= "loginBtn">로그인</button><br>
-<button class="findLogin">아이디 / 비밀번호 찾기</button><br>
-<br><br>
-	<p style="color:#666666; font-size:12px; margin:0px; line-height:1.5">
-	문제가 있거나 문의 사항이 있으시면 아래의 주소로 문의하시기 바랍니다.<br>
-	고객지원: <a href="">hokwan92@naver.com</a> 
-	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<b style="font-size:36px">LOGIN</b>	
+	<br><br>
+	<p style="font-size: 13px; color:#888888; font-weight: bold;line-height:1.5">
+		AWESOME의 다양한 서비스를 이용하시려면 로그인을 해주세요.<br>
+		회원가입을 하시면 다양한 서비스를 받으실 수 있습니다<br><br>
 	</p>
-
+	<form id= "loginForm" action="login.do" method="post">
+		<input class= "loginInput" name="userId" style="margin-bottom:10px;"placeholder="아이디 입력	"> <br>
+		<input class= "loginInput" type="password" name="userPwd" style="margin-bottom:5px;" placeholder="비밀번호 입력" type="password"><br>
+		<button class= "loginBtn">로그인</button><br>
+		<button class="findLogin">아이디 / 비밀번호 찾기</button><br>
+	</form>
+	<br><br>
+		<p style="color:#666666; font-size:12px; margin:0px; line-height:1.5">
+		문제가 있거나 문의 사항이 있으시면 아래의 주소로 문의하시기 바랍니다.<br>
+		고객지원: <a href="">hokwan92@naver.com</a> 
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		</p>
+	
 </div>
-
-
+		
 
 
 </div>
