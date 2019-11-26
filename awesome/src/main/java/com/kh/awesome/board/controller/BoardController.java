@@ -45,12 +45,12 @@ public class BoardController {
 		// ArrayList<Board> flist = bService.selectList(pi);
 		
 		
-		System.out.println("BoardController, flist" + flist.get(4));
+		/* System.out.println("BoardController, flist" + flist.get(4)); */
 		
 		if(flist != null && flist.size() > 0) {	// 게시글이 있다면
 			mv.addObject("flist", flist);
 			mv.addObject("pi", pi);
-			mv.setViewName("board/fboardListView");
+			mv.setViewName("board/fBoardListView");
 		}else {
 			throw new BoardException("게시글 전체 조회 실패!!");
 		}
@@ -58,9 +58,9 @@ public class BoardController {
 		
 	}
 	
-	@RequestMapping("binsertView.do")
+	@RequestMapping("fBoardInsertForm.do")
 	public String boardInsertView() {
-		return "board/boardInsertForm";	// boardInsertForm.jsp만들러 ㄱㄱ씽
+		return "board/fBoardInsertForm";	// boardInsertForm.jsp만들러 ㄱㄱ씽
 	}
 	
 	/*
