@@ -308,7 +308,7 @@
    
 <div class= "previewBoard" >
 	<div class= "previewBoard2"> 
-		<div class= "advertisement"> 광고 (이미지슬라이더) </div>
+		<div class= "advertisement"> 디테일 뷰 잘 들어오니? </div>
 		<div class= "noticeList">  공지사항(미리보기) </div> 
 	</div> 
 </div >

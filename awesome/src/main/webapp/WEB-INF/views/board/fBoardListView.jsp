@@ -5,6 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<title>Awesome 자유게시판</title>
 </head>
 
@@ -38,7 +39,7 @@
 }
 
 .searchBtn:hover{
-	pointer:cursor;
+	cursor:pointer;
 }
 
 .previewBoard{
@@ -78,7 +79,7 @@
   	  border: 1px solid pink; 
       margin-left:auto;
       margin-right:auto;
-      height: 1000px;
+      height: auto;
       padding-left: 40px;
       
 
@@ -98,7 +99,7 @@
 	background: #fbfbfb;
 	border-top: 1px solid black;
     border-left: 0 none;
-    border-right: 1px solid #d0d0d0;
+/*     border-right: 1px solid #d0d0d0; */
     border-bottom: 1px solid #d0d0d0;
 }
 
@@ -133,7 +134,7 @@
 <body>
 
 <jsp:include page="../common/menubar.jsp"/>	
-<div id="container" style="overflow: auto; height: 1200px;" ><!-- container -->
+<div id="container" style="overflow: auto; height: auto;" ><!-- container -->
 
 
 <div class= "previewBoard" >
@@ -157,11 +158,17 @@
 			</tr>
 		<c:forEach var="b" items="${flist}">
 			<tr align="center" class = "normalTr"> 
-				<td>[자유게시판]</td>
-				<td align="left" style=" padding-left: 10px;" > ${b.bTitle }</td>
-				<td> ${b.mId}</td>
+			
+				<td><input type="hidden" value = "${b.bId}"> [자유게시판]</td>
+				<td align="left" style=" padding-left: 10px;" > ${b.bTitle }&nbsp;<span style="color:#e11c24;font-weight:bold;margin-left:8px;">${b.reply}</span></td>
+				<td> ${b.userId}</td>
 				<td>${b.bCount }</td>
-				<td>공감0</td>
+				<c:if test="${b.bGood > 0 }">
+				<td ><span style="color:#e11c24;font-weight:bold;">${b.bGood}</span></td>
+				</c:if>
+				<c:if test="${b.bGood == 0 }">
+				<td>${b.bGood}</td>
+				</c:if>
 				<td> ${b.createDate }</td>
 			</tr> 
 		</c:forEach>
@@ -215,18 +222,16 @@
 			
 	<br>		
 	<div class ="searchArea" align ="center" style="background:#f6f6f6;"> 
-
-	<select style= "height:26px">
-		<option> 전체</option>
-		<option> 제목</option>
-		<option> 작성자</option>
-		<option> 내용</option>
+	<form id ="searchForm" action = "serarchFboardList.do" mthod="post">
+	<select name = "type" style= "height:26px">
+		<option value="all" > 전체</option>
+	 	<option value="bTitle" >제목</option>
+        <option value= "bWriter" >작성자</option>
+        <option value="bContent" >내용</option>
 	</select>
-
-	<input style= " position: relative; top: -1.5px; height:22px; margin:0px; padding:0px"> 
-	
-	<button class = "searchBtn">검색 </button>
-	
+	<input style= " position: relative; top: -1.5px; height:22px; margin:0px; padding:0px" name ="searchWord"> 
+	<button onclick = "searchList();" type="button" class = "searchBtn">검색 </button>
+	</form>
 	</div>		
 			
 			
@@ -235,8 +240,11 @@
 <br> 
 
 
-
-
+<!-- 디테일 뷰 폼 태그  -->
+  <form id= "formTag" action="fBoardDetailView.do" method="post">
+    	<input id= "bId" type= hidden value="" name = bId >
+    	<input id= "page" type= hidden value = "${pi.currentPage}" name= page> 
+  </form>
 
 
 
@@ -245,11 +253,22 @@
 
 $(function(){
     $(".normalTr td").mouseenter(function(){
-       $(this).parent().children().css({"background":"#FFF7D5","cursor":"pointer"});
+       $(this).parent().children().css({"background":"#FFF7D5","cursor":"pointer"}).click(function(){
+   	     	var bId = $(this).parent().children().find('input').val(); // 게시글의  글번호 
+   	      	$("#bId").val(bId);
+          	$("#formTag").submit(); 
+       });
+  
     }).mouseout(function(){
        $(this).parent().children().css({"background":"white"});
     })
  }); 
+
+
+function searchList(){
+	 $("#searchForm").submit();
+}
+
 
 
 

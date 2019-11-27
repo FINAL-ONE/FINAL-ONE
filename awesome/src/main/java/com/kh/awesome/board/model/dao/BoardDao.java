@@ -51,4 +51,8 @@ public class BoardDao {
 	public int deleteBoard(int bId) {
 		return sqlSession.delete("boardMapper.deleteBoard", bId);
 	}
+
+	public int getSearchFboardListCount(String type, String searchWord) {
+		return sqlSession.selectOne("boardMapper.getSearchFboardListCount", type);
+	}
 }

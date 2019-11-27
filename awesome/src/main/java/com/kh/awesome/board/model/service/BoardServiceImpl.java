@@ -52,6 +52,12 @@ public class BoardServiceImpl implements BoardService {
 		return bDao.deleteBoard(bId);
 	}
 
+	@Override
+	public int getSearchFboardListCount(String type, String searchWord) {
+		
+	  return bDao.getSearchFboardListCount(type, searchWord);
+	}
+
 
 	
 }

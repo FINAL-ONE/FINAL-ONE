@@ -5,6 +5,7 @@
   <resultMap type="Board" id="boardResultSet">
   	<id property="bId" column = "BID"/>
   	<result property="mId" column="MID"/>
+  	<result property="userId" column="USER_ID"/>
   	<result property="category" column="CATEGORY"/>
   	<result property="bTitle" column="BTITLE"/>
   	<result property="bType" column="BTYPE"/>
@@ -14,6 +15,8 @@
   	<result property="modifyDate" column="MODIFY_DATE"/>
   	<result property="status" column="STATUS"/>
   	<result property="bLevel" column="BLEVEL"/>
+  	<result property="bGood" column="BGOOD"/>
+  	<result property="reply" column="REPLY"/>
   </resultMap>
   
   <select id="getFboardListCount" resultType="_int">
@@ -23,11 +26,17 @@
   </select>
   
   <select id="selectFList" resultMap="boardResultSet">
-  	SELECT *
-  	FROM D_BOARD
-  	WHERE CATEGORY = 2
-  	ORDER BY BID DESC
-  	
+SELECT B.BID, B.MID, M.USER_ID, CATEGORY, BTITLE, BTYPE, BCONTENT, BCOUNT, B.CREATE_DATE, B.MODIFY_DATE, B.STATUS, BLEVEL, NVL(BGOOD,0) AS BGOOD, NVL(REPLY,0) AS REPLY
+FROM D_BOARD B
+JOIN MEMBER M ON( B.MID = M.MID)
+LEFT OUTER JOIN (SELECT BID, COUNT(*) AS BGOOD
+                 FROM B_GOOD 
+                 GROUP BY BID) BGOOD ON (B.BID = BGOOD.BID) 
+LEFT OUTER JOIN ( SELECT BID, COUNT(*) AS REPLY
+                  FROM D_REPLY
+                  GROUP BY BID)REPLY ON (B.BID = REPLY.BID)
+WHERE B.STATUS ='Y' AND CATEGORY =2
+ORDER BY BID DESC
   </select>
   
   <insert id="insertBoard" parameterType="Board">
@@ -38,16 +47,17 @@
   </insert>
   
   <update id="updateCount" parameterType = "_int">
-  	UPDATE BOARD
+  	UPDATE D_BOARD
   	SET BCOUNT = BCOUNT + 1
   	WHERE BID = #{bId}
   </update>
   
   <select id="selectOne" parameterType = "_int" resultMap="boardResultSet">
-  	SELECT *
-  	FROM BOARD
+  	SELECT BID, B.MID, USER_ID, CATEGORY, BTITLE, BTYPE, BCONTENT, BCOUNT, B.CREATE_DATE, B.MODIFY_DATE, B.STATUS, BLEVEL
+  	FROM D_BOARD B
+  	JOIN MEMBER M ON( B.MID = M.MID)
   	WHERE BID=#{bId}
-  	AND B_STATUS='Y'
+  	AND B.STATUS='Y'
   </select>
   
   <update id="updateBoard" parameterType="Board">

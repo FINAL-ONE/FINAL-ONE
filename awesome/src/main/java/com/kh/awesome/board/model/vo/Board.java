@@ -5,6 +5,7 @@ import java.sql.Date;
 public class Board {
 	private int bId;
 	private int mId; 
+	private String userId; 
 	private int category; 
 	private String bTitle;
 	private String bType; 
@@ -14,15 +15,19 @@ public class Board {
 	private Date modifyDate;
 	private String status;
 	private int bLevel;
-
+	private int bGood; 
+	private int reply;
+	
 	public Board() {
 		super();
 	}
 
-	public Board(int bId, int mId, int category, String bTitle, String bType, String bContent, int bCount,
-			Date createDate, Date modifyDate, String status, int bLevel) {
+	public Board(int bId, int mId, String userId, int category, String bTitle, String bType, String bContent,
+			int bCount, Date createDate, Date modifyDate, String status, int bLevel, int bGood, int reply) {
+		super();
 		this.bId = bId;
 		this.mId = mId;
+		this.userId = userId;
 		this.category = category;
 		this.bTitle = bTitle;
 		this.bType = bType;
@@ -32,6 +37,8 @@ public class Board {
 		this.modifyDate = modifyDate;
 		this.status = status;
 		this.bLevel = bLevel;
+		this.bGood = bGood;
+		this.reply = reply;
 	}
 
 	public int getbId() {
@@ -48,6 +55,14 @@ public class Board {
 
 	public void setmId(int mId) {
 		this.mId = mId;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 	public int getCategory() {
@@ -122,12 +137,29 @@ public class Board {
 		this.bLevel = bLevel;
 	}
 
+	public int getbGood() {
+		return bGood;
+	}
+
+	public void setbGood(int bGood) {
+		this.bGood = bGood;
+	}
+
+	public int getReply() {
+		return reply;
+	}
+
+	public void setReply(int reply) {
+		this.reply = reply;
+	}
+
 	@Override
 	public String toString() {
-		return "Board [bId=" + bId + ", mId=" + mId + ", category=" + category + ", bTitle=" + bTitle + ", bType="
-				+ bType + ", bContent=" + bContent + ", bCount=" + bCount + ", createDate=" + createDate
-				+ ", modifyDate=" + modifyDate + ", status=" + status + ", bLevel=" + bLevel + "]";
-	}
+		return "Board [bId=" + bId + ", mId=" + mId + ", userId=" + userId + ", category=" + category + ", bTitle="
+				+ bTitle + ", bType=" + bType + ", bContent=" + bContent + ", bCount=" + bCount + ", createDate="
+				+ createDate + ", modifyDate=" + modifyDate + ", status=" + status + ", bLevel=" + bLevel + ", bGood="
+				+ bGood + ", reply=" + reply + "]";
+	} 
 	
 }
 
