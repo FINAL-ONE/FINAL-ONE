@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.kh.awesome.board.model.vo.Board;
 import com.kh.awesome.board.model.vo.PageInfo;
+import com.kh.awesome.board.model.vo.Search;
 
 public interface BoardService {
 	/*
@@ -43,6 +44,8 @@ public interface BoardService {
 
 	
 	// 자유게시판 게시글 검색 
-	public int getSearchFboardListCount(String type, String searchWord);
+	public int getSearchFboardListCount(Search sc);
+
+	public ArrayList<Board> selectSeacrchFList(PageInfo pi, Search sc);
 	
 }

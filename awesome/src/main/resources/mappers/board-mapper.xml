@@ -19,25 +19,69 @@
   	<result property="reply" column="REPLY"/>
   </resultMap>
   
-  <select id="getFboardListCount" resultType="_int">
-  	SELECT COUNT(*)
+  <select id="getFboardListCount" resultType="_int"> 	
+	 SELECT COUNT(*)
   	FROM D_BOARD
   	WHERE STATUS='Y'AND CATEGORY = 2
+  	
   </select>
   
-  <select id="selectFList" resultMap="boardResultSet">
-SELECT B.BID, B.MID, M.USER_ID, CATEGORY, BTITLE, BTYPE, BCONTENT, BCOUNT, B.CREATE_DATE, B.MODIFY_DATE, B.STATUS, BLEVEL, NVL(BGOOD,0) AS BGOOD, NVL(REPLY,0) AS REPLY
-FROM D_BOARD B
-JOIN MEMBER M ON( B.MID = M.MID)
-LEFT OUTER JOIN (SELECT BID, COUNT(*) AS BGOOD
-                 FROM B_GOOD 
-                 GROUP BY BID) BGOOD ON (B.BID = BGOOD.BID) 
-LEFT OUTER JOIN ( SELECT BID, COUNT(*) AS REPLY
-                  FROM D_REPLY
-                  GROUP BY BID)REPLY ON (B.BID = REPLY.BID)
-WHERE B.STATUS ='Y' AND CATEGORY =2
-ORDER BY BID DESC
+   <select id="getSearchFboardListCount" resultType="_int">
+ 	SELECT COUNT(*)
+  	FROM FBOARD_VIEW
+  	WHERE (STATUS='Y'AND CATEGORY = 2 )
+ 		<if test='type.equals("all")'>
+ 		    AND ( BTITLE LIKE '%' ||  #{searchWord} || '%'
+ 			or USER_ID LIKE '%' || #{searchWord} || '%'
+ 			or BCONTENT LIKE '%' || #{searchWord} || '%')
+ 		</if>
+ 		<if test='type.equals("bTitle")'>
+ 		    AND ( BTITLE LIKE '%' ||  #{searchWord} || '%')
+ 		</if>
+ 		<if test='type.equals("bWriter")'>
+ 		    AND ( USER_ID LIKE '%' ||  #{searchWord} || '%')
+ 		</if>
+ 		<if test='type.equals("bContent")'>
+ 		    AND ( BCONTENT LIKE '%' || #{searchWord} || '%')
+ 		</if>
   </select>
+  
+  
+  
+  <select id="selectFList" resultMap="boardResultSet">
+		SELECT B.BID, B.MID, M.USER_ID, CATEGORY, BTITLE, BTYPE, BCONTENT, BCOUNT, B.CREATE_DATE, B.MODIFY_DATE, B.STATUS, BLEVEL, NVL(BGOOD,0) AS BGOOD, NVL(REPLY,0) AS REPLY
+		FROM D_BOARD B
+		JOIN MEMBER M ON( B.MID = M.MID)
+		LEFT OUTER JOIN (SELECT BID, COUNT(*) AS BGOOD
+		                 FROM B_GOOD 
+		                 GROUP BY BID) BGOOD ON (B.BID = BGOOD.BID) 
+		LEFT OUTER JOIN ( SELECT BID, COUNT(*) AS REPLY
+		                  FROM D_REPLY
+		                  GROUP BY BID)REPLY ON (B.BID = REPLY.BID)
+		WHERE B.STATUS ='Y' AND CATEGORY =2
+		ORDER BY BID DESC
+  </select>
+  
+  <select id="selectSeacrchFList" resultMap="boardResultSet">
+	  	SELECT *
+	  	FROM FBOARD_VIEW
+	  	WHERE (STATUS='Y'AND CATEGORY = 2 )
+	 		<if test='type.equals("all")'>
+	 		    AND ( BTITLE LIKE '%' ||  #{searchWord} || '%'
+	 			or USER_ID LIKE '%' || #{searchWord} || '%'
+	 			or BCONTENT LIKE '%' || #{searchWord} || '%')
+	 		</if>
+	 		<if test='type.equals("bTitle")'>
+	 		    AND ( BTITLE LIKE '%' ||  #{searchWord} || '%')
+	 		</if>
+	 		<if test='type.equals("bWriter")'>
+	 		    AND ( USER_ID LIKE '%' ||  #{searchWord} || '%')
+	 		</if>
+	 		<if test='type.equals("bContent")'>
+	 		    AND ( BCONTENT LIKE '%' || #{searchWord} || '%')
+	 		</if>
+	 	ORDER BY BID DESC
+   </select>
   
   <insert id="insertBoard" parameterType="Board">
   	INSERT INTO BOARD VALUES(

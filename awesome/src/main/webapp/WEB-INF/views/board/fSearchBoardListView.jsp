@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-    
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,7 +27,8 @@
 }
 
 .searchBtn{
-	height: 26px;
+	height: 49px;
+	width: 60px;
 	background:#6d6d6e; 
 	border-radius:3px; 
 	outline:none;
@@ -129,6 +129,19 @@
 
 
 
+.searchResult{
+     border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #cfcfcf;
+    font-size: 20px;
+    color: #383838;
+    height: 100px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 25px;
+    padding-right: 25px;
+    margin-bottom: 10px;
+}
 
 </style>
 
@@ -140,14 +153,40 @@
 
 <div class= "previewBoard" >
 	<div class= "previewBoard2"> 
-		<div class= "advertisement"> 광고 (이미지슬라이더) </div>
+		
+	
+		<div class= "advertisement">${sc.type} 으로 ${sc.searchWord}를 검색한 결과입니다.</div>
 		<div class= "noticeList">  공지사항(미리보기) </div> 
 	</div> 
 </div >
 
+
 <div class = "centerDiv"> 
-	<div> 
-		<h2 style="font-size: 26px;"> 자유게시판 </h2> 
+	<h2 style="font-size: 26px;"> 자유게시판 </h2> 
+	<div class= "searchResult"> 
+	
+		<div style="margin-bottom:13px; margin-top: 3px; text-align:center"> <b>" ${sc.type} "(으)로   " ${sc.searchWord} "(을)를 검색한 결과입니다.</b></div>
+	
+		<div >
+			<div style="margin-left:auto; margin-right:auto; width: 573px;" >
+				<form id ="searchForm" action = "searchFboardList.do" method="post">
+					<select  name = "type" style= "height:50px; width: 130px; font-size: 18px; padding-left: 8px">
+						<option value="all" > 전체</option>
+					 	<option value="bTitle" >제목</option>
+				        <option value= "bWriter" >작성자</option>
+				        <option value="bContent" >내용</option>
+					</select>
+			
+					<input style= "font-size: 18px; position: relative; top: -1.5px; width: 350px; height:45px; margin:0px; padding-left:10px" name ="searchWord"> 
+				
+			
+					<button onclick = "searchList();" type="button" class = "searchBtn">검색 </button>
+				</form>
+			</div>
+		</div>
+	</div>
+		<br>
+		
 		<table  align="center" cellspacing="0" width="880px" id="boardTable"> 
 			<tr id= "th">
 				<td style= "width: 100px">게시판</td>
@@ -173,9 +212,6 @@
 				<td> ${b.createDate }</td>
 			</tr> 
 		</c:forEach>
-		
-	
-		
 		</table>
 		
 		
@@ -187,15 +223,24 @@
       <div class="pagingArea" align="center">
       <button type= "button" style="border:none; background: none; height: 30px; color:white;padding-bottom:14px; position:relative; float:left;">글쓰기</button>
          <!-- 맨 처음으로(<<) -->
-         <button onclick="location.href='fBoardListView.do?page=1'"> << </button>
+       	<c:url var="blistNextNumber" value="searchFboardList.do">
+					<c:param name="page" value="1"/>
+					<c:param name="type" value= "${sc.type}" />
+					<c:param name="searchWord" value= "${sc.searchWord}" />
+				</c:url>
+               <button onclick="location.href='${blistNextNumber}'"><<</button>
          
          <!-- 이전 페이지로(<) -->
         <c:if test="${pi.currentPage <= 1 }">
             <button disabled> < </button>
         </c:if>
          <c:if test="${pi.currentPage > 1 }">
-         
-            <button onclick="location.href='fBoardListView.do?page=${pi.currentPage -1}'"> < </button>
+        	 <c:url var="blistBack" value="searchFboardList.do">
+				<c:param name="page" value="${pi.currentPage -1}"/>
+				<c:param name="type" value= "${sc.type}" />
+				<c:param name="searchWord" value= "${sc.searchWord}" />
+			</c:url>
+            <button onclick="location.href='${blistBack}'"> < </button>
         </c:if>
          
          <!-- 10개의 페이지 목록 -->
@@ -204,7 +249,12 @@
                <button style="background:#ec434a;color:white" disabled >${p}</button>
            </c:if>
             <c:if test="${pi.currentPage != p }">
-               <button onclick="location.href='fBoardListView.do?page=${p}'">${p}</button>
+            	<c:url var="blistNextNumber" value="searchFboardList.do">
+					<c:param name="page" value="${p}"/>
+					<c:param name="type" value= "${sc.type}" />
+					<c:param name="searchWord" value= "${sc.searchWord}" />
+				</c:url>
+               <button onclick="location.href='${blistNextNumber}'">${p}</button>
             </c:if>
        </c:forEach>
 	 				
@@ -212,31 +262,28 @@
             <button disabled> > </button>
           </c:if>
           <c:if test="${pi.currentPage < pi.maxPage }">
-            <button onclick="location.href='fBoardListView.do?page=${pi.currentPage + 1}'"> > </button>
+          		<c:url var="blistNext" value="searchFboardList.do">
+					<c:param name="page" value="${pi.currentPage + 1}"/>
+					<c:param name="type" value= "${sc.type}" />
+					<c:param name="searchWord" value= "${sc.searchWord}" />
+				</c:url>
+               <button onclick="location.href='${blistNext}'">></button>
           </c:if>
          
          <!-- 맨 끝으로(>>) -->
-         <button onclick="location.href='fBoardListView.do?page=${pi.maxPage}'"> >> </button>
+         <c:url var="blistEnd" value="searchFboardList.do">
+			<c:param name="page" value="${pi.maxPage}"/>
+			<c:param name="type" value= "${sc.type}" />
+			<c:param name="searchWord" value= "${sc.searchWord}" />
+			</c:url>
+           <button onclick="location.href='${blistEnd}'">>></button>
+         
       
       	<button style="border:none; background: #585858; height: 30px; color:white;padding-bottom:14px; position:relative; float:right;" onclick = "location.href='fBoardInsertForm.do'">글쓰기</button>
       </div>
 			
 	<br>		
-	<div class ="searchArea" align ="center" style="background:#f6f6f6;"> 
-	<form id ="searchForm" action = "searchFboardList.do" method="post">
-	<select name = "type" style= "height:26px">
-		<option value="all" > 전체</option>
-	 	<option value="bTitle" >제목</option>
-        <option value= "bWriter" >작성자</option>
-        <option value="bContent" >내용</option>
-	</select>
-	<input style= " position: relative; top: -1.5px; height:22px; margin:0px; padding:0px" name ="searchWord"> 
-	<button onclick = "searchList();" type="button" class = "searchBtn">검색 </button>
-	</form>
-	</div>		
-			
-			
-	</div>
+
 </div>
 <br> 
 

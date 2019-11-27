@@ -57,7 +57,7 @@ public class MemberController {
 	@RequestMapping("enrollView.do")
 	public String enrollView() {
 		
-		return "member/memberJoin";
+		return "member/memberJoin2";
 	}
 	
 	

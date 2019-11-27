@@ -5,6 +5,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,7 +19,9 @@ import com.kh.awesome.board.model.exception.BoardException;
 import com.kh.awesome.board.model.service.BoardService;
 import com.kh.awesome.board.model.vo.Board;
 import com.kh.awesome.board.model.vo.PageInfo;
+import com.kh.awesome.board.model.vo.Search;
 import com.kh.awesome.common.Pagination;
+import com.kh.awesome.member.model.vo.Member;
 
 @Controller
 public class BoardController {
@@ -86,7 +90,7 @@ public class BoardController {
 	
 	
 	
-	@RequestMapping("serarchFboardList.do")
+	@RequestMapping("searchFboardList.do")
 	public ModelAndView searchFboardList(ModelAndView mv,
 					@RequestParam(value="page", required=false) Integer page,
 					@RequestParam(value="type", required=false)	String type, 
@@ -105,13 +109,15 @@ public class BoardController {
 			searchWord ="";
 		}
 		
-		int listCount = bService.getSearchFboardListCount(type, searchWord);
+		Search sc = new Search(type, searchWord); 
+				
+		int listCount = bService.getSearchFboardListCount(sc);
 		
-		System.out.println("boarController, listCount : " + listCount );
+		System.out.println("boarController, getSearchFboardListCount: " + listCount );
 		
 		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
 		
-		ArrayList<Board> flist = bService.selectFList(pi);
+		ArrayList<Board> flist = bService.selectSeacrchFList(pi, sc);
 		// ArrayList<Board> flist = bService.selectList(pi);
 		
 		/* System.out.println("BoardController, flist" + flist.get(0)); */
@@ -119,7 +125,8 @@ public class BoardController {
 		if(flist != null && flist.size() > 0) {	// 게시글이 있다면
 		mv.addObject("flist", flist);
 		mv.addObject("pi", pi);
-		mv.setViewName("board/fBoardListView");
+		mv.addObject("sc", sc);
+		mv.setViewName("board/fSearchBoardListView");
 		}else {
 		throw new BoardException("게시글 전체 조회 실패!!");
 		}
