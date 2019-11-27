@@ -19,6 +19,7 @@ import com.kh.awesome.admin.model.vo.Admin;
 
 @Controller
 public class AdminController {
+
 	
 	@Autowired
 	private AdminService aService;
@@ -53,6 +54,23 @@ public class AdminController {
 		return "admin/sell_goodsInsertView";	
 	}
 	
+	// shop으로 뿌려짐
+	@RequestMapping("shopGoodsListView.do")
+	public ModelAndView shopGoodsList(ModelAndView mv) {
+		
+		ArrayList<Admin> list = aService.selectList();
+		
+		if(list != null) {
+			mv.addObject("list", list);
+			mv.setViewName("shop/shopGoodsListView");
+		}else {
+			throw new AdminException("상품 목록 보기 실패!!");
+				// RuntimeException을 받으면 에러 처리 안해도된다
+		}
+		
+		return mv;
+	}
+	
 	@RequestMapping("sellgoodsInsert.do")
 	public String sell_goodsInsert(Admin a, HttpServletRequest request,				
 								@RequestParam(name="thumbnailImg", required=false) MultipartFile file) {
@@ -65,8 +83,8 @@ public class AdminController {
 		
 		if(!file.getOriginalFilename().contentEquals("")) {
 			String savePath = saveFile(file, request);
-			System.out.println(savePath);
 			
+			System.out.println("savePath : " + savePath);
 			if(savePath != null) {	// 파일이 잘 저장된 경우
 				a.setFilePath(file.getOriginalFilename());
 			} else {
@@ -75,11 +93,10 @@ public class AdminController {
 		}
 		
 		int result = aService.insertSell_goods(a);
-		System.out.println("con" + result);
 		
 		if(result > 0 ) {
-			System.out.println(result);
-			return "redirect:sell_goodsListView.do";
+			return "redirect:sell_goodsList.do";
+			/* return "redirect:shopGoodsListView.do"; */
 		} else {
 			throw new AdminException("상품 등록 실패!!");
 		}
@@ -106,6 +123,7 @@ public class AdminController {
 		// 공지글은 보통 관리자만 쓰니까.
 		String filePath = folder + "\\" + file.getOriginalFilename();	// 실제 저장될 파일 경로 + 파일명 추가
 		
+		System.out.println(filePath);
 		// file은 사용자가 입력한 파일
 		try {
 			file.transferTo(new File(filePath));	// 이 때 파일이 저장된다.
@@ -119,6 +137,15 @@ public class AdminController {
 				// 스트링으로 반환해줌
 		return filePath;
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 
 }

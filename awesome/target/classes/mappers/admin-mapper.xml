@@ -20,15 +20,16 @@
 
 	<select id ="selectList" resultMap="sell_goodsResultSet">
 		SELECT *
+        FROM (SELECT *
 		FROM SELL_GOODS
+		WHERE STATUS='Y')
 		ORDER BY SELL_NUM DESC
 		<!-- ORDER BY N_CREATE_DATE DESC -->
 	</select>
 
 	<insert id ="insertSellgoods" parameterType="Admin">
-		INSERT INTO SELL_GOODS VALUES(
-			SEQ_SELG.NEXTVAL, #{gId}, #{goodsTitle}, #{goodsContent}, #{goodsImage},
-							  #{originName}, #{changerName}, #{filePath}, SYSDATE, SYSDATE, DEFAULT 
+		INSERT INTO SELL_GOODS 
+		VALUES(SELL_NUM.NEXTVAL, #{gId}, #{goodsTitle}, #{goodsContent}, #{filePath}, SYSDATE, SYSDATE, DEFAULT
 		)
 	</insert>
 </mapper>

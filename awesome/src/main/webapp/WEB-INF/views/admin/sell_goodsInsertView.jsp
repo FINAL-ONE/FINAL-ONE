@@ -8,12 +8,17 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
+<script src = "${path}/ckeditor/ckeditor.js"></script>
+
 </head>
 <body>
 
 	<jsp:include page ="../common/menubar.jsp"/>
-	<jsp:include page ="../admin/adminMenu.jsp"/>
+	<%-- <jsp:include page ="../admin/adminMenu.jsp"/> --%>
 	
+	
+	<div id="container" style="overflow: auto; height: 800px;" ><!-- container -->
 	
 <h1 align="center"> 상품 등록 페이지 </h1>
 	
@@ -22,9 +27,7 @@
 		<table class="type02" align="center">	
 			<tr>
 				<th>상품 제목  <span style = "color:red; font-size : 1.5em;">*</span> </th>
-				<td><input type="text" size ="114" name ="goodsTitle" \
-				
-				></td>
+				<td><input type="text" size ="114" name ="goodsTitle"></td>
 			</tr>
 			<tr>
 				<th> 대표이미지  <span style = "color:red; font-size : 1.5em;">*</span> </th>
@@ -36,7 +39,9 @@
 			</tr>
 			<tr>
 				<th>상품 내용 <span style = "color:red; font-size : 1.5em;">*</span></th>
-				<td><textarea name="goodsContent" rows="10" cols ="102" size ="resize:none" required></textarea></td>
+				<td><textarea id ="goodsContent" name="goodsContent" rows="10" cols ="102" size ="resize:none" required></textarea>
+				
+				</td>
 			</tr>
 			<tr>
 				<th> 내용사진 </th>
@@ -47,8 +52,8 @@
 				</td>
 			</tr>
 					
-			<!-- 파일 업로드 하는 부분(file 타입형 input태그들) -->
-				<div id ="fileArea">							   <!-- input태그가 눌리면 this(객체)와1을 매개변수로 LoadImg함수발동 -->	
+				<!-- 파일 업로드 하는 부분(file 타입형 input태그들) -->
+				<div id ="fileArea"	>							   <!-- input태그가 눌리면 this(객체)와1을 매개변수로 LoadImg함수발동 -->	
 					<input type="file" id ="thumbnailImg1" multiple="multiple" name="thumbnailImg" onchange="LoadImg(this,1)">
 					<input type="file" id ="thumbnailImg2" multiple="multiple" name="thumbnailImg" onchange="LoadImg(this,2)">
 				</div>
@@ -87,8 +92,8 @@
 							reader.readAsDataURL(value.files[0]);	// 파일의 url까지 스트림에 넘겨준다
 						}
 					} 
-				
 				</script>
+					<%=request.getRealPath("/") %>
 				
 				<tr>
 					<td colspan="2" align="center">
@@ -98,14 +103,22 @@
 				</tr>
 				</table>
 				
+
 				
 				<!-- InsertThumbnailServlet 만들러 ㄱㄱ!!!! -->
 	</form>	
 	
-	<p align="center">
-		<a href="adminMain.do">관리자페이지로 이동</a>
-		<a href="sell_goodsList.do">목록 보기로 이동</a>
-	</p>
-	
+		
+		<p align="center">
+			<a href="adminMain.do">관리자페이지로 이동</a>
+			<a href="sell_goodsList.do">목록 보기로 이동</a>
+		</p>
+	</div>
 </body>
+
+<footer>
+   <jsp:include page ="../common/footer.jsp"/>
+</footer>
+
+
 </html>

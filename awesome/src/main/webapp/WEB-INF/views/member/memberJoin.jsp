@@ -14,7 +14,9 @@
 </style>
 </head>
 <body>
-	<jsp:include page ="../common/menubar.jsp"/>
+	<jsp:include page="../common/menubar.jsp"/>   
+	<div id="container" style="overflow: auto; height: 800px;" ><!-- container -->
+
 	
 	<br><br><br><br><br><br><br>
    <h1 align="center">회원가입</h1>
@@ -98,5 +100,12 @@
       <!-- 작성 후 minsert.do 요청을 처리하는 부분 작성하러 MemberController로 가자. -->
    </div>
 
+	</div>
 </body>
+
+<footer>
+   <jsp:include page ="../common/footer.jsp"/>
+</footer>
+
+
 </html>

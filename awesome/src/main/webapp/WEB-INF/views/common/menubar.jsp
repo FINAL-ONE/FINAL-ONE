@@ -187,7 +187,7 @@
       <div class= "menu communityMenu">커뮤니티</div>
       <div class =logoImg><img src="${contextPath}/resources/images/logo.png" style="height: 89px; vertical-align: middle" onclick= "location.href='home.do'"></div>
       <div class= "menu normalMenu">BMI 계산기</div>
-      <div class= "menu normalMenu">SHOP</div>
+      <div class= "menu normalMenu" onclick= "location.href='shopGoodsListView.do'">SHOP</div>
    	  <c:if test="${sessionScope.loginUser.userId ne 'admin'}">
    	  	<div class= "menu myPageMenu">마이페이지</div> 
       </c:if>
@@ -229,7 +229,7 @@
 <div class="menubar2 myPageMenubar myPageMenu" style="display:none;">
    <div class= "myPageNav">
       <span class= menu2 style="left: 647px;" onclick= "location.href='goodsWriterView.do'">상품등록</span>
-      <span class= menu2 style="left: 682px;" onclick= "location.href='adminMain.do'">상품조회</span>
+      <span class= menu2 style="left: 682px;" onclick= "location.href='sell_goodsList.do'">상품조회</span>
       <span class= menu2 style="left: 717px;" onclick= "location.href='memberLookup.do'">회원조회</span>
    </div>
 </div>   
