@@ -123,7 +123,6 @@ public class AdminController {
 		// 공지글은 보통 관리자만 쓰니까.
 		String filePath = folder + "\\" + file.getOriginalFilename();	// 실제 저장될 파일 경로 + 파일명 추가
 		
-		System.out.println(filePath);
 		// file은 사용자가 입력한 파일
 		try {
 			file.transferTo(new File(filePath));	// 이 때 파일이 저장된다.
@@ -137,15 +136,6 @@ public class AdminController {
 				// 스트링으로 반환해줌
 		return filePath;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 
 }

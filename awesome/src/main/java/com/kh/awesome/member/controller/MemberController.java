@@ -217,7 +217,7 @@ public class MemberController {
 			int listCount = mService.getListCount();
 			//System.out.println(listCount);
 			
-			PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
+			PageInfo pi = Pagination.getPageInfo2(currentPage, listCount);
 			
 			ArrayList<Member> list = mService.selectList(pi);
 			

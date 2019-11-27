@@ -1,4 +1,4 @@
-package com.kh.awesome.member.model.vo;
+package com.kh.awesome.board.model.vo;
 
 public class PageInfo {
 	// 마이바티스에서 쓴 페이지인포 가져오자

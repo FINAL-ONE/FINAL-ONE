@@ -36,17 +36,21 @@ public class BoardController {
 		}
 		
 		int listCount = bService.getFboardListCount();
-		System.out.println("BoardController, listCount: " + listCount);
 		
+		System.out.println("boarController, listCount : " + listCount );
+
 		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
 		
-		ArrayList<Board> list = bService.selectList(pi);
-		System.out.println("BoardController, list" + list.get(4));
+		ArrayList<Board> flist = bService.selectFList(pi);
+		// ArrayList<Board> flist = bService.selectList(pi);
 		
-		if(list != null && list.size() > 0) {	// 게시글이 있다면
-			mv.addObject("list",list);
+		
+		 System.out.println("BoardController, flist" + flist.get(0)); 
+		
+		if(flist != null && flist.size() > 0) {	// 게시글이 있다면
+			mv.addObject("flist", flist);
 			mv.addObject("pi", pi);
-			mv.setViewName("board/fboardListView");
+			mv.setViewName("board/fBoardListView");
 		}else {
 			throw new BoardException("게시글 전체 조회 실패!!");
 		}
@@ -54,9 +58,87 @@ public class BoardController {
 		
 	}
 	
-	@RequestMapping("binsertView.do")
+	
+	@RequestMapping("fBoardDetailView.do")
+	public ModelAndView boardDetail(ModelAndView mv, int bId,
+									@RequestParam("page") Integer page) {
+		int currentPage = 1;
+		if(page != null) {
+			currentPage = page;
+		}
+		
+		bService.addReadCount(bId);
+		Board board = bService.selectBoard(bId);
+		System.out.println(board);
+		
+		if(board != null) {
+			// 메소드 체이닝 방식
+			mv.addObject("board", board)
+			.addObject("currentPage", currentPage)
+			.setViewName("board/fBoardDetailView");	// boardDetailView.jsp 만들러 ㄱㄱ씽
+			
+		}else {
+			throw new BoardException("게시글 상세조회 실패!");
+		}
+		
+		return mv;
+	}
+	
+	
+	
+	@RequestMapping("serarchFboardList.do")
+	public ModelAndView searchFboardList(ModelAndView mv,
+					@RequestParam(value="page", required=false) Integer page,
+					@RequestParam(value="type", required=false)	String type, 
+					@RequestParam(value="searchWord", required=false) String searchWord) {
+		
+		int currentPage = 1;
+		if(page != null) {
+		currentPage = page;
+		}
+		
+		if(type == null) {
+			type = "all";
+		}
+		
+		if(searchWord ==null) {
+			searchWord ="";
+		}
+		
+		int listCount = bService.getSearchFboardListCount(type, searchWord);
+		
+		System.out.println("boarController, listCount : " + listCount );
+		
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
+		
+		ArrayList<Board> flist = bService.selectFList(pi);
+		// ArrayList<Board> flist = bService.selectList(pi);
+		
+		/* System.out.println("BoardController, flist" + flist.get(0)); */
+		
+		if(flist != null && flist.size() > 0) {	// 게시글이 있다면
+		mv.addObject("flist", flist);
+		mv.addObject("pi", pi);
+		mv.setViewName("board/fBoardListView");
+		}else {
+		throw new BoardException("게시글 전체 조회 실패!!");
+		}
+		return mv;
+
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	@RequestMapping("fBoardInsertForm.do")
 	public String boardInsertView() {
-		return "board/boardInsertForm";	// boardInsertForm.jsp만들러 ㄱㄱ씽
+		return "board/fBoardInsertForm";	// boardInsertForm.jsp만들러 ㄱㄱ씽
 	}
 	
 	/*
@@ -123,30 +205,7 @@ public class BoardController {
 		return renameFileName;
 	}
 	
-	@RequestMapping("bdetail.do")
-	public ModelAndView boardDetail(ModelAndView mv, int bId,
-									@RequestParam("page") Integer page) {
-		int currentPage = 1;
-		if(page != null) {
-			currentPage = page;
-		}
-		
-		bService.addReadCount(bId);
-		Board board = bService.selectBoard(bId);
-		System.out.println(board);
-		
-		if(board != null) {
-			// 메소드 체이닝 방식
-			mv.addObject("board", board)
-			.addObject("currentPage", currentPage)
-			.setViewName("board/boardDetailView");	// boardDetailView.jsp 만들러 ㄱㄱ씽
-			
-		}else {
-			throw new BoardException("게시글 상세조회 실패!");
-		}
-		
-		return mv;
-	}
+	
 	
 	@RequestMapping("bupView.do")
 	public ModelAndView boardUpdateView(ModelAndView mv, int bId,

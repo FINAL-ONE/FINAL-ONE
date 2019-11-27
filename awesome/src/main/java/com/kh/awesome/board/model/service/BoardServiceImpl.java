@@ -23,8 +23,8 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public ArrayList<Board> selectList(PageInfo pi) {
-		return bDao. selectList(pi);
+	public ArrayList<Board> selectFList(PageInfo pi) {
+		return bDao. selectFList(pi);
 	}
 
 	@Override
@@ -50,6 +50,12 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public int deleteBoard(int bId) {
 		return bDao.deleteBoard(bId);
+	}
+
+	@Override
+	public int getSearchFboardListCount(String type, String searchWord) {
+		
+	  return bDao.getSearchFboardListCount(type, searchWord);
 	}
 
 

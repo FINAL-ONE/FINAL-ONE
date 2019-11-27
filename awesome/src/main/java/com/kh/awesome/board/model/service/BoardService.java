@@ -14,7 +14,7 @@ public interface BoardService {
 	/*
 	 * 1_2. 게시판 전체 조회
 	 */
-	public ArrayList<Board> selectList(PageInfo pi);
+	public ArrayList<Board> selectFList(PageInfo pi);
 	
 	/*
 	 * 2. 게시판 등록
@@ -40,5 +40,9 @@ public interface BoardService {
 	 * 5. 게시판 삭제
 	 */
 	public int deleteBoard(int bId);
+
+	
+	// 자유게시판 게시글 검색 
+	public int getSearchFboardListCount(String type, String searchWord);
 	
 }
