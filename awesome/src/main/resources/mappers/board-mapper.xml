@@ -31,15 +31,27 @@
   	<result property="status" column="STATUS"/>
   </resultMap>  
   
-  
+  <resultMap type="BGood" id="bGoodResultSet">
+  	<id property="gId" column="GID"/>
+  	<result property="bId" column="BID"/>
+  	<result property="mId" column="MID"/>
+  	<result property="status" column="STATUS"/>
+  </resultMap> 
   
   
   <select id="getFboardListCount" resultType="_int"> 	
-	 SELECT COUNT(*)
-  	FROM D_BOARD
-  	WHERE STATUS='Y'AND CATEGORY = 2
+  	 SELECT COUNT(*)
+  	 FROM D_BOARD
+  	 WHERE STATUS='Y'AND CATEGORY = 2
   	
   </select>
+  
+  <select id="selectBoardGoodMemory"  parameterType="BGood" resultType="_int"> 	
+	SELECT COUNT(*) 
+    FROM B_GOOD 
+    WHERE BID = #{bId} AND MID = #{mId} AND STATUS='Y'
+  </select>
+  
   
    <select id="getSearchFboardListCount" resultType="_int">
  	SELECT COUNT(*)
@@ -115,6 +127,17 @@
   	)
   
   </insert>
+  
+  
+   <insert id="addBoardGoodCount" parameterType="BGood"> 
+	INSERT INTO 
+  	B_GOOD
+  	VALUES(
+  		SEQ_BGNO.NEXTVAL,#{bId}, #{mId},'Y'  
+  	)
+  
+  </insert>
+  
   
   
   <update id="updateCount" parameterType = "_int">

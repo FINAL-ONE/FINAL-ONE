@@ -3,6 +3,7 @@ package com.kh.awesome.board.model.service;
 import java.util.ArrayList;
 
 import com.kh.awesome.board.model.vo.Attachment;
+import com.kh.awesome.board.model.vo.BGood;
 import com.kh.awesome.board.model.vo.Board;
 import com.kh.awesome.board.model.vo.PageInfo;
 import com.kh.awesome.board.model.vo.Search;
@@ -56,5 +57,9 @@ public interface BoardService {
 
 	// 게시글 상세보기시 첨부파일 조회 
 	public ArrayList<Board> selectAttachments(int bId);
+
+	public int addBoardGoodCount(BGood bGood);
+
+	public int selectBoardGoodMemory(BGood bGood);
 	
 }

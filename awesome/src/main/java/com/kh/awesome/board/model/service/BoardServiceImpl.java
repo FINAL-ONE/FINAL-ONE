@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.awesome.board.model.dao.BoardDao;
 import com.kh.awesome.board.model.vo.Attachment;
+import com.kh.awesome.board.model.vo.BGood;
 import com.kh.awesome.board.model.vo.Board;
 import com.kh.awesome.board.model.vo.PageInfo;
 import com.kh.awesome.board.model.vo.Search;
@@ -74,6 +75,18 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public ArrayList<Board> selectAttachments(int bId) {
 		return bDao.selectAttachments(bId);
+	}
+
+	@Override
+	public int addBoardGoodCount(BGood bGood) {
+		return bDao.addBoardGoodCount(bGood);
+		
+	}
+
+	@Override
+	public int selectBoardGoodMemory(BGood bGood) {
+		
+		return  bDao.selectBoardGoodMemory(bGood);
 	}
 
 

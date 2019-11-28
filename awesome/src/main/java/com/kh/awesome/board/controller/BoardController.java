@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.kh.awesome.board.model.exception.BoardException;
 import com.kh.awesome.board.model.service.BoardService;
 import com.kh.awesome.board.model.vo.Attachment;
+import com.kh.awesome.board.model.vo.BGood;
 import com.kh.awesome.board.model.vo.Board;
 import com.kh.awesome.board.model.vo.PageInfo;
 import com.kh.awesome.board.model.vo.Search;
@@ -263,6 +264,25 @@ public class BoardController {
 	}
 	
 	
+	@RequestMapping ("addBoardGoodCount.do")
+	public void addBoardGoodCount(BGood bGood) {
+	
+		int selectResult = bService.selectBoardGoodMemory(bGood);
+		System.out.println("selectResult: " + selectResult );
+		
+		if(selectResult <= 0 ) {
+			int addResult = bService.addBoardGoodCount(bGood);
+			System.out.println("addResult: " + addResult );
+			
+		}else {
+			/* int subResult = bService.subBoardGoodCount(bGood); */
+			
+		}
+		
+	}
+	
+	
+	
 /*	
 	@RequestMapping("bupView.do")
 	public ModelAndView boardUpdateView(ModelAndView mv, int bId,
@@ -341,6 +361,6 @@ public class BoardController {
 	*/
 	
 	
-	
+
 	
 }

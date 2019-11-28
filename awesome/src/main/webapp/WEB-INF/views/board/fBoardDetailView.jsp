@@ -20,8 +20,8 @@
 <!-- include summernote css/js-->
 <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
 <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
-	
-	
+
+<link href="${contextPath}/resources/fontawesome-free/css/all.css" rel="stylesheet">
 	
 </head>
 
@@ -622,6 +622,24 @@ textArea{
 
 }
 
+
+
+
+/*new 스타일 */
+
+ #heart{
+ 	margin-left:auto;
+ 	margin-right: auto; 
+ 	    width: 54px;
+ 
+ } 
+ 
+ #heart:hover{
+ 	cursor:pointer;
+ }
+
+
+
 </style>
 
 <body>
@@ -632,71 +650,60 @@ textArea{
    
 <div class= "previewBoard" >
 	<div class= "previewBoard2"> 
-		<div class= "advertisement"> 디테일 뷰 잘 들어오니? </div>
+		<div class= "advertisement"> 디테일 뷰 잘 들어오니?  </div>
 		<div class= "noticeList">  공지사항(미리보기) </div> 
 	</div> 
 </div >
 
 <div class = "centerDiv">
-	<h2 style="font-size: 26px; font-weight: bold;">자유게시판</h2> 
+	<h2 style="font-size: 26px; font-weight: bold;margin-top: 40px;">자유게시판</h2> 
 	<hr style="border: 1px solid black">
-	
-	
-	
-	
-	
-		<div id="tableDiv" >
-			<table align="center" width="1230px">
-				<thead>
-					<tr><td style="text-align:center;font-size: 20px;padding:none;height:50px;"><b>${board.bTitle}</b></td></tr>
-				</thead>
-				<tbody id= "boardTbody">
-				<tr>
-					<td style="font-size: 16px">
-					
-					<b>작성자:</b>&nbsp;&nbsp;${board.userId}&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-					<b>등록일:</b>&nbsp;&nbsp;${board.createDate}&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-					<b>조회수:</b>&nbsp; ${board.bCount}</td>
-				</tr>
-				<tr>
-				<td>
-				<%--  <% if(b.getBtype().equals("2")){ %>
-                   	 
-                   		<div class= "clipDiv">
-                  			<span id= "clip" ><img class= clip src = "<%=request.getContextPath() %>/images/clip.png" width=20px height=24px style="padding-bottom:3px">
-                  			&nbsp;<b style="font-size:14px">첨부파일(<font class= attachmentCount><%=attachments.size()%></font>)</b></span>
-               			</div>
-						<div class="balloon">
-							<%for( i = 0;  i<attachments.size(); i++){ %>
-                           			<%Attachment f = attachments.get(i);%>
-                            		<%if(f.getbId() == b.getbId()){%> 
-			                        	<p class="attachmentP" onclick='downloadAttach(<%=f.getfId()%>);'><%=f.getOriginName()%></p> 
-                             	 	<%}%>                     
-                            <%}%> 
-                         <br>
-                         <div class= "balloonClose">닫기</div>
-                        </div>
-               			<br>
-					 <%} %> --%>
-					${board.bContent}</td>
-				</tr>
-				<tr style="font-size:16px">
-					<%-- <%if(bPrev != null){%> --%>
-						<td><b style="margin-right:30px;">이전글</b><span id = "preNextBoard" onclick = "goBoardDetail('1');">1</span></td>
-				<%-- 	<%}else{%>
-						<td><b style="margin-right:30px">이전글</b>이전글이 없습니다.</td>
-					<%}%>
-					 --%>
-				</tr>
-				<tr style="font-size:16px">
-					<%-- <%if(bNext != null){%> --%>
-						<td><b style="margin-right:30px">다음글</b><span id = "preNextBoard" onclick = "goBoardDetail('2);">2</span></td>
-				<%-- 	<%}else{%>
-						<td><b style="margin-right:30px">다음글</b>다음글이 없습니다.
-					<%}%> --%>
-				</tr>
-				</tbody>
-			</table>
+		<table align="center" width="840px" >
+			<tr style="padding:none;"><td style="font-size: 30px;padding:0px; padding-bottom: 10px;height:60px;border-bottom: 1pxz; font-weight: 100px; font-family:none">${board.bTitle}</td></tr>
+			<tbody id= "boardTbody">
+			<tr>
+				<td style="font-size: 16px; padding: 0px; border-top:1px solid #cecece; border-bottom:1px solid #cecece;">
+					<span style="position:relative; float:left;color: #a1a0a0;"> 
+						&nbsp;<i class="fas fa-user"></i>&nbsp;<span style="color: #383838;">&nbsp;${board.userId}</span>
+					</span>
+					<span style="position:relative; float:right; color: #a1a0a0; margin-right: 10px;" >	
+						<i class="far fa-clock"></i>&nbsp;&nbsp;${board.createDate}&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+						<i class="far fa-eye"></i>&nbsp; <span style="color:#ff2626;">${board.bCount}</span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+						<i class="far fa-comment"></i>&nbsp;&nbsp;<span style="color:#ff2626;">${board.reply}</span> 
+					</span>
+				</td>
+			</tr>
+			<td style="padding:0px;padding-top: 15px; padding-bottom: 10px; margin-bottom: 30px; border-bottom: none;">
+			<%--  <% if(b.getBtype().equals("2")){ %>
+                  	 
+                  		<div class= "clipDiv">
+                 			<span id= "clip" ><img class= clip src = "<%=request.getContextPath() %>/images/clip.png" width=20px height=24px style="padding-bottom:3px">
+                 			&nbsp;<b style="font-size:14px">첨부파일(<font class= attachmentCount><%=attachments.size()%></font>)</b></span>
+              			</div>
+					<div class="balloon">
+						<%for( i = 0;  i<attachments.size(); i++){ %>
+                          			<%Attachment f = attachments.get(i);%>
+                           		<%if(f.getbId() == b.getbId()){%> 
+		                        	<p class="attachmentP" onclick='downloadAttach(<%=f.getfId()%>);'><%=f.getOriginName()%></p> 
+                            	 	<%}%>                     
+                           <%}%> 
+                        <br>
+                        <div class= "balloonClose">닫기</div>
+                       </div>
+              			<br>
+				 <%} %> --%>
+				${board.bContent}</td>
+				
+			</tr>
+			<br>
+		</table>
+			<br>
+			<div id = "heart" data-value= "0">
+				<span id="heart0" style="font-size: 30px; color: #ff2626; display:inline-block;"><i class="far fa-heart"></i></span> 
+				<span id= "heart1" style="font-size: 30px; color:#ff2626; display:none "><i class="fas fa-heart"></i></span> 
+				<span id="bGoodCount" style="font-size: 26px; margin-left:5px;" >${board.bGood}</span>
+			</div>
+		
 			<br><br><br><br>
 			<%-- 	<%if(loginUser != null && (loginUser.getUserNo() > 10000 || (loginUser.getUserNo() == b.getUserNo()))){ %> --%>
 				<button id = deleteBtn onclick = "delBoard();"><b>삭제</b></button>
@@ -705,6 +712,9 @@ textArea{
 				<button id = listBtn onclick="location.href='<%=request.getContextPath() %>/Flist.bo'" style="display:inline-block"><b>목록</b></button>
 			<br>
 			</div>	<!--tableDiv 끝 -->
+		
+			
+			
 			
 			
 			
@@ -725,7 +735,6 @@ textArea{
 
 
 	</div>
-</div>
 </body>
 
 <footer>
@@ -737,116 +746,60 @@ textArea{
 
 <script>
 
-	function checkBox(){
-		if(document.getElementById("superCheck").checked == true){
-			document.getElementById("noCheck").disabled = true;
+$(function(){
+ 	
+	$("#heart").click(function(){
+		if( $( "#heart" ).data( "value" ) == "0"){
+			$( "#heart" ).data( "value", "1");
+			$( "#heart0" ).css("display", "none");
+			$( "#heart1" ).css("display", "inline-block");
+			var count = $("#bGoodCount").text()
+			var countAdd = parseInt(count) +1
+			$("#bGoodCount").text(countAdd);
+			
 		}else{
-			document.getElementById("noCheck").disabled = false;
+			$( "#heart" ).data( "value", "0");
+			$( "#heart0" ).css("display","inline-block");
+			$( "#heart1" ).css("display","none");
+		
+			var count = $("#bGoodCount").text()
+			var countSub = parseInt(count)-1
+			$("#bGoodCount").text(countSub);
 		}
-	}
-
-
-
-	function fileInputClick1(){
-	 	$("#fileInput1").click(); 
-	}
-	function fileInputClick2(){
-		$("#fileInput2").click();	
-	}
-	function fileInputClick3(){
-	 	$("#fileInput3").click(); 
-	}
-	function fileInputClick4(){
-		$("#fileInput4").click();	
-	}
-	function fileInputClick5(){
-	 	$("#fileInput5").click(); 
-	}
-	function fileInputClick6(){
-		$("#fileInput6").click();	
-	}
-	function fileInputClick7(){
-	 	$("#fileInput7").click(); 
-	}
-	function fileInputClick8(){
-		$("#fileInput8").click();	
-	}
-
-	function changeSelect(){
-		 $("#fileInput1").val("");
-		 $("#fileInput2").val("");
-		 $("#fileInput3").val("");
-		 $("#fileInput4").val("");
-		 $("#fileInput5").val("");
-		 $("#fileInput6").val("");
-		 $("#fileInput7").val("");
-		 $("#fileInput8").val("");
-		$(".attachTr").remove();
+		var bId = ${board.bId}; 
+		var mId = ${loginUser.mid};
+		
+		$.ajax({
+			url:"addBoardGoodCount.do", 
+			data: {bId: bId, mId: mId},
+			success:function(data){
+				if(data == 1) {
+					alert("이 게시글에 공감하셨습니다.")
+				}
+			}, 
+			error : function(request, status, errorData){
+				alert("error code: " + request.status + "\n"
+					+"message: " + request.responseText
+					+"error: " + errorData);
+			}
+			
+		});
 		
 		
-		var number = $("#attachCount").val();
-	 	for(var i=0; i< number; i++){
-	 		
-	 		if( i == number-1){
-	 			$("#attachTable").append("<tr class= attachTr>"
-	 										+" <td class= attachTd style=\"border-bottom: 1px solid #dbdbdb\">"
-	 										+" <input id= 'attachInput"+(i+1)+"' type='text' placeholder='첨부파일을 등록하세요' readonly>&nbsp;"
-	 								        +" <button type='button' id= 'attachBtn"+(i+1)+"' class='attachBtn' onclick='fileInputClick"+(i+1)+"();'><b>찾아보기</b></button></td></tr>");
-	 		}else{
-	 			$("#attachTable").append("<tr class= attachTr>"
-								+" <td class= attachTd>"
-								+" <input id= 'attachInput"+(i+1)+"' type='text' placeholder='첨부파일을 등록하세요' readonly>&nbsp;"
-						        +" <button type='button' id= 'attachBtn"+(i+1)+"' class='attachBtn' onclick='fileInputClick"+(i+1)+"();'><b>찾아보기</b></button></td></tr>");
-	 		}
-		}  
-	}
-	
+		
+		
+		
+		
+	 });
+});
+ 
+
 
  
 
 </script> 
 
-<script>
 
-function loadAttachName(attach,num){
-	
-	if(attach.files[0]!=undefined){ 
-		var fileValue = $("#fileInput"+num).val().split("\\");
-			var fileName = fileValue[fileValue.length-1]; // 파일명
-			$("#attachInput"+num).val(fileName); 
-	}
-}
-
-function goBoardListView(){
-	location.href="<%= request.getContextPath()%>/Flist.bo"	
-}
-
-
- function insertSubmit(){
-	$("#insertForm").submit();	
-} 
-
-function selectReset(){
-	$("#attachCount").val(1);
-	 $("#fileInput1").val("");
-	 $("#fileInput2").val("");
-	 $("#fileInput3").val("");
-	 $("#fileInput4").val("");
-	 $("#fileInput5").val("");
-	 $("#fileInput6").val("");
-	 $("#fileInput7").val("");
-	 $("#fileInput8").val("");
-	$(".attachTr").remove();
-	var i=0;
-	$("#attachTable").append("<tr class= attachTr>"
-				+" <td class= attachTd style=\"border-bottom: 1px solid #dbdbdb\">"
-				+" <input id= 'attachInput"+(i+1)+"' type='text' placeholder='첨부파일을 등록하세요'>&nbsp;"
-		        +" <button type='button' id= 'attachBtn"+(i+1)+"' class='attachBtn' onclick='fileInputClick"+(i+1)+"();'><b>찾아보기</b></button></td></tr>");
-
-}
- 
- 
-</script>
 
 
 

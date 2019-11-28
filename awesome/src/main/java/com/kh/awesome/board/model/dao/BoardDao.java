@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.awesome.board.model.vo.Attachment;
+import com.kh.awesome.board.model.vo.BGood;
 import com.kh.awesome.board.model.vo.Board;
 import com.kh.awesome.board.model.vo.PageInfo;
 import com.kh.awesome.board.model.vo.Search;
@@ -74,5 +75,13 @@ public class BoardDao {
 
 	public ArrayList<Board> selectAttachments(int bId) {
 		return (ArrayList)sqlSession.selectList("boardMapper.selectAttachList", bId);
+	}
+
+	public int addBoardGoodCount(BGood bGood) {
+		return sqlSession.insert("boardMapper.addBoardGoodCount", bGood);
+	}
+
+	public int selectBoardGoodMemory(BGood bGood) {
+		return sqlSession.selectOne("boardMapper.selectBoardGoodMemory",bGood);
 	}
 }
