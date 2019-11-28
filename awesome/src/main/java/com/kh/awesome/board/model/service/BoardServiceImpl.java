@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.awesome.board.model.dao.BoardDao;
+import com.kh.awesome.board.model.vo.Attachment;
 import com.kh.awesome.board.model.vo.Board;
 import com.kh.awesome.board.model.vo.PageInfo;
 import com.kh.awesome.board.model.vo.Search;
@@ -62,6 +63,17 @@ public class BoardServiceImpl implements BoardService {
 	public ArrayList<Board> selectSeacrchFList(PageInfo pi, Search sc) {
 		return bDao. selectSeacrchFList(pi, sc);
 
+	}
+
+	@Override
+	public int insertAttachment(Attachment attachment) {
+		return bDao.insertAttachment(attachment);
+		
+	}
+
+	@Override
+	public ArrayList<Board> selectAttachments(int bId) {
+		return bDao.selectAttachments(bId);
 	}
 
 

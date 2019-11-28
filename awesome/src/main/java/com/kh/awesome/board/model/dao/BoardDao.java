@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.awesome.board.model.vo.Attachment;
 import com.kh.awesome.board.model.vo.Board;
 import com.kh.awesome.board.model.vo.PageInfo;
 import com.kh.awesome.board.model.vo.Search;
@@ -42,7 +43,7 @@ public class BoardDao {
 	}
 
 	public Board selectBoard(int bId) {
-		return sqlSession.selectOne("boardMapper.selectOne", bId);
+		return sqlSession.selectOne("boardMapper.selectBoardOne", bId);
 	}
 
 	public int updateBoard(Board b) {
@@ -65,5 +66,13 @@ public class BoardDao {
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		
 		return (ArrayList)sqlSession.selectList("boardMapper.selectSeacrchFList", sc, rowBounds);
+	}
+
+	public int insertAttachment(Attachment attachment) {
+		return sqlSession.insert("boardMapper.insertAttachment", attachment);
+	}
+
+	public ArrayList<Board> selectAttachments(int bId) {
+		return (ArrayList)sqlSession.selectList("boardMapper.selectAttachList", bId);
 	}
 }

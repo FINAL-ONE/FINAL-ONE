@@ -27,7 +27,7 @@
 }
 
 .searchBtn{
-	height: 49px;
+	height: 42px;
 	width: 60px;
 	background:#6d6d6e; 
 	border-radius:3px; 
@@ -153,10 +153,8 @@
 
 <div class= "previewBoard" >
 	<div class= "previewBoard2"> 
-		
-	
-		<div class= "advertisement">${sc.type} 으로 ${sc.searchWord}를 검색한 결과입니다.</div>
-		<div class= "noticeList">  공지사항(미리보기) </div> 
+		<div class= "advertisement">광고</div>
+		<div class= "noticeList">공지사항(미리보기) </div> 
 	</div> 
 </div >
 
@@ -165,19 +163,36 @@
 	<h2 style="font-size: 26px;"> 자유게시판 </h2> 
 	<div class= "searchResult"> 
 	
-		<div style="margin-bottom:13px; margin-top: 3px; text-align:center"> <b>" ${sc.type} "(으)로   " ${sc.searchWord} "(을)를 검색한 결과입니다.</b></div>
+		<div style="margin-bottom:13px; margin-top: 7px; text-align:center"> 
+				<b>
+					<span style= "color:#ec434a">
+						<c:if test = "${sc.type eq 'all'}" > " 전체 "</c:if>
+						<c:if test = "${sc.type eq 'bTitle'}" > " 제목 "</c:if>
+						<c:if test = "${sc.type eq 'bContent'}" > " 내용 "</c:if>
+						<c:if test = "${sc.type eq 'bWriter'}" > " 작성자 " </c:if>
+					</span>(으)로
+					 <span style= "color:#ec434a">" ${sc.searchWord} "</span> 을(를) 
+				
+					<c:if test= "${pi.listCount != 0}">
+						검색한 결과입니다.
+					</c:if>	
+					<c:if test = "${pi.listCount == 0}">
+						 검색한 결과가 없습니다.
+					</c:if>
+				</b>
+		</div>
 	
 		<div >
 			<div style="margin-left:auto; margin-right:auto; width: 573px;" >
 				<form id ="searchForm" action = "searchFboardList.do" method="post">
-					<select  name = "type" style= "height:50px; width: 130px; font-size: 18px; padding-left: 8px">
+			<select  name = "type" style= "height:42px; width: 130px; font-size: 16px; padding-left: 8px"> 
 						<option value="all" > 전체</option>
 					 	<option value="bTitle" >제목</option>
 				        <option value= "bWriter" >작성자</option>
 				        <option value="bContent" >내용</option>
 					</select>
 			
-					<input style= "font-size: 18px; position: relative; top: -1.5px; width: 350px; height:45px; margin:0px; padding-left:10px" name ="searchWord"> 
+					<input style= "font-size: 18px; position: relative; top: -1.5px; width: 350px; height:35px; margin:0px; padding-left:10px" name ="searchWord"> 
 				
 			
 					<button onclick = "searchList();" type="button" class = "searchBtn">검색 </button>
@@ -275,8 +290,14 @@
 			<c:param name="page" value="${pi.maxPage}"/>
 			<c:param name="type" value= "${sc.type}" />
 			<c:param name="searchWord" value= "${sc.searchWord}" />
-			</c:url>
-           <button onclick="location.href='${blistEnd}'">>></button>
+		</c:url>
+			
+			<c:if test = "${pi.listCount == 0}">
+					<button onclick="location.href='${blistEnd}'"disabled>>></button>
+			</c:if>
+           <c:if test = "${pi.listCount != 0}">
+					<button onclick="location.href='${blistEnd}'">>></button>
+			</c:if>
          
       
       	<button style="border:none; background: #585858; height: 30px; color:white;padding-bottom:14px; position:relative; float:right;" onclick = "location.href='fBoardInsertForm.do'">글쓰기</button>

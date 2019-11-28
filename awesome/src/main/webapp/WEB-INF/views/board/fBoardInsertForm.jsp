@@ -4,6 +4,8 @@
     <%
 	java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("yyyy.MM.dd.");
 	 String today = formatter.format(new java.util.Date());
+	 
+	  String category = request.getParameter("category"); 
 %>
 
 
@@ -308,39 +310,38 @@
    
 <div class= "previewBoard" >
 	<div class= "previewBoard2"> 
-		<div class= "advertisement"> 광고 (이미지슬라이더) </div>
+		<div class= "advertisement">광고 <%=category%> </div>
 		<div class= "noticeList">  공지사항(미리보기) </div> 
 	</div> 
 </div >
 
 <div class = "centerDiv">
 	<h2 style="font-size: 26px; font-weight: bold;">글쓰기</h2> 
-		<form id= insertForm action = "<%=request.getContextPath()%>/insert.Fbo" method="post" encType="multipart/form-data">
+		<form id= insertForm action = "fBoardInsert.do" method="post" encType="multipart/form-data">
 			<br>
 			<table align="center" id="listArea">
 				<tr>
 					<td class="titleTd tableTd"><b>카테고리</b></td>
 					<td class="tableTd"> &nbsp;&nbsp;
-						<select class="categorySelect" style="height: 35px;"> 
-							<option>게시판 선택 </option>
-							<option>자유게시판 </option>
-							<option>팁&노하우</option>
-							<option>비포&애프터 </option>
-							<option>자극사진</option>
+						<select class="categorySelect" name = "category" style="height: 35px;"> 
+							<option id =  "category2" value = 2>자유게시판 </option>
+							<option id =  "category3" value = 3>팁&노하우</option>
+							<option id =  "category4" value = 4>비포&애프터 </option>
+							<option id =  "category5" value = 5>자극사진</option>
 						</select>
 					</td>
 				</tr>
 				<tr>
 					<td class= "titleTd tableTd"><b>제목</b></td>
-					<td class ="tableTd"><input type="text" name= "btitle" class="inputTd" >
+					<td class ="tableTd"><input type="text" name= "bTitle" class="inputTd" >
 					<label for="superCheck" id=checkLabel><span style="font-size: 14px;">공지사항</span></label>
-					<input id = superCheck type="checkbox" name="blevel" value="4" onclick="checkBox();">
-					<input id = noCheck type= "hidden" name="blevel" value="1">
+					<input id = superCheck type="checkbox" name="bLevel" value="4" onclick="checkBox();">
+					<input id = noCheck type= "hidden" name="bLevel" value="1">
 					</td> 
 				</tr>
 				<tr>
 					<td class= "titleTd tableTd"><b>작성자</b></td>
-					<td  class ="tableTd"><span style="padding-left: 17px; font-size: 16px;">${loginUser.id }</span></td>
+					<td  class ="tableTd"><span style="padding-left: 17px; font-size: 16px;">${loginUser.userId }</span></td>
 				</tr>
 				<tr>
 					<td class= "titleTd tableTd"><b>작성일</b></td>
@@ -348,7 +349,7 @@
 				</tr>
 			</table>
 			<div id="textareaDiv">
-				<textArea id= summernote rows=30 col=100 name = "bcontent" placeholder="내용을 입력해주세요"></textArea>
+				<textArea id= summernote rows=30 col=100 name = "bContent" placeholder="내용을 입력해주세요"></textArea>
 			</div>
 			<table id = "attachTable">
 				<tr>
@@ -394,18 +395,12 @@
 				<input type="file" id="fileInput6" name = "file6" onchange="loadAttachName(this,6);">
 				<input type="file" id="fileInput7" name = "file7" onchange="loadAttachName(this,7);">
 				<input type="file" id="fileInput8" multiple="multiple" name = "file8" onchange="loadAttachName(this,8)">
-			</div>
+			</div> 
 			</form>
 
 
 
 
-<%-- 
-		
-			
-			
-			<br><br>
-	</div>  --%>
 	</div>
 </div>
 </body>
@@ -489,6 +484,22 @@
 </script> 
 
 <script>
+
+$(function(){
+	var category = <%=category%>;   
+
+	if( category == "2" ){
+		$("#category2").prop("selected", true);
+	}else if(   category == '3'   ) {
+		alert(3); 
+	}else if ( category == '4'  ){
+		alert(4); 
+	} else if ( category == '5') {
+		alert(5); 
+	}
+
+});
+
 
 function loadAttachName(attach,num){
 	

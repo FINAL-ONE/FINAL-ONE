@@ -2,6 +2,7 @@ package com.kh.awesome.board.model.service;
 
 import java.util.ArrayList;
 
+import com.kh.awesome.board.model.vo.Attachment;
 import com.kh.awesome.board.model.vo.Board;
 import com.kh.awesome.board.model.vo.PageInfo;
 import com.kh.awesome.board.model.vo.Search;
@@ -46,6 +47,14 @@ public interface BoardService {
 	// 자유게시판 게시글 검색 
 	public int getSearchFboardListCount(Search sc);
 
+	// 자유게게시판 검색 결과 
 	public ArrayList<Board> selectSeacrchFList(PageInfo pi, Search sc);
+
+	// 게시판 글 작성시 파일 첨부 
+	public int insertAttachment(Attachment attachment);
+
+
+	// 게시글 상세보기시 첨부파일 조회 
+	public ArrayList<Board> selectAttachments(int bId);
 	
 }

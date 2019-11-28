@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
     
 <!DOCTYPE html>
 <html>
@@ -218,7 +219,7 @@
          <!-- 맨 끝으로(>>) -->
          <button onclick="location.href='fBoardListView.do?page=${pi.maxPage}'"> >> </button>
       
-      	<button style="border:none; background: #585858; height: 30px; color:white;padding-bottom:14px; position:relative; float:right;" onclick = "location.href='fBoardInsertForm.do'">글쓰기</button>
+      	<button style="border:none; background: #585858; height: 30px; color:white;padding-bottom:14px; position:relative; float:right;" onclick = "location.href='fBoardInsertForm.do?category=2'">글쓰기</button>
       </div>
 			
 	<br>		
@@ -230,7 +231,7 @@
         <option value= "bWriter" >작성자</option>
         <option value="bContent" >내용</option>
 	</select>
-	<input style= " position: relative; top: -1.5px; height:22px; margin:0px; padding:0px" name ="searchWord"> 
+	<input style= " position: relative; top: -1.5px; height:22px; margin:0px; padding:0px; padding-left:5px;" name ="searchWord"> 
 	<button onclick = "searchList();" type="button" class = "searchBtn">검색 </button>
 	</form>
 	</div>		
