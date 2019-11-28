@@ -14,7 +14,7 @@
 	width : 80%;
 	margin-top : 50px;
 	margin-left : 200px;
-
+	
 }
 .membertable{
   border-collapse: collapse;
