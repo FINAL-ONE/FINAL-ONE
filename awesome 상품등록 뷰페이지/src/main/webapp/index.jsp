@@ -26,6 +26,6 @@
 $(function(){
 	document.location.replace('home.do');
 });
-
+   
 </script>
 </html>
