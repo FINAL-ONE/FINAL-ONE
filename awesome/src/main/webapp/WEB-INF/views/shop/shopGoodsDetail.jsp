@@ -151,7 +151,7 @@
 	<jsp:include page ="../common/menubar.jsp"/>
 	<!-- <div id="container" style="overflow: auto; height: 800px;" >container -->
 	<div id="container"><!-- container -->
-
+    
 		<div class = "detailArea"  align="center">
 			<c:forEach var="a" items="${list}">
 				<div class = "goods-img" style="margin-top : 20px;">
