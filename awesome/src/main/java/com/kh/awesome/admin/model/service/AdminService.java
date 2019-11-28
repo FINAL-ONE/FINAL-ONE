@@ -6,8 +6,12 @@ import com.kh.awesome.admin.model.vo.Admin;
 
 public interface AdminService {
 
-	ArrayList<Admin> selectList();
+	public ArrayList<Admin> selectList();
 
-	int insertSell_goods(Admin a);
+	public int insertSell_goods(Admin a);
+
+	public ArrayList<Admin> selectshopgoods(int gId);
+
+	
 
 }

@@ -7,10 +7,9 @@ public class Admin {
 	private int gId;
 	private String goodsTitle;
 	private String goodsContent;
-	private String goodsImage;
 	private String originName;
-	private String changerName;
 	private String filePath;
+	private String contentFilePath;
 	private Date sellDate;
 	private Date modifyDate;
 	private String status;
@@ -18,16 +17,15 @@ public class Admin {
 	public Admin() {
 	}
 
-	public Admin(int sellNum, int gId, String goodsTitle, String goodsContent, String goodsImage, String originName,
-			String changerName, String filePath, Date sellDate, Date modifyDate, String status) {
+	public Admin(int sellNum, int gId, String goodsTitle, String goodsContent, String originName, String filePath,
+			String contentFilePath, Date sellDate, Date modifyDate, String status) {
 		this.sellNum = sellNum;
 		this.gId = gId;
 		this.goodsTitle = goodsTitle;
 		this.goodsContent = goodsContent;
-		this.goodsImage = goodsImage;
 		this.originName = originName;
-		this.changerName = changerName;
 		this.filePath = filePath;
+		this.contentFilePath = contentFilePath;
 		this.sellDate = sellDate;
 		this.modifyDate = modifyDate;
 		this.status = status;
@@ -65,14 +63,6 @@ public class Admin {
 		this.goodsContent = goodsContent;
 	}
 
-	public String getGoodsImage() {
-		return goodsImage;
-	}
-
-	public void setGoodsImage(String goodsImage) {
-		this.goodsImage = goodsImage;
-	}
-
 	public String getOriginName() {
 		return originName;
 	}
@@ -81,20 +71,20 @@ public class Admin {
 		this.originName = originName;
 	}
 
-	public String getChangerName() {
-		return changerName;
-	}
-
-	public void setChangerName(String changerName) {
-		this.changerName = changerName;
-	}
-
 	public String getFilePath() {
 		return filePath;
 	}
 
 	public void setFilePath(String filePath) {
 		this.filePath = filePath;
+	}
+
+	public String getContentFilePath() {
+		return contentFilePath;
+	}
+
+	public void setContentFilePath(String contentFilePath) {
+		this.contentFilePath = contentFilePath;
 	}
 
 	public Date getSellDate() {
@@ -123,11 +113,15 @@ public class Admin {
 
 	@Override
 	public String toString() {
-		return "admin [sellNum=" + sellNum + ", gId=" + gId + ", goodsTitle=" + goodsTitle + ", goodsContent="
-				+ goodsContent + ", goodsImage=" + goodsImage + ", originName=" + originName + ", changerName="
-				+ changerName + ", filePath=" + filePath + ", sellDate=" + sellDate + ", modifyDate=" + modifyDate
-				+ ", status=" + status + "]";
+		return "Admin [sellNum=" + sellNum + ", gId=" + gId + ", goodsTitle=" + goodsTitle + ", goodsContent="
+				+ goodsContent + ", originName=" + originName + ", filePath=" + filePath + ", contentFilePath="
+				+ contentFilePath + ", sellDate=" + sellDate + ", modifyDate=" + modifyDate + ", status=" + status
+				+ "]";
 	}
+
+
+
+	
 
 	
 }

@@ -7,6 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 <style>
    .centerText table{
@@ -19,8 +20,9 @@
 <body>
 	
 	<jsp:include page ="../common/menubar.jsp"/>
+	<div id="container" style="overflow: auto; height: 800px;" ><!-- container -->
 	
-	<br><br><br><br><br><br><br>
+	
 	<h1 align="center">${loginUser.userName }님의 정보 보기</h1>
    
    <div class="centerText">
@@ -119,6 +121,11 @@
       <!-- 작성 후 minsert.do 요청을 처리하는 부분 작성하러 MemberController로 가자. -->
    </div>
 
-	
+</div>
 </body>
+
+<footer>
+   <jsp:include page ="../common/footer.jsp"/>
+</footer>
+
 </html>
