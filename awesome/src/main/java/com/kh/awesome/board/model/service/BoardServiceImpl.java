@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.awesome.board.model.dao.BoardDao;
+import com.kh.awesome.board.model.vo.Attachment;
 import com.kh.awesome.board.model.vo.Board;
 import com.kh.awesome.board.model.vo.PageInfo;
+import com.kh.awesome.board.model.vo.Search;
 
 
 
@@ -53,9 +55,25 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public int getSearchFboardListCount(String type, String searchWord) {
+	public int getSearchFboardListCount(Search sc) {
+	  return bDao.getSearchFboardListCount(sc);
+	}
+
+	@Override
+	public ArrayList<Board> selectSeacrchFList(PageInfo pi, Search sc) {
+		return bDao. selectSeacrchFList(pi, sc);
+
+	}
+
+	@Override
+	public int insertAttachment(Attachment attachment) {
+		return bDao.insertAttachment(attachment);
 		
-	  return bDao.getSearchFboardListCount(type, searchWord);
+	}
+
+	@Override
+	public ArrayList<Board> selectAttachments(int bId) {
+		return bDao.selectAttachments(bId);
 	}
 
 

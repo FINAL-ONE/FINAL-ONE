@@ -28,203 +28,365 @@
 <style> 
 
 
-
-
- #outer{
+   #outer{
+       	
        width: 100%;
        position: relative;
-       padding:0px;
-   	   border:none;
-  	} 
+       border:1px solid black;
+       padding: 10px;
+   }
+#boardTbody tr td {
+      border:1px solid white;
    
-    #tableDiv{
-      position: relative;
+   }
+
+   #content {
+   	  margin-top: 5px;
+      height:230px;
+   }
+   
+   .titleDiv1{
+	border:none;
+	border-bottom: 1px solid darkgray;
+	position: relative;	
+	width:1230px;
+	height:100px;
+	margin-left:auto;
+	margin-right:auto;
+	align: center;
+ 	}	
+
+.titleDiv2{
+	position: relative;
+	width: 290px;	
+	font-size: 45px;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+.replyWriterArea textArea{
+	resize:none;
+	padding: 5px;
+	borderspacing:0px;
+	width:796px;
+	border:none;
+	outline:none;
+}
+
+.replyListText{
+	 border: none;
+	 width: 700px;
+	 resize:none;
+	 height: 63px;
+	 postion: absolute;
+	 outline: none;
+	 
+}
+
+.reReplyText{	
+	resize:none;
+	padding: 0px; 
+	borderspacing:0px;
+	width: 550px;
+	border: 1px solid black; 
+	outline:none;
+}
+
+
+#tableDiv{
+	  border: none;
+      position: relative;	
       width: 1300px;
       padding:10px;
       margin: auto;
-      border:none;
-    }
-    
-  	.titleDiv1{
-		border:none;
-		border-bottom: 1px solid darkgray;
-		position: relative;	
-		width:1230px;
-		height:100px;
-		margin-left:auto;
-		margin-right:auto;
-		align: center;
+}
+
+
+#tableDiv table{
+      border-top: 2px solid black; 
+      border-bottom: 2px solid black; 
+      border-spacing:0px;
+   }
+   th{
+      height: 50px;
+      font-size: 20px;
+     
+   }
+   
+#boardTbody tr td{
+      height: 50px;
+   }
+   
+
+
+#boardTbody tr td{
+    border-bottom: 1px solid lightgray;
+    padding-left: 25px;
+     padding-right: 25px;
+   }
+   
+#tableDiv td span{
+	cursor:pointer;
 	}
 
-	.titleDiv2{
-		position: relative;
-		width: 290px;	
-		font-size: 45px;
-		margin-left:auto;
-		margin-right:auto;
-	}
-    
-    #listArea{
-    	width: 840px;
-    	border-spacing:0px;
-   		border-top:2px solid black;
-    }
-    
-    .tableTd{
-    	border-bottom:1px solid  #dbdbdb;
-    	border-right: 1px solid  #dbdbdb;
-    	
-    }
-    
-    .titleTd{
-   	    width: 120px;
-	    height: 50px;
-	    background: #f5f5f5;
-	    text-align: center;
-	    font-size: 14px;
-	    border-left: 1px solid #dbdbdb;
+   thead{
+      background: #EAEAEA;
+      
+   }
+   
+   .balloon {
+    position: absolute;
+    background: white;
+    width: 250px;
+    margin: 0 auto 10px;
+    border: 1px solid gray;
+    right: 105px;
+    top: 160px;
+    font-size: 14px; 
+    padding: 10px;
+    text-align: left; 
+    display:none;
+    z-index:5;
+}
+ .balloon:after {
+    content: '';
+    position: absolute;
+    border-top: 5px solid transparent;
+    border-right: 7px solid transparent;
+    border-left: 7px solid transparent;
+    border-bottom: 12px solid white ;
+    top: -17px;
+    left: 170px;
+}
 
-    }
-    
-    .inputTd{
-    	width: 500px;
-    	height: 30px; 
-    	margin-left: 10px;
-    	 border: 1px solid #c4c4c4;
-    	outline:none;
-    }
-    
-    textrea{
-    	border-left: 1px solid  #dbdbdb;
-    	overflow-y:scroll;
-		resize:none;
-		width: 1229px;
-    }
-    #textareaDiv{
-    	position: relative;
-    	margin:auto;
-    	width: 840px;
-    }
-    
-    .attachTd{
-		padding: none; 
-		padding-left: 15px;
-		padding-bottom: 12px;
-	
-    }
-   	::-webkit-scrollbar {
-	
-		display:none;
+ .balloon:before {
+    content: '';
+    position: absolute;
+    border-top: 8px solid transparent;
+    border-right: 9px solid transparent;
+    border-left: 10px solid transparent;
+    border-bottom: 14px solid gray;
+    top: -22px;
+    left: 167px;
+}  
+
+.balloonClose{
+
+   margin: 0px; 
+   pdding: 1px;
+   position: absolute;
+   bottom: 10px; 
+   right: 10px;
+   cursor:pointer;
+}
+
+.clipDiv:hover{
+	cursror:pointer;
+
+}
+
+
+.attachmentP{
+   position: relative;
+   margin: auto;
+   padding: auto;
+   padding-bottom:5px;
+   word-wrap: break-word;
 		
-	}
-    
+}
 
-    #attachCount{    
-    	width: 50px;
-    	height: 40px;
-    }
 
-	#attachTable{
-		border: 1px solid #dbdbdb;
-		width: 840px;
-	}   
+.attachmentP:hover{
+cursor:pointer;
+text-decoration: underline;
+}
+
+.clipDiv{
+	position: absolute;
+	width: 130px;
+	height: 30px;
+	right: 60px;
+	top: 120px;
+}
+
+
+
+.clipDiv:hover{
+	cursor:pointer;
+}
+
+#listBtn{
+   border:none;
+   outline: none;
+   background-color: black; 
+   color: white;
+   font-size: 16px;
+   height: 40px;
+   width: 70px;
+   position: absolute; 
+   right: 615px;
+   bottom: 35px;
+   z-index:1;
+}
+#addReplyBtn{
+	 border:none;
+   outline: none;
+   background-color: black; 
+   color: white;
+   font-size: 16px;
+   height: 40px;
+   width: 70px;
+   position: absolute;
+   right:0px;
+   font-weight: bold;
+}
+
+.topBtn{
+   border:none;
+   outline: none;
+   background-color: #f53f29;
+   color: white;
+   font-size: 16px;
+   height: 40px;
+   width: 70px;
+   z-index:1;
+   font-weight: bold;
+}
+
+
+#reWriteBtn{
+	 border:none;
+   outline: none;
+   background-color: black; 
+   color: white;
+   font-size: 16px;
+   height: 40px;
+   width: 70px;
+   position: absolute;
+   right: 35px;
+   bottom: 35px;
+   z-index:1;
+}
+
+#deleteBtn{
+    border:none;
+   outline: none;
+   background-color: black; 
+   color: white;
+   font-size: 16px;
+   height: 40px;
+   width: 70px;
+   position: absolute;
+   right: 120px;
+   bottom: 35px;
+   z-index:1;
+}
+
+#deleteBtn:hover{
+   background-color: darkgray; 
+   color: white;
+   
+}
+
+#listBtn:hover{
+   background-color: #f53f29; 
+   color: white;
+}
+
+
+#reWriteBtn:hover{
+
+   background-color: #f53f29; 
+   color: white;
+}
+
+#addReplyBtn:hover{
+	background-color: #f53f29; 
+   color: white;
+}
+
+#preNextBoard:hover{
+	cusrsor:pointer; 
+	color: darkgray;
+}
+
+.attachmentCount{
+	color:#f53f29; 
+	font-size:15px
+}
+
+.replyArea{
+	  border-top:  1px solid black;
+      position: relative;
+      width: 1230px;
+      padding:auto;
+      margin: auto;
+	  align:center;
+
+}
+
+#replySelectArea{
+	  border: none;
+      position: relative;
+      width: 1230px;
+      padding:auto;
+      margin: auto;
+	  align:left;
+	  
+
+}
+
+
+#replySelectTable{
+	  border-top: 1px solid gray;
+      position: relative;
+      width: 800px;
+	  left: 1px;
+}
+
+
+#replySelectTable tr {
+	border: none;
+	height: 30px;
+}
+#replySelectTable tr td{
+	border: none; 
+}
+
+
+#replySelectTable tr td{
+	word-break:break-all; 
+	wrap:hard;
+	border: none;
+	padding: 2px;
+	margin: 0px; 
+}
+
+.replyWriterArea{
+	border: none;
+	position: relative;
+	width: 1230px;
+	padding: 1px;
 	
-	.attachTd input{
-		height: 40px;
-		padding-left:10px;
-		font-size: 15px;
-		width: 400px;
-	} 
-	
-	.attachBtn{
-		outline: none;
-		border: none; 
-		background: black;
-		color: white;
-		font-size: 15px;
-		width: 100px;
-		height: 40px;		
-	}
-	
-	.attachBtn:hover{
-	   background-color: darkgray;
-	   color: white;
-	}
-	
-	
-	#listBtn{
-	   border:none;
-	   outline: none;
-	   background-color: black; 
-	   color: white;
-	   font-size: 16px;
-	   height: 40px;
-	   width: 70px;
-	}
-	
-	#listBtn:hover{
-	   background-color: darkgray;
-	   color: white;
-	}
-	
-	#insertBtn{
-	   border:none;
-	   outline: none;
-	   background-color: black; 
-	   color: white;
-	   font-size: 16px;
-	   height: 40px;
-	   width: 70px;
-	}
-	
-	#insertBtn:hover{
-	   background-color: #f53f29; 
-	   color: white;
-	}
-	
-	.btnDiv{
-		border-top: 1px solid darkgray;
-		height: 80px;
-		text-align: center;
-		padding-top: 30px;
-	}
+}
+
+
+.replyWriterArea div{
+	border: none;
+	position: relative;
+	width: 1230px;	
 	
 
-	#resetBtn{
-		outline: none;
-		border: none; 
-		background: black;
-		color: white;
-		font-size: 15px;
-		width: 100px;
-		height: 40px;	
-		margin-left: 183px; 
-	}
-	
-	#resetBtn:hover{
-	   background-color: #f53f29; ;
-	   color: white;
-	}
-	
-	
-	
-	#superCheck{
-		width: 17px; 
-		height: 22.3px;
-		position: absolute; 
-		background-color: white;
-		border: 1px solid black;
-		outline: none;
-	}
-	
-	#checkLabel{
-		font-size: 14px;
-		margin-left: 10px;
-		margin-right: 6px;
-	}
-	
-	
-	#boardImg1{
+}
+
+
+.replyWriterArea table{
+	text-align: center;
+	font-size:16px;
+	font-weight: bold;
+}
+
+#boardImg1{
 	position: relative;	
 	width:100%;
 	height:300px;
@@ -233,15 +395,187 @@
 	align: center;
 	text-align: center;
 	background: black;
-	}
+}
+
+
+.delete{
+ border: 1px solid lightgray;
+   background: white;
+   color: lightblack;
+   padding: 5px;
+
+}
+
+
+.delete:hover{
 	
+cursor:pointer;
+	color: lightgray;
+}
+
+
+
+.answerAdd{
+   position: relative;
+   left:3px;
+   bottom: 5px;
+   border: 1px solid lightgray;
+   background: white;
+   color: lightblack;
+   padding: 5px;
+}
+
+.answerAdd:hover{
+ cursor:pointer;
+	color: lightgray;
+}
+
+
+.answerDelete{
+   position: relative;
+   left:3px;
+   bottom: 5px;
+   border: 1px solid lightgray;
+   background: white;
+   color: lightblack;
+   padding: 5px;
+}
+
+.answerDelete:hover{
+ cursor:pointer;
+	color: lightgray;
+}
+
+
+
+
+
+.answer{
+ border: 1px solid lightgray;
+   background: white;
+   color: lightblack;
+   padding: 5px;
+}
+
+.answer:hover{
 	
-	.modal-dialog {
-	    width: 600px;
-	    margin: 30px auto;
-	    margin-top: 300px;
-	}
-	
+cursor:pointer;
+	color: lightgray;
+}
+
+.change{
+	border: 1px solid lightgray;
+   background: white;
+   color: lightblack;
+   padding: 5px;
+}
+
+
+.change:hover{
+
+cursor:pointer;
+	color: lightgray;
+
+}
+
+.good{
+	position: relative;
+	float: right;
+	hegiht: 20px; 
+	margin-left:10px;
+	padding:2px;
+	bottom: 3px;
+}
+
+
+.good:hover{
+	cursor:pointer;	
+}
+
+
+.fix{
+	position: relative;
+	float: right;
+	top: -5px;
+	padding: 5px;
+	font-weight: bold;
+}
+
+
+.fix:hover{
+	cursor:pointer;	
+}
+
+
+.best{
+	padding: 3px;
+	background: #f53f29; 
+	color: white;
+	font-weight: bold;
+	border-radius: 5px;
+	margin-left: 3px;
+	margin-right: 5px;
+	position: relative;
+	bottom: 45px;
+
+}
+
+.refresh:hover{
+
+	color:  gray;	
+	cursor:pointer;
+}
+
+.answerText{
+    position: relative; 
+	width: 600px; 
+	height: 50px;
+	outline:none;
+	top: 5px;
+}
+
+.answerTrWrite textArea:focus{
+	border: 2px solid #2478FF;
+}
+
+.answerTrWrite{
+    display:none;
+    height:110px;
+    padding-top:4px;
+}
+
+.answerTr{
+    height:90px;
+    padding-top:4px;
+}
+
+
+
+.answerIcon{
+	position: relative; 
+	left: 24px; 
+	top: -43px;
+}
+
+.answerInfo{
+	width: 200px;
+	font-weight: bold;
+	position: relative; 
+	left: 46px;
+	margin-bottom: 2px;
+	Top: 5px;
+}
+
+
+#container{
+	height: 100%;
+
+
+}
+
+textArea{
+	resize:none;
+}
 
 
 
@@ -288,16 +622,6 @@
 
 }
 
-.categorySelect{
-    border: 1px solid #c4c4c4;
-    height: 35px;
-    color: #727171;
-    outline: none;
-    cursor: pointer;
-    font-size: 13px;
-    background: #fff;
-}
-
 </style>
 
 <body>
@@ -314,98 +638,92 @@
 </div >
 
 <div class = "centerDiv">
-	<h2 style="font-size: 26px; font-weight: bold;">글쓰기</h2> 
-		<form id= insertForm action = "<%=request.getContextPath()%>/insert.Fbo" method="post" encType="multipart/form-data">
-			<br>
-			<table align="center" id="listArea">
+	<h2 style="font-size: 26px; font-weight: bold;">자유게시판</h2> 
+	<hr style="border: 1px solid black">
+	
+	
+	
+	
+	
+		<div id="tableDiv" >
+			<table align="center" width="1230px">
+				<thead>
+					<tr><td style="text-align:center;font-size: 20px;padding:none;height:50px;"><b>${board.bTitle}</b></td></tr>
+				</thead>
+				<tbody id= "boardTbody">
 				<tr>
-					<td class="titleTd tableTd"><b>카테고리</b></td>
-					<td class="tableTd"> &nbsp;&nbsp;
-						<select class="categorySelect" style="height: 35px;"> 
-							<option>게시판 선택 </option>
-							<option>자유게시판 </option>
-							<option>팁&노하우</option>
-							<option>비포&애프터 </option>
-							<option>자극사진</option>
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<td class= "titleTd tableTd"><b>제목</b></td>
-					<td class ="tableTd"><input type="text" name= "btitle" class="inputTd" >
-					<label for="superCheck" id=checkLabel><span style="font-size: 14px;">공지사항</span></label>
-					<input id = superCheck type="checkbox" name="blevel" value="4" onclick="checkBox();">
-					<input id = noCheck type= "hidden" name="blevel" value="1">
-					</td> 
-				</tr>
-				<tr>
-					<td class= "titleTd tableTd"><b>작성자</b></td>
-					<td  class ="tableTd"><span style="padding-left: 17px; font-size: 16px;">${loginUser.id }</span></td>
-				</tr>
-				<tr>
-					<td class= "titleTd tableTd"><b>작성일</b></td>
-					<td  class ="tableTd"><span style="padding-left: 17px; font-size: 16px;"><%=today%></span></td>
-				</tr>
-			</table>
-			<div id="textareaDiv">
-				<textArea id= summernote rows=30 col=100 name = "bcontent" placeholder="내용을 입력해주세요"></textArea>
-			</div>
-			<table id = "attachTable">
-				<tr>
-					<td rowspan=9 class= "titleTd" style= "border-right: 1px solid #dbdbdb">
-						<b>첨부파일</b>
-					</td>
-					<td  style= "border:none; height:30px; color:gray; padding:12px;padding-left:15px">
-						<select id= attachCount onchange="changeSelect();" style="color:black">
-							 <option>1</option>
-							 <option>2</option>
-							 <option>3</option>
-							 <option>4</option>
-							 <option>5</option>
-							 <option>6</option>
-							 <option>7</option>
-							 <option>8</option>
-							 
-						</select>
-						&nbsp;<span style="font-size: 15px">파일 갯수를 지정해주세요</span>
-						<button type="button" id= "resetBtn" class="attachBtn" onclick="selectReset();"><b>리셋</b></button>
-					</td>
-				</tr> 
-				<tr class= attachTr>
-					<td class= attachTd style="border-bottom: 1px solid #dbdbdb">
-						<input id = "attachInput1" type="text" placeholder="첨부파일을 등록하세요" readonly>&nbsp;
-						<button type="button" id= "attachBtn1" class="attachBtn" onclick="fileInputClick1();"><b>찾아보기</b></button>
-				</tr>
+					<td style="font-size: 16px">
 					
+					<b>작성자:</b>&nbsp;&nbsp;${board.userId}&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+					<b>등록일:</b>&nbsp;&nbsp;${board.createDate}&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+					<b>조회수:</b>&nbsp; ${board.bCount}</td>
+				</tr>
+				<tr>
+				<td>
+				<%--  <% if(b.getBtype().equals("2")){ %>
+                   	 
+                   		<div class= "clipDiv">
+                  			<span id= "clip" ><img class= clip src = "<%=request.getContextPath() %>/images/clip.png" width=20px height=24px style="padding-bottom:3px">
+                  			&nbsp;<b style="font-size:14px">첨부파일(<font class= attachmentCount><%=attachments.size()%></font>)</b></span>
+               			</div>
+						<div class="balloon">
+							<%for( i = 0;  i<attachments.size(); i++){ %>
+                           			<%Attachment f = attachments.get(i);%>
+                            		<%if(f.getbId() == b.getbId()){%> 
+			                        	<p class="attachmentP" onclick='downloadAttach(<%=f.getfId()%>);'><%=f.getOriginName()%></p> 
+                             	 	<%}%>                     
+                            <%}%> 
+                         <br>
+                         <div class= "balloonClose">닫기</div>
+                        </div>
+               			<br>
+					 <%} %> --%>
+					${board.bContent}</td>
+				</tr>
+				<tr style="font-size:16px">
+					<%-- <%if(bPrev != null){%> --%>
+						<td><b style="margin-right:30px;">이전글</b><span id = "preNextBoard" onclick = "goBoardDetail('1');">1</span></td>
+				<%-- 	<%}else{%>
+						<td><b style="margin-right:30px">이전글</b>이전글이 없습니다.</td>
+					<%}%>
+					 --%>
+				</tr>
+				<tr style="font-size:16px">
+					<%-- <%if(bNext != null){%> --%>
+						<td><b style="margin-right:30px">다음글</b><span id = "preNextBoard" onclick = "goBoardDetail('2);">2</span></td>
+				<%-- 	<%}else{%>
+						<td><b style="margin-right:30px">다음글</b>다음글이 없습니다.
+					<%}%> --%>
+				</tr>
+				</tbody>
 			</table>
-		
-			<br><br>
-			<div class= btnDiv>
-					<button type='button'id=listBtn onclick="goBoardListView();"><b>목록</b></button>&nbsp;&nbsp;
-					<button id=insertBtn type="button" onclick="insertSubmit();"><b>등록</b></button>
-			</div>
-		
-			<div style="display:none">
-				<input type="file" id="fileInput1" name = "file1" onchange="loadAttachName(this,1);">
-				<input type="file" id="fileInput2" name = "file2" onchange="loadAttachName(this,2);">
-				<input type="file" id="fileInput3" name = "file3" onchange="loadAttachName(this,3);">
-				<input type="file" id="fileInput4" name = "file4" onchange="loadAttachName(this,4);">
-				<input type="file" id="fileInput5" name = "file5" onchange="loadAttachName(this,5);">
-				<input type="file" id="fileInput6" name = "file6" onchange="loadAttachName(this,6);">
-				<input type="file" id="fileInput7" name = "file7" onchange="loadAttachName(this,7);">
-				<input type="file" id="fileInput8" multiple="multiple" name = "file8" onchange="loadAttachName(this,8)">
-			</div>
-			</form>
-
-
-
-
-<%-- 
-		
+			<br><br><br><br>
+			<%-- 	<%if(loginUser != null && (loginUser.getUserNo() > 10000 || (loginUser.getUserNo() == b.getUserNo()))){ %> --%>
+				<button id = deleteBtn onclick = "delBoard();"><b>삭제</b></button>
+				<button id = reWriteBtn onclick ="location.href='<%=request.getContextPath()%>/FupdateView.bo?bid={$b.bId}'" style="display:inline-block"><b>수정</b></button>
+			<%-- 	<%}%> --%>
+				<button id = listBtn onclick="location.href='<%=request.getContextPath() %>/Flist.bo'" style="display:inline-block"><b>목록</b></button>
+			<br>
+			</div>	<!--tableDiv 끝 -->
 			
 			
-			<br><br>
-	</div>  --%>
+			
+			
+			<div class="replyArea">
+				<br>
+				<div class="replyWriterArea">
+					<div style="border:none;margin-bottom:8px;"><span style="font-weight:bold;font-size:18px;">댓글작성</span>&nbsp;&nbsp;&nbsp;<span onclick = "refreshClick();" class = "refresh"><i class="fa fa-refresh" aria-hidden="true" style="font-size:20px; "></i></span></div>
+					<div style="width:802px;border:1px solid darkgray;">
+					<textArea rows="3" cols="119" id="replyContent" placeholder="댓글을 입력해주세요" style="font-weight:normal;border:none"></textArea>
+					<br><span style="margin-left:680px;color:darkgray;">글자 수 &nbsp;<span id="counter">0</span>&nbsp;/&nbsp;100&nbsp; </span>
+					<div style="height: 40px;width:800px;border:none; border-top:1px solid lightgray"><button id="addReplyBtn" type="button">등록</button></div>
+					</div>
+				</div>	
+			</div> <!-- replyArea 끝 -->
+
+
+
+
 	</div>
 </div>
 </body>

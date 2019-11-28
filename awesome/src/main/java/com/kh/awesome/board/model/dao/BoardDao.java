@@ -7,8 +7,10 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.awesome.board.model.vo.Attachment;
 import com.kh.awesome.board.model.vo.Board;
 import com.kh.awesome.board.model.vo.PageInfo;
+import com.kh.awesome.board.model.vo.Search;
 
 @Repository("bDao")
 public class BoardDao {
@@ -41,7 +43,7 @@ public class BoardDao {
 	}
 
 	public Board selectBoard(int bId) {
-		return sqlSession.selectOne("boardMapper.selectOne", bId);
+		return sqlSession.selectOne("boardMapper.selectBoardOne", bId);
 	}
 
 	public int updateBoard(Board b) {
@@ -52,7 +54,25 @@ public class BoardDao {
 		return sqlSession.delete("boardMapper.deleteBoard", bId);
 	}
 
-	public int getSearchFboardListCount(String type, String searchWord) {
-		return sqlSession.selectOne("boardMapper.getSearchFboardListCount", type);
+
+	public int getSearchFboardListCount(Search sc) {
+		System.out.println("dao, type: " + sc.getType());
+		System.out.println( "dao, searchWord: " + sc.getSearchWord());
+		return sqlSession.selectOne("boardMapper.getSearchFboardListCount", sc);
+	}
+
+	public ArrayList<Board> selectSeacrchFList(PageInfo pi, Search sc) {
+		int offset = (pi.getCurrentPage()-1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("boardMapper.selectSeacrchFList", sc, rowBounds);
+	}
+
+	public int insertAttachment(Attachment attachment) {
+		return sqlSession.insert("boardMapper.insertAttachment", attachment);
+	}
+
+	public ArrayList<Board> selectAttachments(int bId) {
+		return (ArrayList)sqlSession.selectList("boardMapper.selectAttachList", bId);
 	}
 }

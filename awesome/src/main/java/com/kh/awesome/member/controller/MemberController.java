@@ -1,4 +1,4 @@
-package com.kh.awesome.member.controller;
+ package com.kh.awesome.member.controller;
 
 import java.util.ArrayList;
 
@@ -57,7 +57,7 @@ public class MemberController {
 	@RequestMapping("enrollView.do")
 	public String enrollView() {
 		
-		return "member/memberJoin";
+		return "member/memberJoin2";
 	}
 	
 	

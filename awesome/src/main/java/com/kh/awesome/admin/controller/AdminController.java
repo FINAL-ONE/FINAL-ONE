@@ -19,7 +19,6 @@ import com.kh.awesome.admin.model.vo.Admin;
 
 @Controller
 public class AdminController {
-
 	
 	@Autowired
 	private AdminService aService;
