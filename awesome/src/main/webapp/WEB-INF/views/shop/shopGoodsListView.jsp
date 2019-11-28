@@ -71,11 +71,14 @@
 .goods-list:hover{
 	border : 1px solid red;
 }
-
 .goods-img:hover{
 	cursor : pointer;
 	-webkit-transform : scale(1.1,1.1);
 }
+.good-info{
+	height : 50px;
+}
+
 
 </style>
 </head>
@@ -107,14 +110,20 @@
 			</div>
 			<c:forEach var="a" items="${list}">
 				<div class = "goods-list" align ="center">
-					<div class = "goods-img">
-						<img src="resources/auploadFiles/${a.filePath}" width ="250px" height ="250px">
-						${a.goodsTitle} <br>
-					<hr>
-						${a.goodsContent} <br>
-					</div>
+						<c:url var="adetail" value="adetail.do">
+							<c:param name="gId" value="${a.gId }"/>
+						</c:url>
+						<a href="${adetail}">
+							<div class = "goods-img">
+								<img src="resources/auploadFiles/${a.filePath}" width ="250px" height ="250px">
+							</div>
+								${a.goodsTitle} <br>
+							<hr>
+							<div class= "good-info">
+								${a.goodsContent} <br>
+							</div>
+						</a>
 				</div>
-	
 			</c:forEach>
 			
 			

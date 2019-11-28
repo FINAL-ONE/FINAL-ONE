@@ -9,8 +9,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
-<script src = "${path}/ckeditor/ckeditor.js"></script>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <body>
 
@@ -27,41 +26,56 @@
 		<table class="type02" align="center">	
 			<tr>
 				<th>상품 제목  <span style = "color:red; font-size : 1.5em;">*</span> </th>
-				<td><input type="text" size ="114" name ="goodsTitle"></td>
+				<td><input type="text" size ="108" name ="goodsTitle" style="height:20px;"></td>
 			</tr>
+			<!-- <tr>
+				<th>상품 가격  <span style = "color:red; font-size : 1.5em;">*</span> </th>
+				<td><input type="number" size ="108" name ="goodsPrice" style="height:20px;">원</td>
+			</tr>
+			<tr>
+				<th>상품 수량  <span style = "color:red; font-size : 1.5em;">*</span> </th>
+				<td><input type="number" size ="108" name ="count" style="height:20px;">원</td>
+			</tr> -->
 			<tr>
 				<th> 대표이미지  <span style = "color:red; font-size : 1.5em;">*</span> </th>
 				<td>
-					<div id = "titleImgArea">
-						<img id ="titleImg" width ="755" height ="500">
+					<div id = "titleImgArea" >
+						<img id ="titleImg" width ="800" height ="300">
 					</div>
 				</td>					
-			</tr>
-			<tr>
-				<th>상품 내용 <span style = "color:red; font-size : 1.5em;">*</span></th>
-				<td><textarea id ="goodsContent" name="goodsContent" rows="10" cols ="102" size ="resize:none" required></textarea>
-				
-				</td>
 			</tr>
 			<tr>
 				<th> 내용사진 </th>
 				<td>
 					<div id="contentImgArea1">
-						<img id ="contentImg1" width ="185" height ="180">
+						<img id ="contentImg1" width ="800" height ="4500">
 					</div>						
 				</td>
 			</tr>
-					
+			<tr>
+				<th>상품 내용 <span style = "color:red; font-size : 1.5em;">*</span></th>
+				<td><textarea id ="goodsContent" name="goodsContent" rows="10" cols ="109" size ="resize:none" required></textarea>
+				</td>
+			</tr>		
 				<!-- 파일 업로드 하는 부분(file 타입형 input태그들) -->
-				<div id ="fileArea"	>							   <!-- input태그가 눌리면 this(객체)와1을 매개변수로 LoadImg함수발동 -->	
-					<input type="file" id ="thumbnailImg1" multiple="multiple" name="thumbnailImg" onchange="LoadImg(this,1)">
-					<input type="file" id ="thumbnailImg2" multiple="multiple" name="thumbnailImg" onchange="LoadImg(this,2)">
+				<div id ="fileArea">							   <!-- input태그가 눌리면 this(객체)와1을 매개변수로 LoadImg함수발동 -->	
+					<input type="file" id ="thumbnailImg1" multiple="multiple" name="titlethumbnailImg" onchange="LoadImg(this,1)">
+					<input type="file" id ="thumbnailImg2" multiple="multiple" name="subthumbnailImg" onchange="LoadImg(this,2)">
 				</div>
-					
-				<script>
+				
+			
+				<tr>
+					<td colspan="2" align="center">
+						<input type="submit" value="등록하기"> &nbsp;
+						<input type="reset" value="등록취소">
+					</td> 
+				</tr>
+				</table>
+				
+			<script>
 					// 내용 작성 부분의 공간을 클릭할 때 파일 첨부 창이 뜨도록 설정하는 부분
 					$(function(){
-						$("#fileArea").hide();	//파일업로드 하는 fileArea div숨기기
+						$("#fileArea").hide();
 						
 						// 사진이 들어간 div를 클릭시 thumbnailImg(n)클릭하는 효과가 나도록
 						$("#titleImgArea").click(function(){
@@ -93,17 +107,7 @@
 						}
 					} 
 				</script>
-					<%=request.getRealPath("/") %>
 				
-				<tr>
-					<td colspan="2" align="center">
-						<input type="submit" value="등록하기"> &nbsp;
-						<input type="reset" value="등록취소">
-					</td> 
-				</tr>
-				</table>
-				
-
 				
 				<!-- InsertThumbnailServlet 만들러 ㄱㄱ!!!! -->
 	</form>	

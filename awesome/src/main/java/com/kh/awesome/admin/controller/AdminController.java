@@ -73,23 +73,42 @@ public class AdminController {
 	
 	@RequestMapping("sellgoodsInsert.do")
 	public String sell_goodsInsert(Admin a, HttpServletRequest request,				
-								@RequestParam(name="thumbnailImg", required=false) MultipartFile file) {
+								@RequestParam(name="titlethumbnailImg", required=false) MultipartFile file1,
+								@RequestParam(name="subthumbnailImg", required=false) MultipartFile file2) {
 		// pom.xml 가서 일단 multipart 인코딩 타입으로 파일을 넘겨줄 때 필요한 라이브러리부터 다운 받자.
 		// 그냥 한번 출력 해 보면 다 null로 나오는 걸 확인할 수 있다.(물론, 파일 업로드 관련 라이브러리 추가하고 나서)
 		
 		// required를 안 써주면 사용자가 파일을 안 올리고 공지글을 썼을 때 uploadFile이 없다는 에러 
 		// (Bad Request, Required String parameter 'name' is no present)가 떠버리므로 
 		// required-false라는 속성을 써주자
+
 		
-		if(!file.getOriginalFilename().contentEquals("")) {
-			String savePath = saveFile(file, request);
+		// 다중 파일을 묶어서 업로드(다중 파일 업로드) 하기 때문에 컬렉션을 사용
+		// 저장한 파일의 이름을 저장할 ArrayList를 생성하자 
+		//ArrayList<String> saveFiles = new ArrayList<String>();
+		
+		// 원본 파일의 이름을 저장할 ArrayList를 생성하자
+		//ArrayList<String> originFiles = new ArrayList<String>();
+		// <String> 제네릭 하는이유는 나중에 꺼낼때 다운캐스팅 안하려고
+		System.out.println("file1 : " + file1);
+		System.out.println("file2 : " + file2);
+		
+		
+		if(!file1.getOriginalFilename().contentEquals("") && !file2.getOriginalFilename().contentEquals("")) {
+			String savePath1 = saveFile(file1, request);
+			String savePath2 = saveFile(file2, request);
 			
-			System.out.println("savePath : " + savePath);
-			if(savePath != null) {	// 파일이 잘 저장된 경우
-				a.setFilePath(file.getOriginalFilename());
+			System.out.println("savePath1 : " + savePath1);
+			System.out.println("savePath2 : " + savePath2);
+			
+			
+			if(savePath1 != null && savePath2 != null) {	// 파일이 잘 저장된 경우
+				a.setFilePath(file1.getOriginalFilename());
+				a.setContentFilePath(file2.getOriginalFilename());
 			} else {
 				System.out.println("에러");
 			}
+			
 		}
 		
 		int result = aService.insertSell_goods(a);
@@ -121,7 +140,10 @@ public class AdminController {
 		
 		// 공시글은 굳이 파일명 중복 제거는 신경쓰지 말고 게시판에서 파일명 rename하는거 하자!!
 		// 공지글은 보통 관리자만 쓰니까.
+		
 		String filePath = folder + "\\" + file.getOriginalFilename();	// 실제 저장될 파일 경로 + 파일명 추가
+		
+		System.out.println(filePath);
 		
 		// file은 사용자가 입력한 파일
 		try {
@@ -136,6 +158,27 @@ public class AdminController {
 				// 스트링으로 반환해줌
 		return filePath;
 	}
+	
+	@RequestMapping("adetail.do")
+	public ModelAndView shopgoodsDetail(ModelAndView mv, int gId) {
+		
+		ArrayList<Admin> list = aService.selectshopgoods(gId);
+		
+		if(list != null) {
+			mv.addObject("list", list)
+			.setViewName("shop/shopGoodsDetail");
+		
+		} else {
+			throw new AdminException("SHOP 상품 디테일보기 실패!");
+		}
+		
+		return mv;
+	}
+	
+	
+	
+	
+	
 	
 
 }

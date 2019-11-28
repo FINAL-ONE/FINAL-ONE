@@ -23,4 +23,9 @@ public class AdminDao {
 		
 		return sqlSession.insert("adminMapper.insertSellgoods", a);
 	}
+	
+	public ArrayList<Admin> selectshopgoods(int gId) {
+		
+		return (ArrayList)sqlSession.selectList("adminMapper.selectshopgoods", gId);
+	}
 }
