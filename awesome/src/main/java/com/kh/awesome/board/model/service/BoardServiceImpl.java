@@ -89,6 +89,16 @@ public class BoardServiceImpl implements BoardService {
 		return  bDao.selectBoardGoodMemory(bGood);
 	}
 
+	@Override
+	public int subBoardGoodCount(BGood bGood) {
+		return bDao.subBoardGoodCount(bGood);
+	}
+
+	@Override
+	public ArrayList<BGood> selectBGood(int bId) {
+		return bDao.selectBGood(bId);
+	}
+
 
 	
 }

@@ -159,6 +159,14 @@
 		WHERE BID = #{bId}
   </select>
   
+  <select id= "selectBGood" parameterType = "_int" resultMap="bGoodResultSet">
+  		SELECT *
+		FROM B_GOOD
+		WHERE BID = #{bId}
+		
+  </select>
+  
+  
   
   <update id="updateBoard" parameterType="Board">
   	UPDATE BOARD
@@ -173,4 +181,11 @@
   	WHERE BID=#{bId} 
   
   </delete>
+  
+  <delete id="subBoardGoodCount"  parameterType="BGood">
+	DELETE FROM B_GOOD 
+  	WHERE BID=#{bId} AND MID=#{mId}
+  	
+  </delete>
+  
 </mapper>

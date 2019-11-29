@@ -84,4 +84,12 @@ public class BoardDao {
 	public int selectBoardGoodMemory(BGood bGood) {
 		return sqlSession.selectOne("boardMapper.selectBoardGoodMemory",bGood);
 	}
+
+	public int subBoardGoodCount(BGood bGood) {
+		return sqlSession.delete("boardMapper.subBoardGoodCount",bGood);
+	}
+
+	public ArrayList<BGood> selectBGood(int bId) {
+		return (ArrayList)sqlSession.selectList("boardMapper.selectBGood",bId);
+	}
 }

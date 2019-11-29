@@ -4,6 +4,12 @@
     <%
 	java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("yyyy.MM.dd.");
 	 String today = formatter.format(new java.util.Date());
+	 
+	 String display0 = "inline-block"; 
+	 String display1 = "none"; 
+	 String dataValue = "0";
+	 
+	 
 %>
 
 
@@ -623,6 +629,16 @@ textArea{
 }
 
 
+.bDelete:hover{
+	cursor:pointer;
+}
+
+.bModify:hover{
+	cursor:pointer;
+}
+
+
+
 
 
 /*new 스타일 */
@@ -657,10 +673,16 @@ textArea{
 
 <div class = "centerDiv">
 	<h2 style="font-size: 26px; font-weight: bold;margin-top: 40px;">자유게시판</h2> 
-	<hr style="border: 1px solid black">
+	<hr style="border: 1px solid black; margin-bottom: 5px;" >
 		<table align="center" width="840px" >
-			<tr style="padding:none;"><td style="font-size: 30px;padding:0px; padding-bottom: 10px;height:60px;border-bottom: 1pxz; font-weight: 100px; font-family:none">${board.bTitle}</td></tr>
-			<tbody id= "boardTbody">
+			<tr style="padding:none;">
+				<td style="font-size: 30px;padding:0px; padding-bottom: 10px;height:60px;border-bottom: 1pxz; font-weight: 100px; font-family:none">
+					${board.bTitle} 
+					<div style="font-size: 13px; position:relative; float:right; height:40px; padding-top: 20px; padding-right: 10px;"><span class="bModify" style="color: #8d8d8d;">수정</span>&nbsp;|&nbsp;<span class="bDelete" style="color: #8d8d8d;">삭제</span> </div>			
+				</td>
+			</tr>
+		
+		<tbody id= "boardTbody">
 			<tr>
 				<td style="font-size: 16px; padding: 0px; border-top:1px solid #cecece; border-bottom:1px solid #cecece;">
 					<span style="position:relative; float:left;color: #a1a0a0;"> 
@@ -698,27 +720,30 @@ textArea{
 			<br>
 		</table>
 			<br>
-			<div id = "heart" data-value= "0">
-				<span id="heart0" style="font-size: 30px; color: #ff2626; display:inline-block;"><i class="far fa-heart"></i></span> 
-				<span id= "heart1" style="font-size: 30px; color:#ff2626; display:none "><i class="fas fa-heart"></i></span> 
+			<c:forEach var="bGood" items="${bGoodList}" >
+			<c:if test= "${bGood.mId eq loginUser.mid}"> 
+			 		<% 
+						display0 = "none"; 
+					 	display1 = "inline-block"; 
+					 	dataValue = "1";
+					 %>
+				</c:if>
+			</c:forEach>
+			 <div id = "heart" data-value= "<%=dataValue%>">
+				<span id="heart0" style="font-size: 30px; color: #ff2626; display:<%=display0%>"><i class="far fa-heart"></i></span> 
+				<span id= "heart1" style="font-size: 30px; color:#ff2626; display:<%=display1%> "><i class="fas fa-heart"></i></span> 
 				<span id="bGoodCount" style="font-size: 26px; margin-left:5px;" >${board.bGood}</span>
-			</div>
+			</div>	 
 		
 			<br><br><br><br>
-			<%-- 	<%if(loginUser != null && (loginUser.getUserNo() > 10000 || (loginUser.getUserNo() == b.getUserNo()))){ %> --%>
+	
 				<button id = deleteBtn onclick = "delBoard();"><b>삭제</b></button>
 				<button id = reWriteBtn onclick ="location.href='<%=request.getContextPath()%>/FupdateView.bo?bid={$b.bId}'" style="display:inline-block"><b>수정</b></button>
-			<%-- 	<%}%> --%>
+	
 				<button id = listBtn onclick="location.href='<%=request.getContextPath() %>/Flist.bo'" style="display:inline-block"><b>목록</b></button>
 			<br>
 			</div>	<!--tableDiv 끝 -->
-		
-			
-			
-			
-			
-			
-			
+
 			<div class="replyArea">
 				<br>
 				<div class="replyWriterArea">
@@ -747,6 +772,7 @@ textArea{
 <script>
 
 $(function(){
+	
  	
 	$("#heart").click(function(){
 		if( $( "#heart" ).data( "value" ) == "0"){
@@ -773,8 +799,10 @@ $(function(){
 			url:"addBoardGoodCount.do", 
 			data: {bId: bId, mId: mId},
 			success:function(data){
-				if(data == 1) {
+				if(data == "add") {
 					alert("이 게시글에 공감하셨습니다.")
+				}else{
+					alert("이 게시글에 공감을 취소하셨습니다.")
 				}
 			}, 
 			error : function(request, status, errorData){
@@ -784,16 +812,23 @@ $(function(){
 			}
 			
 		});
-		
-		
-		
-		
-		
-		
 	 });
+	
+
+	$(".bModify").click(function(){
+		alert("게시 글을 수정하시겠습니까? ")
+	});
+	
+	$(".bDelete").click(function(){
+	 	alert("게시 글을 삭제 하시겠습니까?")
+	});
+	
 });
  
 
+
+	
+	
 
  
 

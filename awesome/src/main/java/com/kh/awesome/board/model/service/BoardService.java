@@ -61,5 +61,9 @@ public interface BoardService {
 	public int addBoardGoodCount(BGood bGood);
 
 	public int selectBoardGoodMemory(BGood bGood);
+
+	public int subBoardGoodCount(BGood bGood);
+
+	public ArrayList<BGood> selectBGood(int bId);
 	
 }

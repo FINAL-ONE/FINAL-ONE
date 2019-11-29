@@ -1,10 +1,13 @@
 package com.kh.awesome.board.controller;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.websocket.Session;
 
@@ -76,13 +79,15 @@ public class BoardController {
 		bService.addReadCount(bId);
 		Board board = bService.selectBoard(bId);
 		ArrayList<Board> attachments = bService.selectAttachments(bId);
-		
+		ArrayList<BGood> bGoodList =bService.selectBGood(bId);
+		System.out.println("bGoodList: "+  bGoodList);
 		
 		if(board != null) {
 			// 메소드 체이닝 방식
 			mv.addObject("board", board)
 			.addObject("currentPage", currentPage)
 			.addObject("attachments", attachments)
+			.addObject("bGoodList", bGoodList)
 			.setViewName("board/fBoardDetailView");	// boardDetailView.jsp 만들러 ㄱㄱ씽
 			
 		}else {
@@ -265,19 +270,27 @@ public class BoardController {
 	
 	
 	@RequestMapping ("addBoardGoodCount.do")
-	public void addBoardGoodCount(BGood bGood) {
+	public void addBoardGoodCount(HttpServletResponse response, BGood bGood) throws IOException {
 	
 		int selectResult = bService.selectBoardGoodMemory(bGood);
 		System.out.println("selectResult: " + selectResult );
 		
-		if(selectResult <= 0 ) {
+		PrintWriter out = response.getWriter();
+		
+		if(selectResult < 1 ) {
 			int addResult = bService.addBoardGoodCount(bGood);
 			System.out.println("addResult: " + addResult );
+			out.append("add");
+			out.flush();
 			
 		}else {
-			/* int subResult = bService.subBoardGoodCount(bGood); */
-			
+			int subResult = bService.subBoardGoodCount(bGood);
+			System.out.println("subResult: " + subResult );
+			out.append("sub");
+			out.flush();
 		}
+		
+		out.close();
 		
 	}
 	
