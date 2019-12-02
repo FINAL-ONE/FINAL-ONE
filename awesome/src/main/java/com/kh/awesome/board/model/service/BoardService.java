@@ -56,7 +56,7 @@ public interface BoardService {
 
 
 	// 게시글 상세보기시 첨부파일 조회 
-	public ArrayList<Board> selectAttachments(int bId);
+	public ArrayList<Attachment> selectAttachments(int bId);
 
 	public int addBoardGoodCount(BGood bGood);
 

@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"  import="java.util.*, java.text.*"%>
     <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
     <%
 	java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("yyyy.MM.dd.");
 	 String today = formatter.format(new java.util.Date());
@@ -140,19 +142,19 @@
       
    }
    
-   .balloon {
-    position: absolute;
+ .balloon {
+     position: absolute;
     background: white;
     width: 250px;
     margin: 0 auto 10px;
     border: 1px solid gray;
-    right: 105px;
-    top: 160px;
-    font-size: 14px; 
+    right: 544px;
+    top: 650px;
+    font-size: 14px;
     padding: 10px;
-    text-align: left; 
-    display:none;
-    z-index:5;
+    text-align: left;
+    display: none;
+    z-index: 5;
 }
  .balloon:after {
     content: '';
@@ -208,11 +210,9 @@ text-decoration: underline;
 }
 
 .clipDiv{
-	position: absolute;
-	width: 130px;
-	height: 30px;
-	right: 60px;
-	top: 120px;
+	position: relative;
+	width: 110px;
+	float: right;
 }
 
 
@@ -221,19 +221,32 @@ text-decoration: underline;
 	cursor:pointer;
 }
 
-#listBtn{
+#listBtn{ 
+   position: relative;
    border:none;
    outline: none;
-   background-color: black; 
+   background-color: #383838; 
    color: white;
    font-size: 16px;
-   height: 40px;
-   width: 70px;
-   position: absolute; 
-   right: 615px;
-   bottom: 35px;
+   height: 45px;
+   width: 100px;
    z-index:1;
+   border-radius: 4px;
 }
+
+#insertBtn{
+  position: relative;
+	border:none;
+   outline: none;
+   background-color: #f53f29; 
+   color: white;
+   font-size: 16px;
+   height: 45px;
+   width: 100px;
+   z-index:1;
+     border-radius: 4px;
+}
+
 #addReplyBtn{
 	 border:none;
    outline: none;
@@ -294,10 +307,7 @@ text-decoration: underline;
    
 }
 
-#listBtn:hover{
-   background-color: #f53f29; 
-   color: white;
-}
+
 
 
 #reWriteBtn:hover{
@@ -579,6 +589,8 @@ cursor:pointer;
 
 }
 
+
+
 textArea{
 	resize:none;
 }
@@ -638,9 +650,6 @@ textArea{
 }
 
 
-
-
-
 /*new 스타일 */
 
  #heart{
@@ -653,7 +662,6 @@ textArea{
  #heart:hover{
  	cursor:pointer;
  }
-
 
 
 </style>
@@ -695,14 +703,40 @@ textArea{
 					</span>
 				</td>
 			</tr>
+			<tr>
 			<td style="padding:0px;padding-top: 15px; padding-bottom: 10px; margin-bottom: 30px; border-bottom: none;">
-			<%--  <% if(b.getBtype().equals("2")){ %>
+			<c:if test = "${!empty attachments}">
+
+					<div class= "clipDiv">
+                 			<span id= "clip" style="font-size:13px"><i class="fas fa-paperclip"></i>
+                 			&nbsp;첨부파일(<font class= attachmentCount>${fn:length(attachments)}</font>)</span>
+              		</div>
+              		<div class="balloon">
+						<c:forEach var = "attachment" items= "${attachments}">
+							<c:if test = "${attachment.changeName != ''}">
+							
+						<p class="attachmentP">
+							<a href="${contextPath }/resources/buploadFiles/${attachment.changeName}" download="${attachment.originName}">
+								${attachment.originName }
+						   </a>
+						</p>
+								<%-- <p class="attachmentP" onclick='downloadAttach(${attachment.fId});'>${attachment.originName}</p> --%>
+							</c:if>
+						</c:forEach>
+						 <div class= "balloonClose">닫기</div>
+					 </div>
+			</c:if>
+			
+			<br>
+			${board.bContent}</td>
+			
+		 <%-- <% if(b.getBtype().equals("2")){ %>
                   	 
                   		<div class= "clipDiv">
-                 			<span id= "clip" ><img class= clip src = "<%=request.getContextPath() %>/images/clip.png" width=20px height=24px style="padding-bottom:3px">
+                 			<span id= "clip" ><i class="fas fa-paperclip"></i>
                  			&nbsp;<b style="font-size:14px">첨부파일(<font class= attachmentCount><%=attachments.size()%></font>)</b></span>
               			</div>
-					<div class="balloon">
+						<div class="balloon">
 						<%for( i = 0;  i<attachments.size(); i++){ %>
                           			<%Attachment f = attachments.get(i);%>
                            		<%if(f.getbId() == b.getbId()){%> 
@@ -714,10 +748,10 @@ textArea{
                        </div>
               			<br>
 				 <%} %> --%>
-				${board.bContent}</td>
-				
+			
+			
 			</tr>
-			<br>
+				<br>
 		</table>
 			<br>
 			<c:forEach var="bGood" items="${bGoodList}" >
@@ -736,11 +770,11 @@ textArea{
 			</div>	 
 		
 			<br><br><br><br>
-	
-				<button id = deleteBtn onclick = "delBoard();"><b>삭제</b></button>
-				<button id = reWriteBtn onclick ="location.href='<%=request.getContextPath()%>/FupdateView.bo?bid={$b.bId}'" style="display:inline-block"><b>수정</b></button>
-	
-				<button id = listBtn onclick="location.href='<%=request.getContextPath() %>/Flist.bo'" style="display:inline-block"><b>목록</b></button>
+			<div style="margin-left:auto; width:210px"> 
+				<button id = insertBtn onclick= "logcation.href='.bo" > <i class="fas fa-pencil-alt">&nbsp;</i>글쓰기 </button>&nbsp;
+				<button id = listBtn onclick="location.href='.bo'" style="display:inline-block"><i class="fas fa-list"></i> &nbsp;목록</button>
+			</div>
+			
 			<br>
 			</div>	<!--tableDiv 끝 -->
 
@@ -816,18 +850,51 @@ $(function(){
 	
 
 	$(".bModify").click(function(){
-		alert("게시 글을 수정하시겠습니까? ")
+		if (confirm("이 게시 글을 수정하시겠습니까?") == true){    //확인
+			location.href = 'fBoardUpdateView.do?bId=' + ${board.bId} + '&page=' + ${currentPage};
+		}else{   //취소
+	
+		    return;
+		}
 	});
 	
+	
+	
+	
 	$(".bDelete").click(function(){
-	 	alert("게시 글을 삭제 하시겠습니까?")
+		if (confirm("이 게시 글을 삭제 하시겠습니까?") == true){    //확인
+			location.href = 'deleteBoard.do?bId=' + ${board.bId};
+		}else{   //취소
+	
+		    return;
+		}
 	});
+	
+	
+    $(".balloonClose").click(function(){
+        $(".balloon").css("display","none");
+    }); 
+
+    $(".clipDiv").click(function(){
+        
+        var balloon = $(this).parent().find(".balloon");   
+        if(balloon.css("display")== "none"){
+           balloon.css({"display":"block"})   
+        }else{
+           balloon.css({"display":"none"})
+        }
+   });
+
+    
+    function downloadAttach(thing){
+		 location.href="downloadAttach.do?fid="+thing;
+		 
+	 }
 	
 });
  
 
 
-	
 	
 
  

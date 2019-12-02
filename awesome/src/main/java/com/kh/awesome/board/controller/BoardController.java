@@ -28,6 +28,8 @@ import com.kh.awesome.board.model.vo.Search;
 import com.kh.awesome.common.Pagination;
 import com.kh.awesome.member.model.vo.Member;
 
+import oracle.net.aso.a;
+
 @Controller
 public class BoardController {
 
@@ -71,30 +73,30 @@ public class BoardController {
 	@RequestMapping("fBoardDetailView.do")
 	public ModelAndView boardDetail(ModelAndView mv, int bId,
 									@RequestParam("page") Integer page) {
-		int currentPage = 1;
-		if(page != null) {
-			currentPage = page;
-		}
-		
-		bService.addReadCount(bId);
-		Board board = bService.selectBoard(bId);
-		ArrayList<Board> attachments = bService.selectAttachments(bId);
-		ArrayList<BGood> bGoodList =bService.selectBGood(bId);
-		System.out.println("bGoodList: "+  bGoodList);
-		
-		if(board != null) {
-			// 메소드 체이닝 방식
-			mv.addObject("board", board)
-			.addObject("currentPage", currentPage)
-			.addObject("attachments", attachments)
-			.addObject("bGoodList", bGoodList)
-			.setViewName("board/fBoardDetailView");	// boardDetailView.jsp 만들러 ㄱㄱ씽
+			int currentPage = 1;
+			if(page != null) {
+				currentPage = page;
+			}
 			
-		}else {
-			throw new BoardException("게시글 상세조회 실패!");
-		}
-		
-		return mv;
+			bService.addReadCount(bId);
+			Board board = bService.selectBoard(bId);
+			ArrayList<Attachment> attachments = bService.selectAttachments(bId);
+			ArrayList<BGood> bGoodList =bService.selectBGood(bId);
+			System.out.println("bGoodList: "+  bGoodList);
+			
+			if(board != null) {
+				// 메소드 체이닝 방식
+				mv.addObject("board", board)
+				.addObject("currentPage", currentPage)
+				.addObject("attachments", attachments)
+				.addObject("bGoodList", bGoodList)
+				.setViewName("board/fBoardDetailView");	// boardDetailView.jsp 만들러 ㄱㄱ씽
+				
+			}else {
+				throw new BoardException("게시글 상세조회 실패!");
+			}
+			
+			return mv;
 	}
 	
 	
@@ -168,7 +170,7 @@ public class BoardController {
 	
 
 	@RequestMapping("fBoardInsert.do")
-	public String boardInsert(HttpServletRequest request, Board b, Attachment attachment, 
+	public String boardInsert(HttpServletRequest request, Board b, Attachment attachment, String bLevel,
 							@RequestParam(value="file1", required=false)MultipartFile file1,
 							@RequestParam(value="file2", required=false)MultipartFile file2,
 							@RequestParam(value="file3", required=false)MultipartFile file3,
@@ -189,9 +191,16 @@ public class BoardController {
 		HttpSession session = request.getSession(); 
 		Member loginUser = (Member) session.getAttribute("loginUser"); 
 		
-		/* b.setmId(loginUser.getMid()); */
-		b.setmId(1);
+		/* b.setmId(1); */
+		b.setmId(loginUser.getMid()); 
 		b.setbType("1");
+		
+		int blevel = Integer.parseInt(bLevel);
+		b.setbLevel(blevel);
+		
+	
+		
+		
 
 		int count = 0; 
 		
@@ -294,7 +303,55 @@ public class BoardController {
 		
 	}
 	
+	@RequestMapping("deleteBoard.do")
+	public String deleteBoard(int bId, HttpServletRequest request) {
+		ArrayList<Attachment> attachments = bService.selectAttachments(bId);
+		
+		System.out.println(bId);
+		System.out.println(attachments);
+		
+		for( Attachment a: attachments) {
+			if(a.getOriginName() != null) {
+				deleteFile(a.getChangeName(), request);
+			}
+		}		
+		int result = bService.deleteBoard(bId);
+		
+		
+		if(result >0) {
+			return "redirect:fBoardListView.do";
+		}else{
+			throw new BoardException("게시물 삭제 실패!");
+		}
+		
+	}
 	
+	public void deleteFile(String fileName, HttpServletRequest request) {
+		String root = request.getSession().getServletContext().getRealPath("resources");
+		String savePath= root + "\\buploadFiles";
+		File f = new File(savePath + "\\" + fileName);
+		if(f.exists()) {
+			f.delete();
+		}
+	}
+	
+	@RequestMapping("fBoardUpdateView.do")
+	public ModelAndView updateBoardView(ModelAndView mv, int bId,
+			@RequestParam("page") Integer page) {
+		
+		Board board = bService.selectBoard(bId);
+		ArrayList<Attachment> flist = bService.selectAttachments(bId);
+		
+		mv.addObject("board", board)
+		.addObject("currentPage", page)
+		.addObject("flist", flist)
+		.setViewName("board/fBoardUpdateView");	// boardDetailView.jsp 만들러 ㄱㄱ씽
+		
+		return mv;
+	}
+	
+	
+		
 	
 /*	
 	@RequestMapping("bupView.do")

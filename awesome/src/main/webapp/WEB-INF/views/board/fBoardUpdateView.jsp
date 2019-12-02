@@ -1,11 +1,41 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"  import="java.util.*, java.text.*"%>
-    <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-    <%
+<%@ page import = "com.kh.awesome.board.model.vo.Board"%>
+<%@ page import = "com.kh.awesome.board.model.vo.Attachment"%> 
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+
+<%
 	java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("yyyy.MM.dd.");
 	 String today = formatter.format(new java.util.Date());
-	 
-	  String category = request.getParameter("category"); 
+
+	  Board b = (Board)request.getAttribute("board");
+	  int category2 = b.getCategory(); 
+	  String category = String.valueOf(category2);
+	  
+	  ArrayList<Attachment> flist= new ArrayList<Attachment>();
+
+	     flist = (ArrayList<Attachment>)request.getAttribute("flist");
+	     flist.add(new Attachment());
+	     flist.add(new Attachment());
+	     flist.add(new Attachment());
+	     flist.add(new Attachment());
+	     flist.add(new Attachment());
+	     flist.add(new Attachment());
+	     flist.add(new Attachment());
+	     flist.add(new Attachment());
+
+
+	  String originName1= flist.get(0).getOriginName();
+	  String originName2= flist.get(1).getOriginName();
+	  String originName3= flist.get(2).getOriginName();
+	  String originName4= flist.get(3).getOriginName();
+	  String originName5= flist.get(4).getOriginName();
+	  String originName6= flist.get(5).getOriginName();
+	  String originName7= flist.get(6).getOriginName();
+	  String originName8= flist.get(7).getOriginName();
+	  
+
 %>
 
 
@@ -108,6 +138,25 @@
     	width: 840px;
     }
     
+    .delAttachBtn{
+      outline: none;
+      border: none; 
+      background: #383838;
+      color: white;
+      font-size: 15px;
+      width: 100px;
+      height: 40px;      
+   	 border-radius: 4px;
+   
+   }
+   
+   .delAttachBtn:hover{
+      background-color: #f53f29;
+      color: white;
+   }
+    
+    
+    
     .attachTd{
 		padding: none; 
 		padding-left: 15px;
@@ -153,7 +202,6 @@
 	   background-color: darkgray;
 	   color: white;
 	}
-	
 	
 	#listBtn{
 	   border:none;
@@ -324,6 +372,8 @@
 				<tr>
 					<td class="titleTd tableTd"><b>카테고리</b></td>
 					<td class="tableTd"> &nbsp;&nbsp;
+						
+
 						<select class="categorySelect" name = "category" style="height: 35px;"> 
 							<option id =  "category2" value = 2>자유게시판 </option>
 							<option id =  "category3" value = 3>팁&노하우</option>
@@ -334,15 +384,24 @@
 				</tr>
 				<tr>
 					<td class= "titleTd tableTd"><b>제목</b></td>
-					<td class ="tableTd"><input type="text" name= "bTitle" class="inputTd" >
+							
+					<td class ="tableTd"><input type="text" name= "bTitle" class="inputTd" value = "<%=b.getbTitle()%>" >
+					
 					<label for="superCheck" id=checkLabel><span style="font-size: 14px;">공지사항</span></label>
-					<input id = superCheck type="checkbox" name="bLevel" value="4" onclick="checkBox();">
+
+					<%if(b.getbLevel() < 4){ %>
+						<input id = superCheck type="checkbox" name="blevel" value="4" onclick="checkBox();">
+					<%} else{%>
+						<input id = superCheck type="checkbox" name="blevel" value="4" onclick="checkBox();" checked>
+					<%} %>
+			
+					
 					<input id = noCheck type= "hidden" name="bLevel" value="1">
 					</td> 
 				</tr>
 				<tr>
 					<td class= "titleTd tableTd"><b>작성자</b></td>
-					<td  class ="tableTd"><span style="padding-left: 17px; font-size: 16px;">${loginUser.userId }</span></td>
+					<td  class ="tableTd"><span style="padding-left: 17px; font-size: 16px;"><%=b.getUserId()%></span></td>
 				</tr>
 				<tr>
 					<td class= "titleTd tableTd"><b>작성일</b></td>
@@ -350,7 +409,7 @@
 				</tr>
 			</table>
 			<div id="textareaDiv">
-				<textArea id= summernote rows=30 col=100 name = "bContent" placeholder="내용을 입력해주세요"></textArea>
+				<textArea id= summernote rows=30 col=100 name = "bContent" placeholder="내용을 입력해주세요"> <%=b.getbContent() %></textArea>
 			</div>
 			<table id = "attachTable">
 				<tr>
@@ -358,24 +417,55 @@
 						<b>첨부파일</b>
 					</td>
 					<td  style= "border:none; height:30px; color:gray; padding:12px;padding-left:15px">
-						<select id= attachCount onchange="changeSelect();" style="color:black">
-							 <option>1</option>
-							 <option>2</option>
-							 <option>3</option>
-							 <option>4</option>
-							 <option>5</option>
+						<select id= attachCount onchange="changeSelect();" style="color:black" disabled>
+							   <option name= aCount value=1>1</option>
+			                   <option name= aCount value=2>2</option>
+			                   <option name= aCount value=3>3</option>
+			                   <option name= aCount value=4>4</option>
+			                   <option name= aCount value=5 SELECTED >5</option>
 							 
 						</select>
 						&nbsp;<span style="font-size: 15px">파일 갯수를 지정해주세요</span>
 						<button type="button" id= "resetBtn" class="attachBtn" onclick="selectReset();"><b>리셋</b></button>
 					</td>
 				</tr> 
-				<tr class= attachTr>
-					<td class= attachTd style="border-bottom: 1px solid #dbdbdb">
-						<input id = "attachInput1" type="text" placeholder="첨부파일을 등록하세요" readonly>&nbsp;
-						<button type="button" id= "attachBtn1" class="attachBtn" onclick="fileInputClick1();"><b>찾아보기</b></button>
-				</tr>
-					
+				 <tr class= attachTr>
+		            <td class= attachTd>
+		               <input id = "attachInput1" type="text" placeholder="첨부파일을 등록하세요" readonly value ="<%=originName1%>" >&nbsp;
+		               <button type="button" id= "attachBtn1" class="attachBtn" onclick="fileInputClick1();"><b>찾아보기</b></button>&nbsp;
+		               <button type="button" id= "delAttachBtn1" class="delAttachBtn" onclick="delAttach1();"><b>삭제</b></button>
+		            </td>
+		         </tr>
+		          <tr class= attachTr>
+		            <td class= attachTd>
+		               <input id = "attachInput2" type="text" placeholder="첨부파일을 등록하세요" readonly value ="<%=originName2%>" >&nbsp;
+		               <button type="button" id= "attachBtn2" class="attachBtn" onclick="fileInputClick2();"><b>찾아보기</b></button>&nbsp;
+		               <button type="button" id= "delAttachBtn2" class="delAttachBtn" onclick="delAttach2();"><b>삭제</b></button>
+		            </td>
+		         </tr>
+		          <tr class= attachTr>
+		            <td class= attachTd>
+		               <input id = "attachInput3" type="text" placeholder="첨부파일을 등록하세요" readonly value ="<%=originName3%>" >&nbsp;
+		               <button type="button" id= "attachBtn3" class="attachBtn" onclick="fileInputClick3();"><b>찾아보기</b></button>&nbsp;
+		               <button type="button" id= "delAttachBtn3" class="delAttachBtn" onclick="delAttach3();"><b>삭제</b></button>
+		            </td>
+		         </tr>
+		         <tr class= attachTr>
+		            <td class= attachTd>
+		               <input id = "attachInput4" type="text" placeholder="첨부파일을 등록하세요" readonly value ="<%=originName4%>" >&nbsp;
+		               <button type="button" id= "attachBtn4" class="attachBtn" onclick="fileInputClick4();"><b>찾아보기</b></button>&nbsp;
+		               <button type="button" id= "delAttachBtn4" class="delAttachBtn" onclick="delAttach4();"><b>삭제</b></button>
+		            </td>
+		         </tr>
+		         <tr class= attachTr>
+		            <td class= attachTd>
+		               <input id = "attachInput5" type="text" placeholder="첨부파일을 등록하세요" readonly value ="<%=originName5%>" >&nbsp;
+		               <button type="button" id= "attachBtn5" class="attachBtn" onclick="fileInputClick5();"><b>찾아보기</b></button>&nbsp;
+		               <button type="button" id= "delAttachBtn5" class="delAttachBtn" onclick="delAttach5();"><b>삭제</b></button>
+		            </td>
+		         </tr>
+		        
+			
 			</table>
 		
 			<br><br>
@@ -390,14 +480,31 @@
 				<input type="file" id="fileInput3" name = "file3" onchange="loadAttachName(this,3);">
 				<input type="file" id="fileInput4" name = "file4" onchange="loadAttachName(this,4);">
 				<input type="file" id="fileInput5" name = "file5" onchange="loadAttachName(this,5);">
-				<input type="file" id="fileInput6" name = "file6" onchange="loadAttachName(this,6);">
-				<input type="file" id="fileInput7" name = "file7" onchange="loadAttachName(this,7);">
-				<input type="file" id="fileInput8" multiple="multiple" name = "file8" onchange="loadAttachName(this,8)">
 			</div> 
+			
+			
+			<div style="display:none">
+			   <br>
+			   
+			   <input type = "text" id="delFid1" name = "delFid1" value = "0" ><br>
+			   <input type = "text" id="delFid2" name = "delFid2" value = "0"><br>
+			   <input type = "text" id="delFid3" name = "delFid3" value = "0"><br>
+			   <input type = "text" id="delFid4" name = "delFid4" value = "0"><br>
+			   <input type = "text" id="delFid5" name = "delFid5" value = "0"><br>
+			   
+			</div>
+			
 			</form>
 
 
-
+			<div style="display:none">
+					<br>
+				   <input type = "text" id="originFid1" name = "originFid1" value =<%=flist.get(0).getfId()%> ><br>
+				   <input type = "text" id="originFid2" name = "originFid2" value =<%=flist.get(1).getfId()%> ><br>
+				   <input type = "text" id="originFid3" name = "originFid3" value =<%=flist.get(2).getfId()%> ><br>
+				   <input type = "text" id="originFid4" name = "originFid4" value =<%=flist.get(3).getfId()%> ><br>
+				   <input type = "text" id="originFid5" name = "originFid5" value =<%=flist.get(4).getfId()%> ><br>
+			</div>
 
 	</div>
 </div>
@@ -509,7 +616,7 @@ function loadAttachName(attach,num){
 }
 
 function goBoardListView(){
-	location.href="fBoardListView.do"	
+	location.href="<%= request.getContextPath()%>/Flist.bo"	
 }
 
 
@@ -517,25 +624,40 @@ function goBoardListView(){
 	$("#insertForm").submit();	
 } 
 
-function selectReset(){
-	$("#attachCount").val(1);
-	 $("#fileInput1").val("");
-	 $("#fileInput2").val("");
-	 $("#fileInput3").val("");
-	 $("#fileInput4").val("");
-	 $("#fileInput5").val("");
-	 $("#fileInput6").val("");
-	 $("#fileInput7").val("");
-	 $("#fileInput8").val("");
-	$(".attachTr").remove();
-	var i=0;
-	$("#attachTable").append("<tr class= attachTr>"
-				+" <td class= attachTd style=\"border-bottom: 1px solid #dbdbdb\">"
-				+" <input id= 'attachInput"+(i+1)+"' type='text' placeholder='첨부파일을 등록하세요'>&nbsp;"
-		        +" <button type='button' id= 'attachBtn"+(i+1)+"' class='attachBtn' onclick='fileInputClick"+(i+1)+"();'><b>찾아보기</b></button></td></tr>");
-
-}
- 
+ function selectReset(){
+	    
+		delAttach1();
+		delAttach2();
+		delAttach3();
+		delAttach4();
+		delAttach5();
+		delAttach6();
+		delAttach7();
+		delAttach8();
+	      
+	}
+	  
+	function delAttach1(){
+	   $("#delFid1").val($("#originFid1").val());
+	   $("#attachInput1").val(""); 
+	 } 
+	 
+	function delAttach2(){
+	   $("#delFid2").val($("#originFid2").val());
+	   $("#attachInput2").val("");  
+	 } 
+	function delAttach3(){
+	   $("#delFid3").val($("#originFid3").val());
+	   $("#attachInput3").val(""); 
+	 } 
+	function delAttach4(){
+	   $("#delFid4").val($("#originFid4").val());
+	   $("#attachInput4").val(""); 
+	 } 
+	function delAttach5(){
+	   $("#delFid5").val($("#originFid5").val());
+	   $("#attachInput5").val(""); 
+	 } 
  
 </script>
 

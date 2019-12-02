@@ -73,7 +73,7 @@ public class BoardDao {
 		return sqlSession.insert("boardMapper.insertAttachment", attachment);
 	}
 
-	public ArrayList<Board> selectAttachments(int bId) {
+	public ArrayList<Attachment> selectAttachments(int bId) {
 		return (ArrayList)sqlSession.selectList("boardMapper.selectAttachList", bId);
 	}
 

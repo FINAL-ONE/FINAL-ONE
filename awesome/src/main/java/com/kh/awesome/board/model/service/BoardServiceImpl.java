@@ -73,7 +73,7 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public ArrayList<Board> selectAttachments(int bId) {
+	public ArrayList<Attachment> selectAttachments(int bId) {
 		return bDao.selectAttachments(bId);
 	}
 

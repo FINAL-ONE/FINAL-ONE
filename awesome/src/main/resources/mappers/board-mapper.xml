@@ -86,7 +86,7 @@
 		                  FROM D_REPLY
 		                  GROUP BY BID)REPLY ON (B.BID = REPLY.BID)
 		WHERE B.STATUS ='Y' AND CATEGORY =2
-		ORDER BY BID DESC
+		ORDER BY BLEVEL DESC, BID DESC
   </select>
   
   <select id="selectSeacrchFList" resultMap="boardResultSet">
@@ -177,9 +177,8 @@
   </update>
   
   <delete id="deleteBoard" parameterType = "_int">
-  	DELETE FROM BOARD 
-  	WHERE BID=#{bId} 
-  
+    UPDATE d_board SET status = 'N' WHERE bid= #{bId}
+    
   </delete>
   
   <delete id="subBoardGoodCount"  parameterType="BGood">
