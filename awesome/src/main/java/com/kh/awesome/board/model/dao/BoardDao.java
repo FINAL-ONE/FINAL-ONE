@@ -92,4 +92,17 @@ public class BoardDao {
 	public ArrayList<BGood> selectBGood(int bId) {
 		return (ArrayList)sqlSession.selectList("boardMapper.selectBGood",bId);
 	}
+
+	public int deleteAttachAsFid(int fId) {
+		return sqlSession.delete("boardMapper.deleteAttachAsFid",fId);
+	}
+
+	public String selectAttachChangeName(int fId) {
+		return sqlSession.selectOne("boardMapper.selectAttachChangeName",fId);
+	}
+
+	public int updateAttachment(Attachment attachment) {
+		return  sqlSession.insert("boardMapper.updateAttachment", attachment);
+	}
+	
 }

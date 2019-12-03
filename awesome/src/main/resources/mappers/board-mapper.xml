@@ -128,6 +128,15 @@
   
   </insert>
   
+    <insert id="updateAttachment" parameterType="Attachment"> 
+	INSERT INTO 
+  	D_ATTACH
+  	VALUES(
+  		SEQ_DAFID.NEXTVAL, #{bId}, #{originName}, #{changeName}, #{filePath}, SYSDATE, 1, 0,'Y' 
+  	)
+  
+  </insert>
+  
   
    <insert id="addBoardGoodCount" parameterType="BGood"> 
 	INSERT INTO 
@@ -169,12 +178,13 @@
   
   
   <update id="updateBoard" parameterType="Board">
-  	UPDATE BOARD
-  	SET BTITLE=#{bTitle}, BCONTENT=#{bContent},
-  		ORIGINAL_FILENAME=#{originalFileName}, RENAME_FILENAME=#{renameFileName},
-  		B_MODIFY_DATE=SYSDATE
+  	UPDATE D_BOARD
+  	SET BTITLE=#{bTitle}, 
+  		BCONTENT=#{bContent},
+		BLEVEL=#{bLevel}, 
+  		MODIFY_DATE =SYSDATE
   	WHERE BID=#{bId}
-  </update>
+  	</update>
   
   <delete id="deleteBoard" parameterType = "_int">
     UPDATE d_board SET status = 'N' WHERE bid= #{bId}
@@ -186,5 +196,17 @@
   	WHERE BID=#{bId} AND MID=#{mId}
   	
   </delete>
+  
+  
+  
+  <select id ="selectAttachChangeName" parameterType ="_int"  resultType="string">
+  	SELECT CHANGE_NAME FROM D_ATTACH WHERE FID = #{fId}
+  </select>
+  
+  
+  <delete id="deleteAttachAsFid"   parameterType ="_int">
+  	DELETE FROM D_ATTACH WHERE FID =  #{fId}
+  </delete>
+  
   
 </mapper>

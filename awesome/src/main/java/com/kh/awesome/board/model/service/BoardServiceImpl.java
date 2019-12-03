@@ -99,6 +99,22 @@ public class BoardServiceImpl implements BoardService {
 		return bDao.selectBGood(bId);
 	}
 
+	@Override
+	public int deleteAttachAsFid(int fId) {
+		return bDao.deleteAttachAsFid(fId); 
+	}
+
+	@Override
+	public String selectAttachChangeName(int fId) {
+		return bDao.selectAttachChangeName(fId); 
+	}
+
+	@Override
+	public int updateAttachment(Attachment attachment) {
+		return bDao.updateAttachment(attachment); 
+		
+	}
+
 
 	
 }

@@ -65,5 +65,11 @@ public interface BoardService {
 	public int subBoardGoodCount(BGood bGood);
 
 	public ArrayList<BGood> selectBGood(int bId);
+
+	public int deleteAttachAsFid(int fId);
+
+	public String selectAttachChangeName(int fId);
+
+	public int updateAttachment(Attachment attachment);
 	
 }

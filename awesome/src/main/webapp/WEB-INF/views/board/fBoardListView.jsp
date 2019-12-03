@@ -288,6 +288,7 @@ $(function(){
      $(".superTr td").mouseenter(function(){
        $(this).parent().children().css({"cursor":"pointer"}).click(function(){
    	     	var bId = $(this).parent().children().find('input').val(); // 게시글의  글번호 
+   	     	
    	      	$("#bId").val(bId);
           	$("#formTag").submit(); 
        });

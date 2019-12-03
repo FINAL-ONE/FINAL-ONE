@@ -73,12 +73,16 @@
 }
 
 .replyWriterArea textArea{
-	resize:none;
-	padding: 5px;
-	borderspacing:0px;
-	width:796px;
-	border:none;
-	outline:none;
+	resize: none;
+    width: 550px;
+    outline: none;
+    background: #fff;
+    padding: 5px;
+    font-size: 13px;
+    margin-left: 24px;
+    margin-top: 10px;
+    border: 1px solid #c8c8c8;
+    border-radius: 6px;
 }
 
 .replyListText{
@@ -248,16 +252,15 @@ text-decoration: underline;
 }
 
 #addReplyBtn{
-	 border:none;
-   outline: none;
-   background-color: black; 
+	outline:none;
+   border:none;
+   background-color:#F0CA61;
    color: white;
    font-size: 16px;
    height: 40px;
    width: 70px;
    position: absolute;
    right:0px;
-   font-weight: bold;
 }
 
 .topBtn{
@@ -316,10 +319,7 @@ text-decoration: underline;
    color: white;
 }
 
-#addReplyBtn:hover{
-	background-color: #f53f29; 
-   color: white;
-}
+
 
 #preNextBoard:hover{
 	cusrsor:pointer; 
@@ -332,9 +332,9 @@ text-decoration: underline;
 }
 
 .replyArea{
-	  border-top:  1px solid black;
+	  border: none;
       position: relative;
-      width: 1230px;
+      width: 830px;
       padding:auto;
       margin: auto;
 	  align:center;
@@ -381,7 +381,7 @@ text-decoration: underline;
 .replyWriterArea{
 	border: none;
 	position: relative;
-	width: 1230px;
+	width:830px;
 	padding: 1px;
 	
 }
@@ -390,7 +390,7 @@ text-decoration: underline;
 .replyWriterArea div{
 	border: none;
 	position: relative;
-	width: 1230px;	
+	width: 830px;	
 	
 
 }
@@ -664,6 +664,23 @@ textArea{
  }
 
 
+#previewTable{
+	border-top: 1px solid #cecece; 
+	border-bottom:1px solid #cecece; 
+	width: 840px;
+
+}
+
+
+#previewTable tr{
+	height: 50px;
+	
+
+}
+
+
+
+
 </style>
 
 <body>
@@ -684,7 +701,7 @@ textArea{
 	<hr style="border: 1px solid black; margin-bottom: 5px;" >
 		<table align="center" width="840px" >
 			<tr style="padding:none;">
-				<td style="font-size: 30px;padding:0px; padding-bottom: 10px;height:60px;border-bottom: 1pxz; font-weight: 100px; font-family:none">
+				<td style="font-size: 30px;padding:0px; padding-bottom: 10px;height:60px;border-bottom: 1px; font-weight: 100px; font-family:none">
 					${board.bTitle} 
 					<div style="font-size: 13px; position:relative; float:right; height:40px; padding-top: 20px; padding-right: 10px;"><span class="bModify" style="color: #8d8d8d;">수정</span>&nbsp;|&nbsp;<span class="bDelete" style="color: #8d8d8d;">삭제</span> </div>			
 				</td>
@@ -753,7 +770,7 @@ textArea{
 			</tr>
 				<br>
 		</table>
-			<br>
+			<br><br>
 			<c:forEach var="bGood" items="${bGoodList}" >
 			<c:if test= "${bGood.mId eq loginUser.mid}"> 
 			 		<% 
@@ -769,30 +786,57 @@ textArea{
 				<span id="bGoodCount" style="font-size: 26px; margin-left:5px;" >${board.bGood}</span>
 			</div>	 
 		
-			<br><br><br><br>
+			<br><br><br>
 			<div style="margin-left:auto; width:210px"> 
 				<button id = insertBtn onclick= "logcation.href='.bo" > <i class="fas fa-pencil-alt">&nbsp;</i>글쓰기 </button>&nbsp;
 				<button id = listBtn onclick="location.href='.bo'" style="display:inline-block"><i class="fas fa-list"></i> &nbsp;목록</button>
 			</div>
 			
-			<br>
-			</div>	<!--tableDiv 끝 -->
-
+			<br><br>
 			<div class="replyArea">
 				<br>
 				<div class="replyWriterArea">
-					<div style="border:none;margin-bottom:8px;"><span style="font-weight:bold;font-size:18px;">댓글작성</span>&nbsp;&nbsp;&nbsp;<span onclick = "refreshClick();" class = "refresh"><i class="fa fa-refresh" aria-hidden="true" style="font-size:20px; "></i></span></div>
-					<div style="width:802px;border:1px solid darkgray;">
-					<textArea rows="3" cols="119" id="replyContent" placeholder="댓글을 입력해주세요" style="font-weight:normal;border:none"></textArea>
-					<br><span style="margin-left:680px;color:darkgray;">글자 수 &nbsp;<span id="counter">0</span>&nbsp;/&nbsp;100&nbsp; </span>
-					<div style="height: 40px;width:800px;border:none; border-top:1px solid lightgray"><button id="addReplyBtn" type="button">등록</button></div>
+					<div style="border:none;margin-bottom:8px;"><i class="fas fa-chevron-circle-right" style="font-size: 27px; color: #fa4a4a;">&nbsp;</i><span style="font-weight:bold;font-size:18px; position:relative;top:-4px">댓글 쓰기</span>&nbsp;&nbsp;&nbsp;<span onclick = "refreshClick();" class = "refresh"><i class="fa fa-refresh" aria-hidden="true" style="font-size:20px; "></i></span></div>
+					<div style="width:685px; height: 120px; border: 1px solid #ececec;background:#f9f9f9;display:inline-block ">
+						
+						<div style="position:relative; float: left; display:inline-block;width: 580px; height: 100px;" ><textArea rows="4" cols="10" id="replyContent" placeholder="댓글을 입력해주세요" style="font-weight:normal;"></textArea></div>
+						<div style=" position:relative; float: right;display:inline-block;width: 103px; height: 100px;" > <button id="addReplyBtn" type="button"  style="position:relative; top: 12px; width: 80px; height: 80px; border-radius: 6px;" >입력</button></div>
+						
+					<span style="color:darkgray; position:relative; left:478px; top: -5px;">글자 수 &nbsp;<span id="counter">0</span>&nbsp;/&nbsp;100&nbsp; </span> 
+					
 					</div>
-				</div>	
-			</div> <!-- replyArea 끝 -->
-
-
-
-
+				 </div>
+			</div>	<!-- replyArea 끝 -->
+			
+			
+		<br><br>
+		
+		
+		<table id="previewTable"> 
+			<tr style="border-bottom: 1px solid #e9e9e9;"> 
+				<td style="width: 90px;" >&nbsp;&nbsp;이전글&nbsp;&nbsp;<i class="fas fa-caret-up"></i></td>
+				<td style="width: 568px;" > ㅀㄴㄹㄴㄻㄴㄹ ㄴㄻㄴㄹ</td> 
+				<td style="color:#9e9e9e;"> 2019.12.13&nbsp;&nbsp;|&nbsp;&nbsp;조회수: 2017 </td>
+			</tr>
+			<tr> 
+				<td>&nbsp;&nbsp;다음글&nbsp;&nbsp;<i class="fas fa-caret-down"></i></td>
+				<td> ㅀㄴㄹㄴㄻㄴㄹ ㄴㄻㄴㄹ</td> 
+				<td style="color:#9e9e9e;"> 2019.12.13&nbsp;&nbsp;|&nbsp;&nbsp;조회수: 2017 </td>
+			</tr>
+		
+		</table>
+		
+		
+			
+		<br><br>
+		
+		
+		
+		
+		
+		
+		</div>	<!--centerDiv 끝 -->
+		
 	</div>
 </body>
 
@@ -890,6 +934,39 @@ $(function(){
 		 location.href="downloadAttach.do?fid="+thing;
 		 
 	 }
+    
+    
+    $("textarea").keydown(function(){
+		//alert($(this).text()); // textarea는 input태그처럼 입력 값을 val()로 뽑아와야한다.\
+		//alert($(this).val()); // textarea의 입력값을 뽑아올 수는 있지만, 맨 마지막 한글자가 빠짐 
+		
+		var inputLength = $(this).val().length +1;  // textarea는 한턴이 느리므로 +1
+		console.log(inputLength);
+
+		$("#counter").text(inputLength);
+		
+		var remain = 100- inputLength; 
+		
+		if(remain >= 0){
+			$("#counter").css("color", "darkgray");
+		}else{
+			$("#counter").css("color","#f53f29");
+		}
+	});		
+    
+  	
+    $("#previewTable tr td").mouseenter(function(){
+        $(this).parent().children().css({"background":"#FFF7D5","cursor":"pointer"}).click(function(){
+    	     /* 	var bId = $(this).parent().children().find('input').val(); // 게시글의  글번호 
+    	      	$("#bId").val(bId);
+           	$("#formTag").submit();  */
+        });
+   
+     }).mouseout(function(){
+        $(this).parent().children().css({"background":"white"});
+     })
+     
+    
 	
 });
  
@@ -913,7 +990,7 @@ $(document).ready(function() {
             minHeight: null,             // set minimum height of editor
             maxHeight: null,             // set maximum height of editor
             focus: true                  // set focus to editable area after initializing summernote
-    });
+//     });
 });
 
 $(document).ready(function() {

@@ -21,9 +21,7 @@
 	     flist.add(new Attachment());
 	     flist.add(new Attachment());
 	     flist.add(new Attachment());
-	     flist.add(new Attachment());
-	     flist.add(new Attachment());
-	     flist.add(new Attachment());
+	   
 
 
 	  String originName1= flist.get(0).getOriginName();
@@ -31,9 +29,7 @@
 	  String originName3= flist.get(2).getOriginName();
 	  String originName4= flist.get(3).getOriginName();
 	  String originName5= flist.get(4).getOriginName();
-	  String originName6= flist.get(5).getOriginName();
-	  String originName7= flist.get(6).getOriginName();
-	  String originName8= flist.get(7).getOriginName();
+
 	  
 
 %>
@@ -366,7 +362,10 @@
 
 <div class = "centerDiv">
 	<h2 style="font-size: 26px; font-weight: bold;">글쓰기</h2> 
-		<form id= insertForm action = "fBoardInsert.do" method="post" encType="multipart/form-data">
+		<form id= insertForm action = "boardUpdate.do" method="post" encType="multipart/form-data">
+			<input type= "hidden" name="page" value = "${currentPage}" >
+			<input type= "hidden" name="bId" value = "${board.bId}" >
+		
 			<br>
 			<table align="center" id="listArea">
 				<tr>
@@ -464,8 +463,6 @@
 		               <button type="button" id= "delAttachBtn5" class="delAttachBtn" onclick="delAttach5();"><b>삭제</b></button>
 		            </td>
 		         </tr>
-		        
-			
 			</table>
 		
 			<br><br>
@@ -474,7 +471,7 @@
 					<button id=insertBtn type="button" onclick="insertSubmit();"><b>확인</b></button>
 			</div>
 		
-			<div style="display:none">
+			<div style="display:block">
 				<input type="file" id="fileInput1" name = "file1" onchange="loadAttachName(this,1);">
 				<input type="file" id="fileInput2" name = "file2" onchange="loadAttachName(this,2);">
 				<input type="file" id="fileInput3" name = "file3" onchange="loadAttachName(this,3);">
@@ -482,22 +479,17 @@
 				<input type="file" id="fileInput5" name = "file5" onchange="loadAttachName(this,5);">
 			</div> 
 			
-			
-			<div style="display:none">
+			<div style="display:block">
 			   <br>
-			   
 			   <input type = "text" id="delFid1" name = "delFid1" value = "0" ><br>
 			   <input type = "text" id="delFid2" name = "delFid2" value = "0"><br>
 			   <input type = "text" id="delFid3" name = "delFid3" value = "0"><br>
 			   <input type = "text" id="delFid4" name = "delFid4" value = "0"><br>
 			   <input type = "text" id="delFid5" name = "delFid5" value = "0"><br>
-			   
 			</div>
 			
 			</form>
-
-
-			<div style="display:none">
+			<div style="display:block">
 					<br>
 				   <input type = "text" id="originFid1" name = "originFid1" value =<%=flist.get(0).getfId()%> ><br>
 				   <input type = "text" id="originFid2" name = "originFid2" value =<%=flist.get(1).getfId()%> ><br>
@@ -560,9 +552,6 @@
 		 $("#fileInput3").val("");
 		 $("#fileInput4").val("");
 		 $("#fileInput5").val("");
-		 $("#fileInput6").val("");
-		 $("#fileInput7").val("");
-		 $("#fileInput8").val("");
 		$(".attachTr").remove();
 		
 		
@@ -613,6 +602,22 @@ function loadAttachName(attach,num){
 			var fileName = fileValue[fileValue.length-1]; // 파일명
 			$("#attachInput"+num).val(fileName); 
 	}
+	
+	if(num == 1){
+		 $("#delFid1").val($("#originFid1").val());
+	}else if(num == 2){	
+		 $("#delFid2").val($("#originFid2").val());
+	}else if(num == 3){
+		 $("#delFid3").val($("#originFid3").val());
+	}else if(num == 4 ){
+		 $("#delFid4").val($("#originFid4").val());
+	}else if(num == 5){
+		 $("#delFid5").val($("#originFid5").val());
+	}
+	
+	
+	
+	
 }
 
 function goBoardListView(){
@@ -639,23 +644,28 @@ function goBoardListView(){
 	  
 	function delAttach1(){
 	   $("#delFid1").val($("#originFid1").val());
+	   $("#fileInput1").val("");
 	   $("#attachInput1").val(""); 
 	 } 
 	 
 	function delAttach2(){
 	   $("#delFid2").val($("#originFid2").val());
+	   $("#fileInput2").val("");
 	   $("#attachInput2").val("");  
 	 } 
 	function delAttach3(){
 	   $("#delFid3").val($("#originFid3").val());
+	   $("#fileInput3").val("");
 	   $("#attachInput3").val(""); 
 	 } 
 	function delAttach4(){
 	   $("#delFid4").val($("#originFid4").val());
+	   $("#fileInput4").val("");
 	   $("#attachInput4").val(""); 
 	 } 
 	function delAttach5(){
 	   $("#delFid5").val($("#originFid5").val());
+	   $("#fileInput5").val("");
 	   $("#attachInput5").val(""); 
 	 } 
  

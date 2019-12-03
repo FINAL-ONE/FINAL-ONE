@@ -48,7 +48,6 @@ public class BoardController {
 		
 		int listCount = bService.getFboardListCount();
 		
-		System.out.println("boarController, listCount : " + listCount );
 
 		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
 		
@@ -56,7 +55,6 @@ public class BoardController {
 		// ArrayList<Board> flist = bService.selectList(pi);
 		
 		
-		 System.out.println("BoardController, flist" + flist.get(0)); 
 		
 		if(flist != null && flist.size() > 0) {	// 게시글이 있다면
 			mv.addObject("flist", flist);
@@ -235,8 +233,121 @@ public class BoardController {
 		}else {
 			throw new BoardException("게시글 등록 실패!");
 		}
-		
 	}
+	
+	
+	
+	@RequestMapping("boardUpdate.do")
+	public String boardUpdate(HttpServletRequest request, Board b, Attachment attachment, String blevel,
+								@RequestParam(value="file1", required=false)MultipartFile file1,
+								@RequestParam(value="file2", required=false)MultipartFile file2,
+								@RequestParam(value="file3", required=false)MultipartFile file3,
+								@RequestParam(value="file4", required=false)MultipartFile file4,
+								@RequestParam(value="file5", required=false)MultipartFile file5, 
+								String delFid1, String delFid2, String delFid3,String delFid4,String delFid5,
+								@RequestParam("page") Integer page) {
+		
+		
+		// 1. 파일 삭제 
+			
+		int [] fidList = new int[5]; 
+		fidList[0] = Integer.parseInt(delFid1);
+		fidList[1] = Integer.parseInt(delFid2);
+		fidList[2] = Integer.parseInt(delFid3);
+		fidList[3] = Integer.parseInt(delFid4);
+		fidList[4] = Integer.parseInt(delFid5);
+		
+		
+		for(int i=0; i<fidList.length; i++) {
+			if(fidList[i] > 0) {
+		
+				int fId = fidList[i];
+				System.out.println(fId);
+				String changeName =bService.selectAttachChangeName(fId); 		
+				deleteFile(changeName, request);
+				
+				int result = bService.deleteAttachAsFid(fId);
+				if (result >0) {
+					System.out.println("파일 삭제 성공");  
+				}else {
+					System.out.println("파일 삭제 실패");  
+				}
+			}
+		}
+		
+		
+		// 2. 파일 등록 
+			ArrayList<MultipartFile> fileList = new ArrayList<MultipartFile>(); 
+		
+			fileList.add(file1);
+			fileList.add(file2);
+			fileList.add(file3);
+			fileList.add(file4);
+			fileList.add(file5);
+			
+			
+		HttpSession session = request.getSession(); 
+	
+		b.setbType("1");
+		
+		int count = 0; 
+		for(MultipartFile file : fileList) {
+				if(!(file.getOriginalFilename().contentEquals(""))) {
+					b.setbType("4");
+					count++;
+					String renameFileName = saveFile(file, request,count);
+					if(renameFileName != null) {	// 파일이 잘 저장된 경우
+						System.out.println("오리진 파일 : " + file.getOriginalFilename());
+						
+						
+						String root = request.getSession().getServletContext().getRealPath("resources");
+						String savePath= root + "\\buploadFiles";
+						
+						attachment.setOriginName(file.getOriginalFilename());
+						attachment.setChangeName(renameFileName);
+						attachment.setFilePath(savePath);
+						attachment.setbId(b.getbId());
+						System.out.println(attachment);
+						int result = bService.updateAttachment(attachment);
+					}
+				}
+		}
+		
+	
+		//3. 게시판 수정 	
+	
+		if(blevel != null) {
+			 int bLevel = Integer.parseInt(blevel); 
+			 b.setbLevel(bLevel);
+		}else {
+			int bLevel = 1; 
+			 b.setbLevel(bLevel);
+		}
+	
+		  
+		 int result = bService.updateBoard(b);
+		 
+		
+		// 결과 값 반환 
+		
+		if(result > 0) {
+			return "redirect:fBoardListView.do?page=" + page;
+		}else {
+			throw new BoardException("게시글 등록 실패!");
+		}
+	
+	
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	public String saveFile(MultipartFile file, HttpServletRequest request, int count) {
 		// 파일이 저장될 경로를 설정하는 메소드
