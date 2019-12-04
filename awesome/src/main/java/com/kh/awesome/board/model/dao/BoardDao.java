@@ -11,6 +11,7 @@ import com.kh.awesome.board.model.vo.Attachment;
 import com.kh.awesome.board.model.vo.BGood;
 import com.kh.awesome.board.model.vo.Board;
 import com.kh.awesome.board.model.vo.PageInfo;
+import com.kh.awesome.board.model.vo.Reply;
 import com.kh.awesome.board.model.vo.Search;
 
 @Repository("bDao")
@@ -103,6 +104,15 @@ public class BoardDao {
 
 	public int updateAttachment(Attachment attachment) {
 		return  sqlSession.insert("boardMapper.updateAttachment", attachment);
+	}
+
+	public Board selectBoardAsRnum(int rNum) {
+		return sqlSession.selectOne("boardMapper.selectBoardAsRnum", rNum);
+	}
+
+	public ArrayList<Reply> selectReplyList(int bId) {
+	
+		return (ArrayList)sqlSession.selectList("selectReplyList", bId);
 	}
 	
 }

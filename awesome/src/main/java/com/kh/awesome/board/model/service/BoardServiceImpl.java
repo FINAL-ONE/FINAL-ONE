@@ -10,6 +10,7 @@ import com.kh.awesome.board.model.vo.Attachment;
 import com.kh.awesome.board.model.vo.BGood;
 import com.kh.awesome.board.model.vo.Board;
 import com.kh.awesome.board.model.vo.PageInfo;
+import com.kh.awesome.board.model.vo.Reply;
 import com.kh.awesome.board.model.vo.Search;
 
 
@@ -113,6 +114,17 @@ public class BoardServiceImpl implements BoardService {
 	public int updateAttachment(Attachment attachment) {
 		return bDao.updateAttachment(attachment); 
 		
+	}
+
+	@Override
+	public Board selectBoardAsRnum(int rNum) {
+		return bDao.selectBoardAsRnum(rNum); 
+	}
+
+	@Override
+	public ArrayList<Reply> selectReplyList(int bId) {
+		//
+		return bDao.selectReplyList(bId);
 	}
 
 

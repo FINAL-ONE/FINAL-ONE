@@ -38,6 +38,17 @@
   	<result property="status" column="STATUS"/>
   </resultMap> 
   
+	<resultMap type="Reply" id="replyResultSet">
+	  	<id property="rId" column="RID"/>
+	  	<result property="bId" column="BID"/>
+	  	 <result property="mId" column="MID"/>
+	  	<result property="rContent" column="RCONTENT"/>
+	  	<result property="createDate" column="CREATE_DATE"/>
+	  	<result property="modifyDate" column="MODIFY_DATE"/>
+	  	<result property="status" column="STATUS"/>
+  </resultMap>
+  
+  
   
   <select id="getFboardListCount" resultType="_int"> 	
   	 SELECT COUNT(*)
@@ -208,5 +219,18 @@
   	DELETE FROM D_ATTACH WHERE FID =  #{fId}
   </delete>
   
+  
+  <select id ="selectBoardAsRnum"  parameterType ="_int" resultMap="boardResultSet"> 
+	SELECT *
+  	FROM BOARD_VIEW 
+  	WHERE RNUM=#{rNum}
+  	AND STATUS='Y'
+  </select>
+  
+   <select id="selectReplyList" resultMap="replyResultSet" parameterType="_int">
+	SELECT *
+	FROM D_REPLY
+	WHERE BID=#{bId}
+  </select>
   
 </mapper>
