@@ -141,11 +141,12 @@
 	.attachBtn{
 		outline: none;
 		border: none; 
-		background: black;
+		background: #383838;
 		color: white;
 		font-size: 15px;
 		width: 100px;
-		height: 40px;		
+		height: 40px;
+		 border-radius: 4px;		
 	}
 	
 	.attachBtn:hover{
@@ -157,30 +158,30 @@
 	#listBtn{
 	   border:none;
 	   outline: none;
-	   background-color: black; 
+	   background-color: darkgray; 
 	   color: white;
 	   font-size: 16px;
 	   height: 40px;
 	   width: 70px;
+	    border-radius: 4px;
 	}
 	
 	#listBtn:hover{
-	   background-color: darkgray;
 	   color: white;
 	}
 	
 	#insertBtn{
 	   border:none;
 	   outline: none;
-	   background-color: black; 
+	   background-color: #f53f29; 
 	   color: white;
 	   font-size: 16px;
 	   height: 40px;
 	   width: 70px;
+	   border-radius: 4px;
 	}
 	
 	#insertBtn:hover{
-	   background-color: #f53f29; 
 	   color: white;
 	}
 	
@@ -195,12 +196,12 @@
 	#resetBtn{
 		outline: none;
 		border: none; 
-		background: black;
+		background: #383838;
 		color: white;
 		font-size: 15px;
 		width: 100px;
 		height: 40px;	
-		margin-left: 183px; 
+		margin-left: 173px; 
 	}
 	
 	#resetBtn:hover{
@@ -363,9 +364,6 @@
 							 <option>3</option>
 							 <option>4</option>
 							 <option>5</option>
-							 <option>6</option>
-							 <option>7</option>
-							 <option>8</option>
 							 
 						</select>
 						&nbsp;<span style="font-size: 15px">파일 갯수를 지정해주세요</span>
@@ -382,8 +380,8 @@
 		
 			<br><br>
 			<div class= btnDiv>
-					<button type='button'id=listBtn onclick="goBoardListView();"><b>목록</b></button>&nbsp;&nbsp;
-					<button id=insertBtn type="button" onclick="insertSubmit();"><b>등록</b></button>
+					<button type='button'id=listBtn onclick="goBoardListView();"><b>취소</b></button>&nbsp;&nbsp;
+					<button id=insertBtn type="button" onclick="insertSubmit();"><b>확인</b></button>
 			</div>
 		
 			<div style="display:none">
@@ -511,7 +509,7 @@ function loadAttachName(attach,num){
 }
 
 function goBoardListView(){
-	location.href="<%= request.getContextPath()%>/Flist.bo"	
+	location.href="fBoardListView.do"	
 }
 
 

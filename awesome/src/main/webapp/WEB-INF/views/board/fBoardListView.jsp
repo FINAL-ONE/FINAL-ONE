@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+
+    
     <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
     
@@ -128,8 +131,14 @@
 	font-size: 14px;
 }
 
+.superTr{
+	background: #FFEBEE
+}
 
 
+.superTr:hover{
+	font-weight: bold;
+}
 
 </style>
 
@@ -159,9 +168,19 @@
 				<td style= "width: 130px; border-right: none;">작성일</td> 
 			</tr>
 		<c:forEach var="b" items="${flist}">
-			<tr align="center" class = "normalTr"> 
-			
-				<td><input type="hidden" value = "${b.bId}"> [자유게시판]</td>
+	
+				
+				<c:if test = "${b.bLevel == 4}">
+				<tr align="center" class = "superTr"> 
+					<td><input type="hidden" value = "${b.bId}"> [공지사항]</td>
+				</c:if>
+				<c:if test = "${b.bLevel != 4}">
+				<tr align="center" class = "normalTr"> 
+					<td><input type="hidden" value = "${b.bId}"> [자유게시판]</td>
+					
+				</c:if>
+				
+				
 				<td align="left" style=" padding-left: 10px;" > ${b.bTitle }&nbsp;<span style="color:#e11c24;font-weight:bold;margin-left:8px;">${b.reply}</span></td>
 				<td> ${b.userId}</td>
 				<td>${b.bCount }</td>
@@ -264,6 +283,22 @@ $(function(){
     }).mouseout(function(){
        $(this).parent().children().css({"background":"white"});
     })
+    
+    
+     $(".superTr td").mouseenter(function(){
+       $(this).parent().children().css({"cursor":"pointer"}).click(function(){
+   	     	var bId = $(this).parent().children().find('input').val(); // 게시글의  글번호 
+   	     	
+   	      	$("#bId").val(bId);
+          	$("#formTag").submit(); 
+       });
+  
+    }).mouseout(function(){
+       $(this).parent().children().css({"background":"#FFEBEE"});
+    })
+    
+    
+    
  }); 
 
 

@@ -220,8 +220,10 @@
  <c:if test="${sessionScope.loginUser.userId ne 'admin'}">   
 <div class="menubar2 myPageMenubar myPageMenu" style="display:none;">
    <div class= "myPageNav">
-      <span class= menu2 style="left: 647px;">다이어트 일지</span>
-      <span class= menu2 style="left: 682px;" onclick= "location.href='myinfo.do'">내정보보기</span>
+      <span class= menu2 style="left: 637px;" onclick= "location.href='myinfo.do'">내정보보기</span>
+      <!-- <span class= menu2 style="left: 652px;" onclick= "location.href=#">장바구니</span> -->
+      <span class= menu2 style="left: 667px;" onclick= "location.href='orderview.do'">주문조회</span>
+      <span class= menu2 style="left: 682px;">다이어트 일지</span>
    </div>
 </div>   
 </c:if>
