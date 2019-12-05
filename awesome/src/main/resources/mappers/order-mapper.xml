@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="orderMapper">
+	<resultMap type="Order" id="orderResultSet">
+		<id property="oId" column="OID"/>
+		<result property="gId" column="GID"/>
+		<result property="gName" column="GOODS_NAME"/>
+		<result property="gPrice" column="GOODS_PRICE"/>
+		<result property="mId" column="MID"/>
+		<result property="userName" column="USER_NAME"/>
+		<result property="phone" column="PHONE"/>
+		<result property="address" column="ADDRESS"/>
+		<result property="orderNum" column="ORDER_NUM"/>
+		<result property="orderCount" column="ORDER_COUNT"/>
+		<result property="orderDate" column="ORDER_DATE"/>
+		<result property="orderStatus" column="ORDER_STATUS"/>
+		<result property="rowCount" column="ROWCOUNT"/>
+		<result property="usedPoint" column="USERD_POINT"/>
+		<result property="orderPrice" column="ORDER_PRICE"/>
+	</resultMap>
+
+	<select id="selectOrder" resultMap="orderResultSet">
+        SELECT OID, O.GID GID,GOODS_NAME, GOODS_PRICE, MID, O.ORDER_NUM ORDER_NUM, ORDER_COUNT, ORDER_DATE, ORDER_STATUS, ROWCOUNT 
+		FROM ORDER_LIST O 
+		JOIN (SELECT ORDER_NUM, COUNT(*) ROWCOUNT
+		     FROM ORDER_LIST
+		     GROUP BY ORDER_NUM) R ON (O.ORDER_NUM = R.ORDER_NUM)
+		JOIN GOODS G ON (O.GID=G.GID)
+		WHERE MID= #{mId}
+		ORDER BY O.ORDER_NUM DESC
+	</select>
+	
+	<select id="beforeCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM ORDER_LIST
+		WHERE MID=#{mId} AND ORDER_STATUS='B'
+	</select>
+	<select id="deliverCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM ORDER_LIST
+		WHERE MID=#{mId} AND ORDER_STATUS='I'
+	</select>
+	<select id="completeCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM ORDER_LIST
+		WHERE MID=#{mId} AND ORDER_STATUS='C'
+	</select>
+	<select id="cancelCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM ORDER_LIST
+		WHERE MID=#{mId} AND ORDER_STATUS='X'
+	</select>
+	<select id="orderDetail" resultMap="orderResultSet">
+		SELECT O.OID, O.ORDER_NUM ORDER_NUM, O.ORDER_COUNT ORDER_COUNT, O.ORDER_DATE ORDER_DATE,O.ORDER_STATUS ORDER_STATUS, M.USER_NAME USER_NAME, M.PHONE PHONE, M.ADDRESS ADDRESS,G.GID GID, G.GOODS_NAME GOODS_NAME, G.GOODS_PRICE GOODS_PRICE, P.USED_POINT USED_POINT, P.ORDER_PRICE ORDER_PRICE
+		FROM ORDER_LIST O, MEMBER M, GOODS G, PAYMENT P
+		WHERE M.MID = O.MID AND G.GID=O.GID AND P.ORDER_NUM=O.ORDER_NUM AND O.ORDER_NUM=#{orderNum}
+	</select>
+	<update id="orderCancel" parameterType="Order">
+		UPDATE ORDER_LIST
+		SET ORDER_STATUS='X'
+		WHERE OID=#{number}
+	</update>
+
+</mapper>
