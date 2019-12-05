@@ -10,6 +10,8 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link href="js/Modal.js-master/build/css/modal.css" rel="stylesheet">
+
 <style>
 .outer{
 	width : 100%;
@@ -30,8 +32,15 @@ th, td {
 
 tr:nth-child(even) {
   background-color: #f2f2f2;
-  cursor : pointer;
 }
+
+/* 모달 css */
+  *, *:before, *:after {
+    box-sizing: border-box; }
+    body { font-family: 'Roboto'; }
+    .modal_container {text-align: center; }
+    
+    
 </style>
 
 </head>
@@ -39,7 +48,7 @@ tr:nth-child(even) {
 	<jsp:include page="../common/menubar.jsp"/>   
 	<%-- <jsp:include page ="../admin/adminMenu.jsp"/> --%>
  	<div class = "outer">
-		<div id="container" style= "height: 800px; overflow: auto;"><!-- container -->
+		<div id="container" style= "height: auto; overflow: auto;"><!-- container -->
 
 			<c:if test="${!empty loginUser }">
 		   		<div align ="center">
@@ -47,19 +56,17 @@ tr:nth-child(even) {
 		   		</div>
 			</c:if>
 			<br>
-			<button type="button" class="save-Btn" id="savaBtn">저장하기</button>
-			<button type="button" class="del-Btn" id="deleteBtn">삭제하기</button>
-			
-			<table id ="checkboxTestTbl" class = "goodsTable"align="center" width = "75%" border="1" cellspacing="0" style="clear:right;" id ="td">
+		<form id = "goodsInsertForm" action="aStatusUpdate.do" method="post">
+			<table id ="checkboxTestTbl" class = "goodsTable" align="center" border="1" cellspacing="0" style="clear:right;" id ="td">
 					<colgroup>
-			            <col width="40px;"/>
+			            <col width="10px;"/>
 			            <col width="200px;"/>
 			            <col width="100px;"/>
 			            <col width="100px;"/>
-			            <col width="100px;"/>
-			            <col width="100px;"/>
-			            <col width="100px;"/>
-			            <col width="100px;"/>
+			            <col width="70px;"/>
+			            <col width="70px;"/>
+			            <col width="70px;"/>
+			            <col width="150px;"/>
 			        </colgroup>
 
 					
@@ -68,40 +75,49 @@ tr:nth-child(even) {
 						<th>상품번호</th>
 						<th>이미지</th>
 						<th>상품명</th>
+						<th>가격</th>
+						<th>수량</th>
 						<th>상품설명</th>
 						<th>올린날짜</th>
 						<th>수정날짜</th>
 						<th>상태</th>
+						<th>품절</th>
 					</tr>
 					
 					<c:forEach var="a" items="${list}">
 						<tr>
 							<td><input type="checkbox" name="user_CheckBox"></td>
-							<td width ="200px">${a.gId}</td>
+							<td width ="50px"><input type="text" name="sellNum" value="${a.sellNum}" readonly style="background : lightgray; width : 70px;" ></td>
 							<td width ="250px">
-								<img src="resources/auploadFiles/${a.filePath}" width ="100px" height ="100px">
+								<img src="resources/auploadFiles/${a.filePath}" name="filePath" width ="100px" height ="100px">
 							</td>
-							<td width ="450px">
+							<td width ="150px">
 								<c:if test="${!empty loginUser}">
 									<!-- 이따가 작성 -->
-									${a.goodsTitle}			
+									<input type="text" name="goodsTitle" value="${a.goodsTitle}" readonly style="background : lightgray;">	
 									<%-- <c:url var="adetail" value="adetail.do">
 										<c:param name="gId" value="${a.gId }"/>
 									</c:url>
 									<a href="${adetail}">${a.goodsTitle}</a> --%>
 								</c:if>
 								<c:if test="${empty loginUser}">
-									${a.goodsTitle}
+									<input type="text" name="goodsTitle" value="${a.goodsTitle}" readonly style="background : lightgray;">
 								</c:if>
 							</td>
-							<td width ="550px">${a.goodsContent}</td>
-							<td width ="400px">${a.sellDate}</td>
-							<td width ="400px">${a.modifyDate}</td>
-							<td width ="300px">${a.status}</td>
+							<td><input type="text" value="${a.goodsPrice}" readonly style="background : lightgray; width : 70px;"></td>
+							<td><input type="text" value="${a.count}" readonly style="background : lightgray; width : 70px;" ></td>
+							<td width ="550px"><input type="text" name="goodsContent" value="${a.goodsContent}" readonly style="background : lightgray;"></td>
+							<td width ="400px"><input type="text" name ="sellDate" value ="${a.sellDate}" readonly style="background : lightgray; width : 100px;" ></td>
+							<td width ="400px"><input type="text" name ="modifyDate" value="${a.modifyDate}" readonly style="background : lightgray; width : 100px;""></td>
+							<td width ="300px"><input type="text" name ="statusUpdate" value="${a.status}" readonly style="background : lightgray; width : 70px;" ></td>
+							<td width ="300px">
+								<button type="button" style="width : 50px;" onclick="soldout();">품절</button>
+							</td>
+								
 						</tr>
 					</c:forEach>
 				</table> 
-			
+			</form>
 			
 		<!-- 체크박스 전체선택 -->	
 		  <script>
@@ -146,16 +162,59 @@ tr:nth-child(even) {
 		        });
 		        
 		        
-		        $("#savaBtn").click(function(){
-		        	alert('저장');
-			    });
-			    
-		        $("#deleteBtn").click(function(){
-			    	alert('삭제');
-			    });
-		    </script>
+			    // 품절버튼 클릭시
+        	/* 	function soldout () {
+	        		if(confirm('품절처리하시겠습니까?')){
+	        			$("#goodsInsertForm").submit();
+	        			alert("품절되었습니다.");
+	        		} else {
+	        			alert("취소되었습니다.");
+	        		}
+		        }  */
+			    	
+			    	</script>
 		    
-
+				<div class="modal_container">
+				  <div class="css-script-ads">
+				    	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+					<!-- CSSScript Demo Page -->
+					<ins class="adsbygoogle"
+					     style="display:inline-block;width:728px;height:90px"
+					     data-ad-client="ca-pub-2783044520727903"
+					     data-ad-slot="3025259193"></ins>
+						<script>
+							(adsbygoogle = window.adsbygoogle || []).push({});
+						</script>
+					</div>
+				</div>
+				<script src="js/Modal.js-master/modal.js"></script>
+				<script>
+		  		 function soldout(){
+					    	Modal.confirm({
+						  title: '품절여부',
+						  message: '품절 처리하시겠습니까?',
+						  onConfirm: function() {
+							$("#goodsInsertForm").submit();
+						    alert('품절되었습니다');
+				  		},
+						  onCancel: function() {
+						    alert('취소되었습니다.');
+				  		},
+					});
+					  }
+				  </script>
+				  
+		<!-- 모달창 script -->
+		<script>
+			  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+			
+			  ga('create', 'UA-46156385-1', 'cssscript.com');
+			  ga('send', 'pageview');
+		
+		</script>
 
 			<p align="center">
 				<c:url var ="adminMain" value="adminMain.do"/>

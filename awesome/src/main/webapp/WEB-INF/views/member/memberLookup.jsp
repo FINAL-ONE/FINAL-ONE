@@ -9,9 +9,10 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
 <style>
 #member-content{
-	width : 80%;
+	width : 1300px;
 	margin-top : 50px;
 	margin-left : 200px;
 	
@@ -19,19 +20,66 @@
 .membertable{
   border-collapse: collapse;
   border-spacing: 0;
-  width: 90%;
+  width: 1300px;
   border: 1px solid #ddd;
   text-align :center;
 }
 th, td {
   text-align: center;
   padding: 16px;
-  width : 200px;
   
 }
 tr:nth-child(even) {
   background-color: #f2f2f2;
   cursor : pointer;
+}
+
+/* 모달창 css */
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  /* margin: auto; */
+  margin-top : 100px;
+  margin-left : 30%;
+  padding: 40px;
+  border: 1px solid #888;
+  width: 40%;
+
+}
+
+/* The Close Button */
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+#myBtn{
+	width :84px;
+	height : 30px;
+	font-size : 11px;
 }
 
 </style>
@@ -40,7 +88,7 @@ tr:nth-child(even) {
 <body>
 
 	<jsp:include page ="../common/menubar.jsp"/>
-	<div id="container" style="overflow: auto; height: 800px;" ><!-- container -->
+	<div id="container" style="overflow: auto; height: auto;" ><!-- container -->
 	
 	<div id ="member-content">
 		<h3 align="center">
@@ -49,37 +97,88 @@ tr:nth-child(even) {
 	</div>	
 			<table align="center" border="1" cellspacing="1" class ="membertable">
 					<tr bgcolor ="#99ccff">
-						<th width = "100px" align="center">회원아이디</th>
+						<th width = "100px" align="center">회원ID</th>
 						<!-- <th>회원비밀빈호</th> -->
-						<th>회원이름</th>
-						<th>성별</th>
+						<th width="150px">회원이름</th>
+						<th width="70px">성별</th>
 						<th>생년월일</th>
 						<th>핸드폰번호</th>
 						<th>이메일</th>
-						<th width = "700px">주소</th>
+						<th>주소</th>
 						<th>포인트</th>
-						<th>가입일</th>
-						<th>수정일</th>
-						<th>탈퇴상태</th>
+						<th width="70px">가입일</th>
+						<th width="70px">수정일</th>
+						<th width="70px">탈퇴상태</th>
 					<tr>
 			
 				<c:forEach var="n" items="${list}">
 					<tr>
 						<td align="center">${n.userId}</td>
 						<%-- <td align="center">${n.userPwd}</td> --%>
-						<td>${n.userName}</td>
+						<td width="70x">${n.userName}</td>
 						<td>${n.gender}</td>
 						<td>${n.birthday}</td>
 						<td>${n.phone}</td>
 						<td>${n.email}</td>
-						<td>${n.address}</td>
-						<td>${n.point}</td>
+						<td width="400px">${n.address}</td>
+						<td>
+							<input type="text" value ="${n.point}" style =" width : 80px; text-align:center;" readonly >
+
+							<!-- <input type="button" value="수정" id ="myBtn"> -->
+
+							<!-- Trigger/Open The Modal -->
+							<button id="myBtn">포인트 수정</button>
+								<!-- The Modal -->
+								<div id="myModal" class="modal">
+								  <!-- Modal content -->
+								  <div class="modal-content">
+								    <span class="close">&times;</span>
+								    	 <form action="pointUpdate.do" method="post">
+									    	<span>${n.userName}님의 포인트를 추가하시겠습니까?</span>
+									    	<input type="hidden" value="${n.mid}" name ="mId">
+									    	<input type="number" value="${n.point}" name ="point" style ="width : 100px;  text-align:center;">
+									    	<input type="submit" value="수정하기">&nbsp;
+								    	</form>
+								  </div>
+								</div>
+						</td>
 						<td>${n.enrollDate}</td>
 						<td>${n.modifyDate}</td>
 						<td>${n.status}</td>
 					</tr>
 				</c:forEach>
-					
+				
+				
+		<script>
+			
+			// 포인트 팝업 모달
+			// Get the modal
+			var modal = document.getElementById("myModal");
+			
+			// Get the button that opens the modal
+			var btn = document.getElementById("myBtn");
+			
+			// Get the <span> element that closes the modal
+			var span = document.getElementsByClassName("close")[0];
+			
+			// When the user clicks the button, open the modal 
+			btn.onclick = function() {
+			  modal.style.display = "block";
+			}
+			
+			// When the user clicks on <span> (x), close the modal
+			span.onclick = function() {
+			  modal.style.display = "none";
+			}
+			
+			// When the user clicks anywhere outside of the modal, close it
+			window.onclick = function(event) {
+			  if (event.target == modal) {
+			    modal.style.display = "none";
+			  }
+			}
+		</script>
+						
 				<!-- 페이징 부분 -->
 					<tr align ="center" height ="20">
 						<td colspan="11">
@@ -136,6 +235,9 @@ tr:nth-child(even) {
 					</tr>
 			</table>
 	</div>
+	
+	
+	
 </body>
 
 <footer>

@@ -8,7 +8,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style>
 
+
+</style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <body>
@@ -17,7 +20,7 @@
 	<%-- <jsp:include page ="../admin/adminMenu.jsp"/> --%>
 	
 	
-	<div id="container" style="overflow: auto; height: 800px;" ><!-- container -->
+	<div id="container" style="overflow: auto; height: auto;" ><!-- container -->
 	
 <h1 align="center"> 상품 등록 페이지 </h1>
 	
@@ -26,7 +29,7 @@
 		<table class="type02" align="center">	
 			<tr>
 				<th>상품 제목  <span style = "color:red; font-size : 1.5em;">*</span> </th>
-				<td><input type="text" size ="108" name ="goodsTitle" style="height:20px;"></td>
+				<td><input type="text" size ="89" name ="goodsTitle" style="height:20px;"></td>
 			</tr>
 			<!-- <tr>
 				<th>상품 가격  <span style = "color:red; font-size : 1.5em;">*</span> </th>
@@ -40,7 +43,7 @@
 				<th> 대표이미지  <span style = "color:red; font-size : 1.5em;">*</span> </th>
 				<td>
 					<div id = "titleImgArea" >
-						<img id ="titleImg" width ="800" height ="300">
+						<img id ="titleImg" width ="600" height ="600">
 					</div>
 				</td>					
 			</tr>
@@ -48,13 +51,13 @@
 				<th> 내용사진 </th>
 				<td>
 					<div id="contentImgArea1">
-						<img id ="contentImg1" width ="800" height ="4500">
+						<img id ="contentImg1" width ="600" height ="2500">
 					</div>						
 				</td>
 			</tr>
 			<tr>
 				<th>상품 내용 <span style = "color:red; font-size : 1.5em;">*</span></th>
-				<td><textarea id ="goodsContent" name="goodsContent" rows="10" cols ="109" size ="resize:none" required></textarea>
+				<td><textarea id ="goodsContent" name="goodsContent" rows="10" cols ="81" size ="resize:none" required></textarea>
 				</td>
 			</tr>		
 				<!-- 파일 업로드 하는 부분(file 타입형 input태그들) -->

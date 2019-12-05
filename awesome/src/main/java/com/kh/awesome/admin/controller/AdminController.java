@@ -1,20 +1,27 @@
 package com.kh.awesome.admin.controller;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.JsonIOException;
 import com.kh.awesome.admin.model.exception.AdminException;
 import com.kh.awesome.admin.model.service.AdminService;
 import com.kh.awesome.admin.model.vo.Admin;
+import com.kh.awesome.member.model.exception.MemberException;
+import com.kh.awesome.member.model.vo.Member;
+import com.kh.awesome.shop.model.vo.SellReply;
 
 
 @Controller
@@ -23,13 +30,16 @@ public class AdminController {
 	@Autowired
 	private AdminService aService;
 	
-	
+	// 메뉴바에서 관리자페이지 클릭시 관리자페이지메인 view 이동 -- 준배
 	@RequestMapping("adminMain.do")
 	public String nWriterView() {
 		
 		return "admin/adminListView";	
 	}
+	// 메뉴바에서 관리자페이지 클릭시 관리자페이지메인 view 이동 -- 준배
 	
+	
+	// 메뉴바에서 상품조회 클릭시 관리자용 상품조회 테이블 조회--준배
 	@RequestMapping("sell_goodsList.do")
 	public ModelAndView sell_goodsList(ModelAndView mv) {
 		
@@ -46,14 +56,19 @@ public class AdminController {
 		
 		return mv;
 	}
+	// 메뉴바에서 상품조회 클릭시 관리자용 상품조회 테이블 조회--준배
 	
+	
+	// 메뉴바에서 상품등록 클릭시 view 이동 -- 준배
 	@RequestMapping("goodsWriterView.do")
 	public String goodsWriterView() {
 		
 		return "admin/sell_goodsInsertView";	
 	}
+	// 메뉴바에서 상품등록 클릭시 view 이동 -- 준배
 	
-	// shop으로 뿌려짐
+	
+	// 메뉴바에서 shop으로 뿌려질 리스트 조회 -- 준배
 	@RequestMapping("shopGoodsListView.do")
 	public ModelAndView shopGoodsList(ModelAndView mv) {
 		
@@ -69,7 +84,10 @@ public class AdminController {
 		
 		return mv;
 	}
+	// 메뉴바에서 shop으로 뿌려질 리스트 조회 -- 준배
 	
+	
+	// 상품등록 페이지에서 상품버튼 클릭시 -- 준배
 	@RequestMapping("sellgoodsInsert.do")
 	public String sell_goodsInsert(Admin a, HttpServletRequest request,				
 								@RequestParam(name="titlethumbnailImg", required=false) MultipartFile file1,
@@ -102,7 +120,7 @@ public class AdminController {
 			
 			
 			if(savePath1 != null && savePath2 != null) {	// 파일이 잘 저장된 경우
-				a.setFilePath(file1.getOriginalFilename());
+				 a.setFilePath(file1.getOriginalFilename());
 				a.setContentFilePath(file2.getOriginalFilename());
 			} else {
 				System.out.println("에러");
@@ -119,7 +137,9 @@ public class AdminController {
 			throw new AdminException("상품 등록 실패!!");
 		}
 	}
+	// 상품등록 페이지에서 상품버튼 클릭시 -- 준배
 	
+	// 상품등록시 savaFile메소드
 	public String saveFile(MultipartFile file, HttpServletRequest request) {
 		// 파일이 저장될 경로를 설정하는 메소드
 		
@@ -157,11 +177,14 @@ public class AdminController {
 				// 스트링으로 반환해줌
 		return filePath;
 	}
+	// 상품등록시 savaFile메소드
 	
+	
+	// 상품메인 페이지에서 상품 클릭시 디테일페이지 보여줄 리스트 불러오기 --준배
 	@RequestMapping("adetail.do")
-	public ModelAndView shopgoodsDetail(ModelAndView mv, int gId) {
+	public ModelAndView shopgoodsDetail(ModelAndView mv, int sellNum) {
 		
-		ArrayList<Admin> list = aService.selectshopgoods(gId);
+		ArrayList<Admin> list = aService.selectshopgoods(sellNum);
 		
 		if(list != null) {
 			mv.addObject("list", list)
@@ -173,8 +196,50 @@ public class AdminController {
 		
 		return mv;
 	}
+	// 상품메인 페이지에서 상품 클릭시 디테일페이지 보여줄 리스트 불러오기 --준배
 	
 	
+	// 상품 디테일 페이지에서 후기작성 버튼 클릭시 후기 리스트 불러오기 -- 준배
+	 @RequestMapping("afterWrite.do") 
+	 public ModelAndView goodsWriterView(ModelAndView mv, int sellNum) {
+	 
+		 ArrayList<Admin> list = aService.selectshopgoods(sellNum);
+		/* ArrayList<SellReply> list = aService.selectReply(rId); */
+	 
+		 if(list != null) {
+			 mv.addObject("list", list)
+			 .setViewName("shop/sell_afterWriteView");
+		 } else { 
+			 throw new AdminException("후기 불러오기실패!"); }
+	 
+	 return mv;
+	 
+	 }
+	// 상품 디테일 페이지에서 후기작성 버튼 클릭시 후기 리스트 불러오기 -- 준배
+	
+	 
+	// 상품조회 페이지에서 상품 품절 처리 -- 준배
+	@RequestMapping("aStatusUpdate.do")
+	public String aStatusUpdate(Admin a, Model model, @RequestParam("statusUpdate") String statusUpdate) {
+		System.out.println("statusUpdate : " + statusUpdate);
+		
+		a.setStatus(statusUpdate);
+		
+		int result = aService.updateAdminStatus(a);
+		
+		if(result > 0) {
+			model.addAttribute("admin" , a);
+			
+		} else {
+			throw new MemberException("수정 실패!!");
+		}
+		
+		return "redirect:sell_goodsList.do";
+	}
+	// 상품조회 페이지에서 상품 품절 처리 -- 준배
+		
+		
+		
 	
 	
 	

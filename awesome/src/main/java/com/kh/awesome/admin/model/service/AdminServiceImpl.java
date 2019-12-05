@@ -29,9 +29,16 @@ public class AdminServiceImpl implements AdminService{
 
 	// SHOP 상품 디테일보기
 	@Override
-	public ArrayList<Admin> selectshopgoods(int gId) {
+	public ArrayList<Admin> selectshopgoods(int sellNum) {
 
-		return aDao.selectshopgoods(gId);
+		return aDao.selectshopgoods(sellNum);
+	}
+	
+	// 상품 내리기 
+	@Override
+	public int updateAdminStatus(Admin a) {
+		
+		return aDao.updateAdminStatus(a);
 	}
 
 	

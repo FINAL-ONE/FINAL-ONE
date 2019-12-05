@@ -1,7 +1,10 @@
  package com.kh.awesome.member.controller;
 
+import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +22,9 @@ import com.kh.awesome.member.model.exception.MemberException;
 import com.kh.awesome.member.model.service.MemberService;
 import com.kh.awesome.member.model.vo.Member;
 import com.kh.awesome.member.model.vo.PageInfo;
-
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonIOException;
 import com.kh.awesome.common.Pagination;
 @SessionAttributes("loginUser")
 
@@ -223,7 +228,7 @@ public class MemberController {
 			
 			System.out.println(list);
 			
-			if(list != null && list.size() > 0) {	// 게시글이 있다면
+			if(list != null && list.size() > 0) {	
 				mv.addObject("list", list);
 				mv.addObject("pi", pi);
 				mv.setViewName("member/memberLookup");
@@ -232,4 +237,44 @@ public class MemberController {
 			}
 			return mv;
 		}
+		
+		
+	// 최근가입한 5명 미리보기 리스트	
+	@RequestMapping("topList.do")
+	public void boardTopList(HttpServletResponse response) throws JsonIOException, IOException {
+		
+		ArrayList<Member> list = mService.selectTopList();
+		
+		for(Member m : list) {
+			//인코딩 작업				(예외처리 필요)
+			m.setUserName(URLEncoder.encode(m.getUserName(), "utf-8")); // 한글이 들어있을 것에 대해선 인코딩 처리
+			m.setGender(URLEncoder.encode(m.getGender(), "utf-8")); // 한글이 들어있을 것에 대해선 인코딩 처리
+		}
+		
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+						// 예외처리 필요
+		gson.toJson(list, response.getWriter());
+		
+	}
+	
+	
+	// 회원조회시 포인트 수정
+	@RequestMapping("pointUpdate.do")	
+	public String updatePointMember(Member m, Model model, int mId, int point) {
+		m.setMid(mId);
+		m.setPoint(point);
+		
+		int result = mService.updatePointMember(m);
+		
+		if(result > 0) {
+			model.addAttribute("m" , m);
+		} else {
+			throw new MemberException("수정 실패!!");
+		}
+		
+		return "redirect:memberLookup.do";
+	}
+	
+		
+	
 }

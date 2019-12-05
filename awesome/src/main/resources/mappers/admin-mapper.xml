@@ -3,45 +3,63 @@
 <mapper namespace="adminMapper">
 
 	<resultMap type="Admin" id="sell_goodsResultSet">
-		<!-- <id property="sellNum" column ="SELL_NUM"/> -->
-		<id property="gId" column ="GID"/>
+		<id property="sellNum" column ="SELL_NUM"/>
+		<!-- <id property="gId" column ="GID"/> -->
 		
-		<!-- <result property ="gId" column ="GID"/> -->
+		<result property ="gId" column ="GID"/>
 		<result property ="goodsTitle" column ="GOODS_TITLE"/>
+		<result property="goodsPrice" column="GOODS_PRICE"/>
+		<result property="count" column="COUNT"/>
 		<result property ="goodsContent" column ="GOODS_CONTENT"/>
-		<result property ="originName" column="ORIGIN_NAME"/>
-		<result property ="filePath" column="FILE_PATH"/>
-		<result property ="contentFilePath" column="CONTENT_FILE_PATH"/>
+		<result property ="filePath" column="GOODS_FILE_PATH"/>
+		<result property ="contentFilePath" column="GOODS_CONTENT_FILE_PATH"/>
 		<result property ="sellDate" column="SELL_DATE"/>
 		<result property ="modifyDate" column="MODIFY_DATE"/>
 		<result property ="status" column="STATUS"/>
+	</resultMap>
+	
+	<resultMap type="Goods" id="goodResultSet">
+		<id property="gid" column="GID"/>
+	
+		<result property="goodsName" column="GOODS_NAME"/>
+		<result property="goodsPrice" column="GOODS_PRICE"/>
+		<result property="count" column="COUNT"/>
+		<result property="goodsStatus" column="GOODS_STATUS"/>
+		<result property="soldOut" column="SOLDOUT"/>
+		<result property="registerDate" column="REGISTER_DATE"/>
+		<result property="modifyDate" column="MODIFY_DATE"/>
 	</resultMap>
 
 
 	<select id ="selectList" resultMap="sell_goodsResultSet">
 		SELECT *
-        FROM (SELECT *
-		FROM SELL_GOODS
-		WHERE STATUS='Y')
-		ORDER BY GID DESC
+        FROM(SELECT * 
+        FROM SELL_GOODSSELECTVIEW 
+        WHERE STATUS='Y')
+        ORDER BY SELL_NUM DESC
 		<!-- ORDER BY N_CREATE_DATE DESC -->
 	</select>
 
 	<insert id ="insertSellgoods" parameterType="Admin">
 		INSERT INTO SELL_GOODS 
-		VALUES(SEQ_GID.NEXTVAL, #{goodsTitle}, #{goodsContent}, #{originName}, #{filePath}, #{contentFilePath}, SYSDATE, SYSDATE, DEFAULT
+		VALUES(SELL_NUM.NEXTVAL, #{gId}, #{goodsTitle}, #{goodsContent}, #{filePath}, #{contentFilePath}, SYSDATE, SYSDATE, DEFAULT
 		)
 	</insert>
 	
 	<select id ="selectshopgoods" resultMap="sell_goodsResultSet">
 		SELECT *
 		FROM SELL_GOODS
-		WHERE GID=#{gId}
+		WHERE SELL_NUM=#{sellNum}
 		AND STATUS='Y'
 	</select>
 	
 	
-	
+	<update id = "updateAdminStatus" parameterType ="Admin">
+		UPDATE SELL_GOODS
+		SET STATUS='N'
+		WHERE SELL_NUM=#{sellNum}
+
+	</update>
 	
 	
 	

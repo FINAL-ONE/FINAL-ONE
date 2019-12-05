@@ -3,6 +3,7 @@ package com.kh.awesome.admin.model.service;
 import java.util.ArrayList;
 
 import com.kh.awesome.admin.model.vo.Admin;
+import com.kh.awesome.shop.model.vo.SellReply;
 
 public interface AdminService {
 
@@ -10,7 +11,10 @@ public interface AdminService {
 
 	public int insertSell_goods(Admin a);
 
-	public ArrayList<Admin> selectshopgoods(int gId);
+	public ArrayList<Admin> selectshopgoods(int sellNum);
+
+	public int updateAdminStatus(Admin a);
+
 
 	
 

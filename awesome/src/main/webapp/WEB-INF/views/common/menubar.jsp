@@ -26,6 +26,7 @@
       margin-right:auto;
       align: center;
       box-shadow: 0px 4px 4px lightgray;
+      position: relative;
    }
    
    .nav{
@@ -191,7 +192,7 @@
    	  	<div class= "menu myPageMenu">마이페이지</div> 
       </c:if>
       <c:if test="${sessionScope.loginUser.userId eq 'admin' }">
-      	<div class= "menu myPageMenu">관리자페이지</div> 
+      	<div class= "menu myPageMenu" onclick ="location.href='adminMain.do'">관리자페이지</div> 
       </c:if>
    </div>
 </div> 
@@ -230,6 +231,7 @@
       <span class= menu2 style="left: 647px;" onclick= "location.href='goodsWriterView.do'">상품등록</span>
       <span class= menu2 style="left: 682px;" onclick= "location.href='sell_goodsList.do'">상품조회</span>
       <span class= menu2 style="left: 717px;" onclick= "location.href='memberLookup.do'">회원조회</span>
+      <span class= menu2 style="left: 745px;" onclick= "location.href='sellafterlistView.do'">상품후기 조회</span>
    </div>
 </div>   
 </c:if>
