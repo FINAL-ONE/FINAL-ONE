@@ -5,6 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:400,700,800&display=swap&subset=korean" rel="stylesheet">
 <title>Insert title here</title>
 <style>
@@ -126,7 +127,7 @@
     border-left: 6px solid transparent;
     border-bottom: 8px solid #fa4a4a;
     top: -41px;
-    left: 635px;
+    left: 550px;	/* 상위 메뉴바 마우스오버시 화살표 위치   */
 }
 
 
@@ -205,7 +206,7 @@
  -->
 
 <div class="menubar2 normalMenubar">
-
+	
 </div>   
  
  
@@ -227,9 +228,10 @@
 <c:if test="${sessionScope.loginUser.userId eq 'admin' }">
 <div class="menubar2 myPageMenubar myPageMenu" style="display:none;">
    <div class= "myPageNav">
-      <span class= menu2 style="left: 647px;" onclick= "location.href='goodsWriterView.do'">상품등록</span>
-      <span class= menu2 style="left: 682px;" onclick= "location.href='sell_goodsList.do'">상품조회</span>
-      <span class= menu2 style="left: 717px;" onclick= "location.href='memberLookup.do'">회원조회</span>
+      <span class= menu2 style="left: 647px;" onclick= "location.href='goodsWriterView.do'">상품판매</span>
+      <span class= menu2 style="left: 682px;" onclick= "location.href='sell_goodsList.do'">판매상품조회</span>
+      <span class= menu2 style="left: 717px;" onclick= "location.href='goodsList.do'">상품관리</span>
+      <span class= menu2 style="left: 752px;" onclick= "location.href='memberLookup.do'">회원조회</span>
    </div>
 </div>   
 </c:if>

@@ -1,21 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="adminMapper">
-
 	<resultMap type="Admin" id="sell_goodsResultSet">
 		<!-- <id property="sellNum" column ="SELL_NUM"/> -->
 		<id property="gId" column ="GID"/>
-		
+		 
 		<!-- <result property ="gId" column ="GID"/> -->
-		<result property ="goodsTitle" column ="GOODS_TITLE"/>
-		<result property ="goodsContent" column ="GOODS_CONTENT"/>
-		<result property ="originName" column="ORIGIN_NAME"/>
-		<result property ="filePath" column="FILE_PATH"/>
+		<result property ="goodsTitle" 		column ="GOODS_TITLE"/>
+		<result property ="goodsContent" 	column ="GOODS_CONTENT"/>
+		<result property ="originName" 		column="ORIGIN_NAME"/>
+		<result property ="filePath" 		column="FILE_PATH"/>
 		<result property ="contentFilePath" column="CONTENT_FILE_PATH"/>
-		<result property ="sellDate" column="SELL_DATE"/>
-		<result property ="modifyDate" column="MODIFY_DATE"/>
-		<result property ="status" column="STATUS"/>
+		<result property ="sellDate" 		column="SELL_DATE"/>
+		<result property ="modifyDate" 		column="MODIFY_DATE"/>
+		<result property ="status" 			column="STATUS"/>
 	</resultMap>
+
+	<resultMap id="goodsResultSet" type="Goods">
+	  	<id property="gId" 				column="GID"/>
+	  	<result property="cateCd" 		column="CATE_CD"/>
+	  	<result property="goodsName" 	column="GOODS_NAME"/> 
+	  	<result property="goodsPrice" 	column="GOODS_PRICE"/>
+	  	<result property="count" 		column="COUNT"/>
+	  	<result property="goodsStatus" 	column="GOODS_STATUS"/>
+	  	<result property="soldout" 		column="SOLDOUT"/>
+	  	<result property="registerDate" column="REGISTER_DATE"/>
+	  	<result property="modifyDate" 	column="MODIFY_DATE"/>
+	  	
+	  	<result property="cateNm" 		column="CATE_NM"/>
+	  	<result property="lclCd" 		column="LCL_CD"/>
+	  	<result property="mclCd" 		column="MCL_CD"/>
+	  	<result property="sclCd" 		column="SCL_CD"/>
+	</resultMap>
+	
+	<resultMap id="CategoryResultSet" type="Category">
+	  	<id property="cateCd" 		column="CATE_CD"/>
+	  	<result property="cateNm" 	column="CATE_NM"/>
+	  	<result property="lclCd" 	column="LCL_CD"/>
+	  	<result property="mclCd" 	column="MCL_CD"/>
+	  	<result property="sclCd" 	column="SCL_CD"/>
+	  	<result property="cateLvl" 	column="CATE_LVL"/>
+	  	<result property="useYn" 	column="USE_YN"/>
+	  	<result property="regDtm" 	column="REG_DTM"/>
+	  	<result property="modDtm" 	column="MOD_DTM"/>
+
+	  	<result property="lcateNm" 	column="L_CATE_NM"/>
+	  	<result property="mcateNm" 	column="M_CATE_NM"/>
+	  	<result property="scateNm" 	column="S_CATE_NM"/>
+
+	</resultMap>
+
+
+
+
+
+
+
+
+
+
+
 
 
 	<select id ="selectList" resultMap="sell_goodsResultSet">
@@ -39,6 +83,216 @@
 		WHERE GID=#{gId}
 		AND STATUS='Y'
 	</select>
+	
+	
+	<!-- 동복 - 상품 리스트 조회 --> 	
+	<select id="goodsList" resultMap="goodsResultSet">
+		SELECT  G.GID,
+		        G.CATE_CD,
+		        G.GOODS_NAME,
+		        G.GOODS_PRICE,
+		        G.COUNT,
+		        G.GOODS_STATUS,
+		        G.SOLDOUT,
+		        G.REGISTER_DATE,
+		        G.MODIFY_DATE,
+		        C.CATE_NM,
+		        C.LCL_CD,
+		        C.MCL_CD,
+		        C.SCL_CD
+		  FROM GOODS G
+		  JOIN CATEGORY C ON(G.CATE_CD = C.CATE_CD)
+		  ORDER BY 1
+	</select>
+	
+	
+	<!-- 동복 - 상품 등록 -->
+	<insert id ="insertgoods" parameterType="Goods">
+		INSERT INTO GOODS VALUES(
+			SEQ_GID.NEXTVAL, #{cateCd}, #{goodsName}, #{goodsPrice}, #{count}, #{goodsStatus}, #{soldout}, SYSDATE, NULL 
+		)
+	</insert>
+	
+	<!-- 동복 - 등록한 상품의 카테고리 코드 조회 --> 	
+	<select id="categoryCDselect" resultMap="CategoryResultSet" parameterType="Goods">
+		SELECT MAX(CATE_CD)+1 AS CATE_CD
+		  FROM GOODS
+	</select>
+	
+	<!-- 동복 - 카테고리 등록 -->
+	<insert id ="insertCategory" parameterType="Category">
+		INSERT INTO CATEGORY VALUES(
+			#{cateCd}, #{cateNm}, #{lclCd}, #{mclCd}, #{sclCd}, '4', 'Y', SYSDATE, NULL 
+		)
+	</insert>	
+
+	<!-- 동복 - 상품 수정 리스트 조회-->
+	<select id="goodsUpdateList" resultMap="goodsResultSet" parameterType="_int" >
+	  	SELECT *
+	  	  FROM GOODS
+	  	 WHERE GID = #{gId}
+	</select>
+  
+  	<!-- 동복 - 상품 수정-->
+  	<update id="Updategoods" parameterType="Goods">
+  		UPDATE GOODS 
+  		   SET	GOODS_NAME = #{goodsName},
+				GOODS_PRICE = #{goodsPrice},
+  		   		COUNT = #{count},
+  		   		GOODS_STATUS = #{goodsStatus},
+  		   		SOLDOUT = #{soldout},
+  		   		MODIFY_DATE = SYSDATE
+  		WHERE GID = #{gId}  
+  	</update>
+  	
+  	<!-- 동복 - 상품 수정(카테고리 수정)-->
+  	<update id="UpdateCategory" parameterType="Category">
+   		UPDATE CATEGORY 
+  		   SET CATE_NM = #{cateNm},
+			   LCL_CD = #{lclCd},
+  		   	   MCL_CD = #{mclCd},
+  		   	   SCL_CD = #{sclCd},
+  		   	   MOD_DTM = SYSDATE
+  		 WHERE CATE_CD = #{cateCd}
+  	</update>  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+	<!-- 동복 - 상품판매 시 상품리스트 조회 -->
+	<select id="selectGoodsValue" resultMap="goodsResultSet">
+	  	SELECT * 
+	  	  FROM GOODS
+	  	 WHERE GOODS_NAME = #{goodsName} 
+	</select>	
+	
+	<!-- 동복 - 카테고리 조회 -->
+	<select id="selectCategoryList" resultMap="CategoryResultSet">
+	 SELECT *
+	  FROM CATEGORY 
+	 WHERE CATE_LVL = '1'
+	</select>	
+	
+	<!-- 동복 - 대 카테고리 조회 -->
+	<select id="selectLCategoryList" resultMap="CategoryResultSet">
+	 SELECT *
+	  FROM CATEGORY 
+	 WHERE LCL_CD = #{lclCd} 
+	   AND CATE_LVL = '2'
+	</select>
+	
+	<!-- 동복 - 중 카테고리 조회 -->
+	<select id="selectMCategoryList" resultMap="CategoryResultSet" parameterType="Category">
+	 SELECT *
+	  FROM CATEGORY 
+	 WHERE LCL_CD = #{lclCd}
+	   AND MCL_CD = #{mclCd}
+	   AND CATE_LVL = '3'
+	</select>
+	
+	<!-- 동복 - 소 카테고리 조회 -->
+	<select id="selectSCategoryList" resultMap="CategoryResultSet">
+	 SELECT *
+	  FROM CATEGORY 
+	 WHERE LCL_CD = #{lclCd}
+	   AND MCL_CD = #{mclCd}
+	   AND SCL_CD = #{sclCd}
+	   AND CATE_LVL = '4'
+	</select>
+	
+	<!-- 동복 - 상품 등록 시 상품이름 중복 체크 -->
+	<select id="checkGoodsNm" parameterType="string" resultType="_int">
+		 SELECT COUNT(*)
+		  FROM GOODS
+         WHERE GOODS_NAME = #{goodsName}
+	</select>
+	
+	<!-- 동복 - 상품 수정 카테고리 조회-->
+	<select id="goodsUpdateClist" resultMap="CategoryResultSet" parameterType="_int" >
+		SELECT *
+		  FROM CATEGORY
+		 WHERE CATE_LVL = 1
+	</select>	
+	<!-- 동복 - 상품 수정 (대)카테고리 조회-->
+	<select id="goodsUpdateLlist" resultMap="CategoryResultSet" parameterType="_int" >
+		SELECT *
+		  FROM CATEGORY
+		 WHERE CATE_LVL = 2
+		   AND LCL_CD =(
+						 SELECT LCL_CD
+						   FROM GOODS G
+						   JOIN CATEGORY C ON(G.CATE_CD = C.CATE_CD)
+						  WHERE G.GID = #{gId}
+		 				)
+	</select>
+	<!-- 동복 - 상품 수정 (중)카테고리 조회-->
+	<select id="goodsUpdateMlist" resultMap="CategoryResultSet" parameterType="_int" >
+		SELECT *
+		  FROM CATEGORY
+		 WHERE CATE_LVL = 3
+		   AND MCL_CD =(
+						 SELECT MCL_CD
+						   FROM GOODS G
+						   JOIN CATEGORY C ON(G.CATE_CD = C.CATE_CD)
+						  WHERE G.GID = #{gId}
+						)
+	</select>	
+	
+	<!-- 동복 - 클릭한 상품의 카테고리 조회 -->
+	<select id="goodsUpCategorylist" resultMap="CategoryResultSet" parameterType="_int" >
+		SELECT L.CATE_CD AS LCL_CD, 
+		       L.CATE_NM AS L_CATE_NM,
+		       M.CATE_CD AS MCL_CD, 
+		       M.CATE_NM AS M_CATE_NM,
+		       S.CATE_CD AS SCL_CD, 
+		       S.CATE_NM AS S_CATE_NM
+		  FROM (
+		        SELECT CATE_CD,CATE_NM
+		          FROM CATEGORY
+		         WHERE CATE_CD = (
+		                        SELECT LCL_CD
+		                         FROM GOODS G
+		                         JOIN CATEGORY C ON(G.CATE_CD = C.CATE_CD)
+		                         WHERE G.GID = #{gId}
+		                         )
+		        )L,
+		        (
+		        SELECT CATE_CD,CATE_NM
+		          FROM CATEGORY
+		         WHERE CATE_CD = (
+		                        SELECT MCL_CD
+		                         FROM GOODS G
+		                         JOIN CATEGORY C ON(G.CATE_CD = C.CATE_CD)
+		                         WHERE G.GID = #{gId}
+		                         )
+		         )M,
+		         (
+		        SELECT CATE_CD,CATE_NM
+		          FROM CATEGORY
+		         WHERE CATE_CD = (
+		                        SELECT SCL_CD
+		                         FROM GOODS G
+		                         JOIN CATEGORY C ON(G.CATE_CD = C.CATE_CD)
+		                         WHERE G.GID = #{gId}
+		                         )
+		         )S
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

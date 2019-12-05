@@ -7,11 +7,13 @@
 
 	<!-- 클래스들을 미리 만들어 놔야 별칭 지정 한것에서 에러 발생 하지 않는다. -->	
 	<typeAliases>
-			<typeAlias type="com.kh.awesome.member.model.vo.Member" alias="Member"/>
-			<typeAlias type="com.kh.awesome.board.model.vo.Board" alias="Board"/>
-			<typeAlias type="com.kh.awesome.board.model.vo.Reply" alias="Reply"/>
-			<typeAlias type="com.kh.awesome.board.model.vo.Attachment" alias="Attachment"/>
-			<typeAlias type="com.kh.awesome.admin.model.vo.Admin" alias="Admin"/>
+			<typeAlias type="com.kh.awesome.member.model.vo.Member" 	alias="Member"/>
+			<typeAlias type="com.kh.awesome.board.model.vo.Board" 		alias="Board"/>
+			<typeAlias type="com.kh.awesome.board.model.vo.Reply" 		alias="Reply"/>
+			<typeAlias type="com.kh.awesome.board.model.vo.Attachment"	alias="Attachment"/>
+			<typeAlias type="com.kh.awesome.admin.model.vo.Admin" 		alias="Admin"/>
+			<typeAlias type="com.kh.awesome.admin.model.vo.Goods" 		alias="Goods"/>
+			<typeAlias type="com.kh.awesome.admin.model.vo.Category" 	alias="Category"/>
 	</typeAliases>
 
  	<!-- sql문들을 지닌 mapper.xml들을 등록 -->

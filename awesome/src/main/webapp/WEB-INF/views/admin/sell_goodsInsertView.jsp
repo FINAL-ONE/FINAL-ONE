@@ -8,7 +8,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
+<style>
+	.layer { display: none; }
+</style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <body>
@@ -28,21 +30,35 @@
 				<th>상품 제목  <span style = "color:red; font-size : 1.5em;">*</span> </th>
 				<td><input type="text" size ="108" name ="goodsTitle" style="height:20px;"></td>
 			</tr>
-			<!-- <tr>
+			<tr>
+	            <th> 상품 선택  <span style = "color:red; font-size : 1.5em;">*</span> </th>
+	            <td>
+					<!-- <input type="text" size='50' id="goodsName" name="goodsName" placeholder="선택하시오." list="myinter" /> -->
+					<input type="text" size='50' id="goodsName" name="goodsName" placeholder="change 했을때 가격 수량 지워야함" list="myinter" />   
+					<datalist id="myinter" name="myinter">
+						<c:forEach var="g" items="${glist}">
+							<select id="selectBox" name="selectBox">
+								<option value="${g.goodsName}">${g.goodsName}</option>
+							</select>
+						</c:forEach>
+					</datalist>
+				</td>
+			</tr>
+			<tr>
 				<th>상품 가격  <span style = "color:red; font-size : 1.5em;">*</span> </th>
-				<td><input type="number" size ="108" name ="goodsPrice" style="height:20px;">원</td>
+				<td><input id="goodsPrice" type="number" size ="108" name ="goodsPrice" style="height:20px;">원</td>
 			</tr>
 			<tr>
 				<th>상품 수량  <span style = "color:red; font-size : 1.5em;">*</span> </th>
-				<td><input type="number" size ="108" name ="count" style="height:20px;">원</td>
-			</tr> -->
+				<td><input id="count" type="number" size ="108" name ="count" style="height:20px;"></td>
+			</tr>
 			<tr>
 				<th> 대표이미지  <span style = "color:red; font-size : 1.5em;">*</span> </th>
 				<td>
 					<div id = "titleImgArea" >
 						<img id ="titleImg" width ="800" height ="300">
 					</div>
-				</td>					
+				</td>
 			</tr>
 			<tr>
 				<th> 내용사진 </th>
@@ -118,7 +134,49 @@
 			<a href="sell_goodsList.do">목록 보기로 이동</a>
 		</p>
 	</div>
+	
+	<script>
+		$(function(){
+			$("#goodsName").on("keyup",function(){
+				var goodsName =$(this).val().trim();// 공백제거후 담음
+
+				$.ajax({
+					url:"selectGoodsValue.do",
+					data:{goodsName:goodsName},
+					success:function(data){
+
+						for(var i in data){
+							if( data == null){
+								$("#goodsPrice").val("");
+								$("#count").val("");
+							}
+							// 필요한건 2개지만 일단 생성 함
+							var $gId = data[i].gId;
+							var $gName = decodeURIComponent(data[i].goodsName.replace(/\+/g, " "));
+							var $gPrice = data[i].goodsPrice;
+							var $gCount = data[i].count;
+							var $gStatus = data[i].goodsStatus;
+							var $gSoldout = data[i].soldout;
+							 
+							
+							$("#goodsPrice").val($gPrice);
+							$("#count").val($gCount);
+						}
+					},
+					error:function(request, status, errorData){
+						alert("error code : " + request.status + "\n"
+											  + "message : " + request.responseText
+											  + "error : " + errorData);
+					}
+				});
+			});
+		});
+
+	</script>
+
 </body>
+
+
 
 <footer>
    <jsp:include page ="../common/footer.jsp"/>
