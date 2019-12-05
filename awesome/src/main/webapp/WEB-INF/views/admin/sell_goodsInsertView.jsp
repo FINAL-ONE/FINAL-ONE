@@ -19,7 +19,7 @@
 	<%-- <jsp:include page ="../admin/adminMenu.jsp"/> --%>
 	
 	
-	<div id="container" style="overflow: auto; height: 800px;" ><!-- container -->
+	<div id="container" style="overflow: auto; height: auto;" ><!-- container -->
 	
 <h1 align="center"> 상품 등록 페이지 </h1>
 	

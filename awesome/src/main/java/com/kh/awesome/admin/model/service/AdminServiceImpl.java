@@ -16,24 +16,31 @@ public class AdminServiceImpl implements AdminService{
 	@Autowired
 	AdminDao aDao;
 
-	// �긽�뭹 議고쉶
+	// 상품 조회
 	@Override
 	public ArrayList<Admin> selectList() {
 		
 		return aDao.selectList();
 	}
 	
-	// �긽�뭹�벑濡�
+	// 상품등록
 	@Override
 	public int insertSell_goods(Admin a) {
 		return aDao.insertSell_goods(a);
 	}
 
-	// SHOP �긽�뭹 �뵒�뀒�씪蹂닿린
+	// SHOP 상품 디테일보기
 	@Override
-	public ArrayList<Admin> selectshopgoods(int gId) {
+	public ArrayList<Admin> selectshopgoods(int sellNum) {
 
-		return aDao.selectshopgoods(gId);
+		return aDao.selectshopgoods(sellNum);
+	}
+	
+	// 상품 내리기 
+	@Override
+	public int updateAdminStatus(Admin a) {
+		
+		return aDao.updateAdminStatus(a);
 	}
 
 	// 동복- 상품 리스트 조회

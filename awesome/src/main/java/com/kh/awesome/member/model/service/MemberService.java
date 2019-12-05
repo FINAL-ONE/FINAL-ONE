@@ -19,4 +19,9 @@ public interface MemberService {
 
 	ArrayList<Member> selectList(PageInfo pi);
 
+	ArrayList<Member> selectTopList();
+	
+	// 회원조회시 포인트 수정
+	int updatePointMember(Member m);
+ 
 }

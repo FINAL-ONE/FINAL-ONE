@@ -14,6 +14,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -35,13 +36,16 @@ public class AdminController {
 	@Autowired
 	private AdminService aService;
 	
-	
+	// 메뉴바에서 관리자페이지 클릭시 관리자페이지메인 view 이동 -- 준배
 	@RequestMapping("adminMain.do")
 	public String nWriterView() {
 		
 		return "admin/adminListView";	
 	}
+	// 메뉴바에서 관리자페이지 클릭시 관리자페이지메인 view 이동 -- 준배
 	
+	
+	// 메뉴바에서 상품조회 클릭시 관리자용 상품조회 테이블 조회--준배
 	@RequestMapping("sell_goodsList.do")
 	public ModelAndView sell_goodsList(ModelAndView mv) {
 		
@@ -52,38 +56,25 @@ public class AdminController {
 			mv.addObject("list", list);
 			mv.setViewName("admin/sell_goodsListView");
 		}else {
-			throw new AdminException("�긽�뭹 紐⑸줉 蹂닿린 �떎�뙣!!");
-				// RuntimeException�쓣 諛쏆쑝硫� �뿉�윭 泥섎━ �븞�빐�룄�맂�떎
+			throw new AdminException("상품 목록 보기 실패!!");
+				// RuntimeException을 받으면 에러 처리 안해도된다
 		}
 		
 		return mv;
 	}
-
-	/*
+	// 메뉴바에서 상품조회 클릭시 관리자용 상품조회 테이블 조회--준배
+	
+	
+	// 메뉴바에서 상품등록 클릭시 view 이동 -- 준배
 	@RequestMapping("goodsWriterView.do")
 	public String goodsWriterView() {
 		
 		return "admin/sell_goodsInsertView";	
 	}
-	*/
-	// 동복 - 판매상품 등록 수정
-	@RequestMapping("goodsWriterView.do")
-	public ModelAndView goodsWriterView(ModelAndView mv) {
-		ArrayList<Goods> glist = aService.goodsList();
-System.out.println("goodsWriterView_glist : " + glist);
-		
-		if(glist != null) {
-			mv.addObject("glist",glist);
-			mv.setViewName("admin/sell_goodsInsertView");
-		}else {
-			throw new AdminException("상품 목록 보기 실패!!");
-		}
-		return mv;
-	}
+	// 메뉴바에서 상품등록 클릭시 view 이동 -- 준배
 	
 	
-	
-	// shop�쑝濡� 肉뚮젮吏�
+	// 메뉴바에서 shop으로 뿌려질 리스트 조회 -- 준배
 	@RequestMapping("shopGoodsListView.do")
 	public ModelAndView shopGoodsList(ModelAndView mv) {
 		
@@ -93,18 +84,35 @@ System.out.println("goodsWriterView_glist : " + glist);
 			mv.addObject("list", list);
 			mv.setViewName("shop/shopGoodsListView");
 		}else {
-			throw new AdminException("�긽�뭹 紐⑸줉 蹂닿린 �떎�뙣!!");
-				// RuntimeException�쓣 諛쏆쑝硫� �뿉�윭 泥섎━ �븞�빐�룄�맂�떎
+			throw new AdminException("상품 목록 보기 실패!!");
+				// RuntimeException을 받으면 에러 처리 안해도된다
 		}
 		
 		return mv;
 	}
+	// 메뉴바에서 shop으로 뿌려질 리스트 조회 -- 준배
 	
+	
+	// 상품등록 페이지에서 상품버튼 클릭시 -- 준배
 	@RequestMapping("sellgoodsInsert.do")
 	public String sell_goodsInsert(Admin a, HttpServletRequest request,				
 								@RequestParam(name="titlethumbnailImg", required=false) MultipartFile file1,
 								@RequestParam(name="subthumbnailImg", required=false) MultipartFile file2) {
+		// pom.xml 가서 일단 multipart 인코딩 타입으로 파일을 넘겨줄 때 필요한 라이브러리부터 다운 받자.
+		// 그냥 한번 출력 해 보면 다 null로 나오는 걸 확인할 수 있다.(물론, 파일 업로드 관련 라이브러리 추가하고 나서)
+		
+		// required를 안 써주면 사용자가 파일을 안 올리고 공지글을 썼을 때 uploadFile이 없다는 에러 
+		// (Bad Request, Required String parameter 'name' is no present)가 떠버리므로 
+		// required-false라는 속성을 써주자
 
+		
+		// 다중 파일을 묶어서 업로드(다중 파일 업로드) 하기 때문에 컬렉션을 사용
+		// 저장한 파일의 이름을 저장할 ArrayList를 생성하자 
+		//ArrayList<String> saveFiles = new ArrayList<String>();
+		
+		// 원본 파일의 이름을 저장할 ArrayList를 생성하자
+		//ArrayList<String> originFiles = new ArrayList<String>();
+		// <String> 제네릭 하는이유는 나중에 꺼낼때 다운캐스팅 안하려고
 		System.out.println("file1 : " + file1);
 		System.out.println("file2 : " + file2);
 		
@@ -117,28 +125,27 @@ System.out.println("goodsWriterView_glist : " + glist);
 			System.out.println("savePath2 : " + savePath2);
 			
 			
-			if(savePath1 != null && savePath2 != null) {	// �뙆�씪�씠 �옒 ���옣�맂 寃쎌슦
-				a.setFilePath(file1.getOriginalFilename());
+			if(savePath1 != null && savePath2 != null) {	// 파일이 잘 저장된 경우
+				 a.setFilePath(file1.getOriginalFilename());
 				a.setContentFilePath(file2.getOriginalFilename());
 			} else {
-				System.out.println("�뿉�윭");
+				System.out.println("에러");
 			}
 			
 		}
 		
 		int result = aService.insertSell_goods(a);
 		
-		
-		
-		
 		if(result > 0 ) {
 			return "redirect:sell_goodsList.do";
 			/* return "redirect:shopGoodsListView.do"; */
 		} else {
-			throw new AdminException("�긽�뭹 �벑濡� �떎�뙣!!");
+			throw new AdminException("상품 등록 실패!!");
 		}
 	}
+	// 상품등록 페이지에서 상품버튼 클릭시 -- 준배
 	
+	// 상품등록시 savaFile메소드
 	public String saveFile(MultipartFile file, HttpServletRequest request) {
 		// 파일이 저장될 경로를 설정하는 메소드
 		
@@ -147,7 +154,7 @@ System.out.println("goodsWriterView_glist : " + glist);
 	
 		String savePath = root + "\\auploadFiles";
 		
-					// // 위의 주소에다가 파일을 생성할꺼다
+					// 위의 주소에다가 파일을 생성할꺼다
 		File folder = new File(savePath);
 		
 		// 자동으로 경로에 폴더가 없으면 생성해라.
@@ -170,30 +177,99 @@ System.out.println("goodsWriterView_glist : " + glist);
 			// root-context.xml에서 파일 크기 지정을 해줘야만 파일이 저장된다.!!!!!!!!!!!!
 			
 		} catch(Exception e) {
-			System.out.println("�뙆�씪 �쟾�넚 �뿉�윭 : " + e.getMessage());
+			System.out.println("파일 전송 에러 : " + e.getMessage());
 		}
 		
-		// 스트링으로 반환해줌
+				// 스트링으로 반환해줌
 		return filePath;
 	}
+	// 상품등록시 savaFile메소드
 	
+	
+	// 상품메인 페이지에서 상품 클릭시 디테일페이지 보여줄 리스트 불러오기 --준배
 	@RequestMapping("adetail.do")
-	public ModelAndView shopgoodsDetail(ModelAndView mv, int gId) {
+	public ModelAndView shopgoodsDetail(ModelAndView mv, int sellNum) {
 		
-		ArrayList<Admin> list = aService.selectshopgoods(gId);
+		ArrayList<Admin> list = aService.selectshopgoods(sellNum);
 		
 		if(list != null) {
 			mv.addObject("list", list)
 			.setViewName("shop/shopGoodsDetail");
 		
 		} else {
-			throw new AdminException("SHOP �긽�뭹 �뵒�뀒�씪蹂닿린 �떎�뙣!");
+			throw new AdminException("SHOP 상품 디테일보기 실패!");
 		}
 		
 		return mv;
 	}
+	// 상품메인 페이지에서 상품 클릭시 디테일페이지 보여줄 리스트 불러오기 --준배
 	
 	
+	// 상품 디테일 페이지에서 후기작성 버튼 클릭시 후기 리스트 불러오기 -- 준배
+	 @RequestMapping("afterWrite.do") 
+	 public ModelAndView goodsWriterView(ModelAndView mv, int sellNum) {
+	 
+		 ArrayList<Admin> list = aService.selectshopgoods(sellNum);
+		/* ArrayList<SellReply> list = aService.selectReply(rId); */
+	 
+		 if(list != null) {
+			 mv.addObject("list", list)
+			 .setViewName("shop/sell_afterWriteView");
+		 } else { 
+			 throw new AdminException("후기 불러오기실패!"); }
+	 
+	 return mv;
+	 
+	 }
+	// 상품 디테일 페이지에서 후기작성 버튼 클릭시 후기 리스트 불러오기 -- 준배
+	
+	 
+	// 상품조회 페이지에서 상품 품절 처리 -- 준배
+	@RequestMapping("aStatusUpdate.do")
+	public String aStatusUpdate(Admin a, Model model, @RequestParam("statusUpdate") String statusUpdate) {
+		System.out.println("statusUpdate : " + statusUpdate);
+		
+		a.setStatus(statusUpdate);
+		
+		int result = aService.updateAdminStatus(a);
+		
+		if(result > 0) {
+			model.addAttribute("admin" , a);
+			
+		} else {
+			throw new MemberException("수정 실패!!");
+		}
+		
+		return "redirect:sell_goodsList.do";
+	}
+	// 상품조회 페이지에서 상품 품절 처리 -- 준배
+	
+	
+	
+	
+	
+// 동복 부분 --------------------------------------------------------------
+	
+	
+	
+	
+	
+	
+	
+	// 동복 - 판매상품 등록 수정
+	@RequestMapping("goodsWriterView.do")
+	public ModelAndView goodsWriterView(ModelAndView mv) {
+		ArrayList<Goods> glist = aService.goodsList();
+System.out.println("goodsWriterView_glist : " + glist);
+		
+		if(glist != null) {
+			mv.addObject("glist",glist);
+			mv.setViewName("admin/sell_goodsInsertView");
+		}else {
+			throw new AdminException("상품 목록 보기 실패!!");
+		}
+		return mv;
+	}	
 	
 	// 동복 - 상품 리스트 조회
 	@RequestMapping("goodsList.do")
@@ -425,30 +501,6 @@ System.out.println("sendJson : " + sendJson);
 		out.close();
 	}	
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	// 동복 - 상품 등록 카테고리 리스트 조회
 	@RequestMapping("categoryCSelectBox.do")

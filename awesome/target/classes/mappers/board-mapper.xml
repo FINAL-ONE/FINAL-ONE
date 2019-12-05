@@ -31,15 +31,38 @@
   	<result property="status" column="STATUS"/>
   </resultMap>  
   
+  <resultMap type="BGood" id="bGoodResultSet">
+  	<id property="gId" column="GID"/>
+  	<result property="bId" column="BID"/>
+  	<result property="mId" column="MID"/>
+  	<result property="status" column="STATUS"/>
+  </resultMap> 
+  
+	<resultMap type="Reply" id="replyResultSet">
+	  	<id property="rId" column="RID"/>
+	  	<result property="bId" column="BID"/>
+	  	 <result property="mId" column="MID"/>
+	  	<result property="rContent" column="RCONTENT"/>
+	  	<result property="createDate" column="CREATE_DATE"/>
+	  	<result property="modifyDate" column="MODIFY_DATE"/>
+	  	<result property="status" column="STATUS"/>
+  </resultMap>
   
   
   
   <select id="getFboardListCount" resultType="_int"> 	
-	 SELECT COUNT(*)
-  	FROM D_BOARD
-  	WHERE STATUS='Y'AND CATEGORY = 2
+  	 SELECT COUNT(*)
+  	 FROM D_BOARD
+  	 WHERE STATUS='Y'AND CATEGORY = 2
   	
   </select>
+  
+  <select id="selectBoardGoodMemory"  parameterType="BGood" resultType="_int"> 	
+	SELECT COUNT(*) 
+    FROM B_GOOD 
+    WHERE BID = #{bId} AND MID = #{mId} AND STATUS='Y'
+  </select>
+  
   
    <select id="getSearchFboardListCount" resultType="_int">
  	SELECT COUNT(*)
@@ -74,7 +97,7 @@
 		                  FROM D_REPLY
 		                  GROUP BY BID)REPLY ON (B.BID = REPLY.BID)
 		WHERE B.STATUS ='Y' AND CATEGORY =2
-		ORDER BY BID DESC
+		ORDER BY BLEVEL DESC, BID DESC
   </select>
   
   <select id="selectSeacrchFList" resultMap="boardResultSet">
@@ -116,6 +139,26 @@
   
   </insert>
   
+    <insert id="updateAttachment" parameterType="Attachment"> 
+	INSERT INTO 
+  	D_ATTACH
+  	VALUES(
+  		SEQ_DAFID.NEXTVAL, #{bId}, #{originName}, #{changeName}, #{filePath}, SYSDATE, 1, 0,'Y' 
+  	)
+  
+  </insert>
+  
+  
+   <insert id="addBoardGoodCount" parameterType="BGood"> 
+	INSERT INTO 
+  	B_GOOD
+  	VALUES(
+  		SEQ_BGNO.NEXTVAL,#{bId}, #{mId},'Y'  
+  	)
+  
+  </insert>
+  
+  
   
   <update id="updateCount" parameterType = "_int">
   	UPDATE D_BOARD
@@ -136,18 +179,58 @@
 		WHERE BID = #{bId}
   </select>
   
+  <select id= "selectBGood" parameterType = "_int" resultMap="bGoodResultSet">
+  		SELECT *
+		FROM B_GOOD
+		WHERE BID = #{bId}
+		
+  </select>
+  
+  
   
   <update id="updateBoard" parameterType="Board">
-  	UPDATE BOARD
-  	SET BTITLE=#{bTitle}, BCONTENT=#{bContent},
-  		ORIGINAL_FILENAME=#{originalFileName}, RENAME_FILENAME=#{renameFileName},
-  		B_MODIFY_DATE=SYSDATE
+  	UPDATE D_BOARD
+  	SET BTITLE=#{bTitle}, 
+  		BCONTENT=#{bContent},
+		BLEVEL=#{bLevel}, 
+  		MODIFY_DATE =SYSDATE
   	WHERE BID=#{bId}
-  </update>
+  	</update>
   
   <delete id="deleteBoard" parameterType = "_int">
-  	DELETE FROM BOARD 
-  	WHERE BID=#{bId} 
-  
+    UPDATE d_board SET status = 'N' WHERE bid= #{bId}
+    
   </delete>
+  
+  <delete id="subBoardGoodCount"  parameterType="BGood">
+	DELETE FROM B_GOOD 
+  	WHERE BID=#{bId} AND MID=#{mId}
+  	
+  </delete>
+  
+  
+  
+  <select id ="selectAttachChangeName" parameterType ="_int"  resultType="string">
+  	SELECT CHANGE_NAME FROM D_ATTACH WHERE FID = #{fId}
+  </select>
+  
+  
+  <delete id="deleteAttachAsFid"   parameterType ="_int">
+  	DELETE FROM D_ATTACH WHERE FID =  #{fId}
+  </delete>
+  
+  
+  <select id ="selectBoardAsRnum"  parameterType ="_int" resultMap="boardResultSet"> 
+	SELECT *
+  	FROM BOARD_VIEW 
+  	WHERE RNUM=#{rNum}
+  	AND STATUS='Y'
+  </select>
+  
+   <select id="selectReplyList" resultMap="replyResultSet" parameterType="_int">
+	SELECT *
+	FROM D_REPLY
+	WHERE BID=#{bId}
+  </select>
+  
 </mapper>

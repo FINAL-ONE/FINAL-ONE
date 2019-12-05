@@ -12,11 +12,9 @@
 <style>
 
 .outer{
-	width : 100%;
-	/* background : red; */
+	width : 1300px;
  	margin-left: auto;
    	margin-right:auto;
-    /* margin-top:50px; */
 }
 .contentArea{
 	width : 90%;
@@ -27,9 +25,9 @@
 }
 /* 롤링배너 */
 .rolling-banner{
-	width : 1455px;
+	width : 1200px;
 	height : 300px;
-	margin-left: 1%;
+	margin-left: 10px;
 	margin-right:auto;
     margin-top:20px;
     margin-bottom: 20px;
@@ -42,26 +40,27 @@
 	
 	
 .mini-banner{
-	width : 470px;
+	width : 350px;
 	height : 300px;
 	display : inline-block;
-	margin-left: 1%;
+	margin-left: 31px;
 	cursor : pointer;
+	
 }
 .goods-list{
-	width : 350px;
-	height : 450px;
+	width : 270px;
+	height : 300px;
 	/* background : yellow; */
 	display : inline-block;
- 	margin-left: 1%;
+ 	margin-left: 17px;
     margin-right:auto;
     margin-top:20px;
     cursor : pointer;
     
 }
 .goods-img{
-	width : 250px;
-	height : 250px;
+	width : 200px;
+	height : 200px;
 	/* background : green; */
  	margin-left:auto;
     margin-right:auto;
@@ -85,7 +84,7 @@
 <body>
 
 	<jsp:include page ="../common/menubar.jsp"/>
-	<div id="container" style="overflow: auto; height: 800px;" ><!-- container -->
+	<div id="container" style="overflow: auto; overflow-x : hidden;  height: auto;" ><!-- container -->
 	
 	
 	<div class = "outer">
@@ -93,34 +92,34 @@
 			<div class = "rolling-banner">
 				<div class="rbanner">	
 					<ul>
-						<li><img src="resources/images/mainbanner_1.png" width="1455" height="300px"></li>
-						<li><img src="resources/images/mainbanner_2.png" width="1455" height="300px"></li>
-						<li><img src="resources/images/mainbanner_3.png" width="1455" height="300px"></li>
+						<li><img src="resources/images/mainbanner_1.png" width="1200" height="300px"></li>
+						<li><img src="resources/images/mainbanner_2.png" width="1200" height="300px"></li>
+						<li><img src="resources/images/mainbanner_3.png" width="1200" height="300px"></li>
 					</ul>
 				</div>
 			</div>
 			<div class = "mini-banner">
-				<img src="resources/images/minibanner_1.png" width="470" height="300px">
+				<img src="resources/images/minibanner_1.png" width="350" height="250px">
 			</div>
 			<div class = "mini-banner">
-				<img src="resources/images/minibanner_2.png" width="470" height="300px">
+				<img src="resources/images/minibanner_2.png" width="350" height="250px">
 			</div>
 			<div class = "mini-banner">
-				<img src="resources/images/minibanner_2.png" width="470" height="300px">
+				<img src="resources/images/minibanner_2.png" width="350" height="250px">
 			</div>
 			<c:forEach var="a" items="${list}">
 				<div class = "goods-list" align ="center">
 						<c:url var="adetail" value="adetail.do">
-							<c:param name="gId" value="${a.gId }"/>
+							<c:param name="sellNum" value="${a.sellNum }"/>
 						</c:url>
-						<a href="${adetail}">
+						<a href="${adetail}" style="text-decoration:none">
 							<div class = "goods-img">
-								<img src="resources/auploadFiles/${a.filePath}" width ="250px" height ="250px">
+								<img src="resources/auploadFiles/${a.filePath}" width ="200px" height ="200px">
 							</div>
-								${a.goodsTitle} <br>
-							<hr>
+							<br>
+								<span>${a.goodsTitle}</span><br>
 							<div class= "good-info">
-								${a.goodsContent} <br>
+								<span>${a.goodsContent}</span><br>
 							</div>
 						</a>
 				</div>

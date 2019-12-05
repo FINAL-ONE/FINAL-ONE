@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.kh.awesome.admin.model.vo.Admin;
 import com.kh.awesome.admin.model.vo.Category;
 import com.kh.awesome.admin.model.vo.Goods;
+import com.kh.awesome.shop.model.vo.SellReply;
 
 public interface AdminService {
 
@@ -12,7 +13,10 @@ public interface AdminService {
 
 	public int insertSell_goods(Admin a);
 
-	public ArrayList<Admin> selectshopgoods(int gId);
+	public ArrayList<Admin> selectshopgoods(int sellNum);
+
+	public int updateAdminStatus(Admin a);
+
 
 	
 	// 동복- 상품 리스트 조회

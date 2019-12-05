@@ -52,6 +52,19 @@ public class MemberServiceImpl implements MemberService {
 	public ArrayList<Member> selectList(PageInfo pi) {
 		return mDao.selectList(pi);
 	}
+	
+	// 최근가입한 5명 뽑기
+	@Override
+	public ArrayList<Member> selectTopList() {
+
+		return mDao.selectTopList();
+	}
+	
+	// 회원조회시 포인트 수정
+	@Override
+	public int updatePointMember(Member m) {
+		return  mDao.updatePointMember(m);
+	}
 
 	
 }

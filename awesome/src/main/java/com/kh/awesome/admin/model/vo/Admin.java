@@ -6,8 +6,9 @@ public class Admin {
 	private int sellNum;
 	private int gId;
 	private String goodsTitle;
+	private int goodsPrice;
+	private int count;
 	private String goodsContent;
-	private String originName;
 	private String filePath;
 	private String contentFilePath;
 	private Date sellDate;
@@ -17,13 +18,14 @@ public class Admin {
 	public Admin() {
 	}
 
-	public Admin(int sellNum, int gId, String goodsTitle, String goodsContent, String originName, String filePath,
-			String contentFilePath, Date sellDate, Date modifyDate, String status) {
+	public Admin(int sellNum, int gId, String goodsTitle, int goodsPrice, int count, String goodsContent,
+			String filePath, String contentFilePath, Date sellDate, Date modifyDate, String status) {
 		this.sellNum = sellNum;
 		this.gId = gId;
 		this.goodsTitle = goodsTitle;
+		this.goodsPrice = goodsPrice;
+		this.count = count;
 		this.goodsContent = goodsContent;
-		this.originName = originName;
 		this.filePath = filePath;
 		this.contentFilePath = contentFilePath;
 		this.sellDate = sellDate;
@@ -55,20 +57,28 @@ public class Admin {
 		this.goodsTitle = goodsTitle;
 	}
 
+	public int getGoodsPrice() {
+		return goodsPrice;
+	}
+
+	public void setGoodsPrice(int goodsPrice) {
+		this.goodsPrice = goodsPrice;
+	}
+
+	public int getCount() {
+		return count;
+	}
+
+	public void setCount(int count) {
+		this.count = count;
+	}
+
 	public String getGoodsContent() {
 		return goodsContent;
 	}
 
 	public void setGoodsContent(String goodsContent) {
 		this.goodsContent = goodsContent;
-	}
-
-	public String getOriginName() {
-		return originName;
-	}
-
-	public void setOriginName(String originName) {
-		this.originName = originName;
 	}
 
 	public String getFilePath() {
@@ -113,14 +123,14 @@ public class Admin {
 
 	@Override
 	public String toString() {
-		return "Admin [sellNum=" + sellNum + ", gId=" + gId + ", goodsTitle=" + goodsTitle + ", goodsContent="
-				+ goodsContent + ", originName=" + originName + ", filePath=" + filePath + ", contentFilePath="
-				+ contentFilePath + ", sellDate=" + sellDate + ", modifyDate=" + modifyDate + ", status=" + status
-				+ "]";
+		return "Admin [sellNum=" + sellNum + ", gId=" + gId + ", goodsTitle=" + goodsTitle + ", goodsPrice="
+				+ goodsPrice + ", count=" + count + ", goodsContent=" + goodsContent + ", filePath=" + filePath
+				+ ", contentFilePath=" + contentFilePath + ", sellDate=" + sellDate + ", modifyDate=" + modifyDate
+				+ ", status=" + status + "]";
 	}
 
 
-
+	
 	
 
 	

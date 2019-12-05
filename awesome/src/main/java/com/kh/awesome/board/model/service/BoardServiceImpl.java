@@ -7,8 +7,10 @@ import org.springframework.stereotype.Service;
 
 import com.kh.awesome.board.model.dao.BoardDao;
 import com.kh.awesome.board.model.vo.Attachment;
+import com.kh.awesome.board.model.vo.BGood;
 import com.kh.awesome.board.model.vo.Board;
 import com.kh.awesome.board.model.vo.PageInfo;
+import com.kh.awesome.board.model.vo.Reply;
 import com.kh.awesome.board.model.vo.Search;
 
 
@@ -72,8 +74,57 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public ArrayList<Board> selectAttachments(int bId) {
+	public ArrayList<Attachment> selectAttachments(int bId) {
 		return bDao.selectAttachments(bId);
+	}
+
+	@Override
+	public int addBoardGoodCount(BGood bGood) {
+		return bDao.addBoardGoodCount(bGood);
+		
+	}
+
+	@Override
+	public int selectBoardGoodMemory(BGood bGood) {
+		
+		return  bDao.selectBoardGoodMemory(bGood);
+	}
+
+	@Override
+	public int subBoardGoodCount(BGood bGood) {
+		return bDao.subBoardGoodCount(bGood);
+	}
+
+	@Override
+	public ArrayList<BGood> selectBGood(int bId) {
+		return bDao.selectBGood(bId);
+	}
+
+	@Override
+	public int deleteAttachAsFid(int fId) {
+		return bDao.deleteAttachAsFid(fId); 
+	}
+
+	@Override
+	public String selectAttachChangeName(int fId) {
+		return bDao.selectAttachChangeName(fId); 
+	}
+
+	@Override
+	public int updateAttachment(Attachment attachment) {
+		return bDao.updateAttachment(attachment); 
+		
+	}
+
+	@Override
+	public Board selectBoardAsRnum(int rNum) {
+		return bDao.selectBoardAsRnum(rNum); 
+	}
+
+	@Override
+	public ArrayList<Reply> selectReplyList(int bId) {
+		//
+		return bDao.selectReplyList(bId);
 	}
 
 
