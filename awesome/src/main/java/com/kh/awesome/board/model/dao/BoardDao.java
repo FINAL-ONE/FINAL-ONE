@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.awesome.board.model.vo.Attachment;
+import com.kh.awesome.board.model.vo.BGood;
 import com.kh.awesome.board.model.vo.Board;
 import com.kh.awesome.board.model.vo.PageInfo;
+import com.kh.awesome.board.model.vo.Reply;
 import com.kh.awesome.board.model.vo.Search;
 
 @Repository("bDao")
@@ -72,7 +74,45 @@ public class BoardDao {
 		return sqlSession.insert("boardMapper.insertAttachment", attachment);
 	}
 
-	public ArrayList<Board> selectAttachments(int bId) {
+	public ArrayList<Attachment> selectAttachments(int bId) {
 		return (ArrayList)sqlSession.selectList("boardMapper.selectAttachList", bId);
 	}
+
+	public int addBoardGoodCount(BGood bGood) {
+		return sqlSession.insert("boardMapper.addBoardGoodCount", bGood);
+	}
+
+	public int selectBoardGoodMemory(BGood bGood) {
+		return sqlSession.selectOne("boardMapper.selectBoardGoodMemory",bGood);
+	}
+
+	public int subBoardGoodCount(BGood bGood) {
+		return sqlSession.delete("boardMapper.subBoardGoodCount",bGood);
+	}
+
+	public ArrayList<BGood> selectBGood(int bId) {
+		return (ArrayList)sqlSession.selectList("boardMapper.selectBGood",bId);
+	}
+
+	public int deleteAttachAsFid(int fId) {
+		return sqlSession.delete("boardMapper.deleteAttachAsFid",fId);
+	}
+
+	public String selectAttachChangeName(int fId) {
+		return sqlSession.selectOne("boardMapper.selectAttachChangeName",fId);
+	}
+
+	public int updateAttachment(Attachment attachment) {
+		return  sqlSession.insert("boardMapper.updateAttachment", attachment);
+	}
+
+	public Board selectBoardAsRnum(int rNum) {
+		return sqlSession.selectOne("boardMapper.selectBoardAsRnum", rNum);
+	}
+
+	public ArrayList<Reply> selectReplyList(int bId) {
+	
+		return (ArrayList)sqlSession.selectList("selectReplyList", bId);
+	}
+	
 }

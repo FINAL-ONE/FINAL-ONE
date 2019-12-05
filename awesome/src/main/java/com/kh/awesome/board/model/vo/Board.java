@@ -3,6 +3,7 @@ package com.kh.awesome.board.model.vo;
 import java.sql.Date;
 
 public class Board {
+	private int rNum; 
 	private int bId;
 	private int mId; 
 	private String userId; 
@@ -19,12 +20,11 @@ public class Board {
 	private int reply;
 	
 	public Board() {
-		super();
 	}
 
-	public Board(int bId, int mId, String userId, int category, String bTitle, String bType, String bContent,
+	public Board(int rNum, int bId, int mId, String userId, int category, String bTitle, String bType, String bContent,
 			int bCount, Date createDate, Date modifyDate, String status, int bLevel, int bGood, int reply) {
-		super();
+		this.rNum = rNum;
 		this.bId = bId;
 		this.mId = mId;
 		this.userId = userId;
@@ -39,6 +39,14 @@ public class Board {
 		this.bLevel = bLevel;
 		this.bGood = bGood;
 		this.reply = reply;
+	}
+
+	public int getrNum() {
+		return rNum;
+	}
+
+	public void setrNum(int rNum) {
+		this.rNum = rNum;
 	}
 
 	public int getbId() {
@@ -155,11 +163,14 @@ public class Board {
 
 	@Override
 	public String toString() {
-		return "Board [bId=" + bId + ", mId=" + mId + ", userId=" + userId + ", category=" + category + ", bTitle="
-				+ bTitle + ", bType=" + bType + ", bContent=" + bContent + ", bCount=" + bCount + ", createDate="
-				+ createDate + ", modifyDate=" + modifyDate + ", status=" + status + ", bLevel=" + bLevel + ", bGood="
-				+ bGood + ", reply=" + reply + "]";
-	} 
+		return "Board [rNum=" + rNum + ", bId=" + bId + ", mId=" + mId + ", userId=" + userId + ", category=" + category
+				+ ", bTitle=" + bTitle + ", bType=" + bType + ", bContent=" + bContent + ", bCount=" + bCount
+				+ ", createDate=" + createDate + ", modifyDate=" + modifyDate + ", status=" + status + ", bLevel="
+				+ bLevel + ", bGood=" + bGood + ", reply=" + reply + "]";
+	}
+	
+	
+	
 	
 }
 
