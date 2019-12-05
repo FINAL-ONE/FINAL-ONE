@@ -18,12 +18,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonIOException;
 import com.kh.awesome.board.model.exception.BoardException;
 import com.kh.awesome.board.model.service.BoardService;
 import com.kh.awesome.board.model.vo.Attachment;
 import com.kh.awesome.board.model.vo.BGood;
 import com.kh.awesome.board.model.vo.Board;
 import com.kh.awesome.board.model.vo.PageInfo;
+import com.kh.awesome.board.model.vo.Reply;
 import com.kh.awesome.board.model.vo.Search;
 import com.kh.awesome.common.Pagination;
 import com.kh.awesome.member.model.vo.Member;
@@ -78,6 +82,15 @@ public class BoardController {
 			
 			bService.addReadCount(bId);
 			Board board = bService.selectBoard(bId);
+			int nowRnum = board.getrNum(); 
+			System.out.println("nowRnum: " + nowRnum);
+		
+		  Board prevBoard = bService.selectBoardAsRnum(nowRnum-1); 
+		  Board nextBoard = bService.selectBoardAsRnum(nowRnum+1);
+		  System.out.println("prevBoard: " + prevBoard );
+		  System.out.println("nextBoard: " + nextBoard );
+			
+			
 			ArrayList<Attachment> attachments = bService.selectAttachments(bId);
 			ArrayList<BGood> bGoodList =bService.selectBGood(bId);
 			System.out.println("bGoodList: "+  bGoodList);
@@ -86,10 +99,11 @@ public class BoardController {
 				// 메소드 체이닝 방식
 				mv.addObject("board", board)
 				.addObject("currentPage", currentPage)
+				.addObject("prevBoard", prevBoard)
+				.addObject("nextBoard", nextBoard)
 				.addObject("attachments", attachments)
 				.addObject("bGoodList", bGoodList)
 				.setViewName("board/fBoardDetailView");	// boardDetailView.jsp 만들러 ㄱㄱ씽
-				
 			}else {
 				throw new BoardException("게시글 상세조회 실패!");
 			}
@@ -463,6 +477,72 @@ public class BoardController {
 	
 	
 		
+	
+	
+	
+	// 댓글 관련 부분
+		// 댓글 리스트 불러오기
+
+		@RequestMapping("rList.do")
+		public void getReplyList(HttpServletResponse response, int bId) throws JsonIOException, IOException {
+			System.out.println("리플 들어왔니? ");
+			ArrayList<Reply> rList = bService.selectReplyList(bId);
+			
+			response.setContentType("application/json;charset=utf-8");
+			for(Reply r : rList) {
+				r.setrContent(r.getrContent());
+			}
+
+				System.out.println("rList: " + rList);
+			
+			Gson gson = new GsonBuilder().setDateFormat("yyyy.MM.dd").create();
+			gson.toJson(rList, response.getWriter());
+		}
+	
+		
+		/*
+		@RequestMapping("addReply.do")
+		@ResponseBody
+		public String addReply(Reply r, HttpSession session, HttpServletResponse response) {
+			response.setContentType("application/json;charset=utf-8");
+			
+			Member loginUser = (Member)session.getAttribute("loginUser");
+			String rWriter = loginUser.getId();
+			r.setrWriter(rWriter);
+			
+			int result = bService.insertReply(r);
+			
+			if(result > 0) {
+				return "success";
+			}else {
+				throw new BoardException("댓글 등록 실패!");
+			}
+		}
+	*/
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	///////////////////////////
 	
 /*	
 	@RequestMapping("bupView.do")

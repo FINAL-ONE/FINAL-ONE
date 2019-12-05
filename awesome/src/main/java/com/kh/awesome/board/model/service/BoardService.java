@@ -6,6 +6,7 @@ import com.kh.awesome.board.model.vo.Attachment;
 import com.kh.awesome.board.model.vo.BGood;
 import com.kh.awesome.board.model.vo.Board;
 import com.kh.awesome.board.model.vo.PageInfo;
+import com.kh.awesome.board.model.vo.Reply;
 import com.kh.awesome.board.model.vo.Search;
 
 public interface BoardService {
@@ -71,5 +72,9 @@ public interface BoardService {
 	public String selectAttachChangeName(int fId);
 
 	public int updateAttachment(Attachment attachment);
+
+	public Board selectBoardAsRnum(int rNum);
+
+	public ArrayList<Reply> selectReplyList(int bId);
 	
 }

@@ -4,75 +4,91 @@ import java.sql.Date;
 
 public class Reply {
 	private int rId;
+	private int bId;
+	private int mId;
 	private String rContent;
-	private int refBid;
-	private String rWriter;
-	private Date rCreateDate;
-	private Date rModifyDate;
-	private String rStatus;
+	private String createDate;
+	private String modifyDate;
+	private String status;
 	
 	public Reply() {
+		super();
 	}
-	
-	public Reply(int rId, String rContent, int refBid, String rWriter, Date rCreateDate, Date rModifyDate,
-			String rStatus) {
+
+	public Reply(int rId, int bId, int mId, String rContent, String createDate, String modifyDate, String status) {
+		super();
 		this.rId = rId;
+		this.bId = bId;
+		this.mId = mId;
 		this.rContent = rContent;
-		this.refBid = refBid;
-		this.rWriter = rWriter;
-		this.rCreateDate = rCreateDate;
-		this.rModifyDate = rModifyDate;
-		this.rStatus = rStatus;
+		this.createDate = createDate;
+		this.modifyDate = modifyDate;
+		this.status = status;
 	}
 	
 	public int getrId() {
 		return rId;
 	}
+
 	public void setrId(int rId) {
 		this.rId = rId;
 	}
+
+	public int getbId() {
+		return bId;
+	}
+
+	public void setbId(int bId) {
+		this.bId = bId;
+	}
+
+	public int getmId() {
+		return mId;
+	}
+
+	public void setmId(int mId) {
+		this.mId = mId;
+	}
+
 	public String getrContent() {
 		return rContent;
 	}
+
 	public void setrContent(String rContent) {
 		this.rContent = rContent;
 	}
-	public int getRefBid() {
-		return refBid;
+
+	public String getCreateDate() {
+		return createDate;
 	}
-	public void setRefBid(int refBid) {
-		this.refBid = refBid;
+
+	public void setCreateDate(String createDate) {
+		this.createDate = createDate;
 	}
-	public String getrWriter() {
-		return rWriter;
+
+	public String getModifyDate() {
+		return modifyDate;
 	}
-	public void setrWriter(String rWriter) {
-		this.rWriter = rWriter;
+
+	public void setModifyDate(String modifyDate) {
+		this.modifyDate = modifyDate;
 	}
-	public Date getrCreateDate() {
-		return rCreateDate;
+
+	public String getStatus() {
+		return status;
 	}
-	public void setrCreateDate(Date rCreateDate) {
-		this.rCreateDate = rCreateDate;
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
-	public Date getrModifyDate() {
-		return rModifyDate;
-	}
-	public void setrModifyDate(Date rModifyDate) {
-		this.rModifyDate = rModifyDate;
-	}
-	public String getrStatus() {
-		return rStatus;
-	}
-	public void setrStatus(String rStatus) {
-		this.rStatus = rStatus;
-	}
-	
+
 	@Override
 	public String toString() {
-		return "Reply [rId=" + rId + ", rContent=" + rContent + ", refBid=" + refBid + ", rWriter=" + rWriter
-				+ ", rCreateDate=" + rCreateDate + ", rModifyDate=" + rModifyDate + ", rStatus=" + rStatus + "]";
+		return "Reply [rId=" + rId + ", bId=" + bId + ", mId=" + mId + ", rContent=" + rContent + ", createDate="
+				+ createDate + ", modifyDate=" + modifyDate + ", status=" + status + "]";
 	}
+	
+	
 	
 	
 }
