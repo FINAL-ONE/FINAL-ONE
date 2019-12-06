@@ -23,6 +23,7 @@ public class Admin {
 
 	public Admin(int sellNum, int gId, String cateCd, String goodsTitle, int goodsPrice, int count, String goodsContent,
 			String filePath, String contentFilePath, Date sellDate, Date modifyDate, String status) {
+		super();
 		this.sellNum = sellNum;
 		this.gId = gId;
 		this.cateCd = cateCd;

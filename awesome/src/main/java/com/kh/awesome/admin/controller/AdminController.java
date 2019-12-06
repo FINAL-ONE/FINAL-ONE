@@ -2,11 +2,16 @@ package com.kh.awesome.admin.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,10 +20,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
 import com.kh.awesome.admin.model.exception.AdminException;
 import com.kh.awesome.admin.model.service.AdminService;
 import com.kh.awesome.admin.model.vo.Admin;
+import com.kh.awesome.admin.model.vo.Category;
+import com.kh.awesome.admin.model.vo.Goods;
 import com.kh.awesome.member.model.exception.MemberException;
 import com.kh.awesome.member.model.vo.Member;
 import com.kh.awesome.shop.model.vo.SellReply;
@@ -58,14 +67,6 @@ public class AdminController {
 	}
 	// 메뉴바에서 상품조회 클릭시 관리자용 상품조회 테이블 조회--준배
 	
-	
-	// 메뉴바에서 상품등록 클릭시 view 이동 -- 준배
-	@RequestMapping("goodsWriterView.do")
-	public String goodsWriterView() {
-		
-		return "admin/sell_goodsInsertView";	
-	}
-	// 메뉴바에서 상품등록 클릭시 view 이동 -- 준배
 	
 	
 	// 메뉴바에서 shop으로 뿌려질 리스트 조회 -- 준배
@@ -237,12 +238,412 @@ public class AdminController {
 		return "redirect:sell_goodsList.do";
 	}
 	// 상품조회 페이지에서 상품 품절 처리 -- 준배
+	
+	
+	
+	
+	
+// 동복 부분 --------------------------------------------------------------
+	
+	
 		
 		
+	
+	
+	
+	
+	
+	// 동복 - 판매상품 등록 수정
+	@RequestMapping("goodsWriterView.do")
+	public ModelAndView goodsWriterView(ModelAndView mv) {
+		ArrayList<Goods> glist = aService.goodsList();
+System.out.println("goodsWriterView_glist : " + glist);
 		
+		if(glist != null) {
+			mv.addObject("glist",glist);
+			mv.setViewName("admin/sell_goodsInsertView");
+		}else {
+			throw new AdminException("상품 목록 보기 실패!!");
+		}
+		return mv;
+	}	
 	
+	// 동복 - 상품 리스트 조회
+	@RequestMapping("goodsList.do")
+	public ModelAndView goodsList(ModelAndView mv) {
+		ArrayList<Goods> glist = aService.goodsList();
+System.out.println("전체 상품 리스트 : " + glist);
+		
+		if(glist != null) {
+			mv.addObject("glist",glist);
+			mv.setViewName("admin/goodsListView");
+		}else {
+			throw new AdminException("상품 목록 보기 실패!!");
+		}
+		return mv;
+	}
 	
+	// 동복 - 상품 등록 페이지	이동
+	@RequestMapping("goodsInsertView.do")
+	public ModelAndView goodsInsertView(ModelAndView mv, Category c) {
+		
+		String lclCd = "1";
+		String mclCd = "101";
+		c.setLclCd(lclCd);
+		c.setMclCd(mclCd);
+		
+		mv.addObject("gClist", aService.goodsCategoryList()); // 동복 - 상품 수정 카테고리 조회
+		mv.addObject("cateCd", aService.categoryCDselect());
+		
+		mv.addObject("gLlist", aService.goodsLCategoryList(lclCd)); // 동복 - 상품 수정 카테고리 조회
+		mv.addObject("gMlist", aService.goodsMCategoryList(c)); // 동복 - 상품 수정 카테고리 조회
+		
+		mv.setViewName("admin/goodsInsertView"); 
+//		mv.addObject("gSlist", aService.goodsSCategoryList()); // 동복 - 상품 수정 카테고리 조회
+		
+		return mv;
+	}
 	
-	
+	// 동복 - 상품 등록
+	@RequestMapping("goodsInsert.do")
+	public String goodsInsert(Goods g, Category c, String insertlclCd, String insertmclCd, String insertsclCd, String cateCd, String goodsName, HttpServletRequest request) {
+System.out.println("신규 등록 : " + g);
+System.out.println("insertlclCd : " + insertlclCd + ", insertmclCd : " + insertmclCd + ", insertsclCd : " + insertsclCd + ", cateCd : " + cateCd);
 
+		c.setCateCd(cateCd);
+		c.setCateNm(goodsName);
+		c.setLclCd(insertlclCd);
+		c.setMclCd(insertmclCd);
+		c.setSclCd(insertsclCd);
+
+		int result = aService.insertgoods(g); 
+System.out.println(result);
+		if(result > 0 ) {
+			int result2 = aService.insertCategory(c);
+System.out.println(result2);
+			if(result2 > 0) {
+				return "redirect:goodsList.do";
+			}else {
+				throw new AdminException("상품 등록 실패!!");	 
+			}
+		} else {
+			throw new AdminException("상품 등록 실패!!");
+		}
+	}
+	
+	// 동복 - 상품 수정 페이지 이동(조회후)
+	@RequestMapping("goodsDetailList.do")
+	public ModelAndView goodsDetailList(ModelAndView mv, int gId, String cateCd, String cateNm, String lclCd, String mclCd, String sclCd) {
+		
+System.out.println("gId 넘어오나? : " + gId + " cateCd : " + cateCd + " cateNm : " + cateNm + " lclCd : " + lclCd + " mclCd : " + mclCd + " sclCd : " + sclCd);		
+		
+		// 개별로 넘겨볼까..? TEST
+		mv.addObject("cateCd",cateCd);
+		mv.addObject("cateNm",cateNm);
+		mv.addObject("lclCd",lclCd);
+		mv.addObject("mclCd",mclCd);
+		mv.addObject("sclCd",sclCd);
+		// 개별로 넘겨볼까..? TEST
+		
+		mv.addObject("goods", aService.goodsUpdateList(gId));	// 동복 - 클릭한 상품 조회
+		
+		mv.addObject("glist", aService.goodsUpCategorylist(gId)); 	// 동복 - 클릭한 상품의 카테고리 조회(개별)
+		
+		mv.addObject("gClist", aService.goodsUpdateClist(gId)); // 동복 - 클릭한 상품의  카테고리 조회 (전체)
+		mv.addObject("gLlist", aService.goodsUpdateLlist(gId)); // 동복 - 클릭한 상품의  (대)카테고리 조회(전체)
+		mv.addObject("gMlist", aService.goodsUpdateMlist(gId)); // 동복 - 클릭한 상품의  (중)카테고리 조회(전체)
+		
+		mv.setViewName("admin/goodsDetailList"); 
+		
+		return mv;
+	}
+	
+	// 동복 - 상품 수정
+	@RequestMapping("goodsUpdate.do")
+	public String goodsUpdate(Goods g, Category c, HttpServletRequest request) {
+		c.setCateNm(g.getGoodsName());
+System.out.println("gggggg : " + g);
+System.out.println("cccccc : " + c);
+	
+		int result = aService.Updategoods(g);
+		
+		if(result > 0 ) {
+			int result2 = aService.UpdateCategory(c);
+			
+			if(result2 > 0) {
+				return "redirect:goodsList.do";
+			}else {
+				throw new AdminException("상품 수정 실패!!");	
+			}
+			
+		} else {
+			throw new AdminException("상품 수정 실패!!");
+		}
+	}
+	// 동복 - 상품판매 시 상품리스트 조회
+	@RequestMapping("selectGoodsValue.do")
+	public void boardTopList(HttpServletResponse response,  String goodsName) throws JsonIOException, IOException {
+		response.setContentType("application/json;charset=utf-8"); 
+// System.out.println("넘긴값2  : " + goodsName);	
+		ArrayList<Goods> glist = aService.checkIdDup(goodsName);
+// System.out.println("넘어온값1 : " + glist);
+
+		Gson gson = new GsonBuilder().create();  
+		gson.toJson(glist, response.getWriter());
+	}
+
+	
+	// 동복 - 상품 수정화면 카테고리 포커스시 리스트 조회
+	@RequestMapping("updateCategorylist.do")
+	public void updateCategorylist(HttpServletResponse response,  String gId) throws JsonIOException, IOException {
+		response.setContentType("application/json;charset=utf-8");
+System.out.println("gId : " + gId);
+		//ArrayList<Category> gLlist = aService.updateCategorylist(gId);
+		ArrayList<Category> gLlist = aService.goodsCategoryList();
+		
+System.out.println("view로 넘어가기 전: " + gLlist.size());
+		JSONArray jarr = new JSONArray();
+		
+		for(Category cate :gLlist) {
+			// 1_1. JSON배열에 담기 위해 user 객체를 JSON객체에 담기
+			JSONObject jUser = new JSONObject();	// JSONObject 는 MAP 과 동일하다.!?
+			// .put() : JSONObject MAP 형식이라 put 사용
+			jUser.put("cateCd", cate.getCateCd());
+			jUser.put("cateNm", cate.getCateNm());
+			jUser.put("lclCd", cate.getLclCd());
+			jUser.put("mclCd", cate.getMclCd());
+			jUser.put("sclCd", cate.getSclCd());
+			jUser.put("cateLvl", cate.getCateLvl());
+			jUser.put("useYn", cate.getUseYn());
+			
+			// 1_2. user 정보를 담은 JSON객체를 JSON배열에 넣기
+			jarr.add(jUser);
+			
+		}
+		
+		JSONObject sendJson = new JSONObject();	// 이 작업은 위에 for문 돌려서 나온 jarr 리스트값을
+		sendJson.put("list", jarr);
+		PrintWriter out = response.getWriter();
+System.out.println("sendJson : " + sendJson);
+		out.print(sendJson);
+		out.flush();
+		out.close();
+	}
+	
+	
+	// 동복 - 상품 수정화면 (대)카테고리 포커스시 리스트 조회
+	@RequestMapping("updateLategorylist.do")
+	public void updateLategorylist(HttpServletResponse response,  int gId) throws JsonIOException, IOException {
+		response.setContentType("application/json;charset=utf-8");
+System.out.println("gId : " + gId);
+		//ArrayList<Category> gLlist = aService.updateCategorylist(gId);
+		ArrayList<Category> gLlist = aService.goodsUpdateLlist(gId);
+		
+System.out.println("view로 넘어가기 전: " + gLlist.size());
+		JSONArray jarr = new JSONArray();
+		
+		for(Category cate :gLlist) {
+			// 1_1. JSON배열에 담기 위해 user 객체를 JSON객체에 담기
+			JSONObject jUser = new JSONObject();	// JSONObject 는 MAP 과 동일하다.!?
+			// .put() : JSONObject MAP 형식이라 put 사용
+			jUser.put("cateCd", cate.getCateCd());
+			jUser.put("cateNm", cate.getCateNm());
+			jUser.put("lclCd", cate.getLclCd());
+			jUser.put("mclCd", cate.getMclCd());
+			jUser.put("sclCd", cate.getSclCd());
+			jUser.put("cateLvl", cate.getCateLvl());
+			jUser.put("useYn", cate.getUseYn());
+			
+			// 1_2. user 정보를 담은 JSON객체를 JSON배열에 넣기
+			jarr.add(jUser);
+			
+		}
+		
+		JSONObject sendJson = new JSONObject();	// 이 작업은 위에 for문 돌려서 나온 jarr 리스트값을
+		sendJson.put("list", jarr);
+		PrintWriter out = response.getWriter();
+System.out.println("sendJson : " + sendJson);
+		out.print(sendJson);
+		out.flush();
+		out.close();
+	}
+	
+	// 동복 - 상품 수정화면 (중)카테고리 포커스시 리스트 조회
+	@RequestMapping("updateMategorylist.do")
+	public void updateMategorylist(HttpServletResponse response,  int gId) throws JsonIOException, IOException {
+		response.setContentType("application/json;charset=utf-8");
+System.out.println("gId : " + gId);
+		//ArrayList<Category> gLlist = aService.updateCategorylist(gId);
+		ArrayList<Category> gLlist = aService.goodsUpdateMlist(gId);
+		
+System.out.println("view로 넘어가기 전: " + gLlist.size());
+		JSONArray jarr = new JSONArray();
+		
+		for(Category cate :gLlist) {
+			// 1_1. JSON배열에 담기 위해 user 객체를 JSON객체에 담기
+			JSONObject jUser = new JSONObject();	// JSONObject 는 MAP 과 동일하다.!?
+			// .put() : JSONObject MAP 형식이라 put 사용
+			jUser.put("cateCd", cate.getCateCd());
+			jUser.put("cateNm", cate.getCateNm());
+			jUser.put("lclCd", cate.getLclCd());
+			jUser.put("mclCd", cate.getMclCd());
+			jUser.put("sclCd", cate.getSclCd());
+			jUser.put("cateLvl", cate.getCateLvl());
+			jUser.put("useYn", cate.getUseYn());
+			
+			// 1_2. user 정보를 담은 JSON객체를 JSON배열에 넣기
+			jarr.add(jUser);
+			
+		}
+		
+		JSONObject sendJson = new JSONObject();	// 이 작업은 위에 for문 돌려서 나온 jarr 리스트값을
+		sendJson.put("list", jarr);
+		PrintWriter out = response.getWriter();
+System.out.println("sendJson : " + sendJson);
+		out.print(sendJson);
+		out.flush();
+		out.close();
+	}	
+
+	
+	// 동복 - 상품 등록 카테고리 리스트 조회
+	@RequestMapping("categoryCSelectBox.do")
+	public void CategoryselectBox(HttpServletResponse response,  String lclCd) throws JsonIOException, IOException {
+		response.setContentType("application/json;charset=utf-8");
+System.out.println("lclCd : " + lclCd);
+		ArrayList<Category> gLlist = aService.goodsLCategoryList(lclCd);
+System.out.println("view로 넘어가기 전: " + gLlist.size());
+		JSONArray jarr = new JSONArray();
+		
+		for(Category cate :gLlist) {
+			// 1_1. JSON배열에 담기 위해 user 객체를 JSON객체에 담기
+			JSONObject jUser = new JSONObject();	// JSONObject 는 MAP 과 동일하다.!?
+			// .put() : JSONObject MAP 형식이라 put 사용
+			jUser.put("cateCd", cate.getCateCd());
+			jUser.put("cateNm", cate.getCateNm());
+			jUser.put("lclCd", cate.getLclCd());
+			jUser.put("mclCd", cate.getMclCd());
+			jUser.put("sclCd", cate.getSclCd());
+			jUser.put("cateLvl", cate.getCateLvl());
+			jUser.put("useYn", cate.getUseYn());
+			
+			// 1_2. user 정보를 담은 JSON객체를 JSON배열에 넣기
+			jarr.add(jUser);
+			
+		}
+		
+		JSONObject sendJson = new JSONObject();	// 이 작업은 위에 for문 돌려서 나온 jarr 리스트값을
+		sendJson.put("list", jarr);
+		PrintWriter out = response.getWriter();
+System.out.println("sendJson : " + sendJson);
+		out.print(sendJson);
+		out.flush();
+		out.close();
+	}
+	
+	// 동복 - 상품 등록 (대)카테고리 리스트 조회
+	@RequestMapping("categoryLSelectBox.do")
+	public void CategoryLselectBox(HttpServletResponse response,  String lclCd, String mclCd, Category c) throws JsonIOException, IOException {
+		response.setContentType("application/json;charset=utf-8");
+System.out.println("lclCd : " + lclCd + ", mclCd : " + mclCd);
+
+		c.setLclCd(lclCd);
+		c.setMclCd(mclCd);
+System.out.println("c : " + c);
+		ArrayList<Category> gMlist = aService.goodsMCategoryList(c);
+		
+System.out.println("view로 넘어가기 전: " + gMlist.size());
+		JSONArray jarr = new JSONArray();
+		
+		for(Category cate :gMlist) {
+			// 1_1. JSON배열에 담기 위해 user 객체를 JSON객체에 담기
+			JSONObject jUser = new JSONObject();	// JSONObject 는 MAP 과 동일하다.!?
+			// .put() : JSONObject MAP 형식이라 put 사용
+			jUser.put("cateCd", cate.getCateCd());
+			jUser.put("cateNm", cate.getCateNm());
+			jUser.put("lclCd", cate.getLclCd());
+			jUser.put("mclCd", cate.getMclCd());
+			jUser.put("sclCd", cate.getSclCd());
+			jUser.put("cateLvl", cate.getCateLvl());
+			jUser.put("useYn", cate.getUseYn());
+			
+			// 1_2. user 정보를 담은 JSON객체를 JSON배열에 넣기
+			jarr.add(jUser);
+			
+		}
+		
+		JSONObject sendJson = new JSONObject();	// 이 작업은 위에 for문 돌려서 나온 jarr 리스트값을
+		sendJson.put("list", jarr);
+		PrintWriter out = response.getWriter();
+System.out.println("sendJson : " + sendJson);
+		out.print(sendJson);
+		out.flush();
+		out.close();
+	}
+	
+	// 동복 - 상품 등록 (중)카테고리 리스트 조회
+	@RequestMapping("categoryMSelectBox.do")
+	public void CategoryMselectBox(HttpServletResponse response,  String lclCd, String mclCd, String sclCd, Category c) throws JsonIOException, IOException {
+		response.setContentType("application/json;charset=utf-8");
+		
+System.out.println("lclCd : " + lclCd + ", mclCd : " + mclCd + ", sclCd : " + sclCd);
+
+		c.setLclCd(lclCd);
+		c.setMclCd(mclCd);
+		c.setSclCd(sclCd);
+
+		ArrayList<Category> gMlist = aService.goodsSCategoryList(c);
+		
+System.out.println("view로 넘어가기 전: " + gMlist.size());
+		JSONArray jarr = new JSONArray();
+		
+		for(Category cate :gMlist) {
+			// 1_1. JSON배열에 담기 위해 user 객체를 JSON객체에 담기
+			JSONObject jUser = new JSONObject();	// JSONObject 는 MAP 과 동일하다.!?
+			// .put() : JSONObject MAP 형식이라 put 사용
+			jUser.put("cateCd", cate.getCateCd());
+			jUser.put("cateNm", cate.getCateNm());
+			jUser.put("lclCd", cate.getLclCd());
+			jUser.put("mclCd", cate.getMclCd());
+			jUser.put("sclCd", cate.getSclCd());
+			jUser.put("cateLvl", cate.getCateLvl());
+			jUser.put("useYn", cate.getUseYn());
+			
+			// 1_2. user 정보를 담은 JSON객체를 JSON배열에 넣기
+			jarr.add(jUser);
+			
+		}
+		
+		JSONObject sendJson = new JSONObject();	// 이 작업은 위에 for문 돌려서 나온 jarr 리스트값을
+		sendJson.put("list", jarr);
+		PrintWriter out = response.getWriter();
+System.out.println("sendJson : " + sendJson);
+		out.print(sendJson);
+		out.flush();
+		out.close();
+	}
+	
+	
+	// 동복 - 상품 등록 시 상품이름 중복 체크	
+	@RequestMapping("selectGoodsNm.do")
+	public ModelAndView selectGoodsNm(HttpServletResponse response,  String goodsName, ModelAndView mv) throws JsonIOException, IOException {
+		Map map = new HashMap();
+		
+		boolean isUsable = aService.checkGoodsNm(goodsName) == 0? true : false;
+		
+		map.put("isUsable", isUsable);
+		
+		mv.addAllObjects(map);
+		
+		mv.setViewName("jsonView");
+		
+		return mv;
+	}
+	
+	
+	
+	
+	
+	
+	
 }
