@@ -12,6 +12,7 @@
 			<typeAlias type="com.kh.awesome.board.model.vo.Reply" alias="Reply"/>
 			<typeAlias type="com.kh.awesome.board.model.vo.Attachment" alias="Attachment"/>
 			<typeAlias type="com.kh.awesome.board.model.vo.BGood" alias="BGood"/>
+			<typeAlias type="com.kh.awesome.board.model.vo.RGood" alias="RGood"/>
 			<typeAlias type="com.kh.awesome.admin.model.vo.Admin" alias="Admin"/>
 	</typeAliases>
 

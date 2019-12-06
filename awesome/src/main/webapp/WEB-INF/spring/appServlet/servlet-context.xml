@@ -24,4 +24,23 @@
 	<context:component-scan base-package="com.kh.awesome" />
 	
 	
+	<beans:bean id="pi" class="com.kh.awesome.board.model.vo.PageInfo">
+	</beans:bean>
+	
+	
+	
+	<!-- jasonView를 활용할 때 필요한 클래스들에 대한 bean 설정 등록 -->
+	<beans:bean id="jsonView" class="net.sf.json.spring.web.servlet.view.JsonView"/>
+	
+	
+	<beans:bean id="viewResolver" class="org.springframework.web.servlet.view.BeanNameViewResolver">
+		<beans:property name="order" value="0"/>
+	</beans:bean>
+	
+	
+	
+	
+	
+	
+	
 </beans:beans>

@@ -10,6 +10,7 @@ import com.kh.awesome.board.model.vo.Attachment;
 import com.kh.awesome.board.model.vo.BGood;
 import com.kh.awesome.board.model.vo.Board;
 import com.kh.awesome.board.model.vo.PageInfo;
+import com.kh.awesome.board.model.vo.RGood;
 import com.kh.awesome.board.model.vo.Reply;
 import com.kh.awesome.board.model.vo.Search;
 
@@ -122,9 +123,42 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public ArrayList<Reply> selectReplyList(int bId) {
+	public ArrayList<Reply> selectReplyList(int bId, PageInfo pi) {
 		//
-		return bDao.selectReplyList(bId);
+		return bDao.selectReplyList(bId, pi);
+	}
+
+	@Override
+	public int insertReply(Reply r) {
+		return bDao.insertReply(r);
+	}
+
+	@Override
+	public int getReplylistCount(int bId) {
+		
+		return bDao.getReplylistCount(bId);
+	}
+
+	@Override
+	public int deleteReply(int rId) {
+		// TODO Auto-generated method stub
+		return bDao.deleteReply(rId);
+	}
+
+	@Override
+	public int selectReplyGoodMemory(RGood g) {
+		// TODO Auto-generated method stub
+		return bDao.selectReplyGoodMemory(g);
+	}
+
+	@Override
+	public int addReplyGoodCount(RGood g) {
+		return bDao.addReplyGoodCount(g); 
+	}
+
+	@Override
+	public int subReplyGoodCount(RGood g) {
+		return bDao.subReplyGoodCount(g); 
 	}
 
 

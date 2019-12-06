@@ -18,7 +18,7 @@
 		<result property ="modifyDate" column ="MODIFY_DATE"/>
 		<result property ="admin" column ="ADMIN"/>
 		<result property ="status" column ="STATUS"/>
-	
+	  	<result property="userNickname" column="USER_NICKNAME"/>
 	</resultMap>
 	
 	
