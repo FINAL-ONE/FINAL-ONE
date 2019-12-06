@@ -13,6 +13,15 @@
 
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
+<!-- include summernote css/js-->
+<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
+
+
 </head>
 <body>
 
@@ -57,7 +66,7 @@
 			</tr>
 			<tr>
 				<th>상품 내용 <span style = "color:red; font-size : 1.5em;">*</span></th>
-				<td><textarea id ="goodsContent" name="goodsContent" rows="10" cols ="81" size ="resize:none" required></textarea>
+				<td><textarea id ="summernote" name="goodsContent" rows="10" cols ="81" size ="resize:none" required placeholder="내용을 입력해주세요"></textarea>
 				</td>
 			</tr>		
 				<!-- 파일 업로드 하는 부분(file 타입형 input태그들) -->
@@ -115,6 +124,23 @@
 				<!-- InsertThumbnailServlet 만들러 ㄱㄱ!!!! -->
 	</form>	
 	
+			
+		<!--  summernote 동작 -->
+		<script> 
+		$(document).ready(function() {
+		    $('#summernote').summernote({
+		            height: 300,                 // set editor height
+		            minHeight: null,             // set minimum height of editor
+		            maxHeight: null,             // set maximum height of editor
+		            focus: true                  // set focus to editable area after initializing summernote
+		    });
+		});
+		
+		$(document).ready(function() {
+		     $('#summernote').summernote();
+		});
+		</script>
+		
 		
 		<p align="center">
 			<a href="adminMain.do">관리자페이지로 이동</a>

@@ -137,9 +137,8 @@ body {
 	  </div>
 	  
 	  <div class = "contentDiv" id = "contentDiv3" onclick= "location.href='memberLookup.do'">
-	  	최근 회원 가입 회원 테이블 5명 미리보기
-	  	ajax 이후에 작업 한 부분 
-			페이지가 열리면 바로 DB를 갔다와서 top5를 불러오고 
+	  	<!-- 최근 회원 가입 회원 테이블 5명 미리보기 ajax 이후에 작업 한 부분 
+			페이지가 열리면 바로 DB를 갔다와서 top5를 불러오고  -->
 			<h1 align="center">최신 가입 회원</h1>
 			<table align="center" border="1" cellspacing="0" width="600" id="tb">
 				<thead>

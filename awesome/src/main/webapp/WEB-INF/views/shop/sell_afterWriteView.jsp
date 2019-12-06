@@ -151,7 +151,7 @@
 			      $('#radioButton').click(function () {
 			        // getter
 			        var radioVal = $('input[name="star"]:checked').val();
-			        alert(radioVal);
+			        	alert(radioVal);
 			      });
 			    });
   		</script>
