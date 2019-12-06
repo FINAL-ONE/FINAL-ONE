@@ -1,0 +1,237 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    
+    
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link href="js/Modal.js-master/build/css/modal.css" rel="stylesheet">
+
+<style>
+.outer{
+	width : 100%;
+	height : 100%;
+}
+.goodsTable {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 90%;
+  border: 1px solid #ddd;
+  text-align :center;
+}
+th, td {
+  text-align: left;
+  padding: 16px;
+  
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+/* 모달 css */
+  *, *:before, *:after {
+    box-sizing: border-box; }
+    body { font-family: 'Roboto'; }
+    .modal_container {text-align: center; }
+    
+    
+</style>
+
+</head>
+<body>
+	<jsp:include page="../common/menubar.jsp"/>   
+	<%-- <jsp:include page ="../admin/adminMenu.jsp"/> --%>
+ 	<div class = "outer">
+		<div id="container" style= "height: auto; overflow: auto;"><!-- container -->
+
+			<c:if test="${!empty loginUser }">
+		   		<div align ="center">
+		   			<button onclick="location.href='goodsWriterView.do'">상품 등록하기</button>
+		   		</div>
+			</c:if>
+			<br>
+		<form id = "goodsInsertForm" action="aStatusUpdate.do" method="post">
+			<table id ="checkboxTestTbl" class = "goodsTable" align="center" border="1" cellspacing="0" style="clear:right;" id ="td">
+					<colgroup>
+			            <col width="10px;"/>
+			            <col width="200px;"/>
+			            <col width="100px;"/>
+			            <col width="100px;"/>
+			            <col width="70px;"/>
+			            <col width="70px;"/>
+			            <col width="70px;"/>
+			            <col width="150px;"/>
+			        </colgroup>
+
+					
+					<tr bgcolor ="#99ccff">
+						<th><input type="checkbox" name="user_CheckBox"></th>
+						<th>상품번호</th>
+						<th>이미지</th>
+						<th>상품명</th>
+						<th>가격</th>
+						<th>수량</th>
+						<th>상품설명</th>
+						<th>올린날짜</th>
+						<th>수정날짜</th>
+						<th>상태</th>
+						<th>품절</th>
+					</tr>
+					
+					<c:forEach var="a" items="${list}">
+						<tr>
+							<td><input type="checkbox" name="user_CheckBox"></td>
+							<td width ="50px"><input type="text" name="sellNum" value="${a.sellNum}" readonly style="background : lightgray; width : 70px;" ></td>
+							<td width ="250px">
+								<img src="resources/auploadFiles/${a.filePath}" name="filePath" width ="100px" height ="100px">
+							</td>
+							<td width ="150px">
+								<c:if test="${!empty loginUser}">
+									<!-- 이따가 작성 -->
+									<input type="text" name="goodsTitle" value="${a.goodsTitle}" readonly style="background : lightgray;">	
+									<%-- <c:url var="adetail" value="adetail.do">
+										<c:param name="gId" value="${a.gId }"/>
+									</c:url>
+									<a href="${adetail}">${a.goodsTitle}</a> --%>
+								</c:if>
+								<c:if test="${empty loginUser}">
+									<input type="text" name="goodsTitle" value="${a.goodsTitle}" readonly style="background : lightgray;">
+								</c:if>
+							</td>
+							<td><input type="text" value="${a.goodsPrice}" readonly style="background : lightgray; width : 70px;"></td>
+							<td><input type="text" value="${a.count}" readonly style="background : lightgray; width : 70px;" ></td>
+							<td width ="550px"><input type="text" name="goodsContent" value="${a.goodsContent}" readonly style="background : lightgray;"></td>
+							<td width ="400px"><input type="text" name ="sellDate" value ="${a.sellDate}" readonly style="background : lightgray; width : 100px;" ></td>
+							<td width ="400px"><input type="text" name ="modifyDate" value="${a.modifyDate}" readonly style="background : lightgray; width : 100px;""></td>
+							<td width ="300px"><input type="text" name ="statusUpdate" value="${a.status}" readonly style="background : lightgray; width : 70px;" ></td>
+							<td width ="300px">
+								<button type="button" style="width : 50px;" onclick="soldout();">품절</button>
+							</td>
+								
+						</tr>
+					</c:forEach>
+				</table> 
+			</form>
+			
+		<!-- 체크박스 전체선택 -->	
+		  <script>
+		        $(document).ready(function(){
+		            var tbl = $("#checkboxTestTbl");
+		            
+		            // 테이블 헤더에 있는 checkbox 클릭시
+		            $(":checkbox:first", tbl).click(function(){
+		                // 클릭한 체크박스가 체크상태인지 체크해제상태인지 판단
+		                if( $(this).is(":checked") ){
+		                    $(":checkbox", tbl).attr("checked", "checked");
+		                }
+		                else{
+		                    $(":checkbox", tbl).removeAttr("checked");
+		                }
+		 
+		                // 모든 체크박스에 change 이벤트 발생시키기               
+		                $(":checkbox", tbl).trigger("change");
+		            });
+		             
+		            // 헤더에 있는 체크박스외 다른 체크박스 클릭시
+		            $(":checkbox:not(:first)", tbl).click(function(){
+		                var allCnt = $(":checkbox:not(:first)", tbl).length;
+		                var checkedCnt = $(":checkbox:not(:first)", tbl).filter(":checked").length;
+		                 
+		                // 전체 체크박스 갯수와 현재 체크된 체크박스 갯수를 비교해서 헤더에 있는 체크박스 체크할지 말지 판단
+		                if( allCnt==checkedCnt ){
+		                    $(":checkbox:first", tbl).attr("checked", "checked");
+		                }
+		                else{
+		                    $(":checkbox:first", tbl).removeAttr("checked");
+		                }
+		            }).change(function(){
+		                if( $(this).is(":checked") ){
+		                    // 체크박스의 부모 > 부모 니까 tr 이 되고 tr 에 selected 라는 class 를 추가한다.
+		                    $(this).parent().parent().addClass("selected");
+		                }
+		                else{
+		                    $(this).parent().parent().removeClass("selected");
+		                }
+		            });
+		        });
+		        
+		        
+			    // 품절버튼 클릭시
+        	/* 	function soldout () {
+	        		if(confirm('품절처리하시겠습니까?')){
+	        			$("#goodsInsertForm").submit();
+	        			alert("품절되었습니다.");
+	        		} else {
+	        			alert("취소되었습니다.");
+	        		}
+		        }  */
+			    	
+			    	</script>
+		    
+				<div class="modal_container">
+				  <div class="css-script-ads">
+				    	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+					<!-- CSSScript Demo Page -->
+					<ins class="adsbygoogle"
+					     style="display:inline-block;width:728px;height:90px"
+					     data-ad-client="ca-pub-2783044520727903"
+					     data-ad-slot="3025259193"></ins>
+						<script>
+							(adsbygoogle = window.adsbygoogle || []).push({});
+						</script>
+					</div>
+				</div>
+				<script src="js/Modal.js-master/modal.js"></script>
+				<script>
+		  		 function soldout(){
+					    	Modal.confirm({
+						  title: '품절여부',
+						  message: '품절 처리하시겠습니까?',
+						  onConfirm: function() {
+							$("#goodsInsertForm").submit();
+						    alert('품절되었습니다');
+				  		},
+						  onCancel: function() {
+						    alert('취소되었습니다.');
+				  		},
+					});
+					  }
+				  </script>
+				  
+		<!-- 모달창 script -->
+		<script>
+			  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+			
+			  ga('create', 'UA-46156385-1', 'cssscript.com');
+			  ga('send', 'pageview');
+		
+		</script>
+
+			<p align="center">
+				<c:url var ="adminMain" value="adminMain.do"/>
+				<a href="${adminMain}">관리자페이지 이동</a>&nbsp;
+				<c:url var ="sell_goodsList" value="sell_goodsList.do"/>
+				<a href="${sell_goodsList}">목록전체보기</a>
+			</p>
+	
+		</div>
+	</div> 
+	
+		
+		
+</body>
+<footer>
+   <jsp:include page ="../common/footer.jsp"/>
+</footer>
+
+
+</html>

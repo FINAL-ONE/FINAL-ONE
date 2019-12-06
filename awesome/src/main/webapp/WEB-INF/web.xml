@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee https://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+	<!-- The definition of the Root Spring Container shared by all Servlets and Filters -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/spring/root-context.xml
+					/WEB-INF/spring/spring-security.xml	<!-- 암호화 추가 후에 추가 해주자  spring-security.xml 생성 후 온다-->
+		</param-value>
+	</context-param>
+	
+	<!-- Creates the Spring Container shared by all Servlets and Filters -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+	<!-- Processes application requests -->
+	<servlet>
+		<servlet-name>appServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+		
+	<servlet-mapping>
+		<servlet-name>appServlet</servlet-name>
+		<!-- <url-pattern>/</url-pattern> -->
+		<!-- <url-pattern>*.me</url-pattern> -->
+		 <url-pattern>*.do</url-pattern> 
+		
+	</servlet-mapping>
+	
+	
+	
+	<!-- 로그인 만들다가 MemberController부분에서 예외 처리 할때 작성 할 부분 -->
+	<!-- 에러페이지를 등록해주면 공용으로 사용할수 있다. (스프링에서 지원) -->
+	<!-- 공용 에러 관련 참고해볼만한 사이트 : http://jhgan.tistory.com/13 -->
+	<!-- 404에러나 500에러도 등록할 수 있다. -->
+	<error-page>
+		<exception-type>java.lang.Exception</exception-type>	<!-- 자바 예외 형식 클래스명 또는 에러코드 -->
+		<location>/WEB-INF/views/common/errorPage.jsp</location>	<!-- 해당하는 에러시 보여줄 페이지 -->
+	</error-page>
+	<!-- errorPage로 ㄱㄱ씽 -->
+	
+	
+	<!-- 회원 가입시 인코딩 처리할 때 작성할 부분  
+		(한글 꺠짐 방지 인코딩) -->
+		
+	<filter>
+		<!-- fileter 안에는 filter-name, filter-class, init-param을 추가해 둔다. filter-name은 원하는대로 지정가능 -->
+		<filter-name>encodingFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<!-- encoding 값을 UTF-8 로 지정해준다. -->
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>encodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	
+	
+</web-app>

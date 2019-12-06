@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="boardMapper">
+  
+  <resultMap type="Board" id="boardResultSet">
+  	<id property="bId" column = "BID"/>
+  	<result property="mId" column="MID"/>
+  	<result property="userId" column="USER_ID"/>
+  	<result property="category" column="CATEGORY"/>
+  	<result property="bTitle" column="BTITLE"/>
+  	<result property="bType" column="BTYPE"/>
+  	<result property="bContent" column="BCONTENT"/>
+  	<result property="bCount" column="BCOUNT"/>
+  	<result property="createDate" column="CREATE_DATE"/>
+  	<result property="modifyDate" column="MODIFY_DATE"/>
+  	<result property="status" column="STATUS"/>
+  	<result property="bLevel" column="BLEVEL"/>
+  	<result property="bGood" column="BGOOD"/>
+  	<result property="reply" column="REPLY"/>
+  </resultMap>
+  
+  <resultMap type="Attachment" id="attachResultSet">
+	<id property="fId" column = "FID"/>
+  	<result property="bId" column="BID"/>
+  	<result property="originName" column="ORIGIN_NAME"/>
+  	<result property="changeName" column="CHANGE_NAME"/>
+  	<result property="filePath" column="FILE_PATH"/>
+  	<result property="uploadDate" column="UPLOAD_DATE"/>
+  	<result property="fileLevel" column="FILE_LEVEL"/>
+  	<result property="downloadCount" column="DOWNLOAD_COUNT"/>
+  	<result property="status" column="STATUS"/>
+  </resultMap>  
+  
+  <resultMap type="BGood" id="bGoodResultSet">
+  	<id property="gId" column="GID"/>
+  	<result property="bId" column="BID"/>
+  	<result property="mId" column="MID"/>
+  	<result property="status" column="STATUS"/>
+  </resultMap> 
+  
+	<resultMap type="Reply" id="replyResultSet">
+	  	<id property="rId" column="RID"/>
+	  	<result property="bId" column="BID"/>
+	  	 <result property="mId" column="MID"/>
+	  	<result property="rContent" column="RCONTENT"/>
+	  	<result property="createDate" column="CREATE_DATE"/>
+	  	<result property="modifyDate" column="MODIFY_DATE"/>
+	  	<result property="status" column="STATUS"/>
+  </resultMap>
+  
+  
+  
+  <select id="getFboardListCount" resultType="_int"> 	
+  	 SELECT COUNT(*)
+  	 FROM D_BOARD
+  	 WHERE STATUS='Y'AND CATEGORY = 2
+  	
+  </select>
+  
+  <select id="selectBoardGoodMemory"  parameterType="BGood" resultType="_int"> 	
+	SELECT COUNT(*) 
+    FROM B_GOOD 
+    WHERE BID = #{bId} AND MID = #{mId} AND STATUS='Y'
+  </select>
+  
+  
+   <select id="getSearchFboardListCount" resultType="_int">
+ 	SELECT COUNT(*)
+  	FROM BOARD_VIEW
+  	WHERE (STATUS='Y'AND CATEGORY = 2 )
+ 		<if test='type.equals("all")'>
+ 		    AND ( BTITLE LIKE '%' ||  #{searchWord} || '%'
+ 			or USER_ID LIKE '%' || #{searchWord} || '%'
+ 			or BCONTENT LIKE '%' || #{searchWord} || '%')
+ 		</if>
+ 		<if test='type.equals("bTitle")'>
+ 		    AND ( BTITLE LIKE '%' ||  #{searchWord} || '%')
+ 		</if>
+ 		<if test='type.equals("bWriter")'>
+ 		    AND ( USER_ID LIKE '%' ||  #{searchWord} || '%')
+ 		</if>
+ 		<if test='type.equals("bContent")'>
+ 		    AND ( BCONTENT LIKE '%' || #{searchWord} || '%')
+ 		</if>
+  </select>
+  
+  
+  
+  <select id="selectFList" resultMap="boardResultSet">
+		SELECT B.BID, B.MID, M.USER_ID, CATEGORY, BTITLE, BTYPE, BCONTENT, BCOUNT, B.CREATE_DATE, B.MODIFY_DATE, B.STATUS, BLEVEL, NVL(BGOOD,0) AS BGOOD, NVL(REPLY,0) AS REPLY
+		FROM D_BOARD B
+		JOIN MEMBER M ON( B.MID = M.MID)
+		LEFT OUTER JOIN (SELECT BID, COUNT(*) AS BGOOD
+		                 FROM B_GOOD 
+		                 GROUP BY BID) BGOOD ON (B.BID = BGOOD.BID) 
+		LEFT OUTER JOIN ( SELECT BID, COUNT(*) AS REPLY
+		                  FROM D_REPLY
+		                  GROUP BY BID)REPLY ON (B.BID = REPLY.BID)
+		WHERE B.STATUS ='Y' AND CATEGORY =2
+		ORDER BY BLEVEL DESC, BID DESC
+  </select>
+  
+  <select id="selectSeacrchFList" resultMap="boardResultSet">
+	  	SELECT *
+	  	FROM BOARD_VIEW
+	  	WHERE (STATUS='Y'AND CATEGORY = 2 )
+	 		<if test='type.equals("all")'>
+	 		    AND ( BTITLE LIKE '%' ||  #{searchWord} || '%'
+	 			or USER_ID LIKE '%' || #{searchWord} || '%'
+	 			or BCONTENT LIKE '%' || #{searchWord} || '%')
+	 		</if>
+	 		<if test='type.equals("bTitle")'>
+	 		    AND ( BTITLE LIKE '%' ||  #{searchWord} || '%')
+	 		</if>
+	 		<if test='type.equals("bWriter")'>
+	 		    AND ( USER_ID LIKE '%' ||  #{searchWord} || '%')
+	 		</if>
+	 		<if test='type.equals("bContent")'>
+	 		    AND ( BCONTENT LIKE '%' || #{searchWord} || '%')
+	 		</if>
+	 	ORDER BY BID DESC
+   </select>
+  
+  <insert id="insertBoard" parameterType="Board">
+  	INSERT INTO 
+  	D_BOARD 
+  	VALUES(
+  		SEQ_DBNO.NEXTVAL, #{mId},#{category}, #{bTitle}, #{bType}, #{bContent}, 
+  		0,SYSDATE, SYSDATE, 'Y', #{bLevel} 
+  	)
+  </insert>
+  
+  <insert id="insertAttachment" parameterType="Attachment"> 
+	INSERT INTO 
+  	D_ATTACH
+  	VALUES(
+  		SEQ_DAFID.NEXTVAL, SEQ_DBNO.CURRVAL, #{originName}, #{changeName}, #{filePath}, SYSDATE, 1, 0,'Y' 
+  	)
+  
+  </insert>
+  
+    <insert id="updateAttachment" parameterType="Attachment"> 
+	INSERT INTO 
+  	D_ATTACH
+  	VALUES(
+  		SEQ_DAFID.NEXTVAL, #{bId}, #{originName}, #{changeName}, #{filePath}, SYSDATE, 1, 0,'Y' 
+  	)
+  
+  </insert>
+  
+  
+   <insert id="addBoardGoodCount" parameterType="BGood"> 
+	INSERT INTO 
+  	B_GOOD
+  	VALUES(
+  		SEQ_BGNO.NEXTVAL,#{bId}, #{mId},'Y'  
+  	)
+  
+  </insert>
+  
+  
+  
+  <update id="updateCount" parameterType = "_int">
+  	UPDATE D_BOARD
+  	SET BCOUNT = BCOUNT + 1
+  	WHERE BID = #{bId}
+  </update>
+  
+  <select id="selectBoardOne" parameterType = "_int" resultMap="boardResultSet">
+  	SELECT *
+  	FROM BOARD_VIEW 
+  	WHERE BID=#{bId}
+  	AND STATUS='Y'
+  </select>
+    
+  <select id="selectAttachList" parameterType = "_int" resultMap="attachResultSet">
+		SELECT *
+		FROM D_ATTACH
+		WHERE BID = #{bId}
+  </select>
+  
+  <select id= "selectBGood" parameterType = "_int" resultMap="bGoodResultSet">
+  		SELECT *
+		FROM B_GOOD
+		WHERE BID = #{bId}
+		
+  </select>
+  
+  
+  
+  <update id="updateBoard" parameterType="Board">
+  	UPDATE D_BOARD
+  	SET BTITLE=#{bTitle}, 
+  		BCONTENT=#{bContent},
+		BLEVEL=#{bLevel}, 
+  		MODIFY_DATE =SYSDATE
+  	WHERE BID=#{bId}
+  	</update>
+  
+  <delete id="deleteBoard" parameterType = "_int">
+    UPDATE d_board SET status = 'N' WHERE bid= #{bId}
+    
+  </delete>
+  
+  <delete id="subBoardGoodCount"  parameterType="BGood">
+	DELETE FROM B_GOOD 
+  	WHERE BID=#{bId} AND MID=#{mId}
+  	
+  </delete>
+  
+  
+  
+  <select id ="selectAttachChangeName" parameterType ="_int"  resultType="string">
+  	SELECT CHANGE_NAME FROM D_ATTACH WHERE FID = #{fId}
+  </select>
+  
+  
+  <delete id="deleteAttachAsFid"   parameterType ="_int">
+  	DELETE FROM D_ATTACH WHERE FID =  #{fId}
+  </delete>
+  
+  
+  <select id ="selectBoardAsRnum"  parameterType ="_int" resultMap="boardResultSet"> 
+	SELECT *
+  	FROM BOARD_VIEW 
+  	WHERE RNUM=#{rNum}
+  	AND STATUS='Y'
+  </select>
+  
+   <select id="selectReplyList" resultMap="replyResultSet" parameterType="_int">
+	SELECT *
+	FROM D_REPLY
+	WHERE BID=#{bId}
+  </select>
+  
+</mapper>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="adminMapper">
+
+	<resultMap type="Admin" id="sell_goodsResultSet">
+		<id property="sellNum" column ="SELL_NUM"/>
+		
+		<result property ="gId" column ="GID"/>
+		<result property ="goodsTitle" column ="GOODS_TITLE"/>
+		<result property ="goodsContent" column ="GOODS_CONTENT"/>
+		<result property ="goodsImage" column ="GOODS_IMAGE"/>
+		<result property ="originName" column ="ORIGIN_NAME"/>
+		<result property ="changerName" column="CHANGER_NAME"/>
+		<result property ="filePath" column="FILE_PATH"/>
+		<result property ="sellDate" column="SELL_DATE"/>
+		<result property ="modifyDate" column="MODIFY_DATE"/>
+		<result property ="status" column="STATUS"/>
+	</resultMap>
+
+
+	<select id ="selectList" resultMap="sell_goodsResultSet">
+		SELECT *
+        FROM (SELECT *
+		FROM SELL_GOODS
+		WHERE STATUS='Y')
+		ORDER BY SELL_NUM DESC
+		<!-- ORDER BY N_CREATE_DATE DESC -->
+	</select>
+
+	<insert id ="insertSellgoods" parameterType="Admin">
+		INSERT INTO SELL_GOODS 
+		VALUES(SELL_NUM.NEXTVAL, #{gId}, #{goodsTitle}, #{goodsContent}, #{filePath}, SYSDATE, SYSDATE, DEFAULT
+		)
+	</insert>
+</mapper>
