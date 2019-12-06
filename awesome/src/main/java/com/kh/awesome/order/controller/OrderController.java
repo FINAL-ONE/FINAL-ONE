@@ -17,6 +17,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
+import com.kh.awesome.board.model.vo.PageInfo;
+import com.kh.awesome.common.Pagination;
 import com.kh.awesome.member.model.vo.Member;
 import com.kh.awesome.order.model.vo.Order;
 import com.kh.awesome.order.service.OrderService;
@@ -30,16 +32,25 @@ public class OrderController {
 	@RequestMapping("orderview.do")
 	public ModelAndView boardList(ModelAndView mv, @RequestParam(value = "page", required = false) Integer page,
 			HttpServletRequest request) {
-
+		
+		int currentPage = 1;
+		if(page != null) {
+			currentPage = page;
+		}
+		
+		int listCount = oService.getOrderListCount();
+		
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
 		HttpSession session = request.getSession(true);
 
 		Member loginUser = (Member) session.getAttribute("loginUser");
 		int mId = loginUser.getMid();
 
-		ArrayList<Order> list = oService.selectList(mId);
+		ArrayList<Order> list = oService.selectList(mId,pi);
 
 		if (list != null && list.size() > 0) {
 			mv.addObject("list", list);
+			mv.addObject("pi", pi);
 			mv.setViewName("order/orderListView");
 		}
 		return mv;

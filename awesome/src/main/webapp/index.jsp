@@ -11,10 +11,6 @@
 <title>Insert title here</title>
 <c:set var="contextPath" value="${pageContext.servletContext.contextPath }" scope="application"/>
 
-
-
-
-
 <style>
 
    		

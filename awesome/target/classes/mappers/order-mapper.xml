@@ -60,5 +60,8 @@
 		SET ORDER_STATUS='X'
 		WHERE OID=#{number}
 	</update>
-
+	<select id="getOrderListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM ORDER_LIST
+	</select>
 </mapper>
