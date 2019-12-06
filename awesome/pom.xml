@@ -6,7 +6,7 @@
 		* pom.xml구조       
 		project {프로젝트 정보 + properties +(repository) + dependencies + build}
 	 -->
-
+ 
 	<!-- * 프로젝트 정보 -->
 	<modelVersion>4.0.0</modelVersion> 	<!-- Maven 2버전부터 쭉 4.0.0 -->
 	<groupId>com.kh</groupId>			<!-- 최초 만든 패키지 1,2레벨 -->
