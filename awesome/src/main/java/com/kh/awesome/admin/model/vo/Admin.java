@@ -5,6 +5,7 @@ import java.sql.Date;
 public class Admin {
 	private int sellNum;
 	private int gId;
+	private int cateCd;
 	private String goodsTitle;
 	private int goodsPrice;
 	private int count;
@@ -14,14 +15,16 @@ public class Admin {
 	private Date sellDate;
 	private Date modifyDate;
 	private String status;
-	
+
 	public Admin() {
 	}
 
-	public Admin(int sellNum, int gId, String goodsTitle, int goodsPrice, int count, String goodsContent,
+	public Admin(int sellNum, int gId, int cateCd, String goodsTitle, int goodsPrice, int count, String goodsContent,
 			String filePath, String contentFilePath, Date sellDate, Date modifyDate, String status) {
+		super();
 		this.sellNum = sellNum;
 		this.gId = gId;
+		this.cateCd = cateCd;
 		this.goodsTitle = goodsTitle;
 		this.goodsPrice = goodsPrice;
 		this.count = count;
@@ -47,6 +50,14 @@ public class Admin {
 
 	public void setgId(int gId) {
 		this.gId = gId;
+	}
+
+	public int getCateCd() {
+		return cateCd;
+	}
+
+	public void setCateCd(int cateCd) {
+		this.cateCd = cateCd;
 	}
 
 	public String getGoodsTitle() {
@@ -123,15 +134,10 @@ public class Admin {
 
 	@Override
 	public String toString() {
-		return "Admin [sellNum=" + sellNum + ", gId=" + gId + ", goodsTitle=" + goodsTitle + ", goodsPrice="
-				+ goodsPrice + ", count=" + count + ", goodsContent=" + goodsContent + ", filePath=" + filePath
-				+ ", contentFilePath=" + contentFilePath + ", sellDate=" + sellDate + ", modifyDate=" + modifyDate
-				+ ", status=" + status + "]";
+		return "Admin [sellNum=" + sellNum + ", gId=" + gId + ", cateCd=" + cateCd + ", goodsTitle=" + goodsTitle
+				+ ", goodsPrice=" + goodsPrice + ", count=" + count + ", goodsContent=" + goodsContent + ", filePath="
+				+ filePath + ", contentFilePath=" + contentFilePath + ", sellDate=" + sellDate + ", modifyDate="
+				+ modifyDate + ", status=" + status + "]";
 	}
 
-
-	
-	
-
-	
 }

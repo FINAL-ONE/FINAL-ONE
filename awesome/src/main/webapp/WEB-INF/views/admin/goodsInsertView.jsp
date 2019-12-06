@@ -8,6 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <style>
 	select, option {
 	    width: 100%;
@@ -45,16 +46,6 @@
 			<tr>
 	            <th>카테고리 <span style = "color:red; font-size : 1.5em;">*</span> </th>
 	            <td>	    
-	            <!--       
-					<input type="text" size='50' id="categoryC" name="categoryC" placeholder="선택하시오." list="clistC" />   
-					<datalist id="clistC" name="clistC">
-						<c:forEach var="c" items="${gClist}">
-							<select id="lclCd" name="lclCd">
-								<option value="${c.cateNm}">${c.cateNm}</option>
-							</select>
-						</c:forEach>
-					</datalist>
-					 -->
 					<select id="lclCd" name="lclCd">
 						<c:forEach var="c" items="${gClist}">
 							<option value="${c.cateCd}">${c.cateNm}</option>
@@ -67,15 +58,15 @@
 			<tr>
 	            <th>대 선택  <span style = "color:red; font-size : 1.5em;">*</span> </th>
 	            <td>
-	            <!-- <input type="text" id="aa"> -->
 					<select id="mclCd" name="mclCd">
-						<option>선택하세요.</option>
+						<!-- <option>선택하세요.</option> -->
 						<!-- 
 						<option value="${l.cateCd}">${l.cateNm}</option>
+						-->
 						<c:forEach var="l" items="${gLlist}">
 							<option value="${l.cateCd}">${l.cateNm}</option>
 						</c:forEach>
-						 -->
+						 
 					</select>
 				</td>
 			</tr>
@@ -84,12 +75,10 @@
 	            <th>중 선택  <span style = "color:red; font-size : 1.5em;">*</span> </th>
 	            <td>
 					<select id="sclCd" name="sclCd">
-						<option>선택하세요.</option>
-					<!-- 
+						<!-- <option>선택하세요.</option> -->
 						<c:forEach var="m" items="${gMlist}">
 							<option value="${m.cateCd}">${m.cateNm}</option>
 						</c:forEach>
-					-->
 					</select>
 				</td>
 			</tr>
@@ -109,13 +98,16 @@
 				<!-- <td><input id="goodsName" type="text" width="100%" name ="goodsName" readonly /></td> -->
 				<td>
 					<input id="goodsName" type="text" width="100%" name ="goodsName"/>
-					
-					<span class="guide ok">이 상품명은 사용 가능합니다.</span>
-					<span class="guide error">이 상품명는 사용할수 없습니다.</span>
-					<input type="hidden" name="idDuplicateCheck" id="idDuplicateCheck" value="0">	
 				</td>
 			</tr>
-
+			<tr>
+				<th></th>
+				<td>
+					<!-- <span class="guide ok">이 상품명은 사용 가능합니다.</span> -->
+					<span class="guide error">이 상품명은 사용할수 없습니다.</span>
+					<input type="hidden" name="idDuplicateCheck" id="idDuplicateCheck" value="0">
+				</td>
+			</tr>
 			<tr>
 				<th>상품가격  <span style = "color:red; font-size : 1.5em;">*</span> </th>
 				<td><input id="goodsPrice" type="text" width="100%" name ="goodsPrice" numberOnly class="numb"/></td>
@@ -195,12 +187,19 @@
 
 //str 등록버튼 클릭시------------------------------------------------------------------------------------
 	function validate(){
-	
-		if($("#idDuplicateCheck").val()==0){
+		if($("#goodsPrice").val()==0){
+			alert("상품가격을 입력해 주세요");
+			$("#goodsPrice").focus();			
+		}else if($("#count").val()==0){
+			alert("상품수량을 입력해 주세요");
+			$("#count").focus();
+		}else if($("#goodsName").val()==0){
+			alert("사용 가능한 상품명을 입력해 주세요");
+			$("#goodsName").focus();
+		}else if($("#idDuplicateCheck").val()==0){
 			alert("사용 가능한 상품명을 입력해 주세요");
 			$("#goodsName").focus();
 		}else{
-			
 			var targetForm = $("#goodsInsertForm :input");
 			// ,콤마 제거
 			$.each(targetForm, function(index, elem){
@@ -208,14 +207,7 @@
 			});
 			
 			$("#goodsInsertForm").submit();
-		}
-	 
-/* 		var targetForm = $("#goodsInsertForm :input");
-		// ,콤마 제거
-		$.each(targetForm, function(index, elem){
-		      $(this).val($(this).val().replace(/,/g, ''));
-		});
-		$("#goodsInsertForm").submit(); */ 
+		} 
 	}	
 //end 등록버튼 클릭시------------------------------------------------------------------------------------
 
@@ -227,7 +219,7 @@
 		// 카테고리 조회
 		$("#lclCd").on("change",function(){
 			var lclCd =$(this).val();
-			
+
 			$("#mclCd option").remove();
 			$("#sclCd option").remove();
 			$("#nclCd option").remove();
@@ -259,7 +251,7 @@
 							for(var i=0; i<data.list.length; i++){
 								$("#sclCd").append("<option value='" + data.list[i].cateCd + "'>" + data.list[i].cateNm +'</option>');
 							}
-							
+							// 카테고리 변경시 하위 카테고리 조회
 							var sclCd = null;
 							
 							for(var i=0; i<1; i++){
@@ -335,9 +327,9 @@
 					for(var i=0; i<data.list.length; i++){
 						$("#sclCd").append("<option value='" + data.list[i].cateCd + "'>" + data.list[i].cateNm +'</option>');
 					}
-					
+					/*
 					var sclCd = null;
-					
+					 
 					for(var i=0; i<1; i++){
 						$("#sclCd").append("<option value='" + data.list[i].cateCd + "'>" + data.list[i].cateNm +'</option>');
 						sclCd = data.list[i].cateCd;
@@ -349,7 +341,7 @@
 						success:function(data){
 
 							for(var i=0; i<data.list.length; i++){
-								/* $("#nclCd").append("<option value='" + data.list[i].cateCd + "'>" + data.list[i].cateNm +'</option>'); */
+								//$("#nclCd").append("<option value='" + data.list[i].cateCd + "'>" + data.list[i].cateNm +'</option>');
 								$("#nclCd").append("<option value='" + data.list[i].cateCd + "' + cost_value='"+data.list[i].cateNm+"'>" + data.list[i].cateNm +'</option>');
 							}		
  							for(var i=0; i<1; i++){
@@ -373,7 +365,7 @@
 												  + "error : " + errorData);
 						}
 					});
-					
+					*/
 					
 	
 				},
@@ -406,7 +398,7 @@
 				success:function(data){
 
 					for(var i=0; i<data.list.length; i++){
-						/* $("#nclCd").append("<option value='" + data.list[i].cateCd + "'>" + data.list[i].cateNm +'</option>'); */
+						//$("#nclCd").append("<option value='" + data.list[i].cateCd + "'>" + data.list[i].cateNm +'</option>');
 						$("#nclCd").append("<option value='" + data.list[i].cateCd + "' + cost_value='"+data.list[i].cateNm+"'>" + data.list[i].cateNm +'</option>');
 					}			
  					for(var i=0; i<1; i++){
@@ -437,6 +429,7 @@
 
 //---------------------------------------------------------------------------------------------------
 // 카테고리(소) 변경시 상품이름에 반영
+/*
 $("#nclCd").on("change",function(){
 	$("#cateCd").val("");
 	$("#goodsName").val("");
@@ -450,7 +443,7 @@ $("#nclCd").on("change",function(){
 	$("#cateCd").val(cateCd);
 	
 });
-
+*/
 //---------------------------------------------------------------------------------------------------
 
 	$(function(){
@@ -464,11 +457,11 @@ $("#nclCd").on("change",function(){
 					if(data.isUsable == true){
 						 
 						$(".guide.error").hide(); // 이전값이 에러표시나면 숨켜주기위해
-						$(".guide.ok").show();
+						//$(".guide.ok").show();
 						$("#idDuplicateCheck").val(1);		
 					}else{
 						$(".guide.error").show();
-						$(".guide.ok").hide();
+						//$(".guide.ok").hide();
 						$("#idDuplicateCheck").val(0);							
 					}
 					

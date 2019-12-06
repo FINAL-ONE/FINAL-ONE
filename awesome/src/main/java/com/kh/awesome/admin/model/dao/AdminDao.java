@@ -35,6 +35,7 @@ public class AdminDao {
 
 		return sqlSession.update("adminMapper.updateAdminStatus", a);
 	}
+
 	
 	// 동복- 상품 리스트 조회
 	public ArrayList<Goods> goodsList() {

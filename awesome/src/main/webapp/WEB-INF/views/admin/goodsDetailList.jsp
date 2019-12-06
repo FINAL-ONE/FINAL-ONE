@@ -8,6 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <style>
  select[multiple]{
      height: 100%;
@@ -40,9 +41,9 @@
 	<form action="goodsUpdate.do" method="post" enctype="Multipart/form-data" id="goodsUpdateForm">
 		<table class="type02" align="center"><!--  style="border-spacing:60px" -->	
 		
-		<input type="hidden" name="lidDuplicateCheck" id="lidDuplicateCheck" value="0">
+		<!-- <input type="hidden" name="lidDuplicateCheck" id="lidDuplicateCheck" value="0">
 		<input type="hidden" name="midDuplicateCheck" id="midDuplicateCheck" value="0">
-		<input type="hidden" name="sidDuplicateCheck" id="sidDuplicateCheck" value="0">
+		<input type="hidden" name="sidDuplicateCheck" id="sidDuplicateCheck" value="0"> -->
 		
 				<!-- <th>카테고리 코드  <span style = "color:red; font-size : 1.5em;">*</span> </th> -->
 				<%-- <td><input id="selectlclCd" type="hidden" width="100%" name ="lclCd" value="${lclCd}"/></td> --%>
@@ -107,15 +108,15 @@
 			
 			<tr>
 				<th>상품이름  <span style = "color:red; font-size : 1.5em;">*</span> </th>
-				<td><input type="text" width="100%" name ="goodsName" value="${goods.goodsName}"/></td>
+				<td><input id="goodsName" type="text" width="100%" name ="goodsName" value="${goods.goodsName}"/></td>
 			</tr>
 			<tr>
 				<th>상품가격  <span style = "color:red; font-size : 1.5em;">*</span> </th>
-				<td><input type="text" width="100%" name ="goodsPrice" numberOnly value="${goods.goodsPrice}"/></td>
+				<td><input id="goodsPrice"  type="text" width="100%" name ="goodsPrice" numberOnly value="${goods.goodsPrice}"/></td>
 			</tr>
 			<tr>
 				<th>상품수량  <span style = "color:red; font-size : 1.5em;">*</span> </th>
-				<td><input type="text" width="100%" name ="count" numberOnly value="${goods.count}"/></td> 
+				<td><input id="count"  type="text" width="100%" name ="count" numberOnly value="${goods.count}"/></td> 
 			</tr>
 
 			<tr>
@@ -177,9 +178,9 @@
 			$("#nclCd option").remove();
 			$("#cateCd").val("");
 			// click 이벤트 막기
-			$("#lidDuplicateCheck").val(1);	
-			$("#midDuplicateCheck").val(1);
-			$("#sidDuplicateCheck").val(1);
+//			$("#lidDuplicateCheck").val(1);	
+//			$("#midDuplicateCheck").val(1);
+//			$("#sidDuplicateCheck").val(1);
 			//$("#goodsName").val("");
 			//$("#goodsPrice").val("");
 			//$("#count").val("");
@@ -286,8 +287,8 @@
 			$("#goodsPrice").val("");
 			$("#count").val("");
 			// click 이벤트 막기
-			$("#midDuplicateCheck").val(1);
-			$("#sidDuplicateCheck").val(1);
+//			$("#midDuplicateCheck").val(1);
+//			$("#sidDuplicateCheck").val(1);
 			
 			$.ajax({
 				url:"categoryLSelectBox.do",
@@ -362,7 +363,7 @@
 			$("#goodsPrice").val("");
 			$("#count").val("");
 			// click 이벤트 막기
-			$("#sidDuplicateCheck").val(1);
+//			$("#sidDuplicateCheck").val(1);
 			
 			$.ajax({
 				url:"categoryMSelectBox.do",
@@ -479,6 +480,31 @@
 
 //str 등록버튼 클릭시----------------------------------------------------------------------------------------------------
 	function validate(){
+		
+		if($("#goodsPrice").val()==0){
+			alert("상품가격을 입력해 주세요");
+			$("#goodsPrice").focus();			
+		}else if($("#count").val()==0){
+			alert("상품수량을 입력해 주세요");
+			$("#count").focus();
+		}else if($("#goodsName").val()==0){
+			alert("사용 가능한 상품명을 입력해 주세요");
+			$("#goodsName").focus();
+		}else if($("#idDuplicateCheck").val()==0){
+			alert("사용 가능한 상품명을 입력해 주세요");
+			$("#goodsName").focus();
+		}else{
+			var targetForm = $("#goodsUpdateForm :input");
+			// ,콤마 제거 
+			$.each(targetForm, function(index, elem){
+			      $(this).val($(this).val().replace(/,/g, ''));
+			});
+			
+			$("#goodsUpdateForm").submit();
+		} 
+	}
+	/*
+	function validate(){
 		var targetForm = $("#goodsUpdateForm :input");
 		// ,콤마 제거
 		$.each(targetForm, function(index, elem){
@@ -486,7 +512,8 @@
 		});
 
 		$("#goodsUpdateForm").submit(); 
-	}	
+	}
+	*/
 //end 등록버튼 클릭시----------------------------------------------------------------------------------------------------
 
 </script>

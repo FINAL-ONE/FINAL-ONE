@@ -28,6 +28,9 @@ import com.kh.awesome.admin.model.service.AdminService;
 import com.kh.awesome.admin.model.vo.Admin;
 import com.kh.awesome.admin.model.vo.Category;
 import com.kh.awesome.admin.model.vo.Goods;
+import com.kh.awesome.member.model.exception.MemberException;
+import com.kh.awesome.member.model.vo.Member;
+import com.kh.awesome.shop.model.vo.SellReply;
 
 
 @Controller
@@ -64,14 +67,6 @@ public class AdminController {
 	}
 	// 메뉴바에서 상품조회 클릭시 관리자용 상품조회 테이블 조회--준배
 	
-	
-	// 메뉴바에서 상품등록 클릭시 view 이동 -- 준배
-	@RequestMapping("goodsWriterView.do")
-	public String goodsWriterView() {
-		
-		return "admin/sell_goodsInsertView";	
-	}
-	// 메뉴바에서 상품등록 클릭시 view 이동 -- 준배
 	
 	
 	// 메뉴바에서 shop으로 뿌려질 리스트 조회 -- 준배
@@ -251,6 +246,8 @@ public class AdminController {
 // 동복 부분 --------------------------------------------------------------
 	
 	
+		
+		
 	
 	
 	
@@ -288,13 +285,20 @@ System.out.println("전체 상품 리스트 : " + glist);
 	
 	// 동복 - 상품 등록 페이지	이동
 	@RequestMapping("goodsInsertView.do")
-	public ModelAndView goodsInsertView(ModelAndView mv) {
+	public ModelAndView goodsInsertView(ModelAndView mv, Category c) {
+		
+		String lclCd = "1";
+		String mclCd = "101";
+		c.setLclCd(lclCd);
+		c.setMclCd(mclCd);
 		
 		mv.addObject("gClist", aService.goodsCategoryList()); // 동복 - 상품 수정 카테고리 조회
 		mv.addObject("cateCd", aService.categoryCDselect());
+		
+		mv.addObject("gLlist", aService.goodsLCategoryList(lclCd)); // 동복 - 상품 수정 카테고리 조회
+		mv.addObject("gMlist", aService.goodsMCategoryList(c)); // 동복 - 상품 수정 카테고리 조회
+		
 		mv.setViewName("admin/goodsInsertView"); 
-//		mv.addObject("gLlist", aService.goodsLCategoryList()); // 동복 - 상품 수정 카테고리 조회
-//		mv.addObject("gMlist", aService.goodsMCategoryList()); // 동복 - 상품 수정 카테고리 조회
 //		mv.addObject("gSlist", aService.goodsSCategoryList()); // 동복 - 상품 수정 카테고리 조회
 		
 		return mv;

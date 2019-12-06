@@ -5,7 +5,6 @@
 <html>
 <head>
 <meta charset="UTF-8">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:400,700,800&display=swap&subset=korean" rel="stylesheet">
 <title>Insert title here</title>
 <style>
@@ -27,6 +26,7 @@
       margin-right:auto;
       align: center;
       box-shadow: 0px 4px 4px lightgray;
+      position: relative;
    }
    
    .nav{
@@ -192,7 +192,7 @@
    	  	<div class= "menu myPageMenu">마이페이지</div> 
       </c:if>
       <c:if test="${sessionScope.loginUser.userId eq 'admin' }">
-      	<div class= "menu myPageMenu">관리자페이지</div> 
+      	<div class= "menu myPageMenu" onclick ="location.href='adminMain.do'">관리자페이지</div> 
       </c:if>
    </div>
 </div> 
@@ -220,18 +220,23 @@
  <c:if test="${sessionScope.loginUser.userId ne 'admin'}">   
 <div class="menubar2 myPageMenubar myPageMenu" style="display:none;">
    <div class= "myPageNav">
-      <span class= menu2 style="left: 647px;">다이어트 일지</span>
-      <span class= menu2 style="left: 682px;" onclick= "location.href='myinfo.do'">내정보보기</span>
+      <span class= menu2 style="left: 637px;" onclick= "location.href='myinfo.do'">내정보보기</span>
+      <!-- <span class= menu2 style="left: 652px;" onclick= "location.href=#">장바구니</span> -->
+      <span class= menu2 style="left: 667px;" onclick= "location.href='orderview.do'">주문조회</span>
+      <span class= menu2 style="left: 682px;">다이어트 일지</span>
    </div>
 </div>   
 </c:if>
 <c:if test="${sessionScope.loginUser.userId eq 'admin' }">
 <div class="menubar2 myPageMenubar myPageMenu" style="display:none;">
    <div class= "myPageNav">
+
       <span class= menu2 style="left: 647px;" onclick= "location.href='goodsWriterView.do'">상품판매</span>
       <span class= menu2 style="left: 682px;" onclick= "location.href='sell_goodsList.do'">판매상품조회</span>
       <span class= menu2 style="left: 717px;" onclick= "location.href='goodsList.do'">상품관리</span>
       <span class= menu2 style="left: 752px;" onclick= "location.href='memberLookup.do'">회원조회</span>
+      <span class= menu2 style="left: 745px;" onclick= "location.href='sellafterlistView.do'">상품후기 조회</span>
+
    </div>
 </div>   
 </c:if>

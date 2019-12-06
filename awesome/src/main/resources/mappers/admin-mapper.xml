@@ -5,18 +5,19 @@
 		<id property="sellNum" column ="SELL_NUM"/>
 		<!-- <id property="gId" column ="GID"/> -->
 		
-		<result property ="gId" column ="GID"/>
-		<result property ="goodsTitle" column ="GOODS_TITLE"/>
-		<result property="goodsPrice" column="GOODS_PRICE"/>
-		<result property="count" column="COUNT"/>
-		<result property ="goodsContent" column ="GOODS_CONTENT"/>
-		<result property ="filePath" column="GOODS_FILE_PATH"/>
+		<result property ="gId" 			column ="GID"/>
+		<result property="cateCd" 			column="CATE_CD"/>
+		<result property ="goodsTitle" 		column ="GOODS_TITLE"/>
+		<result property="goodsPrice" 		column="GOODS_PRICE"/>
+		<result property="count" 			column="COUNT"/>
+		<result property ="goodsContent" 	column ="GOODS_CONTENT"/>
+		<result property ="filePath" 		column="GOODS_FILE_PATH"/>
 		<result property ="contentFilePath" column="GOODS_CONTENT_FILE_PATH"/>
-		<result property ="sellDate" column="SELL_DATE"/>
-		<result property ="modifyDate" column="MODIFY_DATE"/>
-		<result property ="status" column="STATUS"/>
+		<result property ="sellDate" 		column="SELL_DATE"/>
+		<result property ="modifyDate" 		column="MODIFY_DATE"/>
+		<result property ="status" 			column="STATUS"/>
 	</resultMap>
-
+	
 	<resultMap id="goodsResultSet" type="Goods">
 	  	<id property="gId" 				column="GID"/>
 	  	<result property="cateCd" 		column="CATE_CD"/>
@@ -62,7 +63,7 @@
 
 	<insert id ="insertSellgoods" parameterType="Admin">
 		INSERT INTO SELL_GOODS 
-		VALUES(SELL_NUM.NEXTVAL, #{gId}, #{goodsTitle}, #{goodsContent}, #{filePath}, #{contentFilePath}, SYSDATE, SYSDATE, DEFAULT
+		VALUES(SELL_NUM.NEXTVAL, #{gId}, #{cateCd}, #{goodsTitle}, #{goodsContent}, #{filePath}, #{contentFilePath}, SYSDATE, SYSDATE, DEFAULT
 		)
 	</insert>
 	
@@ -80,12 +81,6 @@
 		WHERE SELL_NUM=#{sellNum}
 
 	</update>
-	
-	
-	
-	
-	
-	
 	
 	
 	
@@ -128,7 +123,7 @@
 		)
 	</insert>
 	
-	<!-- 동복 - 등록한 상품의 카테고리 코드 조회 --> 	
+	<!-- 동복 - 등록한 상품의 카테고리 코드 조회 (상품등록시 사용 시퀀스로 안함 : 상품등록후 카테고리도 등록해야되서 )--> 	
 	<select id="categoryCDselect" resultMap="CategoryResultSet" parameterType="Goods">
 		SELECT MAX(CATE_CD)+1 AS CATE_CD
 		  FROM GOODS
@@ -296,10 +291,6 @@
 		                         )
 		         )S
 	</select>
-	
-	
-	
-	
 	
 	
 	
