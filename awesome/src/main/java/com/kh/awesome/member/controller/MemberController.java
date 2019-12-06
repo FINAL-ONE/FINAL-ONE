@@ -245,7 +245,7 @@ public class MemberController {
 		
 		ArrayList<Member> list = mService.selectTopList();
 		
-		for(Member m : list) {
+		for(Member m : list) { 
 			//인코딩 작업				(예외처리 필요)
 			m.setUserName(URLEncoder.encode(m.getUserName(), "utf-8")); // 한글이 들어있을 것에 대해선 인코딩 처리
 			m.setGender(URLEncoder.encode(m.getGender(), "utf-8")); // 한글이 들어있을 것에 대해선 인코딩 처리
