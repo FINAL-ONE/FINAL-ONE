@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%> 
          <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
@@ -26,6 +26,7 @@
       margin-right:auto;
       align: center;
       box-shadow: 0px 4px 4px lightgray;
+      position: relative;
    }
    
    .nav{
@@ -126,7 +127,7 @@
     border-left: 6px solid transparent;
     border-bottom: 8px solid #fa4a4a;
     top: -41px;
-    left: 635px;
+    left: 550px;	/* 상위 메뉴바 마우스오버시 화살표 위치   */
 }
 
 
@@ -185,13 +186,13 @@
       <div class= "menu normalMenu">공지사항</div>
       <div class= "menu communityMenu">커뮤니티</div>
       <div class =logoImg><img src="${contextPath}/resources/images/logo.png" style="height: 89px; vertical-align: middle" onclick= "location.href='home.do'"></div>
-      <div class= "menu normalMenu">BMI 계산기</div>
+      <div class= "menu normalMenu" onclick="location.href='bmicalc.do'">BMI 계산기</div>
       <div class= "menu normalMenu" onclick= "location.href='shopGoodsListView.do'">SHOP</div>
    	  <c:if test="${sessionScope.loginUser.userId ne 'admin'}">
    	  	<div class= "menu myPageMenu">마이페이지</div> 
       </c:if>
       <c:if test="${sessionScope.loginUser.userId eq 'admin' }">
-      	<div class= "menu myPageMenu">관리자페이지</div> 
+      	<div class= "menu myPageMenu" onclick ="location.href='adminMain.do'">관리자페이지</div> 
       </c:if>
    </div>
 </div> 
@@ -205,9 +206,8 @@
  -->
 
 <div class="menubar2 normalMenubar">
-
+	
 </div>   
- 
  
 <div class="menubar2 communityMenubar communityMenu" style="display:none;">
    <div class= "conmmunityNav">
@@ -219,17 +219,23 @@
  <c:if test="${sessionScope.loginUser.userId ne 'admin'}">   
 <div class="menubar2 myPageMenubar myPageMenu" style="display:none;">
    <div class= "myPageNav">
-      <span class= menu2 style="left: 647px;">다이어트 일지</span>
-      <span class= menu2 style="left: 682px;" onclick= "location.href='myinfo.do'">내정보보기</span>
+      <span class= menu2 style="left: 637px;" onclick= "location.href='myinfo.do'">내정보보기</span>
+      <!-- <span class= menu2 style="left: 652px;" onclick= "location.href=#">장바구니</span> -->
+      <span class= menu2 style="left: 667px;" onclick= "location.href='orderview.do'">주문조회</span>
+      <span class= menu2 style="left: 682px;">다이어트 일지</span>
    </div>
 </div>   
 </c:if>
 <c:if test="${sessionScope.loginUser.userId eq 'admin' }">
 <div class="menubar2 myPageMenubar myPageMenu" style="display:none;">
    <div class= "myPageNav">
-      <span class= menu2 style="left: 647px;" onclick= "location.href='goodsWriterView.do'">상품등록</span>
-      <span class= menu2 style="left: 682px;" onclick= "location.href='sell_goodsList.do'">상품조회</span>
-      <span class= menu2 style="left: 717px;" onclick= "location.href='memberLookup.do'">회원조회</span>
+
+      <span class= menu2 style="left: 647px;" onclick= "location.href='goodsWriterView.do'">상품판매</span>
+      <span class= menu2 style="left: 682px;" onclick= "location.href='sell_goodsList.do'">판매상품조회</span>
+      <span class= menu2 style="left: 717px;" onclick= "location.href='goodsList.do'">상품관리</span>
+      <span class= menu2 style="left: 752px;" onclick= "location.href='memberLookup.do'">회원조회</span>
+      <span class= menu2 style="left: 745px;" onclick= "location.href='sellafterlistView.do'">상품후기 조회</span>
+
    </div>
 </div>   
 </c:if>
