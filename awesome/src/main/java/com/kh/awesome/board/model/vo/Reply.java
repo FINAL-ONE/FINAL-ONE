@@ -1,6 +1,7 @@
 package com.kh.awesome.board.model.vo;
 
 import java.sql.Date;
+import java.util.ArrayList;
 
 public class Reply {
 	private int rId;
@@ -13,13 +14,14 @@ public class Reply {
 	private String modifyDate;
 	private String status;
 	private int rGood;
+	private ArrayList<Answer> aList;
 	
 	public Reply() {
 		super();
 	}
 
 	public Reply(int rId, int bId, int mId, String userId, String userNickname, String rContent, String createDate,
-			String modifyDate, String status, int rGood) {
+			String modifyDate, String status, int rGood, ArrayList<Answer> aList) {
 		super();
 		this.rId = rId;
 		this.bId = bId;
@@ -31,6 +33,7 @@ public class Reply {
 		this.modifyDate = modifyDate;
 		this.status = status;
 		this.rGood = rGood;
+		this.aList = aList;
 	}
 
 	public int getrId() {
@@ -69,8 +72,8 @@ public class Reply {
 		return userNickname;
 	}
 
-	public void setUserNickname(String userNikcname) {
-		this.userNickname = userNikcname;
+	public void setUserNickname(String userNickname) {
+		this.userNickname = userNickname;
 	}
 
 	public String getrContent() {
@@ -113,14 +116,24 @@ public class Reply {
 		this.rGood = rGood;
 	}
 
+	public ArrayList<Answer> getaList() {
+		return aList;
+	}
+
+	public void setaList(ArrayList<Answer> aList) {
+		this.aList = aList;
+	}
+
 	@Override
 	public String toString() {
-		return "Reply [rId=" + rId + ", bId=" + bId + ", mId=" + mId + ", userId=" + userId + ", userNikcname="
+		return "Reply [rId=" + rId + ", bId=" + bId + ", mId=" + mId + ", userId=" + userId + ", userNickname="
 				+ userNickname + ", rContent=" + rContent + ", createDate=" + createDate + ", modifyDate=" + modifyDate
-				+ ", status=" + status + ", rGood=" + rGood + "]";
-	} 
+				+ ", status=" + status + ", rGood=" + rGood + ", aList=" + aList + "]";
+	}
+
+
 	
-	
+
 	
 	
 	

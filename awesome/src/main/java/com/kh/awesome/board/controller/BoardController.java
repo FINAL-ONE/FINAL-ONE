@@ -26,6 +26,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
 import com.kh.awesome.board.model.exception.BoardException;
 import com.kh.awesome.board.model.service.BoardService;
+import com.kh.awesome.board.model.vo.Answer;
 import com.kh.awesome.board.model.vo.Attachment;
 import com.kh.awesome.board.model.vo.BGood;
 import com.kh.awesome.board.model.vo.Board;
@@ -559,6 +560,23 @@ public class BoardController {
 				}
 				
 			}
+		
+			for(Reply reply:rList) {
+				
+				int rId = reply.getrId();
+				
+				ArrayList<Answer> aList = bService.selectAList(rId); 
+				
+				response.setContentType("application/json;charset=utf-8");
+				for(Answer a  : aList) {
+					a.setUserNickname(a.getUserNickname());
+					a.setaContent(a.getaContent());
+				}
+				
+				if(aList != null && (!aList.isEmpty())) {
+					reply.setaList(aList);
+				}
+			}
 			
 			response.setContentType("application/json;charset=utf-8");
 			for(Reply r : rList) {
@@ -610,6 +628,25 @@ public class BoardController {
 			}
 		}
 	
+		@RequestMapping("addAnswer.do")
+		@ResponseBody
+		public String addAnswer(Answer a, HttpSession session, HttpServletResponse response) {
+			response.setContentType("application/json;charset=utf-8");
+			
+			Member loginUser = (Member)session.getAttribute("loginUser");
+			int mId = loginUser.getMid();
+			a.setmId(mId);
+			
+			int result = bService.insertAnswer(a);
+			
+			if(result > 0) {
+				return "success";
+			}else {
+				throw new BoardException("댓글 등록 실패!");
+			}
+		}
+		
+		
 		
 		
 		@RequestMapping("addReplyGood.do")
@@ -664,6 +701,18 @@ public class BoardController {
 			}
 		}
 	
+		@RequestMapping("deleteAnswer.do")
+		@ResponseBody
+		public String deleteAnswer(int aId) {
+			
+			int result = bService.deleteAnswer(aId);
+			
+			if(result > 0) {
+				return "success";
+			}else {
+				throw new BoardException("댓글 등록 실패!");
+			}
+		}
 	
 	
 	
