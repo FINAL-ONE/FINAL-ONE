@@ -25,6 +25,8 @@ import com.kh.awesome.member.model.vo.PageInfo;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
+import com.kh.awesome.admin.model.service.AdminService;
+import com.kh.awesome.admin.model.vo.Admin;
 import com.kh.awesome.common.Pagination;
 @SessionAttributes("loginUser")
 
@@ -149,6 +151,8 @@ public class MemberController {
 			
 			Member loginUser = mService.loginMember(m);
 									// matches 안에서 긁어온 암호화된 녀석이랑 사용자가 입력한 녀석이랑 비교해준다.
+			
+			System.out.println("loginUser : "  + loginUser);
 			if(bcryptPasswordEncoder.matches(m.getUserPwd(),loginUser.getUserPwd())) {
 				model.addAttribute("loginUser", loginUser);
 			}else {
@@ -156,6 +160,7 @@ public class MemberController {
 			}
 			return "home";
 		}
+		
 		
 		// ---------------------이제 로그인/ 로그아웃, 회원가입은 완벽하게 끝냈다!--------------------------
 		

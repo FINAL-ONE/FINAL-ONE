@@ -57,6 +57,10 @@ public class AdminDao {
 	public int UpdateCategory(Category c) {
 		return sqlSession.update("adminMapper.UpdateCategory", c);
 	}	
+	// 동복 - 상품판매 등록시 가격 과 수량을 변경했다면 상품테이블도 변경 (1:1 매핑임)
+	public int sellUpdategoods(Goods g) {
+		return sqlSession.update("adminMapper.sellUpdategoods", g);
+	}	
 	// 동복 - 상품판매 시 상품리스트 조회
 	public ArrayList<Goods> checkIdDup(String goodsName) {
 		return (ArrayList)sqlSession.selectList("adminMapper.selectGoodsValue",goodsName);

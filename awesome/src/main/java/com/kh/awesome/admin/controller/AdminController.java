@@ -74,6 +74,7 @@ public class AdminController {
 	public ModelAndView shopGoodsList(ModelAndView mv) {
 		
 		ArrayList<Admin> list = aService.selectList();
+		// System.out.println(list);
 		
 		if(list != null) {
 			mv.addObject("list", list);
@@ -90,7 +91,7 @@ public class AdminController {
 	
 	// 상품등록 페이지에서 상품버튼 클릭시 -- 준배
 	@RequestMapping("sellgoodsInsert.do")
-	public String sell_goodsInsert(Admin a, HttpServletRequest request,				
+	public String sell_goodsInsert(Admin a, Goods g, HttpServletRequest request,				
 								@RequestParam(name="titlethumbnailImg", required=false) MultipartFile file1,
 								@RequestParam(name="subthumbnailImg", required=false) MultipartFile file2) {
 		// pom.xml 가서 일단 multipart 인코딩 타입으로 파일을 넘겨줄 때 필요한 라이브러리부터 다운 받자.
@@ -108,10 +109,12 @@ public class AdminController {
 		// 원본 파일의 이름을 저장할 ArrayList를 생성하자
 		//ArrayList<String> originFiles = new ArrayList<String>();
 		// <String> 제네릭 하는이유는 나중에 꺼낼때 다운캐스팅 안하려고
-		System.out.println("file1 : " + file1);
-		System.out.println("file2 : " + file2);
+//System.out.println("file1 : " + file1);
+//System.out.println("file2 : " + file2);
+//System.out.println("Admin data : " + a);
+//System.out.println("Goods data : " + g);
 		
-		
+
 		if(!file1.getOriginalFilename().contentEquals("") && !file2.getOriginalFilename().contentEquals("")) {
 			String savePath1 = saveFile(file1, request);
 			String savePath2 = saveFile(file2, request);
@@ -124,20 +127,27 @@ public class AdminController {
 				 a.setFilePath(file1.getOriginalFilename());
 				a.setContentFilePath(file2.getOriginalFilename());
 			} else {
-				System.out.println("에러");
+				System.out.println("파일 에러");
 			}
 			
 		}
 		
 		int result = aService.insertSell_goods(a);
-		
+
 		if(result > 0 ) {
-			return "redirect:sell_goodsList.do";
+			int result2 = aService.sellUpdategoods(g);
+			
+			if(result2 >0) {
+				return "redirect:sell_goodsList.do";	
+			} else {
+				throw new AdminException("result : 상품판매 등록 실패!!");
+			}
+			
 			/* return "redirect:shopGoodsListView.do"; */
 		} else {
-			throw new AdminException("상품 등록 실패!!");
+			throw new AdminException("result2  : 상품판매 등록 실패!!");
 		}
-	}
+	} 
 	// 상품등록 페이지에서 상품버튼 클릭시 -- 준배
 	
 	// 상품등록시 savaFile메소드
@@ -257,7 +267,7 @@ public class AdminController {
 	@RequestMapping("goodsWriterView.do")
 	public ModelAndView goodsWriterView(ModelAndView mv) {
 		ArrayList<Goods> glist = aService.goodsList();
-System.out.println("goodsWriterView_glist : " + glist);
+//System.out.println("goodsWriterView_glist : " + glist);
 		
 		if(glist != null) {
 			mv.addObject("glist",glist);
@@ -272,7 +282,7 @@ System.out.println("goodsWriterView_glist : " + glist);
 	@RequestMapping("goodsList.do")
 	public ModelAndView goodsList(ModelAndView mv) {
 		ArrayList<Goods> glist = aService.goodsList();
-System.out.println("전체 상품 리스트 : " + glist);
+//System.out.println("전체 상품 리스트 : " + glist);
 		
 		if(glist != null) {
 			mv.addObject("glist",glist);
@@ -307,8 +317,8 @@ System.out.println("전체 상품 리스트 : " + glist);
 	// 동복 - 상품 등록
 	@RequestMapping("goodsInsert.do")
 	public String goodsInsert(Goods g, Category c, String insertlclCd, String insertmclCd, String insertsclCd, String cateCd, String goodsName, HttpServletRequest request) {
-System.out.println("신규 등록 : " + g);
-System.out.println("insertlclCd : " + insertlclCd + ", insertmclCd : " + insertmclCd + ", insertsclCd : " + insertsclCd + ", cateCd : " + cateCd);
+//System.out.println("신규 등록 : " + g);
+//System.out.println("insertlclCd : " + insertlclCd + ", insertmclCd : " + insertmclCd + ", insertsclCd : " + insertsclCd + ", cateCd : " + cateCd);
 
 		c.setCateCd(cateCd);
 		c.setCateNm(goodsName);
@@ -317,10 +327,10 @@ System.out.println("insertlclCd : " + insertlclCd + ", insertmclCd : " + insertm
 		c.setSclCd(insertsclCd);
 
 		int result = aService.insertgoods(g); 
-System.out.println(result);
+//System.out.println(result);
 		if(result > 0 ) {
 			int result2 = aService.insertCategory(c);
-System.out.println(result2);
+//System.out.println(result2);
 			if(result2 > 0) {
 				return "redirect:goodsList.do";
 			}else {
@@ -335,7 +345,7 @@ System.out.println(result2);
 	@RequestMapping("goodsDetailList.do")
 	public ModelAndView goodsDetailList(ModelAndView mv, int gId, String cateCd, String cateNm, String lclCd, String mclCd, String sclCd) {
 		
-System.out.println("gId 넘어오나? : " + gId + " cateCd : " + cateCd + " cateNm : " + cateNm + " lclCd : " + lclCd + " mclCd : " + mclCd + " sclCd : " + sclCd);		
+//System.out.println("gId 넘어오나? : " + gId + " cateCd : " + cateCd + " cateNm : " + cateNm + " lclCd : " + lclCd + " mclCd : " + mclCd + " sclCd : " + sclCd);		
 		
 		// 개별로 넘겨볼까..? TEST
 		mv.addObject("cateCd",cateCd);
@@ -362,8 +372,8 @@ System.out.println("gId 넘어오나? : " + gId + " cateCd : " + cateCd + " cate
 	@RequestMapping("goodsUpdate.do")
 	public String goodsUpdate(Goods g, Category c, HttpServletRequest request) {
 		c.setCateNm(g.getGoodsName());
-System.out.println("gggggg : " + g);
-System.out.println("cccccc : " + c);
+//System.out.println("gggggg : " + g);
+//System.out.println("cccccc : " + c);
 	
 		int result = aService.Updategoods(g);
 		
@@ -397,11 +407,11 @@ System.out.println("cccccc : " + c);
 	@RequestMapping("updateCategorylist.do")
 	public void updateCategorylist(HttpServletResponse response,  String gId) throws JsonIOException, IOException {
 		response.setContentType("application/json;charset=utf-8");
-System.out.println("gId : " + gId);
+//System.out.println("gId : " + gId);
 		//ArrayList<Category> gLlist = aService.updateCategorylist(gId);
 		ArrayList<Category> gLlist = aService.goodsCategoryList();
 		
-System.out.println("view로 넘어가기 전: " + gLlist.size());
+//System.out.println("view로 넘어가기 전: " + gLlist.size());
 		JSONArray jarr = new JSONArray();
 		
 		for(Category cate :gLlist) {
@@ -424,7 +434,7 @@ System.out.println("view로 넘어가기 전: " + gLlist.size());
 		JSONObject sendJson = new JSONObject();	// 이 작업은 위에 for문 돌려서 나온 jarr 리스트값을
 		sendJson.put("list", jarr);
 		PrintWriter out = response.getWriter();
-System.out.println("sendJson : " + sendJson);
+//System.out.println("sendJson : " + sendJson);
 		out.print(sendJson);
 		out.flush();
 		out.close();
@@ -435,11 +445,11 @@ System.out.println("sendJson : " + sendJson);
 	@RequestMapping("updateLategorylist.do")
 	public void updateLategorylist(HttpServletResponse response,  int gId) throws JsonIOException, IOException {
 		response.setContentType("application/json;charset=utf-8");
-System.out.println("gId : " + gId);
+//System.out.println("gId : " + gId);
 		//ArrayList<Category> gLlist = aService.updateCategorylist(gId);
 		ArrayList<Category> gLlist = aService.goodsUpdateLlist(gId);
 		
-System.out.println("view로 넘어가기 전: " + gLlist.size());
+//System.out.println("view로 넘어가기 전: " + gLlist.size());
 		JSONArray jarr = new JSONArray();
 		
 		for(Category cate :gLlist) {
@@ -462,7 +472,7 @@ System.out.println("view로 넘어가기 전: " + gLlist.size());
 		JSONObject sendJson = new JSONObject();	// 이 작업은 위에 for문 돌려서 나온 jarr 리스트값을
 		sendJson.put("list", jarr);
 		PrintWriter out = response.getWriter();
-System.out.println("sendJson : " + sendJson);
+//System.out.println("sendJson : " + sendJson);
 		out.print(sendJson);
 		out.flush();
 		out.close();
@@ -472,11 +482,11 @@ System.out.println("sendJson : " + sendJson);
 	@RequestMapping("updateMategorylist.do")
 	public void updateMategorylist(HttpServletResponse response,  int gId) throws JsonIOException, IOException {
 		response.setContentType("application/json;charset=utf-8");
-System.out.println("gId : " + gId);
+//System.out.println("gId : " + gId);
 		//ArrayList<Category> gLlist = aService.updateCategorylist(gId);
 		ArrayList<Category> gLlist = aService.goodsUpdateMlist(gId);
 		
-System.out.println("view로 넘어가기 전: " + gLlist.size());
+//System.out.println("view로 넘어가기 전: " + gLlist.size());
 		JSONArray jarr = new JSONArray();
 		
 		for(Category cate :gLlist) {
@@ -499,7 +509,7 @@ System.out.println("view로 넘어가기 전: " + gLlist.size());
 		JSONObject sendJson = new JSONObject();	// 이 작업은 위에 for문 돌려서 나온 jarr 리스트값을
 		sendJson.put("list", jarr);
 		PrintWriter out = response.getWriter();
-System.out.println("sendJson : " + sendJson);
+//System.out.println("sendJson : " + sendJson);
 		out.print(sendJson);
 		out.flush();
 		out.close();
@@ -510,9 +520,9 @@ System.out.println("sendJson : " + sendJson);
 	@RequestMapping("categoryCSelectBox.do")
 	public void CategoryselectBox(HttpServletResponse response,  String lclCd) throws JsonIOException, IOException {
 		response.setContentType("application/json;charset=utf-8");
-System.out.println("lclCd : " + lclCd);
+//System.out.println("lclCd : " + lclCd);
 		ArrayList<Category> gLlist = aService.goodsLCategoryList(lclCd);
-System.out.println("view로 넘어가기 전: " + gLlist.size());
+//System.out.println("view로 넘어가기 전: " + gLlist.size());
 		JSONArray jarr = new JSONArray();
 		
 		for(Category cate :gLlist) {
@@ -535,7 +545,7 @@ System.out.println("view로 넘어가기 전: " + gLlist.size());
 		JSONObject sendJson = new JSONObject();	// 이 작업은 위에 for문 돌려서 나온 jarr 리스트값을
 		sendJson.put("list", jarr);
 		PrintWriter out = response.getWriter();
-System.out.println("sendJson : " + sendJson);
+//System.out.println("sendJson : " + sendJson);
 		out.print(sendJson);
 		out.flush();
 		out.close();
@@ -545,14 +555,14 @@ System.out.println("sendJson : " + sendJson);
 	@RequestMapping("categoryLSelectBox.do")
 	public void CategoryLselectBox(HttpServletResponse response,  String lclCd, String mclCd, Category c) throws JsonIOException, IOException {
 		response.setContentType("application/json;charset=utf-8");
-System.out.println("lclCd : " + lclCd + ", mclCd : " + mclCd);
+//System.out.println("lclCd : " + lclCd + ", mclCd : " + mclCd);
 
 		c.setLclCd(lclCd);
 		c.setMclCd(mclCd);
-System.out.println("c : " + c);
+//System.out.println("c : " + c);
 		ArrayList<Category> gMlist = aService.goodsMCategoryList(c);
 		
-System.out.println("view로 넘어가기 전: " + gMlist.size());
+//System.out.println("view로 넘어가기 전: " + gMlist.size());
 		JSONArray jarr = new JSONArray();
 		
 		for(Category cate :gMlist) {
@@ -575,7 +585,7 @@ System.out.println("view로 넘어가기 전: " + gMlist.size());
 		JSONObject sendJson = new JSONObject();	// 이 작업은 위에 for문 돌려서 나온 jarr 리스트값을
 		sendJson.put("list", jarr);
 		PrintWriter out = response.getWriter();
-System.out.println("sendJson : " + sendJson);
+//System.out.println("sendJson : " + sendJson);
 		out.print(sendJson);
 		out.flush();
 		out.close();
@@ -586,7 +596,7 @@ System.out.println("sendJson : " + sendJson);
 	public void CategoryMselectBox(HttpServletResponse response,  String lclCd, String mclCd, String sclCd, Category c) throws JsonIOException, IOException {
 		response.setContentType("application/json;charset=utf-8");
 		
-System.out.println("lclCd : " + lclCd + ", mclCd : " + mclCd + ", sclCd : " + sclCd);
+//System.out.println("lclCd : " + lclCd + ", mclCd : " + mclCd + ", sclCd : " + sclCd);
 
 		c.setLclCd(lclCd);
 		c.setMclCd(mclCd);
@@ -594,7 +604,7 @@ System.out.println("lclCd : " + lclCd + ", mclCd : " + mclCd + ", sclCd : " + sc
 
 		ArrayList<Category> gMlist = aService.goodsSCategoryList(c);
 		
-System.out.println("view로 넘어가기 전: " + gMlist.size());
+//System.out.println("view로 넘어가기 전: " + gMlist.size());
 		JSONArray jarr = new JSONArray();
 		
 		for(Category cate :gMlist) {
@@ -617,7 +627,7 @@ System.out.println("view로 넘어가기 전: " + gMlist.size());
 		JSONObject sendJson = new JSONObject();	// 이 작업은 위에 for문 돌려서 나온 jarr 리스트값을
 		sendJson.put("list", jarr);
 		PrintWriter out = response.getWriter();
-System.out.println("sendJson : " + sendJson);
+//System.out.println("sendJson : " + sendJson);
 		out.print(sendJson);
 		out.flush();
 		out.close();

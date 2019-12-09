@@ -29,7 +29,6 @@
 	<!-- 마이바티스의 커넥션 객체와 같은 sqlSession -->
 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="configLocation" value="classpath:mybatis-config.xml"/>
-		<!-- 경로에서 classpath:은 webapp 위에 있는 resources폴더(java 폴더안 resources)를 의미한다. -->
 		<property name="dataSource" ref="dataSource"/>
 	</bean>
 		

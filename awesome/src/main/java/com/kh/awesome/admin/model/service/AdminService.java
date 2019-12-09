@@ -8,7 +8,7 @@ import com.kh.awesome.admin.model.vo.Goods;
 import com.kh.awesome.shop.model.vo.SellReply;
 
 public interface AdminService {
-
+	
 	public ArrayList<Admin> selectList();
 
 	public int insertSell_goods(Admin a);
@@ -29,6 +29,8 @@ public interface AdminService {
 	int Updategoods(Goods g);
 	// 동복 - 상품 수정(카테고리 수정) 
 	int UpdateCategory(Category c);
+	// 동복 - 상품판매 등록시 가격 과 수량을 변경했다면 상품테이블도 변경 (1:1 매핑임)
+	int sellUpdategoods(Goods g);
 	// 동복 - 상품판매 시 상품리스트 조회
 	public ArrayList<Goods> checkIdDup(String goodsName);
 	// 동복 - 상품 등록 카테고리 조회

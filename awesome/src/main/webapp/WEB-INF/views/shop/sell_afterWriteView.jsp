@@ -85,7 +85,7 @@
 		<table class="afterTable" align="center">	
 			<c:forEach var="a" items="${list}">
 				<input type="hidden" name ="sellNum" value="${a.sellNum}">
-				<c:out value = "${a.sellNum }"/>
+				<%-- <c:out value = "${a.sellNum }"/> --%>
 			</c:forEach>
 			<tr>
 				<th> 작성자 </th>
@@ -95,7 +95,7 @@
 				<th> 내용 </th>
 				<td><textArea id= "summernote" name= "rContent" rows="30" col="100" placeholder="내용을 입력해주세요"></textArea>
 				</td>
-<!-- 				<td><textarea rows="10"></textarea></td> -->
+	<!-- 		<td><textarea rows="10"></textarea></td> -->
 			</tr>
 			<tr>
 				<th>첨부파일</th>

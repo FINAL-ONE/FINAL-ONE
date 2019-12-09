@@ -78,6 +78,7 @@ input:focus { outline: none; }
 		회원가입을 하시면 다양한 서비스를 받으실 수 있습니다<br><br>
 	</p>
 	<form id= "loginForm" action="login.do" method="post">
+		<input type="hidden" name="mId" value="mId">
 		<input class= "loginInput" name="userId" style="margin-bottom:10px;"placeholder="아이디 입력	"> <br>
 		<input class= "loginInput" type="password" name="userPwd" style="margin-bottom:5px;" placeholder="비밀번호 입력" type="password"><br>
 		<button class= "loginBtn">로그인</button><br>

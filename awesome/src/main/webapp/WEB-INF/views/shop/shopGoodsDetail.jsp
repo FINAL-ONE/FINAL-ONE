@@ -9,6 +9,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link href="js/Modal.js-master/build/css/modal.css" rel="stylesheet">
 <style>
 .outer{
 	width : 1300px;
@@ -136,6 +137,97 @@
 #myBtn:hover {
   background-color: #555;
 }
+
+/* 모달 css */
+  *, *:before, *:after {
+    box-sizing: border-box; }
+    body { font-family: 'Roboto'; }
+    .modal_container {text-align: center; }
+
+
+/* 로그인 창 css */
+
+.loginInput{
+		height: 45px;
+	    line-height: 45px;
+	    background: #fff;
+	    color: black;
+	    border: 1px solid #ccc;
+	    font-size: 14px;
+	    padding: 0 12px;
+	    vertical-align: middle;
+	    width: 325px;
+	
+	}
+
+.loginBtn {
+    margin: 10px 0px 15px;
+    border: 1px solid #fe6666;
+    background: #fe6666;
+    border-radius: 2px;
+    color: #fff;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    width: 326px;
+    height: 40px;
+}
+.findLogin {
+    background: #fff;
+    border: 1px solid #fe6666;
+    text-align: center;
+    font-size: 14px;
+    border-radius: 2px;
+     color: #fe6666; 
+    font-weight: 600;
+    width: 326px;
+    height: 40px;
+}
+
+
+
+#loginmodal {
+ 			display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+
+}
+
+#loginmodal .login_modal_content {
+  background-color: #fefefe;
+            margin: 15% auto; /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 30%; /* Could be more or less, depending on screen size */ 
+}
+.login_modal_content{
+		text-align:center; 
+		width: 500px;
+		height: 500px;
+		margin-top: 100px;
+		margin-left: auto;
+		margin-right: auto;
+}
+.close{
+	display : inline-block;
+	float : right;
+	color: #aaaaaa;
+  	font-size: 28px;
+  	font-weight: bold;
+}		
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
 </style>
 
 </head>
@@ -148,31 +240,53 @@
     
 		<div class = "detailArea"  align="center">
 			<c:forEach var="a" items="${list}">
-				<div class ="goods-Area">
-					<div class = "goods-img" style="margin-top : 20px;">
-						 <img src="resources/auploadFiles/${a.filePath}" width ="500px" height ="500px">
-					</div>
-					<div class = "goods-info" style="margin-top : 20px;">
-						<h3 style = "font-size : 25px; font-weight: bold;">${a.goodsTitle}</h3>
-						<span>${a.goodsContent}</span><br>
-						<hr>
-						<br>
-						<span>판매가격 : </span><br><br>
-						<span>배송방법 : 택배배송 </span><br><br>
-						<span>배송비 : </span><br><br>
-						<hr>
-						<!-- <p id="goods_count">수량: </p>
-								<input type="number" name="count" value="1" size="3"> -->
-								
-						<div class="number">
-							<span id="numberUpDown">1</span>
-								<a href="#" id="increaseQuantity">▲</a>
-							    <a href="#" id="decreaseQuantity">▼</a>
+				<form id = "goCartForm" action="goCart.do" method="post">
+					<div class ="goods-Area">
+						<input type="hidden" name="sellNum" value="${a.sellNum}">
+						<input type="hidden" name="gId" value="${a.gId }">
+						<input type="hidden" name="mId" value="${sessionScope.loginUser.mid }">${sessionScope.loginUser.mid }
+
+						<div class = "goods-img" style="margin-top : 20px;">
+							 <img src="resources/auploadFiles/${a.filePath}" width ="500px" height ="500px" name ="${a.filePath}" value="${a.filePath}">
+						</div>
+						<div class = "goods-info" style="margin-top : 20px;">
+							<h3 style = "font-size : 25px; font-weight: bold;">${a.goodsTitle}</h3>
+							<input type="hidden" name="goodsTitle" value="${a.goodsTitle}">
+							
+							<span>${a.goodsContent}</span>
+							<input type="hidden" name="goodsContent" value="${a.goodsContent}"><br>
+							
+							<hr>
+							<br>
+							<span>판매가격 : ${a.goodsPrice}원</span>
+							<input type="hidden" name="goodsPrice" value="${a.goodsPrice}"><br>
+							
+							<input type="hidden" name="cateCd" value="${a.cateCd}"><br>
+							<span>배송방법 : 택배배송 </span><br><br>
+							<span>배송비 : 무료</span><br><br>
+							<hr>
+							<!-- <p id="goods_count">수량: </p>
+									<input type="number" name="count" value="1" size="3"> -->
+									
+							<div class="number">
+								<span id="numberUpDown">1</span>
+								<input type="hidden" name="count" value="${a.count}">
+									<a href="#" id="increaseQuantity">▲</a>
+								    <a href="#" id="decreaseQuantity">▼</a>
+							</div>
+							<br>
+							<c:if test="${empty sessionScope.loginUser }">
+								<button type="button" style="width : 100px; height : 40px;" onclick="notLogin();">장바구니</button>
+					        </c:if>
+					        <c:if test="${!empty sessionScope.loginUser }">
+								<button type="button" style="width : 100px; height : 40px;" onclick="goCart();">장바구니</button>
+							</c:if>
 						</div>
 					</div>
-				</div>	
+				</form>
+				
 				<button class="tablink" id="defaultOpen"><a href="#goods-img1" style="color:white">상세설명</a></button>
-				<button class="tablink"><a href="#sell-infoDiv" style="color:white">구매정보</a></button>
+				<button class="tablink"><a href="#sell-infoDiv" style="color:white">구매정보</a></button>	
 				<button class="tablink"><a href="#afterWriteDiv" style="color:white">상품후기</a></button>
 				<button class="tablink"><a href="#QABtnDiv" style="color:white">상품문의</a></button>
 				
@@ -285,6 +399,36 @@
 		</div>
     </div>		
 		
+	
+	
+	
+	<div id="loginmodal">
+	 
+	    <div class="login_modal_content">
+			<b style="font-size:36px">LOGIN</b>	
+	    	<span class="close">&times;</span>
+			<br><br>
+			<p style="font-size: 13px; color:#888888; font-weight: bold;line-height:1.5">
+				AWESOME의 다양한 서비스를 이용하시려면 로그인을 해주세요.<br>
+				회원가입을 하시면 다양한 서비스를 받으실 수 있습니다<br><br>
+			</p>
+	        <form id= "loginForm" action="login.do" method="post">
+				<input type="hidden" name="mId" value="mId">
+				<input class= "loginInput" name="userId" style="margin-bottom:10px;"placeholder="아이디 입력	"> <br>
+				<input class= "loginInput" type="password" name="userPwd" style="margin-bottom:5px;" placeholder="비밀번호 입력" type="password"><br>
+				<button class= "loginBtn">로그인</button><br>
+				<button class="findLogin">아이디 / 비밀번호 찾기</button><br>
+			</form>
+	       <br><br>
+			<p style="color:#666666; font-size:12px; margin:0px; line-height:1.5">
+			문제가 있거나 문의 사항이 있으시면 아래의 주소로 문의하시기 바랍니다.<br>
+			고객지원: <a href="">hokwan92@naver.com</a> 
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			</p>
+	    </div>
+	   
+	    <div class="login_modal_layer"></div>
+	</div>
 		<!-- 하단 tab -->
 		<script>
 			function openCity(cityName,elmnt,color) {
@@ -332,19 +476,65 @@
 					var num = parseInt(stat,10);
 					num++;
 	
-					if(num>100){
+					if(num>10){
 						alert('더이상 늘릴수 없습니다.');
-						num=100;
+						num=10;
 					}
-				
+					
 				$('#numberUpDown').text(num);
-				
-				});
 			});
-
-		
+		});
+			
 		</script>
 		
+		<script>
+			function notLogin(){
+				 Modal.confirm({
+					  title: '로그인여부',
+					  message: '로그인 하시겠습니까?',
+					  onConfirm: function() {
+						  $("#loginmodal").attr("style", "display:block");
+			  		},
+					  onCancel: function() {
+			  		},
+				});
+		       
+		    };
+		   
+		     $(".close").click(function(){
+		        $("#loginmodal").attr("style", "display:none");
+		    });      
+		</script>
+		
+		<script src="js/Modal.js-master/modal.js"></script>
+		<script>
+			 function goCart(){
+			      Modal.confirm({
+				  title: '장바구니에 추가되었습니다.',
+				  message: '장바구니로 이동하시겠습니까?',
+				  onConfirm: function() {
+					$("#goCartForm").submit();
+					 /* alert('장바구니로 이동.'); */
+		  		},
+				  onCancel: function() {
+				    /* alert('취소되었습니다.'); */
+		  		},
+			});
+		}
+		</script>
+		
+		
+		<!-- 모달창 script -->
+		<script>
+			  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+			
+			  ga('create', 'UA-46156385-1', 'cssscript.com');
+			  ga('send', 'pageview');
+		
+		</script>
 		
 		<button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
 	
@@ -369,6 +559,7 @@
 			  document.body.scrollTop = 0;
 			  document.documentElement.scrollTop = 0;
 			}
+	
 		</script>
 			
 

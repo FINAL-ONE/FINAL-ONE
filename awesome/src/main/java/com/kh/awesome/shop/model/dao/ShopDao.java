@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.awesome.admin.model.vo.Admin;
+import com.kh.awesome.shop.model.vo.Cart;
 import com.kh.awesome.shop.model.vo.SellReply;
 
 @Repository("ShopDao")
@@ -28,6 +29,12 @@ public class ShopDao {
 
 	public ArrayList<SellReply> selectReply(int sellNum) {
 		return (ArrayList)sqlSession.selectList("shopMapper.selectReply", sellNum);
+	}
+	
+	// 카트에 상품 추가
+	public int CartInsert(Cart c) {
+
+		return sqlSession.insert("shopMapper.CartInsert", c);
 	}
 	
 }

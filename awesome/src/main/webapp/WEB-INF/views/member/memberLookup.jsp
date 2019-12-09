@@ -10,6 +10,11 @@
 <title>Insert title here</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
+
+<!-- switch버튼 css -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="js/switch-master/css/style.css">	
+
 <style>
 #member-content{
 	width : 1300px;
@@ -81,7 +86,6 @@ tr:nth-child(even) {
 	height : 30px;
 	font-size : 11px;
 }
-
 </style>
 
 </head>
@@ -125,10 +129,11 @@ tr:nth-child(even) {
 							<input type="text" value ="${n.point}" style =" width : 80px; text-align:center;" readonly >
 
 							<!-- <input type="button" value="수정" id ="myBtn"> -->
-
+							
 							<!-- Trigger/Open The Modal -->
-							<button id="myBtn">포인트 수정</button>
+							<button id="myBtn" class="myBtn" onclick="myBtn();">포인트 수정</button>
 								<!-- The Modal -->
+							
 								<div id="myModal" class="modal">
 								  <!-- Modal content -->
 								  <div class="modal-content">
@@ -145,40 +150,42 @@ tr:nth-child(even) {
 						<td>${n.enrollDate}</td>
 						<td>${n.modifyDate}</td>
 						<td>${n.status}</td>
+		
+		<!-- switch버튼 css -->
+	       <!-- <div class="css-script-ads" style="margin:30px auto">
+		    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+			CSSScript Demo Page
+			<ins class="adsbygoogle"
+			     style="display:inline-block;width:728px;height:90px"
+			     data-ad-client="ca-pub-2783044520727903"
+			     data-ad-slot="3025259193"></ins>
+			<script>
+				(adsbygoogle = window.adsbygoogle || []).push({});
+			</script>
+		</div> -->
+	           <td>
+		           <label class="switch">
+		             <input type="checkbox" checked>
+		             <span></span>
+		           </label>
+	           </td>
+	
+				<script>
+					  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+					  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+					  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+					  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+					
+					  ga('create', 'UA-46156385-1', 'cssscript.com');
+					  ga('send', 'pageview');
+				</script>
+
+							
 					</tr>
-				</c:forEach>
-				
-				
-		<script>
-			
-			// 포인트 팝업 모달
-			// Get the modal
-			var modal = document.getElementById("myModal");
-			
-			// Get the button that opens the modal
-			var btn = document.getElementById("myBtn");
-			
-			// Get the <span> element that closes the modal
-			var span = document.getElementsByClassName("close")[0];
-			
-			// When the user clicks the button, open the modal 
-			btn.onclick = function() {
-			  modal.style.display = "block";
-			}
-			
-			// When the user clicks on <span> (x), close the modal
-			span.onclick = function() {
-			  modal.style.display = "none";
-			}
-			
-			// When the user clicks anywhere outside of the modal, close it
-			window.onclick = function(event) {
-			  if (event.target == modal) {
-			    modal.style.display = "none";
-			  }
-			}
-		</script>
 						
+					</c:forEach>
+				
+		
 				<!-- 페이징 부분 -->
 					<tr align ="center" height ="20">
 						<td colspan="11">
@@ -236,8 +243,35 @@ tr:nth-child(even) {
 			</table>
 	</div>
 	
-	
-	
+		<script>
+			// 포인트 팝업 모달
+			// Get the modal
+			var modal = document.getElementById("myModal");
+			
+			// Get the button that opens the modal
+			/* var btn = document.getElementById("myBtn"); */
+			var btn = document.getElementsByClassName("myBtn")[0];
+			
+			// Get the <span> element that closes the modal
+			var span = document.getElementsByClassName("close")[0];
+			
+			// When the user clicks the button, open the modal 
+			btn.onclick = function() {
+			  modal.style.display = "block";
+			}
+			// When the user clicks on <span> (x), close the modal
+			span.onclick = function() {
+			  modal.style.display = "none";
+			}
+			
+			// When the user clicks anywhere outside of the modal, close it
+			window.onclick = function(event) {
+			  if (event.target == modal) {
+			    modal.style.display = "none";
+			  }
+			}
+			
+		</script>
 </body>
 
 <footer>

@@ -190,7 +190,7 @@ tr:nth-child(even) {
 				<script src="js/Modal.js-master/modal.js"></script>
 				<script>
 		  		 function soldout(){
-					    	Modal.confirm({
+					      Modal.confirm({
 						  title: '품절여부',
 						  message: '품절 처리하시겠습니까?',
 						  onConfirm: function() {

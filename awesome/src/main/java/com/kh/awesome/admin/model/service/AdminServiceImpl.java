@@ -68,6 +68,11 @@ public class AdminServiceImpl implements AdminService{
 	public int UpdateCategory(Category c) {
 		return aDao.UpdateCategory(c);
 	}	
+	// 동복 - 상품판매 등록시 가격 과 수량을 변경했다면 상품테이블도 변경 (1:1 매핑임)
+	@Override
+	public int sellUpdategoods(Goods g) {
+		return aDao.sellUpdategoods(g);
+	}
 	// 동복 - 상품판매 시 상품리스트 조회
 	@Override
 	public ArrayList<Goods> checkIdDup(String goodsName) {

@@ -4,6 +4,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
+	
+	
+	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
 <title>Insert title here</title>
       <title>jQuery Multidraggable Plugin Demo</title>
         <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
@@ -13,9 +16,8 @@
         <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
         <script src="js/Drag-Drop/demo/multidraggable.js" charset="utf-8"></script>
         
-    
-    
-<style>
+        
+	
 <style>
 body {
   font-family: "Lato", sans-serif;
@@ -105,13 +107,14 @@ body {
 </head>
 <body>
 
-<div id="mySidenav" class="sidenav">
+ <div id="mySidenav" class="sidenav">
   <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
   <a href="#">상품등록</a>
   <a href="#">상품조회</a>
   <a href="#">회원조회</a>
   <a href="#">후기게시판 조회</a>
 </div>
+
   <ul id="multidraggable">
             <li class="red">Red</li>
             <li class="blue">Blue</li>
@@ -137,8 +140,8 @@ body {
 	  </div>
 	  
 	  <div class = "contentDiv" id = "contentDiv3" onclick= "location.href='memberLookup.do'">
-	  	<!-- 최근 회원 가입 회원 테이블 5명 미리보기 ajax 이후에 작업 한 부분 
-			페이지가 열리면 바로 DB를 갔다와서 top5를 불러오고  -->
+	  	최근 회원 가입 회원 테이블 5명 미리보기 ajax 이후에 작업 한 부분 
+			페이지가 열리면 바로 DB를 갔다와서 top5를 불러오고 
 			<h1 align="center">최신 가입 회원</h1>
 			<table align="center" border="1" cellspacing="0" width="600" id="tb">
 				<thead>
@@ -235,9 +238,10 @@ body {
 	  
 	}
 	
-	
-
-
 </script>
+
+
+
+
 </body>
 </html>

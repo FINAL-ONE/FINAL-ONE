@@ -5,6 +5,7 @@ import java.sql.Date;
 public class Admin {
 	private int sellNum;
 	private int gId;
+	private int mId;
 	private String cateCd;
 	private String goodsTitle;
 	private int goodsPrice;
@@ -15,17 +16,16 @@ public class Admin {
 	private Date sellDate;
 	private Date modifyDate;
 	private String status;
-	
-	
+
 	public Admin() {
 	}
 
-
-	public Admin(int sellNum, int gId, String cateCd, String goodsTitle, int goodsPrice, int count, String goodsContent,
-			String filePath, String contentFilePath, Date sellDate, Date modifyDate, String status) {
-		super();
+	public Admin(int sellNum, int gId, int mId, String cateCd, String goodsTitle, int goodsPrice, int count,
+			String goodsContent, String filePath, String contentFilePath, Date sellDate, Date modifyDate,
+			String status) {
 		this.sellNum = sellNum;
 		this.gId = gId;
+		this.mId = mId;
 		this.cateCd = cateCd;
 		this.goodsTitle = goodsTitle;
 		this.goodsPrice = goodsPrice;
@@ -37,137 +37,120 @@ public class Admin {
 		this.modifyDate = modifyDate;
 		this.status = status;
 	}
-
 
 	public int getSellNum() {
 		return sellNum;
 	}
 
-
 	public void setSellNum(int sellNum) {
 		this.sellNum = sellNum;
 	}
-
 
 	public int getgId() {
 		return gId;
 	}
 
-
 	public void setgId(int gId) {
 		this.gId = gId;
 	}
 
+	public int getmId() {
+		return mId;
+	}
+
+	public void setmId(int mId) {
+		this.mId = mId;
+	}
 
 	public String getCateCd() {
 		return cateCd;
 	}
 
-
 	public void setCateCd(String cateCd) {
 		this.cateCd = cateCd;
 	}
-
 
 	public String getGoodsTitle() {
 		return goodsTitle;
 	}
 
-
 	public void setGoodsTitle(String goodsTitle) {
 		this.goodsTitle = goodsTitle;
 	}
-
 
 	public int getGoodsPrice() {
 		return goodsPrice;
 	}
 
-
 	public void setGoodsPrice(int goodsPrice) {
 		this.goodsPrice = goodsPrice;
 	}
-
 
 	public int getCount() {
 		return count;
 	}
 
-
 	public void setCount(int count) {
 		this.count = count;
 	}
-
 
 	public String getGoodsContent() {
 		return goodsContent;
 	}
 
-
 	public void setGoodsContent(String goodsContent) {
 		this.goodsContent = goodsContent;
 	}
-
 
 	public String getFilePath() {
 		return filePath;
 	}
 
-
 	public void setFilePath(String filePath) {
 		this.filePath = filePath;
 	}
-
 
 	public String getContentFilePath() {
 		return contentFilePath;
 	}
 
-
 	public void setContentFilePath(String contentFilePath) {
 		this.contentFilePath = contentFilePath;
 	}
-
 
 	public Date getSellDate() {
 		return sellDate;
 	}
 
-
 	public void setSellDate(Date sellDate) {
 		this.sellDate = sellDate;
 	}
-
 
 	public Date getModifyDate() {
 		return modifyDate;
 	}
 
-
 	public void setModifyDate(Date modifyDate) {
 		this.modifyDate = modifyDate;
 	}
-
 
 	public String getStatus() {
 		return status;
 	}
 
-
 	public void setStatus(String status) {
 		this.status = status;
 	}
 
-
 	@Override
 	public String toString() {
-		return "Admin [sellNum=" + sellNum + ", gId=" + gId + ", cateCd=" + cateCd + ", goodsTitle=" + goodsTitle
-				+ ", goodsPrice=" + goodsPrice + ", count=" + count + ", goodsContent=" + goodsContent + ", filePath="
-				+ filePath + ", contentFilePath=" + contentFilePath + ", sellDate=" + sellDate + ", modifyDate="
-				+ modifyDate + ", status=" + status + "]";
+		return "Admin [sellNum=" + sellNum + ", gId=" + gId + ", mId=" + mId + ", cateCd=" + cateCd + ", goodsTitle="
+				+ goodsTitle + ", goodsPrice=" + goodsPrice + ", count=" + count + ", goodsContent=" + goodsContent
+				+ ", filePath=" + filePath + ", contentFilePath=" + contentFilePath + ", sellDate=" + sellDate
+				+ ", modifyDate=" + modifyDate + ", status=" + status + "]";
 	}
-	
-	
 
-	
+
+
+
 }
