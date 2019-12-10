@@ -264,6 +264,7 @@
   	UPDATE D_BOARD
   	SET BTITLE=#{bTitle}, 
   		BCONTENT=#{bContent},
+  		BTYPE=#{bType},
 		BLEVEL=#{bLevel}, 
   		MODIFY_DATE =SYSDATE
   	WHERE BID=#{bId}

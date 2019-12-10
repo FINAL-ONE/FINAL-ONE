@@ -9,6 +9,12 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+<!-- switch버튼 css -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="js/switch-master/css/style.css">	
+
 <style>
 #member-content{
 	width : 80%;
@@ -34,13 +40,60 @@ tr:nth-child(even) {
   cursor : pointer;
 }
 
+/* 모달창 css */
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  /* margin: auto; */
+  margin-top : 100px;
+  margin-left : 30%;
+  padding: 40px;
+  border: 1px solid #888;
+  width: 40%;
+
+}
+
+/* The Close Button */
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+#myBtn{
+	width :84px;
+	height : 30px;
+	font-size : 11px;
+}
 </style>
 
 </head>
 <body>
 
 	<jsp:include page ="../common/menubar.jsp"/>
-	<div id="container" style="overflow: auto; height: 800px;" ><!-- container -->
+	<div id="container" style="overflow: auto; height: auto;" ><!-- container -->
 	
 	<div id ="member-content">
 		<h3 align="center">
@@ -56,7 +109,7 @@ tr:nth-child(even) {
 						<th>생년월일</th>
 						<th>핸드폰번호</th>
 						<th>이메일</th>
-						<th width = "700px">주소</th>
+						<th>주소</th>
 						<th>포인트</th>
 						<th>가입일</th>
 						<th>수정일</th>
@@ -72,13 +125,68 @@ tr:nth-child(even) {
 						<td>${n.birthday}</td>
 						<td>${n.phone}</td>
 						<td>${n.email}</td>
-						<td>${n.address}</td>
-						<td>${n.point}</td>
+						<td width="400px">${n.address}</td>
+						<td>
+							<input type="text" value ="${n.point}" style =" width : 80px; text-align:center;" readonly >
+
+							<!-- <input type="button" value="수정" id ="myBtn"> -->
+							
+							<!-- Trigger/Open The Modal -->
+							<button id="myBtn" class="myBtn" onclick="myBtn();">포인트 수정</button>
+								<!-- The Modal -->
+							
+								<div id="myModal" class="modal">
+								  <!-- Modal content -->
+								  <div class="modal-content">
+								    <span class="close">&times;</span>
+								    	 <form action="pointUpdate.do" method="post">
+									    	<span>${n.userName}님의 포인트를 추가하시겠습니까?</span>
+									    	<input type="hidden" value="${n.mid}" name ="mId">
+									    	<input type="number" value="${n.point}" name ="point" style ="width : 100px;  text-align:center;">
+									    	<input type="submit" value="수정하기">&nbsp;
+								    	</form>
+								  </div>
+								</div>
+						</td>
 						<td>${n.enrollDate}</td>
 						<td>${n.modifyDate}</td>
 						<td>${n.status}</td>
+		
+		<!-- switch버튼 css -->
+	       <!-- <div class="css-script-ads" style="margin:30px auto">
+		    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+			CSSScript Demo Page
+			<ins class="adsbygoogle"
+			     style="display:inline-block;width:728px;height:90px"
+			     data-ad-client="ca-pub-2783044520727903"
+			     data-ad-slot="3025259193"></ins>
+			<script>
+				(adsbygoogle = window.adsbygoogle || []).push({});
+			</script>
+		</div> -->
+	           <td>
+		           <label class="switch">
+		             <input type="checkbox" checked>
+		             <span></span>
+		           </label>
+	           </td>
+	
+				<script>
+					  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+					  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+					  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+					  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+					
+					  ga('create', 'UA-46156385-1', 'cssscript.com');
+					  ga('send', 'pageview');
+				</script>
+
+							
 					</tr>
-				</c:forEach>
+						
+					</c:forEach>
+				
+		
 					
 				<!-- 페이징 부분 -->
 					<tr align ="center" height ="20">
@@ -136,6 +244,40 @@ tr:nth-child(even) {
 					</tr>
 			</table>
 	</div>
+	
+		<script>
+			// 포인트 팝업 모달
+			// Get the modal
+			var modal = document.getElementById("myModal");
+			
+			// Get the button that opens the modal
+			/* var btn = document.getElementById("myBtn"); */
+			var btn = document.getElementsByClassName("myBtn")[0];
+			
+			// Get the <span> element that closes the modal
+			var span = document.getElementsByClassName("close")[0];
+			
+			// When the user clicks the button, open the modal 
+			btn.onclick = function() {
+			  modal.style.display = "block";
+			}
+			// When the user clicks on <span> (x), close the modal
+			span.onclick = function() {
+			  modal.style.display = "none";
+			}
+			
+			// When the user clicks anywhere outside of the modal, close it
+			window.onclick = function(event) {
+			  if (event.target == modal) {
+			    modal.style.display = "none";
+			    
+			    
+			    
+			    $("#date1").val(); 
+			  }
+			}
+			
+		</script>
 </body>
 
 <footer>

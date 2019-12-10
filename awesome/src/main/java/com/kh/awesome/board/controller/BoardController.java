@@ -54,16 +54,12 @@ public class BoardController {
 		if(page != null) {
 			currentPage = page;
 		}
-		
 		int listCount = bService.getFboardListCount();
 		
-
 		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
 		
 		ArrayList<Board> flist = bService.selectFList(pi);
 		// ArrayList<Board> flist = bService.selectList(pi);
-		
-		
 		
 		if(flist != null && flist.size() > 0) {	// 게시글이 있다면
 			mv.addObject("flist", flist);
@@ -221,12 +217,24 @@ public class BoardController {
 
 		int count = 0; 
 		
+		int attachCount = 0; 
+		for(MultipartFile file : fileList) {
+			if(!file.getOriginalFilename().contentEquals("")) {
+				attachCount ++; 
+			}
+		}
+
+		if(attachCount > 0) {
+			b.setbType("4");
+		}
+		
+		
+		
 		int result = bService.insertBoard(b);
 		
 		
 		for(MultipartFile file : fileList) {
 				if(!file.getOriginalFilename().contentEquals("")) {
-					b.setbType("4");
 					count++;
 					String renameFileName = saveFile(file, request,count);
 					if(renameFileName != null) {	// 파일이 잘 저장된 경우
@@ -304,15 +312,23 @@ public class BoardController {
 			fileList.add(file4);
 			fileList.add(file5);
 			
-			
-		HttpSession session = request.getSession(); 
-	
 		b.setbType("1");
+		
+		int attachCount = 0; 
+		for(MultipartFile file : fileList) {
+			if(!file.getOriginalFilename().contentEquals("")) {
+				attachCount ++; 
+			}
+		}
+
+		if(attachCount > 0) {
+			b.setbType("4");
+		}
+		
 		
 		int count = 0; 
 		for(MultipartFile file : fileList) {
 				if(!(file.getOriginalFilename().contentEquals(""))) {
-					b.setbType("4");
 					count++;
 					String renameFileName = saveFile(file, request,count);
 					if(renameFileName != null) {	// 파일이 잘 저장된 경우
@@ -357,15 +373,6 @@ public class BoardController {
 	
 	
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	public String saveFile(MultipartFile file, HttpServletRequest request, int count) {
@@ -479,10 +486,6 @@ public class BoardController {
 		
 		return mv;
 	}
-	
-	
-		
-	
 	
 	
 	// 댓글 관련 부분

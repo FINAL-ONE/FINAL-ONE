@@ -53,6 +53,13 @@ public class MemberDao {
 		return (ArrayList)sqlSession.selectList("memberMapper.selectList", null, rowBounds);
 	}
 
-	
+	public ArrayList<Member> selectTopList() {
+		return (ArrayList)sqlSession.selectList("memberMapper.selectTopList");
+	}
+
+	public int updatePointMember(Member m) {
+		return sqlSession.update("memberMapper.updatePointMember", m);
+	}
+
 	
 }

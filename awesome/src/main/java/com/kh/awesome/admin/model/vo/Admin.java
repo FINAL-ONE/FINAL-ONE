@@ -5,9 +5,13 @@ import java.sql.Date;
 public class Admin {
 	private int sellNum;
 	private int gId;
+	private int mId;
+	private String cateCd;
+	private String goodsName;
 	private String goodsTitle;
+	private int goodsPrice;
+	private int count;
 	private String goodsContent;
-	private String originName;
 	private String filePath;
 	private String contentFilePath;
 	private Date sellDate;
@@ -17,13 +21,18 @@ public class Admin {
 	public Admin() {
 	}
 
-	public Admin(int sellNum, int gId, String goodsTitle, String goodsContent, String originName, String filePath,
-			String contentFilePath, Date sellDate, Date modifyDate, String status) {
+	public Admin(int sellNum, int gId, int mId, String cateCd, String goodsName, String goodsTitle, int goodsPrice,
+			int count, String goodsContent, String filePath, String contentFilePath, Date sellDate, Date modifyDate,
+			String status) {
 		this.sellNum = sellNum;
 		this.gId = gId;
+		this.mId = mId;
+		this.cateCd = cateCd;
+		this.goodsName = goodsName;
 		this.goodsTitle = goodsTitle;
+		this.goodsPrice = goodsPrice;
+		this.count = count;
 		this.goodsContent = goodsContent;
-		this.originName = originName;
 		this.filePath = filePath;
 		this.contentFilePath = contentFilePath;
 		this.sellDate = sellDate;
@@ -47,6 +56,30 @@ public class Admin {
 		this.gId = gId;
 	}
 
+	public int getmId() {
+		return mId;
+	}
+
+	public void setmId(int mId) {
+		this.mId = mId;
+	}
+
+	public String getCateCd() {
+		return cateCd;
+	}
+
+	public void setCateCd(String cateCd) {
+		this.cateCd = cateCd;
+	}
+
+	public String getGoodsName() {
+		return goodsName;
+	}
+
+	public void setGoodsName(String goodsName) {
+		this.goodsName = goodsName;
+	}
+
 	public String getGoodsTitle() {
 		return goodsTitle;
 	}
@@ -55,20 +88,28 @@ public class Admin {
 		this.goodsTitle = goodsTitle;
 	}
 
+	public int getGoodsPrice() {
+		return goodsPrice;
+	}
+
+	public void setGoodsPrice(int goodsPrice) {
+		this.goodsPrice = goodsPrice;
+	}
+
+	public int getCount() {
+		return count;
+	}
+
+	public void setCount(int count) {
+		this.count = count;
+	}
+
 	public String getGoodsContent() {
 		return goodsContent;
 	}
 
 	public void setGoodsContent(String goodsContent) {
 		this.goodsContent = goodsContent;
-	}
-
-	public String getOriginName() {
-		return originName;
-	}
-
-	public void setOriginName(String originName) {
-		this.originName = originName;
 	}
 
 	public String getFilePath() {
@@ -113,15 +154,13 @@ public class Admin {
 
 	@Override
 	public String toString() {
-		return "Admin [sellNum=" + sellNum + ", gId=" + gId + ", goodsTitle=" + goodsTitle + ", goodsContent="
-				+ goodsContent + ", originName=" + originName + ", filePath=" + filePath + ", contentFilePath="
-				+ contentFilePath + ", sellDate=" + sellDate + ", modifyDate=" + modifyDate + ", status=" + status
-				+ "]";
+		return "Admin [sellNum=" + sellNum + ", gId=" + gId + ", mId=" + mId + ", cateCd=" + cateCd + ", goodsName="
+				+ goodsName + ", goodsTitle=" + goodsTitle + ", goodsPrice=" + goodsPrice + ", count=" + count
+				+ ", goodsContent=" + goodsContent + ", filePath=" + filePath + ", contentFilePath=" + contentFilePath
+				+ ", sellDate=" + sellDate + ", modifyDate=" + modifyDate + ", status=" + status + "]";
 	}
 
 
 
-	
 
-	
 }

@@ -68,4 +68,24 @@
 		ORDER BY MID DESC
 	</select>
 	
+	<select id ="selectTopList" resultMap="memberResultSet">
+	<![CDATA[
+		SELECT *
+		FROM(SELECT *
+		FROM MEMBER
+		ORDER BY ENROLL_DATE DESC)
+		WHERE ROWNUM <=5
+	]]>
+	</select>
+	<!-- rownum은 작거나 같다나 작을떄만 가능
+		마이바티스 쿼리에선 < 가 아니다를 표시해줘야함 (태그로 인식안하게)
+	 -->
+	
+	<!-- 회원조회시 포인트 수정  -->
+	<update id = "updatePointMember" parameterType ="Member">
+		UPDATE MEMBER
+		SET POINT=#{point}
+		WHERE MID=#{mid}
+	</update>
+	
 </mapper>
