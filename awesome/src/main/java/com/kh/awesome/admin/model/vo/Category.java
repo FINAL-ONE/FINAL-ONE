@@ -3,7 +3,18 @@ package com.kh.awesome.admin.model.vo;
 import java.sql.Date;
 
 public class Category {
-
+	/*
+	CATE_CD VARCHAR2(20) NOT NULL,
+	CATE_NM	VARCHAR2(100) NOT NULL,
+	LCL_CD	VARCHAR2(10) NULL,
+	MCL_CD	VARCHAR2(10) NULL,
+	SCL_CD	VARCHAR2(10) NULL,
+	CATE_LVL	VARCHAR2(1) NULL,
+	USE_YN	VARCHAR2(1) NOT NULL,
+	REG_DTM	DATE NOT NULL,
+	MOD_DTM	DATE NULL
+	*/
+	
 	private String cateCd;
 	private String cateNm;
 	private String lclCd;

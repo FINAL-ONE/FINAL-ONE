@@ -51,7 +51,7 @@ public class AdminController {
 	public ModelAndView sell_goodsList(ModelAndView mv) {
 		
 		ArrayList<Admin> list = aService.selectList();
-System.out.println("상품 판매 list : " + list );
+		System.out.println(list);
 		
 		if(list != null) {
 			mv.addObject("list", list);
@@ -87,7 +87,7 @@ System.out.println("상품 판매 list : " + list );
 	
 	// 상품등록 페이지에서 상품버튼 클릭시 -- 준배
 	@RequestMapping("sellgoodsInsert.do")
-	public String sell_goodsInsert(Goods g, Admin a, HttpServletRequest request,				
+	public String sell_goodsInsert(Admin a, Goods g, HttpServletRequest request,		
 								@RequestParam(name="titlethumbnailImg", required=false) MultipartFile file1,
 								@RequestParam(name="subthumbnailImg", required=false) MultipartFile file2) {
 		// pom.xml 가서 일단 multipart 인코딩 타입으로 파일을 넘겨줄 때 필요한 라이브러리부터 다운 받자.
@@ -105,12 +105,11 @@ System.out.println("상품 판매 list : " + list );
 		// 원본 파일의 이름을 저장할 ArrayList를 생성하자
 		//ArrayList<String> originFiles = new ArrayList<String>();
 		// <String> 제네릭 하는이유는 나중에 꺼낼때 다운캐스팅 안하려고
-System.out.println("file1 : " + file1);
-System.out.println("file2 : " + file2);
-System.out.println("Admin data : " + a);
-System.out.println("Goods data : " + g);
+//System.out.println("file1 : " + file1);
+//System.out.println("file2 : " + file2);
+//System.out.println("Admin data : " + a);
+//System.out.println("Goods data : " + g);
 		
-
 		if(!file1.getOriginalFilename().contentEquals("") && !file2.getOriginalFilename().contentEquals("")) {
 			String savePath1 = saveFile(file1, request);
 			String savePath2 = saveFile(file2, request);
@@ -208,7 +207,7 @@ System.out.println("Goods data : " + g);
 	
 	// 상품 디테일 페이지에서 후기작성 버튼 클릭시 후기 리스트 불러오기 -- 준배
 	@RequestMapping("afterWrite.do") 
-	public ModelAndView goodsWriterView(ModelAndView mv, int sellNum) {
+	 public ModelAndView goodsWriterView(ModelAndView mv, int sellNum) {
 	 
 		 ArrayList<Admin> list = aService.selectshopgoods(sellNum);
 		/* ArrayList<SellReply> list = aService.selectReply(rId); */
@@ -227,51 +226,56 @@ System.out.println("Goods data : " + g);
 	
 	 
 	// 상품조회 페이지에서 상품 품절 처리 -- 준배(동복 : 판매상품 품절 처리시 상품과 판매가 1:1 이라 상품 상태도 N으로 변경)
-	@RequestMapping("aStatusUpdate.do")
-	public String aStatusUpdate(Admin a, Model model, int sellNum, String status) {
-	//public String aStatusUpdate(Admin a, Model model, int sellNum, String status, @RequestParam("statusUpdate") String statusUpdate) {
-		//System.out.println("statusUpdate : " + statusUpdate);
-		System.out.println("status : " + status);
-		System.out.println("sellNum : " + sellNum);
-		
-		//a.setStatus(statusUpdate);
-		a.setStatus(status);
-		a.setSellNum(sellNum);
-		
-		int gId = a.getgId();	//상품 상태 update를 위해서 추가 
-		
-		int result = aService.updateAdminStatus(a);
-		
-System.out.println("result : " + result);
+		@RequestMapping("aStatusUpdate.do")
+		public String aStatusUpdate(Admin a, Model model, int sellNum, String status) {
+		//public String aStatusUpdate(Admin a, Model model, int sellNum, String status, @RequestParam("statusUpdate") String statusUpdate) {
+			//System.out.println("statusUpdate : " + statusUpdate);
+			System.out.println("status : " + status);
+			System.out.println("sellNum : " + sellNum);
+			
+			//a.setStatus(statusUpdate);
+			a.setStatus(status);
+			a.setSellNum(sellNum);
+			
+			int gId = a.getgId();	//상품 상태 update를 위해서 추가 
+			
+			int result = aService.updateAdminStatus(a);
+			
+	System.out.println("result : " + result);
 
-		if(result > 0) {
-			
-			int result2 = aService.updateGoodsStatus(a);
-			
-			if(result2 > 0) {
-				model.addAttribute("admin" , a);	
-			}else {
-				throw new MemberException("result : 수정 실패!!");	
+			if(result > 0) {
+				
+				int result2 = aService.updateGoodsStatus(a);
+				
+				if(result2 > 0) {
+					model.addAttribute("admin" , a);	
+				}else {
+					throw new MemberException("result : 수정 실패!!");	
+				}
+				
+			} else {
+				throw new MemberException("result2 : 수정 실패!!");
 			}
-		} else {
-			throw new MemberException("result2 : 수정 실패!!");
-		}
-		
-		return "redirect:sell_goodsList.do";
+			
+			return "redirect:sell_goodsList.do";
 
-	}
-	// 상품조회 페이지에서 상품 품절 처리 -- 준배
+		}
+		// 상품조회 페이지에서 상품 품절 처리 -- 준배
+		
 	
 	
 	
 	
 	
 	
-	// 동복 부분 --------------------------------------------------------------
 		
 		
-			
-			
+	
+		// 동복 부분 --------------------------------------------------------------
+		
+		
+		
+		
 		// 동복 - 판매 상품 조회 수정 페이지 조회
 		@RequestMapping("sell_goodsDetailView.do")
 		public ModelAndView sell_goodsDetailView(ModelAndView mv, HttpServletResponse response, int sellNum ) throws IOException {
@@ -402,48 +406,20 @@ System.out.println("result : " + result);
 			}
 		}
 		
-		
-	//-3- 작업중
 		// 동복 - 상품 리스트 조회
 		@RequestMapping("goodsList.do")
-		public ModelAndView goodsList(ModelAndView mv, Category c) {
-			
-			String lclCd = "1";
-			String mclCd = "101";
-			c.setLclCd(lclCd);
-			c.setMclCd(mclCd);
-			
+		public ModelAndView goodsList(ModelAndView mv) {
 			ArrayList<Goods> glist = aService.goodsList();
 	System.out.println("전체 상품 리스트 : " + glist);
-
+			
 			if(glist != null) {
 				mv.addObject("glist",glist);
-				
-				mv.addObject("gClist", aService.goodsCategoryList()); // 동복 - 상품 수정 카테고리 조회 (카테고리)
-				mv.addObject("gLlist", aService.goodsLCategoryList(lclCd)); // 동복 - 상품 수정 카테고리 조회 (대)
-				mv.addObject("gMlist", aService.goodsMCategoryList(c)); // 동복 - 상품 수정 카테고리 조회 (중)
-				
 				mv.setViewName("admin/goodsListView");
 			}else {
 				throw new AdminException("상품 목록 보기 실패!!");
 			}
 			return mv;
 		}
-		
-		
-
-		
-
-
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		
 		// 동복 - 상품 등록 페이지	이동
 		@RequestMapping("goodsInsertView.do")
@@ -454,11 +430,11 @@ System.out.println("result : " + result);
 			c.setLclCd(lclCd);
 			c.setMclCd(mclCd);
 			
-			mv.addObject("gClist", aService.goodsCategoryList()); // 동복 - 상품 수정 카테고리 조회 (카테고리)
+			mv.addObject("gClist", aService.goodsCategoryList()); // 동복 - 상품 수정 카테고리 조회
 			mv.addObject("cateCd", aService.categoryCDselect());
 			
-			mv.addObject("gLlist", aService.goodsLCategoryList(lclCd)); // 동복 - 상품 수정 카테고리 조회 (대)
-			mv.addObject("gMlist", aService.goodsMCategoryList(c)); // 동복 - 상품 수정 카테고리 조회 (중)
+			mv.addObject("gLlist", aService.goodsLCategoryList(lclCd)); // 동복 - 상품 수정 카테고리 조회
+			mv.addObject("gMlist", aService.goodsMCategoryList(c)); // 동복 - 상품 수정 카테고리 조회
 			
 			mv.setViewName("admin/goodsInsertView"); 
 //			mv.addObject("gSlist", aService.goodsSCategoryList()); // 동복 - 상품 수정 카테고리 조회
@@ -849,98 +825,6 @@ System.out.println("result : " + result);
 		}	
 		
 		
-	// -3-
-		// 동복 - 상품관리 화면에서 조건 검색
-		@RequestMapping("checkTextSelectGoods.do")
-		public void checkTextSelectGoods(HttpServletResponse response,  String lclCd, String mclCd, String sclCd, String goodsStatus, String soldout, String goodsName, Goods g ) throws JsonIOException, IOException {
-//		public void checkTextSelectGoods(HttpServletResponse response,  String goodsName, String goodsStatus, Goods g ) throws JsonIOException, IOException {
-			response.setContentType("application/json;charset=utf-8");
-	//System.out.println("lclCd : " + lclCd);
-			
-			String whereNum = "";
-			
-			if(!lclCd.isEmpty() || lclCd != ""){
-				whereNum = "1";
-			}else if(!goodsStatus.isEmpty() || goodsStatus != ""){
-				whereNum = "2";
-			}else if(!soldout.isEmpty() || soldout != ""){
-				whereNum = "3";
-			}else if(!goodsName.isEmpty() || goodsName != ""){
-				whereNum = "4";
-			}
-			
-			g.setLclCd(lclCd);
-			g.setMclCd(mclCd);
-			g.setSclCd(sclCd);
-			g.setGoodsStatus(goodsStatus);
-			g.setSoldout(soldout);
-
-			g.setWhereNum(whereNum);
-			
-			//g.setGoodsName(goodsName);
-			//g.setGoodsStatus(goodsStatus);
-			/*
-			if(goodsStatus.length() > 0){
-				whereNum = "2";
-			}else if(goodsName.length() > 0){
-				whereNum = "4";
-			}
-			*/
-			// sql 검색 조건 넘기기
-			
-			
-			
-	System.out.println("g 값 : " + g);
-			
-			ArrayList<Goods> glist = aService.checkTextSelectGoods(g);
-	System.out.println("결과값 : " + glist);		
-			//Gson gson = new GsonBuilder().create();
-			Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-			
-			gson.toJson(glist, response.getWriter());
-			
-			
-	/* 
-			
-	System.out.println("결과값 : " + gLlist);
-	//System.out.println("view로 넘어가기 전: " + gLlist.size());
-			JSONArray jarr = new JSONArray();
-			
-			for(Goods cate :gLlist) {
-				// 1_1. JSON배열에 담기 위해 user 객체를 JSON객체에 담기
-				JSONObject jUser = new JSONObject();	// JSONObject 는 MAP 과 동일하다.!?
-				// .put() : JSONObject MAP 형식이라 put 사용
-
-				jUser.put("gId", 			cate.getgId());
-				jUser.put("cateCd", 		cate.getCateCd());
-				jUser.put("cateNm", 		cate.getCateNm());
-				jUser.put("goodsName", 		cate.getGoodsName());
-				jUser.put("goodsPrice", 	cate.getGoodsPrice());
-				jUser.put("goodsStatus", 	cate.getGoodsStatus());
-				jUser.put("soldout", 		cate.getSoldout());
-				jUser.put("registerDate",	cate.getRegisterDate());
-				jUser.put("modifyDate", 	cate.getModifyDate());
-				jUser.put("lclCd", 			cate.getLclCd());
-				jUser.put("mclCd", 			cate.getMclCd());
-				jUser.put("sclCd", 			cate.getSclCd());
-				
-				// 1_2. user 정보를 담은 JSON객체를 JSON배열에 넣기
-				jarr.add(jUser);
-				
-			}
-			
-			JSONObject sendJson = new JSONObject();	// 이 작업은 위에 for문 돌려서 나온 jarr 리스트값을
-			sendJson.put("list", jarr);
-			PrintWriter out = response.getWriter();
-	System.out.println("sendJson : " + sendJson);
-			out.print(sendJson);
-			out.flush();
-			out.close();
-			
-	*/		
-			
-		}	
 		
 		
-		
-	}
+}
