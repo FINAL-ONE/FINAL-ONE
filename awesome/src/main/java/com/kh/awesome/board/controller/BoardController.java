@@ -651,7 +651,6 @@ public class BoardController {
 		
 		
 		
-		
 		@RequestMapping("addReplyGood.do")
 		@ResponseBody
 		public String addReply(RGood g, int rId, HttpSession session, HttpServletResponse response) {

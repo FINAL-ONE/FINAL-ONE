@@ -68,6 +68,7 @@
 		ORDER BY MID DESC
 	</select>
 	
+	
 	<select id ="selectTopList" resultMap="memberResultSet">
 	<![CDATA[
 		SELECT *

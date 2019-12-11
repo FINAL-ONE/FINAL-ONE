@@ -157,6 +157,7 @@ public class MemberController {
 			return "home";
 		}
 		
+		
 		// ---------------------이제 로그인/ 로그아웃, 회원가입은 완벽하게 끝냈다!--------------------------
 		
 		// 그럼 이제 로그인 이후에 자신의 정보를 보고 수정하는 페이지를 만들자
@@ -256,8 +257,9 @@ public class MemberController {
 			
 		}
 		
-		
+
 		// 회원조회시 포인트 수정
+
 		@RequestMapping("pointUpdate.do")	
 		public String updatePointMember(Member m, Model model, int mId, int point) {
 			m.setMid(mId);

@@ -10,45 +10,75 @@
 <title>Insert title here</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <link href="js/Modal.js-master/build/css/modal.css" rel="stylesheet">
+
+
 <style>
+body{
+	background : white;
+}
 .detailArea{
-	border : 1px solid red;
-	width : 60%;
+	/* border : 1px solid red; */
+	width : 800px;
 	height : 90%;
 	margin-left : 350px;
 }
-.goods-list{
+.goods-Area{
 	width : 800px;
-	height : 600px;
+	height : 530px;
 	/* background : yellow; */
 	display : inline-block;
- 	margin-left: 1%;
+ 	/* margin-left: 100px; */
     margin-right:auto;
     margin-top:20px;
     cursor : pointer;
-    border : 1px solid blue;
-    
+/*     border : 1px solid blue; */
+    position: relative;
 }
 .goods-img{
-	width : 500px;
-	height : 500px;
     cursor : pointer;
-    border : 1px solid blue;
-  /*   position: absolute; */
-   display : inline-block;
+  	/* border : 1px solid blue; */
+	position: relative;
+    display : inline-block;
+    margin-top : 20px;
+    
 }
 .goods-info{
- 	/* position: relative; */
+ 	position: absolute;
 	display: inline-block;
-	border : 1px solid blue;
+/* 	border : 1px solid blue; */
 	width : 250px;
-	height :400px;
+	height : 500px;
+	margin-top : 20px;
 }
 .sell-info{
 	width : 500px;
 	border : 1px solid black;
 }
 
+.number{
+	position: relative;
+}
+.UpDown{
+	position: absolute;
+	display : inline-block;
+}
+
+.Quantity{
+	display : inline-block;
+	margin-left : 100px;
+	
+}
+
+#increaseQuantity{
+	text-decoration: none;
+}
+#decreaseQuantity{
+	text-decoration: none;
+}
+#tablinkDiv{
+	margin-left : 1px;
+	padding-left : 1px;
+}
 .tablink {
   background-color: #555;
   color: white;
@@ -56,9 +86,9 @@
   border: none;
   outline: none;
   cursor: pointer;
-  padding: 14px 16px;
+  padding : 15px 4px;
   font-size: 17px;
-  width: 25%;
+  width: 266px;
 }
 
 .tablink:hover {
@@ -97,29 +127,6 @@
 	float: right;
 	margin-bottom: 20px;
 	
-}
-/* 문의하기 table */
-#QAtable{
-  border-collapse: collapse;
-  border-spacing: 0;
-  width : 100%;
-  border: 1px solid #ddd;
-  text-align :center;
-  margin-bottom: 100px;
-}
-#QAtable th, td {
-  text-align: center;
-  padding: 16px;
-  width : 200px;
-  
-}
-#QAtable tr:nth-child(even) {
-  background-color: #f2f2f2;
-  cursor : pointer;
-}
-#QABtn{
-	float: right;
-	margin-bottom: 20px;
 }
 
 /* 맨위로 버튼  */
@@ -193,25 +200,25 @@
 
 
 #loginmodal {
- 			display: none; /* Hidden by default */
-            position: fixed; /* Stay in place */
-            z-index: 1; /* Sit on top */
-            left: 0;
-            top: 0;
-            width: 100%; /* Full width */
-            height: 100%; /* Full height */
-            overflow: auto; /* Enable scroll if needed */
-            background-color: rgb(0,0,0); /* Fallback color */
-            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+		display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 
 }
 
 #loginmodal .login_modal_content {
-  background-color: #fefefe;
-            margin: 15% auto; /* 15% from the top and centered */
-            padding: 20px;
-            border: 1px solid #888;
-            width: 30%; /* Could be more or less, depending on screen size */ 
+  		background-color: #fefefe;
+        margin: 15% auto; /* 15% from the top and centered */
+        padding: 20px;
+        border: 1px solid #888;
+        width: 30%; /* Could be more or less, depending on screen size */ 
 }
 .login_modal_content{
 		text-align:center; 
@@ -234,6 +241,69 @@
   text-decoration: none;
   cursor: pointer;
 }
+
+
+/* 장바구니 버튼 클릭 팝업 css */
+.popup {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* The actual popup */
+.popup .popuptext {
+  visibility: hidden;
+  width: 200px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -80px;
+}
+
+/* Popup arrow */
+.popup .popuptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+/* Toggle this class - hide and show the popup */
+.popup .show {
+  visibility: visible;
+  -webkit-animation: fadeIn 1s;
+  animation: fadeIn 1s;
+}
+.hide{
+  -webkit-animation: fadeOut 1s;
+  animation: fadeOut 1s;
+}
+
+/* Add animation (fade in the popup) */
+@-webkit-keyframes fadeIn {
+  from {opacity: 0;} 
+  to {opacity: 1;}
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity:1 ;}
+  
+
 </style>
 
 </head>
@@ -246,54 +316,62 @@
     
 		<div class = "detailArea"  align="center">
 			<c:forEach var="a" items="${list}">
-				<form id = "goCartForm" action="goCart.do" method="post">
+				<form id = "goCartForm" action="goCart.do" method="post" target="iframe"> 
 					<div class ="goods-Area">
 						<input type="hidden" name="sellNum" value="${a.sellNum}">
 						<input type="hidden" name="gId" value="${a.gId }">
-						<input type="hidden" name="mId" value="${sessionScope.loginUser.mid }">${sessionScope.loginUser.mid }
-
-						<div class = "goods-img" style="margin-top : 20px;">
-							 <img src="resources/auploadFiles/${a.filePath}" width ="500px" height ="500px" name ="${a.filePath}" value="${a.filePath}">
-						</div>
-						<div class = "goods-info" style="margin-top : 20px;">
-							<h3 style = "font-size : 25px; font-weight: bold;">${a.goodsTitle}</h3>
-							<input type="hidden" name="goodsTitle" value="${a.goodsTitle}">
-							
-							<span>${a.goodsContent}</span>
-							<input type="hidden" name="goodsContent" value="${a.goodsContent}"><br>
-							
-							<hr>
-							<br>
-							<span>판매가격 : ${a.goodsPrice}원</span>
-							<input type="hidden" name="goodsPrice" value="${a.goodsPrice}"><br>
-							
-							<input type="hidden" name="cateCd" value="${a.cateCd}"><br>
-							<span>배송방법 : 택배배송 </span><br><br>
-							<span>배송비 : 무료</span><br><br>
-							<hr>
-									
-							<div class="number">
-								<span id="numberUpDown">1</span>
-								<input type="hidden" name="count" value="${a.count}">
-									<a href="#" id="increaseQuantity">▲</a>
-								    <a href="#" id="decreaseQuantity">▼</a>
+						<input type="hidden" name="mId" value="${sessionScope.loginUser.mid }">
+						<div class = "goods-imginfoArea" style = "margin-right : 255px;">
+							<div class = "goods-img" >
+								 <img src="resources/auploadFiles/${a.filePath}" width ="500px" height ="500px" name ="${a.filePath}" value="${a.filePath}">
 							</div>
-							<br>
-							<c:if test="${empty sessionScope.loginUser }">
-								<button type="button" style="width : 100px; height : 40px;" onclick="notLogin();">장바구니</button>
-					        </c:if>
-					        <c:if test="${!empty sessionScope.loginUser }">
-								<button type="button" style="width : 100px; height : 40px;" onclick="goCart();">장바구니</button>
-							</c:if>
+							<div class = "goods-info" style = "text-align : left; margin-left : 20px";>
+								<h3 style = "font-size : 25px; font-weight: bold;">${a.goodsTitle}</h3>
+								<input type="hidden" name="goodsTitle" value="${a.goodsTitle}">
+								
+								<span>${a.goodsContent}</span>
+								<input type="hidden" name="goodsContent" value="${a.goodsContent}">
+								
+								<hr>
+	
+								<span>판매가격 : ${a.goodsPrice}원</span>
+								<input type="hidden" name="goodsPrice" value="${a.goodsPrice}"><br>
+								
+								<input type="hidden" name="cateCd" value="${a.cateCd}"><br>
+								<span>배송방법 : 택배배송 </span><br><br>
+								<span>배송비 : 무료</span><br><br>
+								<hr>
+										
+								<div class="number" style= "width : 130px; height : 50px;">
+									<div class="UpDown" style="padding-top: 13px;">
+										수량 선택 : <span id="numberUpDown">1</span>
+										<input type="hidden" name="count" value="${a.count}">
+									</div>
+									<div class="Quantity" style="width : 50px;">
+										<a href="#" id="increaseQuantity">▲</a><br>
+									    <a href="#" id="decreaseQuantity">▼</a>
+									</div>
+								</div>
+								<br>
+								<c:if test="${empty sessionScope.loginUser }">
+									<button type="button" style="width : 110px; height : 40px;" onclick="notLogin();">장바구니</button>
+						        </c:if>
+						        <c:if test="${!empty sessionScope.loginUser }">
+									<button class="popup" type="button" style="width : 100px; height : 40px;" onclick="goCart();">장바구니 <span class="popuptext" id="myPopup">장바구니에 추가되었습니다.</span></button>
+								</c:if>
+									<input type="button" value="찜하기" style="width : 110px; height : 40px;"/>
+							</div>
 						</div>
 					</div>
 				</form>
-				
-					
-				<button class="tablink" id="defaultOpen"><a href="#goods-img1" style="color:white">상세설명</a></button>
-				<button class="tablink"><a href="#sell-infoDiv" style="color:white">구매정보</a></button>	
-				<button class="tablink"><a href="#afterWriteDiv" style="color:white">상품후기</a></button>
-				<button class="tablink"><a href="#QABtnDiv" style="color:white">상품문의</a></button>
+		<!-- 장바구니 클릭시 form 경로로 안넘어가고 화면유지  -->
+		<iframe src="#" name="iframe" style="width:1px; height:1px; border:0; visibility:hidden;"></iframe>
+		
+				<div id = "tablinkDiv">
+					<button class="tablink" id="defaultOpen"><a href="#goods-img1" style="color:white">상세설명</a></button>
+					<button class="tablink"><a href="#sell-infoDiv" style="color:white">구매정보</a></button>	
+					<button class="tablink"><a href="#afterWriteDiv" style="color:white">상품후기</a></button>
+				</div>	
 				
 					<div id ="goods-img1" class = "goods-img1" style = "margin-bottom: 15px;">
 							<img src="resources/auploadFiles/${a.contentFilePath}" width ="800px" height ="4500px">
@@ -364,47 +442,12 @@
 							<a href="${afterWrite}"><button>후기작성</button></a>
 					</div>
 					
-					
-					<div id ="QABtnDiv">
-						<h3 align="left"> 문의하기 </h3>
-						<button id ="QABtn">문의하기</button>
-						<table id ="QAtable">
-							<tr>
-								<th width ="200px">번호</th>
-								<th width ="400px">제목</th>
-								<th width ="200px">작성일</th>
-								<th width ="200px">닉네임</th>
-							</tr>
-							<tr>
-								<td>3</td>
-								<td>문의사항1</td>
-								<td>2019-12-01</td>
-								<td>홍길동</td>
-							</tr>
-							<tr>
-								<td>2</td>
-								<td>문의사항2</td>
-								<td>2019-12-01</td>
-								<td>홍길동</td>
-							</tr>
-							<tr>
-								<td>1</td>
-								<td>문의사항3</td>
-								<td>2019-12-01</td>
-								<td>홍길동</td>
-							</tr>
-						</table>
-					</div>
-					
-					
 			</c:forEach>
 		
 			</div>
 		</div>
 			
-		
-	
-	
+
 	
 	<div id="loginmodal">
 	 
@@ -493,7 +536,7 @@
 		
 		<script>
 			function notLogin(){
-				 Modal.confirm({
+				Modal.confirm({
 					  title: '로그인여부',
 					  message: '로그인 하시겠습니까?',
 					  onConfirm: function() {
@@ -511,13 +554,19 @@
 		</script>
 		
 		<script src="js/Modal.js-master/modal.js"></script>
+
 		<script>
-			 function goCart(){
-			      Modal.confirm({
-				  title: '장바구니',
-				  message: '장바구니에 추가하시겠습니까?',
+		 	function goCart(){
+			  /* 장바구니 클릭시 팝업 */
+			 	  var popup = document.getElementById("myPopup");
+				  popup.classList.toggle("show");
+			  $("#goCartForm").submit();
+				 
+			  Modal.confirm({
+				  title: '장바구니이동',
+				  message: '장바구니로 이동하시겠습니까?',
 				  onConfirm: function() {
-					$("#goCartForm").submit();
+					  location.href="moveCart.do?";
 					 /* alert('장바구니로 이동.'); */
 		  		},
 				  onCancel: function() {
@@ -564,7 +613,8 @@
 			}
 	
 		</script>
-			
+
+
 
 </body>
 

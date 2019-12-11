@@ -3,7 +3,7 @@ package com.kh.awesome.admin.model.vo;
 import java.sql.Date;
 
 public class Goods {
-	
+
 	private int gId;
 	private String cateCd;
 	private String goodsName;
@@ -13,18 +13,22 @@ public class Goods {
 	private String soldout;
 	private Date registerDate;
 	private Date modifyDate;
-	
+
 	private String cateNm;
 	private String lclCd;
 	private String mclCd;
 	private String sclCd;
-	
+
+	private String whereNum; // 상품관리 화면 검색 조건 타입
+
 	public Goods() {
+		super();
 	}
 
 	public Goods(int gId, String cateCd, String goodsName, int goodsPrice, int count, String goodsStatus,
-			String soldout, Date registerDate, Date modifyDate, String cateNm, String lclCd, String mclCd,
-			String sclCd) {
+			String soldout, Date registerDate, Date modifyDate, String cateNm, String lclCd, String mclCd, String sclCd,
+			String whereNum) {
+		super();
 		this.gId = gId;
 		this.cateCd = cateCd;
 		this.goodsName = goodsName;
@@ -38,6 +42,7 @@ public class Goods {
 		this.lclCd = lclCd;
 		this.mclCd = mclCd;
 		this.sclCd = sclCd;
+		this.whereNum = whereNum;
 	}
 
 	public int getgId() {
@@ -144,14 +149,20 @@ public class Goods {
 		this.sclCd = sclCd;
 	}
 
+	public String getWhereNum() {
+		return whereNum;
+	}
+
+	public void setWhereNum(String whereNum) {
+		this.whereNum = whereNum;
+	}
+
 	@Override
 	public String toString() {
 		return "Goods [gId=" + gId + ", cateCd=" + cateCd + ", goodsName=" + goodsName + ", goodsPrice=" + goodsPrice
 				+ ", count=" + count + ", goodsStatus=" + goodsStatus + ", soldout=" + soldout + ", registerDate="
 				+ registerDate + ", modifyDate=" + modifyDate + ", cateNm=" + cateNm + ", lclCd=" + lclCd + ", mclCd="
-				+ mclCd + ", sclCd=" + sclCd + "]";
+				+ mclCd + ", sclCd=" + sclCd + ", whereNum=" + whereNum + "]";
 	}
 
-
 }
-

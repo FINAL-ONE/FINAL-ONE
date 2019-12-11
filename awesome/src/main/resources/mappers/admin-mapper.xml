@@ -54,14 +54,6 @@
 
 	</resultMap>
 
-<!-- 	<select id ="selectList" resultMap="sell_goodsResultSet">
-		SELECT *
-        FROM(SELECT * 
-        FROM SELL_GOODSSELECTVIEW
-        WHERE STATUS='Y')
-        ORDER BY SELL_NUM DESC
-		ORDER BY N_CREATE_DATE DESC
-	</select> -->
 
 	<insert id ="insertSellgoods" parameterType="Admin">
 		INSERT INTO SELL_GOODS 
@@ -89,20 +81,9 @@
 	</update>
 	
 	
+<!--========================================= INSERT  =========================================-->	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	<!--========================================= INSERT  =========================================-->	
-	
-	<!-- ?숇났 - ?곹뭹 ?깅줉 -->
+	<!-- 동복 - 상품 등록 -->
 	<insert id ="insertgoods" parameterType="Goods">
 		INSERT INTO GOODS VALUES(
 			SEQ_GID.NEXTVAL, #{cateCd}, #{goodsName}, #{goodsPrice}, #{count}, #{goodsStatus}, #{soldout}, SYSDATE, NULL 
@@ -111,7 +92,7 @@
 	
 
 	
-	<!-- ?숇났 - 移댄뀒怨좊━ ?깅줉 -->
+	<!-- 동복 - 카테고리 등록 -->
 	<insert id ="insertCategory" parameterType="Category">
 		INSERT INTO CATEGORY VALUES(
 			#{cateCd}, #{cateNm}, #{lclCd}, #{mclCd}, #{sclCd}, '4', 'Y', SYSDATE, NULL 
@@ -120,7 +101,7 @@
 
 <!--========================================= UPDATE  =========================================-->
   
-  	<!-- ?숇났 - ?곹뭹 ?섏젙-->
+  	<!-- 동복 - 상품 수정-->
   	<update id="Updategoods" parameterType="Goods">
   		UPDATE GOODS 
   		   SET	GOODS_NAME = #{goodsName},
@@ -132,7 +113,7 @@
   		WHERE GID = #{gId}  
   	</update>
   	
-  	<!-- ?숇났 - ?곹뭹 ?섏젙(移댄뀒怨좊━ ?섏젙)-->
+  	<!-- 동복 - 상품 수정(카테고리 수정)-->
   	<update id="UpdateCategory" parameterType="Category">
    		UPDATE CATEGORY 
   		   SET CATE_NM = #{cateNm},
@@ -143,7 +124,7 @@
   		 WHERE CATE_CD = #{cateCd}
   	</update>  	
 
-  	<!-- ?숇났 - ?곹뭹?먮ℓ ?깅줉??媛寃?怨??섎웾??蹂寃쏀뻽?ㅻ㈃ ?곹뭹?뚯씠釉붾룄 蹂寃?(1:1 留ㅽ븨??-->
+  	<!-- 동복 - 상품판매 등록시 가격 과 수량을 변경했다면 상품테이블도 변경 (1:1 매핑임)-->
   	<update id="sellUpdategoods" parameterType="Goods">
   		UPDATE GOODS 
   		   SET GOODS_PRICE = #{goodsPrice},
@@ -152,7 +133,7 @@
   		 WHERE GID = #{gId}  
   	</update>
 
-  	<!-- ?숇났 : ?먮ℓ?곹뭹 ?덉젅 泥섎━???곹뭹怨??먮ℓ媛 1:1 ?대씪 ?곹뭹 ?곹깭??N?쇰줈 蹂寃?-->
+  	<!-- 동복 : 판매상품 품절 처리시 상품과 판매가 1:1 이라 상품 상태도 N으로 변경-->
   	<update id="updateGoodsStatus" parameterType="Admin">
   		UPDATE GOODS
   		<if test='status == "Y"'>
@@ -165,7 +146,7 @@
   		 WHERE GID = #{gId}
   	</update>
 
-  	<!-- ?숇났 - ?먮ℓ ?곹뭹 議고쉶 ?댁뿭 ?섏젙 -->
+  	<!-- 동복 - 판매 상품 조회 내역 수정-->
   	<update id="UpdateSellGoods" parameterType="Admin">
   		UPDATE SELL_GOODS 
   		   SET	GOODS_TITLE = #{goodsTitle},
@@ -176,7 +157,7 @@
   		WHERE SELL_NUM = #{sellNum}
   	</update>
   	
-  	<!-- ?숇났 - ?곹뭹愿由ъ뿉???섏젙???먮ℓ以묒씤 ?곹뭹由ъ뒪?몄뿉 ????곹깭??蹂寃?-->
+  	<!-- 동복 - 상품관리에서 수정시 판매중인 상품리스트에 대한 상태도 변경 -->
   	<update id = "updateSellGoodsStatus" parameterType ="Admin">
 		UPDATE SELL_GOODS
 		<if test='status == "Y"'>
@@ -190,7 +171,7 @@
   	
 <!--========================================= SELECT  =========================================-->
 
-	<!-- ?숇났 - ?섏젙(?덉젅泥섎━???곹뭹??List??蹂댁뿬以?異뷀썑???ы뙋留?媛?ν븯?꾨줉)) -->
+	<!-- 동복 - 수정(품절처리된 상품도 List에 보여줌(추후에 재판매 가능하도록)) -->
 	<select id ="selectList" resultMap="sell_goodsResultSet">
 		
 		<!-- SELECT *
@@ -207,7 +188,7 @@
 		<!-- ORDER BY N_CREATE_DATE DESC -->
 	</select>
 	
-	<!-- ?숇났 - ?곹뭹 由ъ뒪??議고쉶 --> 	
+	<!-- 동복 - 상품 리스트 조회 --> 	
 	<select id="goodsList" resultMap="goodsResultSet">
 		SELECT  G.GID,
 		        G.CATE_CD,
@@ -227,34 +208,34 @@
 		  ORDER BY 1
 	</select>
 	
-	<!-- ?숇났 - ?깅줉???곹뭹??移댄뀒怨좊━ 肄붾뱶 議고쉶 (?곹뭹?깅줉???ъ슜 ?쒗?ㅻ줈 ?덊븿 : ?곹뭹?깅줉??移댄뀒怨좊━???깅줉?댁빞?섏꽌 )--> 	
+	<!-- 동복 - 등록한 상품의 카테고리 코드 조회 (상품등록시 사용 시퀀스로 안함 : 상품등록후 카테고리도 등록해야되서 )--> 	
 	<select id="categoryCDselect" resultMap="CategoryResultSet" parameterType="Goods">
 		SELECT MAX(CATE_CD)+1 AS CATE_CD
 		  FROM GOODS
 	</select>
 	
-	<!-- ?숇났 - ?곹뭹 ?섏젙 由ъ뒪??議고쉶-->
+	<!-- 동복 - 상품 수정 리스트 조회-->
 	<select id="goodsUpdateList" resultMap="goodsResultSet" parameterType="_int" >
 	  	SELECT *
 	  	  FROM GOODS
 	  	 WHERE GID = #{gId}
 	</select>
 	
-	<!-- ?숇났 - ?곹뭹?먮ℓ ???곹뭹由ъ뒪??議고쉶 -->
+	<!-- 동복 - 상품판매 시 상품리스트 조회 -->
 	<select id="selectGoodsValue" resultMap="goodsResultSet">
 	  	SELECT * 
 	  	  FROM GOODS
 	  	 WHERE GOODS_NAME = #{goodsName} 
 	</select>	
 	
-	<!-- ?숇났 - 移댄뀒怨좊━ 議고쉶 -->
+	<!-- 동복 - 카테고리 조회 -->
 	<select id="selectCategoryList" resultMap="CategoryResultSet">
 	 SELECT *
 	  FROM CATEGORY 
 	 WHERE CATE_LVL = '1'
 	</select>	
 	
-	<!-- ?숇났 - ? 移댄뀒怨좊━ 議고쉶 -->
+	<!-- 동복 - 대 카테고리 조회 -->
 	<select id="selectLCategoryList" resultMap="CategoryResultSet">
 	 SELECT *
 	  FROM CATEGORY 
@@ -262,7 +243,7 @@
 	   AND CATE_LVL = '2'
 	</select>
 	
-	<!-- ?숇났 - 以?移댄뀒怨좊━ 議고쉶 -->
+	<!-- 동복 - 중 카테고리 조회 -->
 	<select id="selectMCategoryList" resultMap="CategoryResultSet" parameterType="Category">
 	 SELECT *
 	  FROM CATEGORY 
@@ -271,7 +252,7 @@
 	   AND CATE_LVL = '3'
 	</select>
 	
-	<!-- ?숇났 - ??移댄뀒怨좊━ 議고쉶 -->
+	<!-- 동복 - 소 카테고리 조회 -->
 	<select id="selectSCategoryList" resultMap="CategoryResultSet">
 	 SELECT *
 	  FROM CATEGORY 
@@ -281,14 +262,14 @@
 	   AND CATE_LVL = '4'
 	</select>
 	
-	<!-- ?숇났 - ?곹뭹 ?깅줉 ???곹뭹?대쫫 以묐났 泥댄겕 -->
+	<!-- 동복 - 상품 등록 시 상품이름 중복 체크 -->
 	<select id="checkGoodsNm" parameterType="string" resultType="_int">
 		 SELECT COUNT(*)
 		  FROM GOODS
          WHERE GOODS_NAME = #{goodsName}
 	</select>
 	
-	<!-- ?숇났 - ?곹뭹 ?섏젙???꾩옱 ?대떦 ?곹뭹???먮ℓ 以묒씤吏 議고쉶 -->
+	<!-- 동복 - 상품 수정시 현재 해당 상품이 판매 중인지 조회 -->
 	<select id="selectsellGoodsList" parameterType="string" resultType="_int">
 		 SELECT COUNT(*)
 		  FROM SELL_GOODS
@@ -296,14 +277,14 @@
 	</select>
 	
 	
-	<!-- ?숇났 - ?곹뭹 ?섏젙 移댄뀒怨좊━ 議고쉶-->
+	<!-- 동복 - 상품 수정 카테고리 조회-->
 	<select id="goodsUpdateClist" resultMap="CategoryResultSet" parameterType="_int" >
 		SELECT *
 		  FROM CATEGORY
 		 WHERE CATE_LVL = 1
 	</select>	
 	
-	<!-- ?숇났 - ?곹뭹 ?섏젙 (?)移댄뀒怨좊━ 議고쉶-->
+	<!-- 동복 - 상품 수정 (대)카테고리 조회-->
 	<select id="goodsUpdateLlist" resultMap="CategoryResultSet" parameterType="_int" >
 		SELECT *
 		  FROM CATEGORY
@@ -316,7 +297,7 @@
 		 				)
 	</select>
 	
-	<!-- ?숇났 - ?곹뭹 ?섏젙 (以?移댄뀒怨좊━ 議고쉶-->
+	<!-- 동복 - 상품 수정 (중)카테고리 조회-->
 	<select id="goodsUpdateMlist" resultMap="CategoryResultSet" parameterType="_int" >
 		SELECT *
 		  FROM CATEGORY
@@ -329,7 +310,7 @@
 						)
 	</select>	
 	
-	<!-- ?숇났 - ?대┃???곹뭹??移댄뀒怨좊━ 議고쉶 -->
+	<!-- 동복 - 클릭한 상품의 카테고리 조회 -->
 	<select id="goodsUpCategorylist" resultMap="CategoryResultSet" parameterType="_int" >
 		SELECT L.CATE_CD AS LCL_CD, 
 		       L.CATE_NM AS L_CATE_NM,
@@ -369,7 +350,7 @@
 		         )S
 	</select>
 	
-	<!-- ?숇났 - ?먮ℓ ?곹뭹 議고쉶 ?섏젙 ?섏씠吏 -->
+	<!-- 동복 - 판매 상품 조회 수정 페이지 -->
 	<select id="sell_goodsDetailView" resultMap="sell_goodsResultSet">
 		SELECT S.SELL_NUM
 		      ,S.GID
@@ -388,7 +369,165 @@
 		  JOIN GOODS G ON(S.GID = G.GID)
          WHERE SELL_NUM = #{sellNum}
 	</select>
+	
+	<!-- 동복 - 상품관리 화면에서 조건 검색 -->
+	<select id="checkTextSelectGoods" resultMap="goodsResultSet">
+	
+<!-- 		SELECT  G.GID,
+	        G.CATE_CD,
+	        G.GOODS_NAME,
+	        G.GOODS_PRICE,
+	        G.COUNT,
+	        G.GOODS_STATUS,
+	        G.SOLDOUT,
+	        G.REGISTER_DATE,
+	        G.MODIFY_DATE,
+	        C.CATE_NM,
+	        C.LCL_CD,
+	        C.MCL_CD,
+	        C.SCL_CD,
+	        C.CATE_LVL
+	  FROM GOODS G
+	  JOIN CATEGORY C ON(G.CATE_CD = C.CATE_CD)
+	<if test='whereNum == "4"'> 상품명 들어오면 이거부터 4
+	 WHERE GOODS_NAME LIKE '%'||#{goodsName}||'%'
+	</if> -->
+ 
+ 
+ 
+ 
+  		<!-- SELECT  G.GID,
+	        G.CATE_CD,
+	        G.GOODS_NAME,
+	        G.GOODS_PRICE,
+	        G.COUNT,
+	        G.GOODS_STATUS,
+	        G.SOLDOUT,
+	        G.REGISTER_DATE,
+	        G.MODIFY_DATE,
+	        C.CATE_NM,
+	        C.LCL_CD,
+	        C.MCL_CD,
+	        C.SCL_CD,
+	        C.CATE_LVL
+	  FROM GOODS G
+	  JOIN CATEGORY C ON(G.CATE_CD = C.CATE_CD)
+	<if test='whereNum == "2"'> 상태 들어오면 2
+	 WHERE GOODS_STATUS = #{goodsStatus}
+		<if test='goodsName != "null"'>
+		   AND G.GOODS_NAME LIKE '%'||#{goodsName}||'%'
+		</if>
+	</if> -->
+ 
+ 
+ 
+ 
+ 		SELECT  G.GID,
+	        G.CATE_CD,
+	        G.GOODS_NAME,
+	        G.GOODS_PRICE,
+	        G.COUNT,
+	        G.GOODS_STATUS,
+	        G.SOLDOUT,
+	        G.REGISTER_DATE,
+	        G.MODIFY_DATE,
+	        C.CATE_NM,
+	        C.LCL_CD,
+	        C.MCL_CD,
+	        C.SCL_CD,
+	        C.CATE_LVL
+	  FROM GOODS G
+	  JOIN CATEGORY C ON(G.CATE_CD = C.CATE_CD)
+	<if test='whereNum == "1"'> <!-- 카테고리 들어오면 이거 1 -->
+	 WHERE C.LCL_CD = #{lclCd}
+		<if test="mclCd != ''">
+		   AND C.MCL_CD = #{mclCd}
+		</if>   
+		<if test="sclCd != ''">
+		   AND C.SCL_CD = #{sclCd}
+		</if>
+		<if test="goodsName != ''">
+		   AND G.GOODS_NAME LIKE '%'||#{goodsName}||'%'
+		</if>
+		<if test="goodsStatus != ''">
+		   AND G.GOODS_STATUS = #{goodsStatus}
+		</if>
+		<if test="soldout != ''">
+		   AND G.SOLDOUT = #{soldout}
+		</if>
+	</if>
 
+	<if test='whereNum == "2"'> <!-- 상태 들어오면 2 -->
+	 WHERE GOODS_STATUS = #{goodsStatus}
+  	  <choose>
+	    <when test="soldout != ''">
+	      AND SOLDOUT = #{soldout}
+	    </when>
+	    <when test="lclCd != ''">
+	      AND C.LCL_CD = #{lclCd}
+	    </when>
+	    <when test="mclCd != ''">
+	      AND C.MCL_CD = #{mclCd}
+	    </when>
+	    <when test="sclCd != ''">
+	      AND C.SCL_CD = #{sclCd}
+	    </when>
+	    <when test="goodsName != ''">
+	      AND G.GOODS_NAME LIKE '%'||#{goodsName}||'%'
+	    </when>
+	    <otherwise>
+	      AND ORDER BY 1
+	    </otherwise>
+	  </choose>
+	</if>
+
+	<if test='whereNum == "3"'> <!-- 매진 구분 들어오면 3 -->
+	 WHERE SOLDOUT = #{soldout}
+		<if test="goodsStatus != ''">
+		   AND GOODS_STATUS = #{goodsStatus}
+		</if>   
+		<if test="lclCd != ''">
+		   AND C.LCL_CD = #{lclCd}
+		</if>  
+		<if test="mclCd != ''">
+		   AND C.MCL_CD = #{mclCd}
+		</if>  
+		<if test="sclCd != ''">
+		   AND C.SCL_CD = #{sclCd}
+		</if>  
+		<if test="goodsName != ''">
+		   AND G.GOODS_NAME LIKE '%'||#{goodsName}||'%'
+		</if>  
+	</if>
+	
+	<if test='whereNum == "4"'> <!-- 상품명 들어오면 이거부터 4 -->
+	 WHERE GOODS_NAME LIKE '%'||#{goodsName}||'%'
+		<if test="goodsStatus != ''">
+		   AND GOODS_STATUS = #{goodsStatus}
+		</if> 
+		<if test="soldout != ''">
+		   AND SOLDOUT = #{soldout}
+		</if> 
+		<if test="lclCd != ''">
+		   AND C.LCL_CD = #{lclCd}
+		</if> 
+		<if test="mclCd != ''">
+		   AND C.MCL_CD = #{mclCd}
+		</if> 
+		<if test="sclCd != ''">
+		   AND C.SCL_CD = #{sclCd} 
+		</if> 
+	</if>
+ 
+ 
+	</select>
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

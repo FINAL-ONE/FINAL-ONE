@@ -138,3 +138,5 @@ public class Reply {
 	
 	
 }
+	public Reply(int rId, int bId, int mId, String userId, String userNickname, String rContent, String createDate,
+			String modifyDate, String status, int rGood, ArrayList<Answer> aList) {

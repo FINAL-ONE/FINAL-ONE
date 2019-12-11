@@ -169,5 +169,10 @@ public class AdminServiceImpl implements AdminService{
 		public ArrayList<Admin> sell_goodsDetailView(int sellNum) {
 			return aDao.sell_goodsDetailView(sellNum);
 		}
+		// 동복 - 상품관리 화면에서 조건 검색
+		@Override
+		public ArrayList<Goods> checkTextSelectGoods(Goods g) {
+			return aDao.checkTextSelectGoods(g);
+		}
 
-}
+	}

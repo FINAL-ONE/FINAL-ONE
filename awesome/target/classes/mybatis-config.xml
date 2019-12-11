@@ -15,7 +15,7 @@
 			<typeAlias type="com.kh.awesome.board.model.vo.BGood" alias="BGood"/>
 			<typeAlias type="com.kh.awesome.board.model.vo.RGood" alias="RGood"/>
 			<typeAlias type="com.kh.awesome.admin.model.vo.Admin" alias="Admin"/>
-			<typeAlias type="com.kh.awesome.order.model.vo.Order" alias="Order"/>
+
 			
 			<typeAlias type="com.kh.awesome.shop.model.vo.SellReply" alias="SellReply"/>
 			<typeAlias type="com.kh.awesome.admin.model.vo.Goods" alias="Goods"/>
