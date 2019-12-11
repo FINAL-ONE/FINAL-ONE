@@ -15,37 +15,59 @@
 table {
 	border-collapse: separate;
 	border-spacing: 1px;
-	text-align: left;
+	text-align: center;
 	line-height: 1.5;
 	border-top: 1px solid #d0d0d0;
 	margin: 20px 10px;
-}
-
-table th {
-	width: 150px;
-	padding: 10px;
-	font-weight: bold;
-	vertical-align: top;
-	border-bottom: 1px solid #d0d0d0;
 }
 
 table td {
 	padding: 10px;
 	vertical-align: top;
 	border-bottom: 1px solid #d0d0d0;
+	font-size: 15px;
 }
+
+a {
+	-webkit-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+	-moz-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+	-ms-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+	-o-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+	transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+	display: block;
+	max-width: 150px;
+	text-decoration: none;
+	border-radius: 4px;
+	padding: 10px 20px;
+}
+
+
+a.button {
+	color: gray;
+	box-shadow: gray 0 0px 0px 2px inset;
+}
+
+a.button:hover {
+	color: rgba(255, 255, 255, 0.85);
+	box-shadow: #fa4a4a 0 80px 0px 2px inset;
+}
+
+
 </style>
 <body>
-
-	<h2>주문취소</h2>
+	<div align="center">
+	<img src="resources/images/logo.png" style="height:20%; width:20%;">
+	<h1>주문취소</h1>
+	<h4 >취소하실 상품을 선택해주세요</h4>
+	</div>
 	<table>
 		<tr>
 			<td style="width: 10px"><input type="checkbox" id="chkall"
 				class="check" value="0"></td>
-			<td style="width: 200px">상품이름</td>
+			<td style="width: 100px">상품이름</td>
 			<td style="width: 200px">상품이미지</td>
 			<td style="width: 50px">수량</td>
-			<td style="width: 50px">가격</td>
+			<td style="width: 70px">가격</td>
 		</tr>
 		<c:forEach var="o" items="${list }">
 			<tr>
@@ -54,14 +76,15 @@ table td {
 					<td><pre>${o.gName }</pre></td>
 					<td>${o.oId }</td>
 					<td>${o.orderCount }</td>
-					<td>${o.gPrice * o.orderCount}</td>
+					<td>${o.gPrice * o.orderCount}원</td>
 			</tr>
 			</c:if>
 		</c:forEach>
 	</table>
 
 	<div id="button" align="center">
-		<button onclick="cancel()">선택 상품 취소</button>
+
+  			<a onclick="cancel()" class="button">선택 상품 취소</a>
 	</div>
 	<script> 
 	var str="";

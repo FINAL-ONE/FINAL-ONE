@@ -3,7 +3,7 @@ package com.kh.awesome.admin.model.vo;
 import java.sql.Date;
 
 public class Goods {
-
+	
 	private int gId;
 	private String cateCd;
 	private String goodsName;
@@ -13,20 +13,18 @@ public class Goods {
 	private String soldout;
 	private Date registerDate;
 	private Date modifyDate;
-
+	
 	private String cateNm;
 	private String lclCd;
 	private String mclCd;
 	private String sclCd;
-
+	
 	public Goods() {
-		super();
 	}
 
 	public Goods(int gId, String cateCd, String goodsName, int goodsPrice, int count, String goodsStatus,
 			String soldout, Date registerDate, Date modifyDate, String cateNm, String lclCd, String mclCd,
 			String sclCd) {
-		super();
 		this.gId = gId;
 		this.cateCd = cateCd;
 		this.goodsName = goodsName;
@@ -154,4 +152,6 @@ public class Goods {
 				+ mclCd + ", sclCd=" + sclCd + "]";
 	}
 
+
 }
+

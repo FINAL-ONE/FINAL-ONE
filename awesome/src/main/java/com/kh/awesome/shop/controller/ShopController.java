@@ -29,13 +29,13 @@ public class ShopController {
 	@Autowired
 	private ShopService ShopService;
 	
-	/*
+/*
 	@RequestMapping("afterWrite.do")
 	public String goodsWriterView() {
 		
 		return "shop/sell_afterWriteView";	
 	}
-	*/
+*/
 	
 	/*
 	@RequestMapping("afterWrite.do") 
@@ -48,21 +48,15 @@ public class ShopController {
 			 mv.addObject("list", list)
 			 .setViewName("shop/sell_afterWriteView");
 		 } else { 
-			 throw new AdminException("상품 정보 불러오기실패!"); }
-		 */
-		 
-		 
-		 
-		/*
-		 * mv.addObject("list", ShopService.selectReply(sellNum))
-		 * .setViewName("shop/sell_afterWriteView");
+			 throw new AdminException("상품 정보 불러오기실패!"); 
+		}
 		
-		 
-		 
+		 mv.addObject("list", ShopService.selectReply(sellNum))
+		 .setViewName("shop/sell_afterWriteView");
 	 return mv;
 	 
 	 }
-	 */
+	*/
 	
 	
 	@RequestMapping("sellafterInsert.do")
@@ -195,7 +189,7 @@ public class ShopController {
 	
 	// 카트 뷰로 이동
 	@RequestMapping("moveCart.do")
-	public String goodsWriterView() {
+	public String moveCart() {
 		
 		return "shop/shopCartView";	
 	}							

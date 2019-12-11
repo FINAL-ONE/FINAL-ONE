@@ -20,7 +20,7 @@
 <body>
 	
 	<jsp:include page ="../common/menubar.jsp"/>
-	<div id="container" style="overflow: auto; height: auto;" ><!-- container -->
+	<div id="container" style="overflow: auto; height: 800px;" ><!-- container -->
 	
 	
 	<h1 align="center">${loginUser.userName }님의 정보 보기</h1>

@@ -25,8 +25,6 @@ import com.kh.awesome.member.model.vo.PageInfo;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
-import com.kh.awesome.admin.model.service.AdminService;
-import com.kh.awesome.admin.model.vo.Admin;
 import com.kh.awesome.common.Pagination;
 @SessionAttributes("loginUser")
 
@@ -280,6 +278,10 @@ public class MemberController {
 		return "redirect:memberLookup.do";
 	}
 	
+	@RequestMapping("bmicalc.do")
+	public String bmiCalculator() {
+		return "common/bmiCalculator";
+	}
 		
 	
 }

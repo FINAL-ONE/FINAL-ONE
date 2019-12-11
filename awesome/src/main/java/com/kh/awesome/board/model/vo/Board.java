@@ -7,6 +7,7 @@ public class Board {
 	private int bId;
 	private int mId; 
 	private String userId; 
+	private String userNickname; 
 	private int category; 
 	private String bTitle;
 	private String bType; 
@@ -22,12 +23,15 @@ public class Board {
 	public Board() {
 	}
 
-	public Board(int rNum, int bId, int mId, String userId, int category, String bTitle, String bType, String bContent,
-			int bCount, Date createDate, Date modifyDate, String status, int bLevel, int bGood, int reply) {
+	public Board(int rNum, int bId, int mId, String userId, String userNickname, int category, String bTitle,
+			String bType, String bContent, int bCount, Date createDate, Date modifyDate, String status, int bLevel,
+			int bGood, int reply) {
+		super();
 		this.rNum = rNum;
 		this.bId = bId;
 		this.mId = mId;
 		this.userId = userId;
+		this.userNickname = userNickname;
 		this.category = category;
 		this.bTitle = bTitle;
 		this.bType = bType;
@@ -71,6 +75,14 @@ public class Board {
 
 	public void setUserId(String userId) {
 		this.userId = userId;
+	}
+
+	public String getUserNickname() {
+		return userNickname;
+	}
+
+	public void setUserNickname(String userNickname) {
+		this.userNickname = userNickname;
 	}
 
 	public int getCategory() {
@@ -163,11 +175,13 @@ public class Board {
 
 	@Override
 	public String toString() {
-		return "Board [rNum=" + rNum + ", bId=" + bId + ", mId=" + mId + ", userId=" + userId + ", category=" + category
-				+ ", bTitle=" + bTitle + ", bType=" + bType + ", bContent=" + bContent + ", bCount=" + bCount
-				+ ", createDate=" + createDate + ", modifyDate=" + modifyDate + ", status=" + status + ", bLevel="
-				+ bLevel + ", bGood=" + bGood + ", reply=" + reply + "]";
+		return "Board [rNum=" + rNum + ", bId=" + bId + ", mId=" + mId + ", userId=" + userId + ", userNickname="
+				+ userNickname + ", category=" + category + ", bTitle=" + bTitle + ", bType=" + bType + ", bContent="
+				+ bContent + ", bCount=" + bCount + ", createDate=" + createDate + ", modifyDate=" + modifyDate
+				+ ", status=" + status + ", bLevel=" + bLevel + ", bGood=" + bGood + ", reply=" + reply + "]";
 	}
+
+	
 	
 	
 	

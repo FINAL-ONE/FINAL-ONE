@@ -52,19 +52,13 @@ public class MemberDao {
 		
 		return (ArrayList)sqlSession.selectList("memberMapper.selectList", null, rowBounds);
 	}
-	
-	// 최근가입한 5명 뽑기
-	public ArrayList<Member> selectTopList() {
 
+	public ArrayList<Member> selectTopList() {
 		return (ArrayList)sqlSession.selectList("memberMapper.selectTopList");
 	}
-	
-	// 회원조회시 포인트 수정
-	public int updatePointMember(Member m) {
 
-		System.out.println("DAom" + m);
+	public int updatePointMember(Member m) {
 		return sqlSession.update("memberMapper.updatePointMember", m);
-		
 	}
 
 	

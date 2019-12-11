@@ -68,10 +68,10 @@
 </head>
 <body>
 	<%-- <jsp:include page ="common/header.jsp"/>
-	<jsp:include page ="common/mainHome.jsp"/>  --%>
+	<jsp:include page ="common/mainHome.jsp"/> --%>
 
 <jsp:include page ="common/menubar.jsp"/>
-<div id="container" style="overflow: auto; height: 800px;" ><!-- container -->
+<div id="container" style="overflow: auto; height: auto;" ><!-- container -->
 
 	    
 <div class="content">

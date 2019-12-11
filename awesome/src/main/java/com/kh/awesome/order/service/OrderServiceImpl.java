@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.awesome.board.model.vo.PageInfo;
 import com.kh.awesome.order.model.dao.OrderDao;
 import com.kh.awesome.order.model.vo.Order;
 
@@ -16,10 +17,9 @@ public class OrderServiceImpl implements OrderService{
 	OrderDao oDao;
 	
 
-
 	@Override
-	public ArrayList<Order> selectList(int mId) {
-		return oDao.selectList(mId);
+	public ArrayList<Order> selectList(int mId,PageInfo pi) {
+		return oDao.selectList(mId, pi);
 	}
 
 
@@ -64,6 +64,14 @@ public class OrderServiceImpl implements OrderService{
 	@Override
 	public int orderCancel(int number) {
 		return oDao.orderCancel(number);
+	}
+
+
+
+	@Override
+	public int getOrderListCount() {
+		
+		return oDao.getOrderListCount();
 	}
 
 

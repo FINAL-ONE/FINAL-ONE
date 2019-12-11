@@ -182,7 +182,7 @@
 				
 				
 				<td align="left" style=" padding-left: 10px;" > ${b.bTitle }&nbsp;<span style="color:#e11c24;font-weight:bold;margin-left:8px;">${b.reply}</span></td>
-				<td> ${b.userId}</td>
+				<td> ${b.userNickname}</td>
 				<td>${b.bCount }</td>
 				<c:if test="${b.bGood > 0 }">
 				<td ><span style="color:#e11c24;font-weight:bold;">${b.bGood}</span></td>
@@ -237,9 +237,15 @@
          
          <!-- 맨 끝으로(>>) -->
          <button onclick="location.href='fBoardListView.do?page=${pi.maxPage}'"> >> </button>
+     
       
       	<button style="border:none; background: #585858; height: 30px; color:white;padding-bottom:14px; position:relative; float:right;" onclick = "location.href='fBoardInsertForm.do?category=2'">글쓰기</button>
       </div>
+      
+      
+      
+      
+      
 			
 	<br>		
 	<div class ="searchArea" align ="center" style="background:#f6f6f6;"> 

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="adminMapper">
+
 	<resultMap type="Admin" id="sell_goodsResultSet">
-		<id property="sellNum" column ="SELL_NUM"/>
-		<!-- <id property="gId" column ="GID"/> -->
+	    <id property="sellNum" column ="SELL_NUM"/>
 		
 		<result property ="gId" 			column ="GID"/>
 		<result property ="mId" 			column ="MID"/>
@@ -18,7 +18,7 @@
 		<result property ="modifyDate" 		column="MODIFY_DATE"/>
 		<result property ="status" 			column="STATUS"/>
 	</resultMap>
-	
+
 	<resultMap id="goodsResultSet" type="Goods">
 	  	<id property="gId" 				column="GID"/>
 	  	<result property="cateCd" 		column="CATE_CD"/>
@@ -35,7 +35,8 @@
 	  	<result property="mclCd" 		column="MCL_CD"/>
 	  	<result property="sclCd" 		column="SCL_CD"/>
 	</resultMap>
-	
+
+
 	<resultMap id="CategoryResultSet" type="Category">
 	  	<id property="cateCd" 		column="CATE_CD"/>
 	  	<result property="cateNm" 	column="CATE_NM"/>
@@ -53,14 +54,14 @@
 
 	</resultMap>
 
-	<select id ="selectList" resultMap="sell_goodsResultSet">
+<!-- 	<select id ="selectList" resultMap="sell_goodsResultSet">
 		SELECT *
         FROM(SELECT * 
         FROM SELL_GOODSSELECTVIEW
         WHERE STATUS='Y')
         ORDER BY SELL_NUM DESC
-		<!-- ORDER BY N_CREATE_DATE DESC -->
-	</select>
+		ORDER BY N_CREATE_DATE DESC
+	</select> -->
 
 	<insert id ="insertSellgoods" parameterType="Admin">
 		INSERT INTO SELL_GOODS 
@@ -78,9 +79,13 @@
 	
 	<update id = "updateAdminStatus" parameterType ="Admin">
 		UPDATE SELL_GOODS
-		SET STATUS='N'
+		<if test='status == "Y"'>
+    		SET STATUS='N'
+		</if>
+		<if test='status == "N"'>
+    		SET STATUS='Y'
+		</if>		
 		WHERE SELL_NUM=#{sellNum}
-
 	</update>
 	
 	
@@ -95,27 +100,7 @@
 	
 	
 	
-	
-	<!-- ?숇났 - ?곹뭹 由ъ뒪??議고쉶 --> 	
-	<select id="goodsList" resultMap="goodsResultSet">
-		SELECT  G.GID,
-		        G.CATE_CD,
-		        G.GOODS_NAME,
-		        G.GOODS_PRICE,
-		        G.COUNT,
-		        G.GOODS_STATUS,
-		        G.SOLDOUT,
-		        G.REGISTER_DATE,
-		        G.MODIFY_DATE,
-		        C.CATE_NM,
-		        C.LCL_CD,
-		        C.MCL_CD,
-		        C.SCL_CD
-		  FROM GOODS G
-		  JOIN CATEGORY C ON(G.CATE_CD = C.CATE_CD)
-		  ORDER BY 1
-	</select>
-	
+	<!--========================================= INSERT  =========================================-->	
 	
 	<!-- ?숇났 - ?곹뭹 ?깅줉 -->
 	<insert id ="insertgoods" parameterType="Goods">
@@ -124,11 +109,7 @@
 		)
 	</insert>
 	
-	<!-- ?숇났 - ?깅줉???곹뭹??移댄뀒怨좊━ 肄붾뱶 議고쉶 (?곹뭹?깅줉???ъ슜 ?쒗?ㅻ줈 ?덊븿 : ?곹뭹?깅줉??移댄뀒怨좊━???깅줉?댁빞?섏꽌 )--> 	
-	<select id="categoryCDselect" resultMap="CategoryResultSet" parameterType="Goods">
-		SELECT MAX(CATE_CD)+1 AS CATE_CD
-		  FROM GOODS
-	</select>
+
 	
 	<!-- ?숇났 - 移댄뀒怨좊━ ?깅줉 -->
 	<insert id ="insertCategory" parameterType="Category">
@@ -137,12 +118,7 @@
 		)
 	</insert>	
 
-	<!-- ?숇났 - ?곹뭹 ?섏젙 由ъ뒪??議고쉶-->
-	<select id="goodsUpdateList" resultMap="goodsResultSet" parameterType="_int" >
-	  	SELECT *
-	  	  FROM GOODS
-	  	 WHERE GID = #{gId}
-	</select>
+<!--========================================= UPDATE  =========================================-->
   
   	<!-- ?숇났 - ?곹뭹 ?섏젙-->
   	<update id="Updategoods" parameterType="Goods">
@@ -176,7 +152,94 @@
   		 WHERE GID = #{gId}  
   	</update>
 
+  	<!-- ?숇났 : ?먮ℓ?곹뭹 ?덉젅 泥섎━???곹뭹怨??먮ℓ媛 1:1 ?대씪 ?곹뭹 ?곹깭??N?쇰줈 蹂寃?-->
+  	<update id="updateGoodsStatus" parameterType="Admin">
+  		UPDATE GOODS
+  		<if test='status == "Y"'>
+    		SET GOODS_STATUS = 'N',
+		</if>
+		<if test='status == "N"'>
+    		SET GOODS_STATUS = 'Y',
+		</if>		
+  		   	   MODIFY_DATE = SYSDATE
+  		 WHERE GID = #{gId}
+  	</update>
 
+  	<!-- ?숇났 - ?먮ℓ ?곹뭹 議고쉶 ?댁뿭 ?섏젙 -->
+  	<update id="UpdateSellGoods" parameterType="Admin">
+  		UPDATE SELL_GOODS 
+  		   SET	GOODS_TITLE = #{goodsTitle},
+				GOODS_CONTENT = #{goodsContent},
+  		   		GOODS_FILE_PATH = #{filePath},
+  		   		GOODS_CONTENT_FILE_PATH = #{contentFilePath},
+  		   		MODIFY_DATE = SYSDATE
+  		WHERE SELL_NUM = #{sellNum}
+  	</update>
+  	
+  	<!-- ?숇났 - ?곹뭹愿由ъ뿉???섏젙???먮ℓ以묒씤 ?곹뭹由ъ뒪?몄뿉 ????곹깭??蹂寃?-->
+  	<update id = "updateSellGoodsStatus" parameterType ="Admin">
+		UPDATE SELL_GOODS
+		<if test='status == "Y"'>
+    		SET STATUS='Y'
+		</if>
+		<if test='status == "N"'>
+    		SET STATUS='N'
+		</if>		
+		WHERE GID = #{gId}
+	</update>
+  	
+<!--========================================= SELECT  =========================================-->
+
+	<!-- ?숇났 - ?섏젙(?덉젅泥섎━???곹뭹??List??蹂댁뿬以?異뷀썑???ы뙋留?媛?ν븯?꾨줉)) -->
+	<select id ="selectList" resultMap="sell_goodsResultSet">
+		
+		<!-- SELECT *
+        FROM(SELECT * 
+        FROM SELL_GOODSSELECTVIEW 
+        WHERE STATUS='Y')
+        ORDER BY SELL_NUM DESC -->
+        
+		SELECT *
+        FROM(SELECT * 
+        FROM SELL_GOODSSELECTVIEW)
+        ORDER BY SELL_NUM DESC        
+        
+		<!-- ORDER BY N_CREATE_DATE DESC -->
+	</select>
+	
+	<!-- ?숇났 - ?곹뭹 由ъ뒪??議고쉶 --> 	
+	<select id="goodsList" resultMap="goodsResultSet">
+		SELECT  G.GID,
+		        G.CATE_CD,
+		        G.GOODS_NAME,
+		        G.GOODS_PRICE,
+		        G.COUNT,
+		        G.GOODS_STATUS,
+		        G.SOLDOUT,
+		        G.REGISTER_DATE,
+		        G.MODIFY_DATE,
+		        C.CATE_NM,
+		        C.LCL_CD,
+		        C.MCL_CD,
+		        C.SCL_CD
+		  FROM GOODS G
+		  JOIN CATEGORY C ON(G.CATE_CD = C.CATE_CD)
+		  ORDER BY 1
+	</select>
+	
+	<!-- ?숇났 - ?깅줉???곹뭹??移댄뀒怨좊━ 肄붾뱶 議고쉶 (?곹뭹?깅줉???ъ슜 ?쒗?ㅻ줈 ?덊븿 : ?곹뭹?깅줉??移댄뀒怨좊━???깅줉?댁빞?섏꽌 )--> 	
+	<select id="categoryCDselect" resultMap="CategoryResultSet" parameterType="Goods">
+		SELECT MAX(CATE_CD)+1 AS CATE_CD
+		  FROM GOODS
+	</select>
+	
+	<!-- ?숇났 - ?곹뭹 ?섏젙 由ъ뒪??議고쉶-->
+	<select id="goodsUpdateList" resultMap="goodsResultSet" parameterType="_int" >
+	  	SELECT *
+	  	  FROM GOODS
+	  	 WHERE GID = #{gId}
+	</select>
+	
 	<!-- ?숇났 - ?곹뭹?먮ℓ ???곹뭹由ъ뒪??議고쉶 -->
 	<select id="selectGoodsValue" resultMap="goodsResultSet">
 	  	SELECT * 
@@ -225,12 +288,21 @@
          WHERE GOODS_NAME = #{goodsName}
 	</select>
 	
+	<!-- ?숇났 - ?곹뭹 ?섏젙???꾩옱 ?대떦 ?곹뭹???먮ℓ 以묒씤吏 議고쉶 -->
+	<select id="selectsellGoodsList" parameterType="string" resultType="_int">
+		 SELECT COUNT(*)
+		  FROM SELL_GOODS
+         WHERE GID = #{gId}
+	</select>
+	
+	
 	<!-- ?숇났 - ?곹뭹 ?섏젙 移댄뀒怨좊━ 議고쉶-->
 	<select id="goodsUpdateClist" resultMap="CategoryResultSet" parameterType="_int" >
 		SELECT *
 		  FROM CATEGORY
 		 WHERE CATE_LVL = 1
 	</select>	
+	
 	<!-- ?숇났 - ?곹뭹 ?섏젙 (?)移댄뀒怨좊━ 議고쉶-->
 	<select id="goodsUpdateLlist" resultMap="CategoryResultSet" parameterType="_int" >
 		SELECT *
@@ -243,6 +315,7 @@
 						  WHERE G.GID = #{gId}
 		 				)
 	</select>
+	
 	<!-- ?숇났 - ?곹뭹 ?섏젙 (以?移댄뀒怨좊━ 議고쉶-->
 	<select id="goodsUpdateMlist" resultMap="CategoryResultSet" parameterType="_int" >
 		SELECT *
@@ -296,15 +369,26 @@
 		         )S
 	</select>
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	<!-- ?숇났 - ?먮ℓ ?곹뭹 議고쉶 ?섏젙 ?섏씠吏 -->
+	<select id="sell_goodsDetailView" resultMap="sell_goodsResultSet">
+		SELECT S.SELL_NUM
+		      ,S.GID
+		      ,S.CATE_CD
+		      ,S.GOODS_TITLE
+		      ,S.GOODS_CONTENT
+		      ,S.GOODS_FILE_PATH
+		      ,S.GOODS_CONTENT_FILE_PATH
+		      ,S.SELL_DATE
+		      ,S.MODIFY_DATE
+		      ,S.STATUS
+		      ,G.GOODS_NAME
+		      ,G.GOODS_PRICE
+		      ,G.COUNT
+		  FROM SELL_GOODS S
+		  JOIN GOODS G ON(S.GID = G.GID)
+         WHERE SELL_NUM = #{sellNum}
+	</select>
+
 	
 	
 	

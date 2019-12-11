@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%> 
          <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
@@ -214,7 +214,6 @@
 <div class="menubar2 normalMenubar">
 	
 </div>   
- 
  
 <div class="menubar2 communityMenubar communityMenu" style="display:none;">
    <div class= "conmmunityNav">

@@ -13,6 +13,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
 
+
 .outer{
 	width : 1300px;
  	margin-left: auto;
@@ -32,7 +33,7 @@
 	margin-left: 10px;
 	margin-right:auto;
     margin-top:20px;
-    margin-bottom: 20px;
+    margin-bottom: 50px;
 }
 
 /* banner */
@@ -43,22 +44,21 @@
 	
 .mini-banner{
 	width : 350px;
-	height : 300px;
+	height : 200px;
 	display : inline-block;
 	margin-left: 36px;
 	cursor : pointer;
 	
 }
 .goods-list{
-	width : 265px;
-	height : 360px;
+	width : 270px;
+	height : 380px;
 	/* background : yellow; */
 	display : inline-block;
- 	margin-left: 20px;
+ 	margin-left: 17px;
     margin-right:auto;
-    margin-top:20px;
+    margin-top:30px;
     cursor : pointer;
-    font-size : 14px;
     
 }
 .goods-img{
@@ -102,13 +102,13 @@
 				</div>
 			</div>
 			<div class = "mini-banner">
-				<img src="resources/images/minibanner_1.png" width="350" height="250px">
+				<img src="resources/images/minibanner_1.png" width="350" height="200px">
 			</div>
 			<div class = "mini-banner">
-				<img src="resources/images/minibanner_2.png" width="350" height="250px">
+				<img src="resources/images/minibanner_2.png" width="350" height="200px">
 			</div>
 			<div class = "mini-banner">
-				<img src="resources/images/minibanner_2.png" width="350" height="250px">
+				<img src="resources/images/minibanner_3.png" width="350" height="200px">
 			</div>
 			<c:forEach var="a" items="${list}">
 				<div class = "goods-list">

@@ -6,6 +6,7 @@ import com.kh.awesome.board.model.vo.Attachment;
 import com.kh.awesome.board.model.vo.BGood;
 import com.kh.awesome.board.model.vo.Board;
 import com.kh.awesome.board.model.vo.PageInfo;
+import com.kh.awesome.board.model.vo.RGood;
 import com.kh.awesome.board.model.vo.Reply;
 import com.kh.awesome.board.model.vo.Search;
 
@@ -75,6 +76,18 @@ public interface BoardService {
 
 	public Board selectBoardAsRnum(int rNum);
 
-	public ArrayList<Reply> selectReplyList(int bId);
+	public ArrayList<Reply> selectReplyList(int bId, PageInfo pi);
+
+	public int insertReply(Reply r);
+
+	public int getReplylistCount(int bId);
+
+	public int deleteReply(int rId);
+
+	public int selectReplyGoodMemory(RGood g);
+
+	public int addReplyGoodCount(RGood g);
+
+	public int subReplyGoodCount(RGood g);
 	
 }
