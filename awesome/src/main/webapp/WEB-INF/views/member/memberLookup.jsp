@@ -24,7 +24,7 @@
 	width : 1400px;
 	margin-top : 50px;
 	/* background : yellow; */
-	margin-left : 60px;
+	margin-left : 150px;
 	margin-bottom: 10px;
 }
 .membertable{
@@ -136,7 +136,7 @@ tr:nth-child(even) {
 	<div id="container" style="overflow: auto; height: auto;" ><!-- container -->
 	
 	<div id ="member-content">
-		<span align="left" style ="font-size : 20px; font-weight: bold; margin-right :875px;">
+		<span align="left" style ="font-size : 20px; font-weight: bold; margin-right :882px;">
 			총 회원 수 : ${pi.listCount}명
 		</span>
 
@@ -174,25 +174,22 @@ tr:nth-child(even) {
 							<input type="text" value ="${n.point}" style =" width : 80px; text-align:center;" readonly >
 
 							<!-- <input type="button" value="수정" id ="myBtn"> -->
-							
+							<input type="hidden" value="${n.mid}" name ="mId">
+							<input type="hidden" value="${n.userId}" name ="userId">
 							<!-- Trigger/Open The Modal -->
-							<button id="myBtn" class="myBtn success" onclick="myBtn();"><span>수정</span></button>
+							<button  type="button" id="myBtn" class="myBtn success" onclick = "showModifyPoint(${n.mid}, '${n.userName}', ${n.point});"><span>수정</span></button>
 								<!-- The Modal -->
 							
 								<div id="myModal" class="modal">
 								  <!-- Modal content -->
 								  <div class="modal-content">
 								    <span class="close">&times;</span>
-							    	 	<c:forEach var="nl" items="${list}" varStatus="status">
-											<%-- ${fn:length(list)} --%>
-
-									    	 <form action="pointUpdate.do" method="post">
-										    	<span>${nl.userName}님의 포인트를 추가하시겠습니까?</span>
-										    	<input type="hidden" value="${nl.mid}" name ="mId">
-										    	<input type="number" value="${nl.point}" name ="point" style ="width : 100px;  text-align:center;">
-										    	<input class="myBtn success" type="submit" value="수정하기">&nbsp;
-									    	</form>
-								    	</c:forEach>
+								    	 <form action="pointUpdate.do" method="post">
+									    	<span><b id=modalUserName> </b>님의 포인트를 추가하시겠습니까?</span>
+									    	<input id="modalMid" type="hidden" value="" name ="mId" >
+									    	<input id="modalPoint" type="number" value="" name ="point" style ="width : 100px;  text-align:center;">
+									    	<input class="myBtn success" type="submit" value="수정하기">&nbsp;
+								    	</form>
 								  </div>
 								</div>
 						</td>
@@ -292,20 +289,49 @@ tr:nth-child(even) {
 		</script>
 		
 		
-		
+		<!-- 포인트 수정 script   -->
 		<script>
+		$(function() {
+			
+			var modal = document.getElementById("myModal");
+			
+			
+			$(".close").click(function(){
+				modal.style.display = "none";
+			});
+			
+			window.onclick = function(event) {
+				  if (event.target == modal) {
+				    modal.style.display = "none";
+				  }
+			}
+		});
+		
+		
+		function showModifyPoint(mId, userName, point){
+			showModal(mId , userName, point );
+			/* modal.style.display = "block"; */
+		}
+		
+		function showModal(mId, userName, point){
+			var modal = document.getElementById("myModal");
+			modal.style.display = "block";
+			$("#modalUserName").html(userName)
+			$("#modalMid").val(mId);
+			$("#modalPoint").val(point);
+		}
+		
+		
+		</script>
+		
+	 	<!-- <script>
 			// 포인트 팝업 모달
 			// Get the modal
 			var modal = document.getElementById("myModal");
-			var list1 = new Array();
-
-			for (var i = 0; i < list1.length; i++) {
-			    alert(list1[i]);
-			}
 
 			// Get the button that opens the modal
 			/* var btn = document.getElementById("myBtn"); */
-			var btn = document.getElementsByClassName("myBtn")[i];
+			var btn = document.getElementsByClassName("myBtn")[1];
 		
 			
 			// Get the <span> element that closes the modal
@@ -327,7 +353,7 @@ tr:nth-child(even) {
 			  }
 			}
 			
-		</script>
+		</script> -->
 		
 <!-- 엑셀로 다운받기 -->	
 <script type="text/javascript" src="https://pagead2.googlesyndication.com/pagead/show_ads.js">

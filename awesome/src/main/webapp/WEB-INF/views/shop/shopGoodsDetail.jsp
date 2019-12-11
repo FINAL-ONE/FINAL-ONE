@@ -345,7 +345,7 @@ body{
 								<div class="number" style= "width : 130px; height : 50px;">
 									<div class="UpDown" style="padding-top: 13px;">
 										수량 선택 : <span id="numberUpDown">1</span>
-										<input type="hidden" name="count" value="${a.count}">
+										<input id="numberCount" type="hidden" name="count">
 									</div>
 									<div class="Quantity" style="width : 50px;">
 										<a href="#" id="increaseQuantity">▲</a><br>
@@ -496,7 +496,7 @@ body{
 			document.getElementById("defaultOpen").click();
 		</script>
 		
-		<!-- 상품 수량 증가 / 감소 -->
+			<!-- 상품 수량 증가 / 감소 -->
 		<script>
 			$(function(){
 				$('#decreaseQuantity').click(function(e){
@@ -513,6 +513,7 @@ body{
 					}
 					
 					$('#numberUpDown').text(num);
+					$('#numberCount').val(num);
 				});
 					
 				$('#increaseQuantity').click(function(e){
@@ -527,12 +528,13 @@ body{
 						alert('더이상 늘릴수 없습니다.');
 						num=10;
 					}
-					
-				$('#numberUpDown').text(num);
+				 	$('#numberUpDown').text(num);
+					$('#numberCount').val(num);
 			});
 		});
 			
 		</script>
+		
 		
 		<script>
 			function notLogin(){
