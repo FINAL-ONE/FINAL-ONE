@@ -2,12 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="adminMapper">
 	<resultMap type="Admin" id="sell_goodsResultSet">
-		<id property="sellNum" column ="SELL_NUM"/>
-		<!-- <id property="gId" column ="GID"/> -->
+	    <id property="sellNum" column ="SELL_NUM"/>
 		
 		<result property ="gId" 			column ="GID"/>
+		<result property ="mId" 			column ="MID"/>
 		<result property="cateCd" 			column="CATE_CD"/>
-		<result property="goodsName" 		column="GOODS_NAME"/>
 		<result property ="goodsTitle" 		column ="GOODS_TITLE"/>
 		<result property="goodsPrice" 		column="GOODS_PRICE"/>
 		<result property="count" 			column="COUNT"/>
@@ -55,7 +54,7 @@
 
 	<insert id ="insertSellgoods" parameterType="Admin">
 		INSERT INTO SELL_GOODS 
-		VALUES(SELL_NUM.NEXTVAL, #{gId}, #{cateCd}, #{goodsTitle}, #{goodsContent}, #{filePath}, #{contentFilePath}, SYSDATE, SYSDATE, DEFAULT
+		VALUES(SELL_NUM.NEXTVAL, #{gId}, #{mId}, #{cateCd}, #{goodsTitle}, #{goodsContent}, #{filePath}, #{contentFilePath}, SYSDATE, SYSDATE, DEFAULT
 		)
 	</insert>
 	

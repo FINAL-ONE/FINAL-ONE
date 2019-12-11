@@ -7,10 +7,12 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.awesome.board.model.vo.Answer;
 import com.kh.awesome.board.model.vo.Attachment;
 import com.kh.awesome.board.model.vo.BGood;
 import com.kh.awesome.board.model.vo.Board;
 import com.kh.awesome.board.model.vo.PageInfo;
+import com.kh.awesome.board.model.vo.RGood;
 import com.kh.awesome.board.model.vo.Reply;
 import com.kh.awesome.board.model.vo.Search;
 
@@ -110,9 +112,51 @@ public class BoardDao {
 		return sqlSession.selectOne("boardMapper.selectBoardAsRnum", rNum);
 	}
 
-	public ArrayList<Reply> selectReplyList(int bId) {
+	public ArrayList<Reply> selectReplyList(int bId, PageInfo pi) {
 	
-		return (ArrayList)sqlSession.selectList("selectReplyList", bId);
+		int offset = (pi.getCurrentPage()-1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("boardMapper.selectReplyList", bId, rowBounds);
+	}
+
+	public int insertReply(Reply r) {
+		return sqlSession.insert("boardMapper.insertReply", r);
+	}
+
+	public int getReplylistCount(int bId) {
+		return sqlSession.selectOne("boardMapper.getReplylistCount", bId);
+	}
+
+	public int deleteReply(int rId) {
+		
+		return sqlSession.delete("boardMapper.deleteReply",rId);
+	}
+
+	public int selectReplyGoodMemory(RGood g) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("boardMapper.selectReplyGoodMemory", g);
+	}
+
+	public int addReplyGoodCount(RGood g) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("boardMapper.addReplyGoodCount", g);
+	}
+
+	public int subReplyGoodCount(RGood g) {
+		return sqlSession.delete("boardMapper.subReplyGoodCount", g);
+	}
+
+	public int insertAnswer(Answer a) {
+		return sqlSession.insert("boardMapper.insertAnswer",a);
+	}
+
+	public ArrayList<Answer> selectAList(int rId) {
+		return (ArrayList)sqlSession.selectList("boardMapper.selectAList", rId);
+	}
+
+	public int deleteAnswer(int aId) {
+		return sqlSession.delete("boardMapper.deleteAnswer",aId);
 	}
 	
 }

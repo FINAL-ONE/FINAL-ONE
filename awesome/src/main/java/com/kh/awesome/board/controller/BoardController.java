@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -23,10 +26,12 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
 import com.kh.awesome.board.model.exception.BoardException;
 import com.kh.awesome.board.model.service.BoardService;
+import com.kh.awesome.board.model.vo.Answer;
 import com.kh.awesome.board.model.vo.Attachment;
 import com.kh.awesome.board.model.vo.BGood;
 import com.kh.awesome.board.model.vo.Board;
 import com.kh.awesome.board.model.vo.PageInfo;
+import com.kh.awesome.board.model.vo.RGood;
 import com.kh.awesome.board.model.vo.Reply;
 import com.kh.awesome.board.model.vo.Search;
 import com.kh.awesome.common.Pagination;
@@ -49,16 +54,12 @@ public class BoardController {
 		if(page != null) {
 			currentPage = page;
 		}
-		
 		int listCount = bService.getFboardListCount();
 		
-
 		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
 		
 		ArrayList<Board> flist = bService.selectFList(pi);
 		// ArrayList<Board> flist = bService.selectList(pi);
-		
-		
 		
 		if(flist != null && flist.size() > 0) {	// 게시글이 있다면
 			mv.addObject("flist", flist);
@@ -216,12 +217,24 @@ public class BoardController {
 
 		int count = 0; 
 		
+		int attachCount = 0; 
+		for(MultipartFile file : fileList) {
+			if(!file.getOriginalFilename().contentEquals("")) {
+				attachCount ++; 
+			}
+		}
+
+		if(attachCount > 0) {
+			b.setbType("4");
+		}
+		
+		
+		
 		int result = bService.insertBoard(b);
 		
 		
 		for(MultipartFile file : fileList) {
 				if(!file.getOriginalFilename().contentEquals("")) {
-					b.setbType("4");
 					count++;
 					String renameFileName = saveFile(file, request,count);
 					if(renameFileName != null) {	// 파일이 잘 저장된 경우
@@ -299,15 +312,23 @@ public class BoardController {
 			fileList.add(file4);
 			fileList.add(file5);
 			
-			
-		HttpSession session = request.getSession(); 
-	
 		b.setbType("1");
+		
+		int attachCount = 0; 
+		for(MultipartFile file : fileList) {
+			if(!file.getOriginalFilename().contentEquals("")) {
+				attachCount ++; 
+			}
+		}
+
+		if(attachCount > 0) {
+			b.setbType("4");
+		}
+		
 		
 		int count = 0; 
 		for(MultipartFile file : fileList) {
 				if(!(file.getOriginalFilename().contentEquals(""))) {
-					b.setbType("4");
 					count++;
 					String renameFileName = saveFile(file, request,count);
 					if(renameFileName != null) {	// 파일이 잘 저장된 경우
@@ -352,15 +373,6 @@ public class BoardController {
 	
 	
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	public String saveFile(MultipartFile file, HttpServletRequest request, int count) {
@@ -476,17 +488,29 @@ public class BoardController {
 	}
 	
 	
-		
-	
-	
-	
 	// 댓글 관련 부분
 		// 댓글 리스트 불러오기
-
+		
+		/*
 		@RequestMapping("rList.do")
-		public void getReplyList(HttpServletResponse response, int bId) throws JsonIOException, IOException {
+		public void getReplyList(HttpServletResponse response, int bId, HttpSession session,
+								@RequestParam(value="page", required=false) Integer page) throws JsonIOException, IOException {
 			System.out.println("리플 들어왔니? ");
-			ArrayList<Reply> rList = bService.selectReplyList(bId);
+			
+			int rCurrentPage = 1;
+			if(page != null) {
+				rCurrentPage = page;
+			}
+			
+			int rListCount = bService.getReplylistCount(bId);
+			System.out.println("리플리스트 카운트:" + rListCount );
+			
+			PageInfo pi = Pagination.getPageInfo(rCurrentPage, rListCount );
+			
+			session.setAttribute("rListCount", rListCount);
+
+			
+			ArrayList<Reply> rList = bService.selectReplyList(bId, pi);
 			
 			response.setContentType("application/json;charset=utf-8");
 			for(Reply r : rList) {
@@ -498,17 +522,105 @@ public class BoardController {
 			Gson gson = new GsonBuilder().setDateFormat("yyyy.MM.dd").create();
 			gson.toJson(rList, response.getWriter());
 		}
-	
+	*/
 		
-		/*
+		@RequestMapping("rList.do")
+		public ModelAndView  getReplyList(ModelAndView mv, RGood g, HttpSession session, HttpServletResponse response, int bId, 
+											@RequestParam(value="page", required=false) Integer page){
+			
+
+			int rCurrentPage = 1;
+			if(page != null) {
+				rCurrentPage = page;
+			}
+			
+			
+			int rListCount = bService.getReplylistCount(bId);
+			
+			
+			System.out.println("리플리스트 카운트:" + rListCount );
+			
+			
+			
+			PageInfo pi = Pagination.getPageInfo(rCurrentPage, rListCount );
+			
+			ArrayList<Reply> rList = bService.selectReplyList(bId, pi);
+			
+			System.out.println(rList);
+			
+			Member loginUser= (Member) session.getAttribute("loginUser");
+			int mId= loginUser.getMid(); 
+			g.setmId(mId);
+			int result = 0; 
+			ArrayList goodClickList = new ArrayList(); 
+			for(Reply reply: rList) {
+				g.setrId(reply.getrId());
+				result = bService.selectReplyGoodMemory(g);
+				if (result > 0) {
+					goodClickList.add(reply.getrId());
+				}else {
+					goodClickList.add(30000);
+				}
+				
+			}
+		
+			for(Reply reply:rList) {
+				
+				int rId = reply.getrId();
+				
+				ArrayList<Answer> aList = bService.selectAList(rId); 
+				
+				response.setContentType("application/json;charset=utf-8");
+				for(Answer a  : aList) {
+					a.setUserNickname(a.getUserNickname());
+					a.setaContent(a.getaContent());
+				}
+				
+				if(aList != null && (!aList.isEmpty())) {
+					reply.setaList(aList);
+				}
+			}
+			
+			response.setContentType("application/json;charset=utf-8");
+			for(Reply r : rList) {
+				r.setUserNickname(r.getUserNickname());
+				r.setrContent(r.getrContent());
+			}
+			
+			// Sample 클래스 만들고 시작
+			// JsonView 라이브러리 받고 빈설정, Sample도 빈 설정 해주자(Servlet-context.xml)
+			
+			Map map = new HashMap();
+			map.put("pi", pi);
+			map.put("rList", rList);
+			map.put("rListCount", rListCount);
+			map.put("goodClickList", goodClickList);
+			
+			// addAllObjects 메소드를 이용하여 map 객체에 저장된 모든 속성(key, value)를 모델에 저장함
+			// addObject로 하게 되면 안된다!
+			mv.addAllObjects(map);
+			
+			// 뷰 지정 : JsonView를 빈으로 등록하고 JsonView id를 뷰 이름으로 지정
+			// (viewName과 실제 view단을 연결해주기 위해서)
+			mv.setViewName("jsonView");
+			
+			return mv;
+		}
+		
+		
+		
+		
+		
+		
+	
 		@RequestMapping("addReply.do")
 		@ResponseBody
 		public String addReply(Reply r, HttpSession session, HttpServletResponse response) {
 			response.setContentType("application/json;charset=utf-8");
 			
 			Member loginUser = (Member)session.getAttribute("loginUser");
-			String rWriter = loginUser.getId();
-			r.setrWriter(rWriter);
+			int mId = loginUser.getMid();
+			r.setmId(mId);
 			
 			int result = bService.insertReply(r);
 			
@@ -518,10 +630,91 @@ public class BoardController {
 				throw new BoardException("댓글 등록 실패!");
 			}
 		}
-	*/
 	
+		@RequestMapping("addAnswer.do")
+		@ResponseBody
+		public String addAnswer(Answer a, HttpSession session, HttpServletResponse response) {
+			response.setContentType("application/json;charset=utf-8");
+			
+			Member loginUser = (Member)session.getAttribute("loginUser");
+			int mId = loginUser.getMid();
+			a.setmId(mId);
+			
+			int result = bService.insertAnswer(a);
+			
+			if(result > 0) {
+				return "success";
+			}else {
+				throw new BoardException("댓글 등록 실패!");
+			}
+		}
+		
+		
+		
+		@RequestMapping("addReplyGood.do")
+		@ResponseBody
+		public String addReply(RGood g, int rId, HttpSession session, HttpServletResponse response) {
+			response.setContentType("application/json;charset=utf-8");
+			
+			Member loginUser = (Member)session.getAttribute("loginUser");
+			int mId = loginUser.getMid();
+			g.setmId(mId);
+			g.setrId(rId);
+			
+			int result1 = bService.selectReplyGoodMemory(g);
+			
+			
+			
+			System.out.println("리플좋아요 셀렉트 결과: " + result1 );
+			
+			int result = 0; 
+			if(result1 < 1 ) {
+				 result = bService.addReplyGoodCount(g);
 	
+				 if(result > 0) {
+						return "AddSuccess";
+					}else {
+						throw new BoardException("조아요 추가 실패!");
+					}
+			
+			}else {
+				result= bService.subReplyGoodCount(g);
+			
+				 if(result > 0) {
+						return "SubSuccess";
+					}else {
+						throw new BoardException("조아요 삭제 실패!");
+					}
+			}
+		}
+		
+		
 	
+		@RequestMapping("deleteReply.do")
+		@ResponseBody
+		public String deleteReply(int rId) {
+			
+			int result = bService.deleteReply(rId);
+			
+			if(result > 0) {
+				return "success";
+			}else {
+				throw new BoardException("댓글 등록 실패!");
+			}
+		}
+	
+		@RequestMapping("deleteAnswer.do")
+		@ResponseBody
+		public String deleteAnswer(int aId) {
+			
+			int result = bService.deleteAnswer(aId);
+			
+			if(result > 0) {
+				return "success";
+			}else {
+				throw new BoardException("댓글 등록 실패!");
+			}
+		}
 	
 	
 	

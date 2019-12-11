@@ -18,10 +18,8 @@ public interface MemberService {
 	int getListCount();
 
 	ArrayList<Member> selectList(PageInfo pi);
-
+	// 최근 가입 5명 불러오기 ajax
 	ArrayList<Member> selectTopList();
-	
-	// 회원조회시 포인트 수정
+	//회원포인트 수정
 	int updatePointMember(Member m);
- 
 }

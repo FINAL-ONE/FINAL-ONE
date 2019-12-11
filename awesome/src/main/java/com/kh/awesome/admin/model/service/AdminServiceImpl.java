@@ -39,7 +39,6 @@ public class AdminServiceImpl implements AdminService{
 	// 상품 내리기 
 	@Override
 	public int updateAdminStatus(Admin a) {
-		
 		return aDao.updateAdminStatus(a);
 	}
 

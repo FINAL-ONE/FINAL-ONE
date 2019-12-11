@@ -3,7 +3,6 @@ package com.kh.awesome.admin.controller;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -68,13 +67,12 @@ System.out.println("상품 판매 list : " + list );
 	}
 	// 메뉴바에서 상품조회 클릭시 관리자용 상품조회 테이블 조회--준배
 	
-	
-	
 	// 메뉴바에서 shop으로 뿌려질 리스트 조회 -- 준배
 	@RequestMapping("shopGoodsListView.do")
 	public ModelAndView shopGoodsList(ModelAndView mv) {
 		
 		ArrayList<Admin> list = aService.selectList();
+		// System.out.println(list);
 		
 		if(list != null) {
 			mv.addObject("list", list);
@@ -124,7 +122,7 @@ System.out.println("Goods data : " + g);
 			
 			
 			if(savePath1 != null && savePath2 != null) {	// 파일이 잘 저장된 경우
-				 a.setFilePath(file1.getOriginalFilename());
+				a.setFilePath(file1.getOriginalFilename());
 				a.setContentFilePath(file2.getOriginalFilename());
 			} else {
 				System.out.println("파일 에러");
@@ -149,6 +147,7 @@ System.out.println("Goods data : " + g);
 		}
 	} 
 	// 상품등록 페이지에서 상품버튼 클릭시 -- 준배
+	
 	
 	// 상품등록시 savaFile메소드
 	public String saveFile(MultipartFile file, HttpServletRequest request) {
@@ -211,8 +210,8 @@ System.out.println("Goods data : " + g);
 	
 	
 	// 상품 디테일 페이지에서 후기작성 버튼 클릭시 후기 리스트 불러오기 -- 준배
-	 @RequestMapping("afterWrite.do") 
-	 public ModelAndView goodsWriterView(ModelAndView mv, int sellNum) {
+	@RequestMapping("afterWrite.do") 
+	public ModelAndView goodsWriterView(ModelAndView mv, int sellNum) {
 	 
 		 ArrayList<Admin> list = aService.selectshopgoods(sellNum);
 		/* ArrayList<SellReply> list = aService.selectReply(rId); */
@@ -226,6 +225,7 @@ System.out.println("Goods data : " + g);
 	 return mv;
 	 
 	 }
+
 	// 상품 디테일 페이지에서 후기작성 버튼 클릭시 후기 리스트 불러오기 -- 준배
 	
 	 

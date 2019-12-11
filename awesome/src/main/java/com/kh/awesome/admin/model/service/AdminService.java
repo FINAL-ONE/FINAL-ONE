@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import com.kh.awesome.admin.model.vo.Admin;
 import com.kh.awesome.admin.model.vo.Category;
 import com.kh.awesome.admin.model.vo.Goods;
-import com.kh.awesome.shop.model.vo.SellReply;
 
 public interface AdminService {
 
