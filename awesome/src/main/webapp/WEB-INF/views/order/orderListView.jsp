@@ -417,7 +417,7 @@ input::placeholder {
 				
 				console.log("date1 : " + date1);
 
-			 location.href="orderSearch.do?date3="+date1+"&date4="+date2;  
+			 location.href="termSearch.do?date3="+date1+"&date4="+date2;  
 				
 			}
 			
