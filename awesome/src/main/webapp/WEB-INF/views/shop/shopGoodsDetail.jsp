@@ -77,7 +77,7 @@ body{
 }
 #tablinkDiv{
 	margin-left : 1px;
-	padding-left : 2px;
+	padding-left : 1px;
 }
 .tablink {
   background-color: #555;

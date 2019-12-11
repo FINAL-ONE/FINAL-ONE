@@ -89,5 +89,4 @@
 		WHERE MID=#{mid}
 	</update>
 	
-	
 </mapper>

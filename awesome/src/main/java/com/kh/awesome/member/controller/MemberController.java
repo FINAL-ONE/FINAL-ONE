@@ -258,7 +258,7 @@ public class MemberController {
 		}
 		
 		
-
+		// 회원조회시 포인트 수정
 		@RequestMapping("pointUpdate.do")	
 		public String updatePointMember(Member m, Model model, int mId, int point) {
 			m.setMid(mId);

@@ -193,7 +193,6 @@
       <div class= "menu normalMenu"><a href="${shopGoodsListView}" style="text-decoration: none; color : black;">SHOP</a></div>
 		<%-- <a href="${shopGoodsListView}"><div>SHOP</div></a> --%>
 							
-      
    	  <c:if test="${sessionScope.loginUser.userId ne 'admin'}">
    	  	<div class= "menu myPageMenu">마이페이지</div> 
       </c:if>
