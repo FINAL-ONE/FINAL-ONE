@@ -10,41 +10,35 @@
 <title>Insert title here</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <style>
+.outer{
+	width : 1300px;
+ 	margin-left: auto;
+   	margin-right:auto;
+}
+
 .detailArea{
 	border : 1px solid red;
-	width : 60%;
-	height : 90%;
-	margin-left : 350px;
-}
-.goods-list{
 	width : 800px;
-	height : 600px;
-	/* background : yellow; */
-	display : inline-block;
- 	margin-left: 1%;
-    margin-right:auto;
-    margin-top:20px;
-    cursor : pointer;
-    border : 1px solid blue;
-    
+	margin-left : 350px;
 }
 .goods-img{
 	width : 500px;
 	height : 500px;
     cursor : pointer;
-    border : 1px solid blue;
-  /*   position: absolute; */
-   display : inline-block;
+    /* background : blue; */
+  	/* position: relative; */
+    display : inline-block;
 }
 .goods-info{
- 	/* position: relative; */
+ 	/* position: absolute; */
 	display: inline-block;
 	border : 1px solid blue;
-	width : 250px;
-	height :400px;
+	width : 150px;
+	height :500px;
+	text-align: cetner;
 }
 .sell-info{
-	width : 500px;
+	width : 150px;
 	border : 1px solid black;
 }
 
@@ -149,33 +143,34 @@
 
 
 	<jsp:include page ="../common/menubar.jsp"/>
-	<!-- <div id="container" style="overflow: auto; height: 800px;" >container -->
-	<div id="container"><!-- container -->
+	<div id="container" style="overflow: auto; overflow-x : hidden;  height: auto;" ><!-- container -->
+    <div class="outer">
     
 		<div class = "detailArea"  align="center">
 			<c:forEach var="a" items="${list}">
-				<div class = "goods-img" style="margin-top : 20px;">
-					<img src="resources/auploadFiles/${a.filePath}" width ="500px" height ="500px">
-				</div>
-				<div class = "goods-info" align="left">
-					<h3 style = "font-size : 25px; font-weight: bold;">${a.goodsTitle}</h3>
-					<span>${a.goodsContent}</span><br>
-					<hr>
-					<br>
-					<span>판매가격 : </span><br><br>
-					<span>배송방법 : 택배배송 </span><br><br>
-					<span>배송비 : </span><br><br>
-					<hr>
-					<!-- <p id="goods_count">수량: </p>
-							<input type="number" name="count" value="1" size="3"> -->
-							
-					<div class="number">
-						<span id="numberUpDown">1</span>
-							<a href="#" id="increaseQuantity">▲</a>
-						    <a href="#" id="decreaseQuantity">▼</a>
+				<div class ="goods-Area">
+					<div class = "goods-img" style="margin-top : 20px;">
+						 <img src="resources/auploadFiles/${a.filePath}" width ="500px" height ="500px">
 					</div>
-				</div>
-					
+					<div class = "goods-info" style="margin-top : 20px;">
+						<h3 style = "font-size : 25px; font-weight: bold;">${a.goodsTitle}</h3>
+						<span>${a.goodsContent}</span><br>
+						<hr>
+						<br>
+						<span>판매가격 : </span><br><br>
+						<span>배송방법 : 택배배송 </span><br><br>
+						<span>배송비 : </span><br><br>
+						<hr>
+						<!-- <p id="goods_count">수량: </p>
+								<input type="number" name="count" value="1" size="3"> -->
+								
+						<div class="number">
+							<span id="numberUpDown">1</span>
+								<a href="#" id="increaseQuantity">▲</a>
+							    <a href="#" id="decreaseQuantity">▼</a>
+						</div>
+					</div>
+				</div>	
 				<button class="tablink" id="defaultOpen"><a href="#goods-img1" style="color:white">상세설명</a></button>
 				<button class="tablink"><a href="#sell-infoDiv" style="color:white">구매정보</a></button>
 				<button class="tablink"><a href="#afterWriteDiv" style="color:white">상품후기</a></button>
@@ -221,9 +216,10 @@
 						</div>
 					</div>
 					<br>
+					
 					<div id ="afterWriteDiv">
 						<h3 align="left"> 후기작성 </h3>
-						<button id ="afterWriteBtn">후기 작성하기</button>
+						
 						<table id ="afterWrite">
 							<tr>
 								<th width ="200px">사진</th>
@@ -231,26 +227,25 @@
 								<th width ="200px">작성자</th>
 								<th width ="200px">평점</th>
 							</tr>
-							<tr>
-								<td>이미지</td>
-								<td>후기</td>
-								<td>홍길동</td>
-								<td>****</td>
-							</tr>
-							<tr>
-								<td>이미지</td>
-								<td>후기</td>
-								<td>홍길동</td>
-								<td>****</td>
-							</tr>
-							<tr>
-								<td>이미지</td>
-								<td>후기</td>
-								<td>홍길동</td>
-								<td>****</td>
-							</tr>
+							<%-- <c:forEach var="afterlist" items="${afterlist}"> --%>
+							<c:forEach var="aflist" items="${aflist}">
+								<tr>
+									<td><img src="resources/afteruploadFiles/${aflist.filePath}" width ="200px" height ="200px"></td>
+									<td>${aflist.rContent}</td>
+									<td>${loginUser.userId }</td>
+									<td></td>
+									<td></td>
+									<!-- <td></td>
+									<td></td> -->
+								</tr>
+						</c:forEach>
 						</table>
+							<c:url var="afterWrite" value="afterWrite.do">
+								<c:param name="sellNum" value="${a.sellNum }"/>
+							</c:url>
+							<a href="${afterWrite}"><button>후기작성</button></a>
 					</div>
+					
 					
 					<div id ="QABtnDiv">
 						<h3 align="left"> 문의하기 </h3>
@@ -288,7 +283,7 @@
 		
 			</div>
 		</div>
-			
+    </div>		
 		
 		<!-- 하단 tab -->
 		<script>
@@ -352,7 +347,8 @@
 		
 		
 		<button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
-		
+	
+		<!-- 맨위로 버튼 클릭  -->		
 		<script>
 			//Get the button
 			var mybutton = document.getElementById("myBtn");

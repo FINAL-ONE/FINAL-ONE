@@ -63,5 +63,21 @@
 	<select id="getOrderListCount" resultType="_int">
 		SELECT COUNT(*)
 		FROM ORDER_LIST
+		WHERE MID=#{mId}
+	</select>
+	<select id="getOrderSearch" resultMap="orderResultSet">
+		SELECT OID, O.GID GID,GOODS_NAME, GOODS_PRICE, MID, O.ORDER_NUM ORDER_NUM, ORDER_COUNT, ORDER_DATE, ORDER_STATUS, ROWCOUNT 
+		FROM ORDER_LIST O 
+		JOIN (SELECT ORDER_NUM, COUNT(*) ROWCOUNT
+		     FROM ORDER_LIST
+		     GROUP BY ORDER_NUM) R ON (O.ORDER_NUM = R.ORDER_NUM)
+		JOIN GOODS G ON (O.GID=G.GID)
+		WHERE MID= #{mid} AND ORDER_DATE BETWEEN #{date1} AND #{date2}
+		ORDER BY O.ORDER_NUM DESC
+	</select>
+		<select id="getOrderSearchCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM ORDER_LIST
+		WHERE MID= #{mid} AND ORDER_DATE BETWEEN #{date1} AND #{date2}
 	</select>
 </mapper>

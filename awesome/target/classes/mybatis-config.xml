@@ -13,7 +13,12 @@
 			<typeAlias type="com.kh.awesome.board.model.vo.Attachment" alias="Attachment"/>
 			<typeAlias type="com.kh.awesome.board.model.vo.BGood" alias="BGood"/>
 			<typeAlias type="com.kh.awesome.admin.model.vo.Admin" alias="Admin"/>
+			<typeAlias type="com.kh.awesome.shop.model.vo.SellReply" alias="SellReply"/>
+			<typeAlias type="com.kh.awesome.admin.model.vo.Goods" alias="Goods"/>
 			<typeAlias type="com.kh.awesome.order.model.vo.Order" alias="Order"/>
+			<typeAlias type="com.kh.awesome.order.model.vo.OrderSearch" alias="OrderSearch"/>
+			<typeAlias type="com.kh.awesome.admin.model.vo.Category" 	alias="Category"/>
+			
 	</typeAliases>
 
  	<!-- sql문들을 지닌 mapper.xml들을 등록 -->
@@ -22,7 +27,9 @@
 <!-- 		<mapper resource = "mappers/notice-mapper.xml"/> -->
 		<mapper resource = "mappers/board-mapper.xml"/>
 		<mapper resource="mappers/admin-mapper.xml"/>
+		<mapper resource="mappers/shop-mapper.xml"/>
 		<mapper resource="mappers/order-mapper.xml"/>
+		
 	</mappers>
 	
 	<!-- 우선 member-mapper.xml만 만들고 로그인 부터 하자 -->
