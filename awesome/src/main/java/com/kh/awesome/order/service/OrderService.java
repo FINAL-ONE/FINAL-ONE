@@ -8,7 +8,7 @@ import com.kh.awesome.order.model.vo.Order;
 public interface OrderService {
 
 
-	ArrayList<Order> selectList(int mId);
+	ArrayList<Order> selectList(int mId, PageInfo pi);
 
 
 	int beforeCount(int mId);
@@ -27,6 +27,9 @@ public interface OrderService {
 
 
 	int orderCancel(int number);
+
+
+	int getOrderListCount();
 
 
 

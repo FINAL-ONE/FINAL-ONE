@@ -1,18 +1,18 @@
 	<%@ page language="java" contentType="text/html; charset=UTF-8"
 	    pageEncoding="UTF-8"  import="java.util.*, java.text.*"%>
-	    <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-	    <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-		<%@ page import ="com.kh.awesome.board.model.vo.Board" %>
-	    <%
-		java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("yyyy.MM.dd.");
-		 String today = formatter.format(new java.util.Date());
-		 
-		 String display0 = "inline-block"; 
-		 String display1 = "none"; 
-		 String dataValue = "0";
+    <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+	<%@ page import ="com.kh.awesome.board.model.vo.Board" %>
+    <%
+	java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("yyyy.MM.dd.");
+	 String today = formatter.format(new java.util.Date());
 	 
-		Board prevBoard	= (Board)request.getAttribute("prevBoard");
-		Board nextBoard  = (Board)request.getAttribute("nextBoard");
+	 String display0 = "inline-block"; 
+	 String display1 = "none"; 
+	 String dataValue = "0";
+ 
+	Board prevBoard	= (Board)request.getAttribute("prevBoard");
+	Board nextBoard  = (Board)request.getAttribute("nextBoard");
 		 
 	%>
 	
@@ -37,6 +37,17 @@
 	
 	<style> 
 	
+	.pagingArea button {
+		  border: 1px solid #dcdcdc;
+		  outline: none;
+		  padding: 6px 12px;
+		  cursor: pointer;
+		  background: white;
+		  font-size: 13px;
+	      color: #828282;
+	}
+	
+
 	
 	   #outer{
 	       	
@@ -168,7 +179,7 @@
 	    margin: 0 auto 10px;
 	    border: 1px solid gray;
 	    right: 544px;
-	    top: 650px;
+	    top: 630px;
 	    font-size: 14px;
 	    padding: 10px;
 	    text-align: left;
@@ -218,7 +229,7 @@
 	   margin: auto;
 	   padding: auto;
 	   padding-bottom:5px;
-	   word-wrap: break-word;
+	   word-break: break-all;;
 			
 	}
 	
@@ -349,9 +360,10 @@
 	.replyArea{
 		  border: none;
 	      position: relative;
-	      width: 830px;
+	      width: 685px;
 	      padding:auto;
-	      margin: auto;
+	      margin-left: auto;
+	      margin-right: auto;
 		  align:center;
 	
 	}
@@ -462,19 +474,8 @@
 	}
 	
 	
-	.answerDelete{
-	   position: relative;
-	   left:3px;
-	   bottom: 5px;
-	   border: 1px solid lightgray;
-	   background: white;
-	   color: lightblack;
-	   padding: 5px;
-	}
-	
 	.answerDelete:hover{
 	 cursor:pointer;
-		color: lightgray;
 	}
 	
 	
@@ -657,6 +658,7 @@
 	
 	}
 	
+
 	
 	.bDelete:hover{
 		cursor:pointer;
@@ -697,8 +699,8 @@
 	
 	#rtb{
 		width: 685px;  
-		cellspacing: 0; 
-		margin-left:5px;
+		margin-left:auto;
+		margin-right: auto;
 	
 	}
 	
@@ -721,14 +723,15 @@
 	#rtb tbody tr td div {
 		width:685px; 
 		height:auto;
+		word-break:break-all;
 	}
 	
 	.rContent{
 		width:685px; 
 		height: auto;
 		overflow:hidden;
-		word-wrap:break-word;
-
+		word-wrap:break-all;;
+		
 	}
 	
 	
@@ -738,8 +741,17 @@
 		color:#fa111a;
 	}
 	
-	.answerBtn{
-		
+	.answerBtn2{
+		position: relative;
+	    bottom: 25px;
+	    width: 60px;
+	    margin-left: 5px;
+	    height: 60px;
+	    background-color: #F0CA61;
+	    outline: none;
+	    border: none;
+	    border-radius: 6px;
+	    color: white;
 	}
 	
 	.answerBtn:hover{
@@ -760,6 +772,13 @@
 		margin-bottom: 10px;
 	
 	}
+	
+	.contentDiv2{
+		width: 635px;
+		margin-bottom: 10px;
+	
+	}
+	
 	
 	.answerDiv{
 		width: 685px;
@@ -798,9 +817,26 @@
 	    text-align: center;
 	    height: 22px;
 	    padding-top: 2px;
-	    border: 1px solid  #cecece;
-	    color:  #cecece;	
+      border: 1px solid  #cecece;
+	    color:  #9b9b9b;
+	 
 	}
+	
+	.replyGood2{
+		font-size: 13px;
+	    position: relative;
+	    float: right;
+	    width: 55px;
+	    text-align: center;
+	    height: 22px;
+	    padding-top: 2px;
+      border: 1px solid  #fa111a;
+	    color:  #fa111a;		
+	}
+	.replyGood2:hover{
+	cursor:pointer;
+	}
+	
 	
 	.replyGood:hover{
 		cursor:pointer;
@@ -810,6 +846,8 @@
 		font-size: 13px;
 		
 	}
+	
+	.answer
 	
 	</style>
 	
@@ -821,7 +859,7 @@
 	   
 	<div class= "previewBoard" >
 		<div class= "previewBoard2"> 
-			<div class= "advertisement"> 디테일 뷰 잘 들어오니?  </div>
+			<div class= "advertisement"> 디테일 뷰 잘 들어오니?   </div>
 			<div class= "noticeList">  공지사항(미리보기) </div> 
 		</div> 
 	</div >
@@ -831,7 +869,7 @@
 		<hr style="border: 1px solid black; margin-bottom: 5px;" >
 			<table align="center" width="840px" >
 				<tr style="padding:none;">
-					<td style="font-size: 30px;padding:0px; padding-bottom: 10px;height:60px;border-bottom: 1px; font-weight: 100px; font-family:none">
+					<td style="font-size: 25px;padding:0px; padding-bottom: 10px;height:60px;border-bottom: 1px; font-weight: 100px; font-family:none">
 						${board.bTitle} 
 						<div style="font-size: 13px; position:relative; float:right; height:40px; padding-top: 20px; padding-right: 10px;"><span class="bModify" style="color: #8d8d8d;">수정</span>&nbsp;|&nbsp;<span class="bDelete" style="color: #8d8d8d;">삭제</span> </div>			
 					</td>
@@ -841,12 +879,12 @@
 				<tr>
 					<td style="font-size: 16px; padding: 0px; border-top:1px solid #cecece; border-bottom:1px solid #cecece;">
 						<span style="position:relative; float:left;color: #a1a0a0;"> 
-							&nbsp;<i class="fas fa-user"></i>&nbsp;<span style="color: #383838;">&nbsp;${board.userId}</span>
+							&nbsp;<i class="fas fa-user"></i>&nbsp;<span style="color: #383838;">&nbsp;${board.userNickname}</span>
 						</span>
 						<span style="position:relative; float:right; color: #a1a0a0; margin-right: 10px;" >	
 							<i class="far fa-clock"></i>&nbsp;&nbsp;${board.createDate}&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
 							<i class="far fa-eye"></i>&nbsp; <span style="color:#ff2626;">${board.bCount}</span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-							<i class="far fa-comment"></i>&nbsp;&nbsp;<span style="color:#ff2626;">${board.reply}</span> 
+							<i class="far fa-comment"></i>&nbsp;&nbsp;<span style="color:#ff2626;" class="rcount">${board.reply}</span> 
 						</span>
 					</td>
 				</tr>
@@ -921,13 +959,12 @@
 					<button id = insertBtn onclick= "logcation.href='.bo" > <i class="fas fa-pencil-alt">&nbsp;</i>글쓰기 </button>&nbsp;
 					<button id = listBtn onclick="location.href='.bo'" style="display:inline-block"><i class="fas fa-list"></i> &nbsp;목록</button>
 				</div>
-				
 				<br><br>
-				<div class="replyArea">
+				<div class="replyArea" >
 					<br>
 					<div class="replyWriterArea">
 						<div style="border:none;margin-bottom:8px;"><i class="fas fa-chevron-circle-right" style="font-size: 27px; color: #fa4a4a;">&nbsp;</i><span style="font-weight:bold;font-size:18px; position:relative;top:-4px">댓글 쓰기</span>&nbsp;&nbsp;&nbsp;<span onclick = "refreshClick();" class = "refresh"><i class="fa fa-refresh" aria-hidden="true" style="font-size:20px; "></i></span></div>
-						<div style="width:685px; height: 120px; border: 1px solid #ececec;background:#f9f9f9;display:inline-block ">
+						<div style="width:685px; height: 120px; border: 1px solid #ececec;background:#f9f9f9;display:inline-block;">
 							
 							<div style="position:relative; float: left; display:inline-block;width: 580px; height: 100px;" ><textArea id= "rContent"rows="4" cols="10" id="replyContent" placeholder="댓글을 입력해주세요" style="font-weight:normal;"></textArea></div>
 							<div style=" position:relative; float: right;display:inline-block;width: 103px; height: 100px;" > <button id="addReplyBtn" type="button"  style="position:relative; top: 12px; width: 80px; height: 80px; border-radius: 6px;" >입력</button></div>
@@ -940,12 +977,12 @@
 				
 				
 			<br><br>
-			
-			
+				
+	
 				<table id="rtb">
 				<thead>
 					<tr>
-						<td colspan="3">댓글 <span id="rCount" ></span> </td>
+						<td colspan="3">댓글 <span id="rCount" class="rcount" >${board.reply}</span> </td>
 					</tr>
 				</thead>
 				<tbody>
@@ -954,12 +991,46 @@
 							<div> 
 								<div class= "replyWriterDiv"><span class = replyWriterSpan >admin</span><span class= replyDate>2015.07.13 18:09</span> <span class="replyGood"><i class="far fa-thumbs-up"></i> 2018 </span></div>
 								<div class = contentDiv>
-								fsdfsadfsdaffdsfsdafasdfaffdsfa dfsdg fsd gfgfd sghdf ghdf hds fhsd h gdh f h sfhsfdsfasdf fds fsd f sfsda fsadfsdffsdfsfsfsdf sf fsdf sfs fafdsf fsdf sdffsdfaf
+								 댓글 디자인을 해볼까? 
 								</div>
 								<div class="answerDiv"><span class= "answerBtn">답글</span><span class= "replyDelete">삭제</span><span class= "replyModify">수정</span></div>
 							</div>
 						</td>
 					</tr>
+					<tr> 
+						<td class= 'answerInsert' style='background: #f9f9f9;' > 
+							<div style='padding-left:50px;'>
+								<div class= 'replyWriterDiv'><span class = 'replyWriterSpan' >admin</span><span class= 'replyDate'>2015.07.13 18:09</span></div>
+								<div style="width:635px;height:65px; margin-bottom:10px;">
+									<textarea style='width: 500px; height: 60px;'></textarea><button type='button' class='answerBtn2'> 입력</button>
+								</div>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td style='background: #f9f9f9;' >
+							<div style='padding-left:50px;'>
+								<div class= 'replyWriterDiv'><span class = 'replyWriterSpan' >admin</span><span class= 'replyDate'>2015.07.13 18:09</span><span class= 'replyDate'>삭제</span></div>
+								<div style='width:635px; margin-bottom:10px;'>
+								아무렇게나해 이자식아 아무렇게나해 이자식아 아무렇게나해 이자식아 아무렇게나해 이자식아 아무렇게나해 이자식아 아무렇게나해 이자식아 아무렇게나해 이자식아 아무렇게나해 이자식아 아무렇게나해 이자식아 아무렇게나해 이자식아 아무렇게나해 이자식아
+								</div>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td style="background: #f9f9f9;">
+							<div style="padding-left:50px;">
+								<div class= "replyWriterDiv"><span class = replyWriterSpan >admin</span><span class= replyDate>2015.07.13 18:09</span><span  class= replyDate>삭제</span></div>
+								<div style="width:635px; margin-bottom:10px;">
+									메롱 메롱 메롱 
+								</div>
+							</div>
+						</td>
+					</tr>
+					
+					
+					
+					
 					<tr>
 						<td>
 							<div> 
@@ -973,7 +1044,13 @@
 					</tr>
 				</tbody>
 			</table>
-			<br><br> 
+			<br><br>  
+			
+			
+			<div class='pagingArea' align='center'></div>
+			<br>
+			
+			
 			
 			
 			<table id="previewTable"> 
@@ -1001,7 +1078,7 @@
 				<%}%>
 			</table>
 			<br><br>
-			
+		
 			
 			
 			
@@ -1107,6 +1184,11 @@
 	        }
 	   });
 	
+
+	    
+	    
+	    
+	    
 	    
 	    function downloadAttach(thing){
 			 location.href="downloadAttach.do?fid="+thing;
@@ -1143,40 +1225,102 @@
 	     }).mouseout(function(){
 	        $(this).parent().children().css({"background":"white"});
 	     })
+	     	     
+	     
 
-    /*
-	     function getReplyList(){	// 댓글 리스트를 불러오는 함수
+	     function getReplyList(page){// 댓글 리스트를 불러오는 함수
 			var bId = ${board.bId};
-		
+	
+			
 			$.ajax({
 				url:"rList.do",
-				data:{bId:bId},
+				data:{bId:bId, page:page},
 				dataType:"json",
 				success:function(data){
-				
+					console.log(data.rListCount);
+					$(".rcount").text(data.rListCount);
+					
+					console.log(data.pi);
 					$tableBody = $("#rtb tbody");
-					$tableBody.html("");
-					
-					var $tr;
-					var $rWriter;
-					var $rContent;
-					var $rCreateDate;
-					
-					$("#rCount").text(data.length);
-					
-					if(data.length > 0){	// 댓글이 하나 이상 있으면
-						for(var i in data){
+				 	$tableBody.html(""); 
+					var html = "";
+					if(data.rList.length > 0){	// 댓글이 하나 이상 있으면
+						for(var i in data.rList){
+							console.log(data.rList);
+							console.log(data.goodClickList);
+							html += "<tr><td><div><div class= 'replyWriterDiv'><span class= 'replyWriterSpan'>"+data.rList[i].userNickname + "</span>";
+							html += "<span class= replyDate>"+data.rList[i].createDate+"</span>";
 							
-							var html = "";
-							html += "<tr><td><div><div class= 'replyWriterDiv'><span class= 'replyWriterSpan'>"+data[i].mId + "</span><span class= replyDate>"+data[i].createDate+"</span> <span class='replyGood'><i class='far fa-thumbs-up'></i>11 </span></div>";
-							html += "<div class = contentDiv>"+decodeURIComponent(data[i].rContent.replace(/\+/g," ")) +"</div>";
-							html += "<div class='answerDiv'><span class= 'answerBtn'>답글</span><span class= 'replyDelete'>삭제</span><span class= 'replyModify'>수정</span></div></div></td></tr>";
+							if(data.goodClickList != "undefined"){
+								for(var j in data.goodClickList){
+									if( data.rList[i].rId == data.goodClickList[j]){
+										var html2 = "<span class='replyGood2' onclick='replyGood("+data.rList[i].rId +","+ data.pi.currentPage +");'><i class='far fa-thumbs-up'></i>"+ data.rList[i].rGood +"</span></div>";
+											break;  	                                        
+									}else{
+										var html2 =  "<span class='replyGood' onclick='replyGood("+data.rList[i].rId +","+ data.pi.currentPage +");'><i class='far fa-thumbs-up'></i>"+ data.rList[i].rGood +"</span></div>";
+									}
+								}
+								html += html2;
+							}else{
+								html += "<span class='replyGood' onclick='replyGood("+data.rList[i].rId +","+ data.pi.currentPage +");'><i class='far fa-thumbs-up'></i>"+ data.rList[i].rGood +"</span></div>";
+							}
+							html += "<div class = contentDiv>"+ data.rList[i].rContent+"</div>";
+							html += "<div class='answerDiv'><span class= 'answerBtn' onclick='addAnswer("+data.rList[i].rId+");'>답글</span><span class= 'replyDelete' onclick='replyDelete("+data.rList[i].rId +","+ data.pi.currentPage +");'>삭제</span><span class= 'replyModify'>수정</span></div></div></td></tr>";					
+										
+							html += "<tr style='display:none' class = 'answerTr"+ data.rList[i].rId +"'><td class= 'answerInsert' style='background: #f9f9f9;'><div style='padding-left:50px;'>";
+							html += "<div class= 'replyWriterDiv'><span class = 'replyWriterSpan' >admin</span></div>";
+							html +=	"<div style='width:635px;height:65px; margin-bottom:10px;'>";
+							html +=	"<textarea class = 'content"+ data.rList[i].rId +"' style='width: 500px; height: 60px;'></textarea><button type='button' class='answerBtn2' onclick='addAnswer2("+data.rList[i].rId+");'> 입력</button></div></div></td></tr>";
 							
-							
-							$tableBody.append(html); 
-							
-							
+							for( var k in data.rList[i].aList){
+								html +=	"<tr><td style='background: #f9f9f9;' ><div style='padding-left:50px;'>";
+								html += "<div class= 'replyWriterDiv'><span class = 'replyWriterSpan' >"+ data.rList[i].aList[k].userNickname+ "</span><span class= 'replyDate'>"+data.rList[i].aList[k].createDate+ "</span><span class= 'replyDate answerDelete' onclick='answerDelete("+data.rList[i].aList[k].aId +","+ data.pi.currentPage+ ");'>삭제</span></div>";
+								html += "<div style='width:635px; margin-bottom:10px;'>"+ data.rList[i].aList[k].aContent;
+								html += "</div></div></td></tr>";
+								
+								
+							} 
+						
 						}
+						$tableBody.append(html); 
+						
+						
+						$pagingArea = $(".pagingArea");
+						$pagingArea.html(""); 
+						
+				
+						html = ""; 
+						html +="<button onclick='goReplyPage("+ 1 +");'> << </button>";
+				         if(data.pi.currentPage <= 1){
+				        	html += "<button disabled> < </button>";
+				         }
+				         if(data.pi.currentPage > 1){
+				        	 html += "<button onclick='goReplyPage("+ (data.pi.currentPage-1) +");'> < </button>";
+				         }
+		        	 
+		        	
+				         for(var i= data.pi.startPage; i<data.pi.endPage+1; i++) {
+				        	 	
+				        	    if( data.pi.currentPage == i ){
+				        	    	html+= "<button style='background:#ec434a;color:white' disabled >"+i+"</button>"
+				        	    }else{
+				        	    	html+= "<button class='dfsff' onclick='goReplyPage("+ i +");'>"+ i +"</button>"
+				        	    }
+				        	    
+				        	}
+				         
+				        	
+				         if(data.pi.currentPage >= data.pi.maxPage){
+					         html += " <button disabled> > </button>";
+					      }
+		        		 if(data.pi.currentPage < data.pi.maxPage){
+					         html += "<button onclick='goReplyPage("+ (data.pi.currentPage+1) +");'> > </button>";
+					      }	
+					    html+= "<button onclick='goReplyPage("+ data.pi.maxPage +");'> >> </button>";
+					    
+					    $pagingArea.append(html);    
+				        	
+					
 					}else{	// 댓글이 없으면
 					
 					}
@@ -1190,27 +1334,26 @@
 		}
 	     
 	     // 댓글 호출 
-	  	  getReplyList();
+	  	  getReplyList(1);
 			
 	     // 댓글 일정시간마다  새로갱신 
 			setInterval(function(){
-				getReplyList();
+				getReplyList(1);
 			}, 40000); 
 	     
-	     */
+	
 	     
-	     /*
+	  
 	     // 댓글 등록 ajax
 			$("#addReplyBtn").on("click", function(){
 				var rContent=$("#rContent").val();
 				var bId =${board.bId};
-				
 				$.ajax({
 					url:"addReply.do",
 					data:{rContent:rContent, bId:bId},
 					success:function(data){
 						if(data=="success"){
-							getReplyList(); // 댓글 등록 성공시 댓글 부분이 setInerval 안기다리고 바로 갱신되게 함수 실행
+							getReplyList(1); // 댓글 등록 성공시 댓글 부분이 setInerval 안기다리고 바로 갱신되게 함수 실행
 							$("#rContent").val(""); // 댓글 작성한 부분 리셋 해주기
 						}
 					},
@@ -1223,7 +1366,255 @@
 				
 			});
 	     
-	     */
+	     
+	});
+	
+
+	function goReplyPage(page){
+		getReplyList(page);
+		
+	}
+	
+	
+	function replyDelete(rId, currentPage){
+		console.log(rId);
+		console.log(currentPage);
+		
+		
+		$.ajax({
+			url:"deleteReply.do",
+			data:{rId:rId},
+			success:function(data){
+				if(data=="success"){
+					getReplyList(currentPage); 
+				}
+			},
+			error:function(request, status, errorData){
+				alert("error code: " + request.status + "\n"
+						+"message: " + request.responseText
+						+"error: " + errorData);
+			}
+		});
+		
+		
+	}
+	
+	
+	function answerDelete(aId, currentPage){
+		console.log(aId);
+		console.log(currentPage);
+	 	
+		$.ajax({
+			url:"deleteAnswer.do",
+			data:{aId:aId},
+			success:function(data){
+				if(data=="success"){
+					getReplyList(currentPage); 
+				}
+			},
+			error:function(request, status, errorData){
+				alert("error code: " + request.status + "\n"
+						+"message: " + request.responseText
+						+"error: " + errorData);
+			}
+		}); 
+		
+		
+	}
+	
+	
+	
+	
+	function replyGood(rId, page){
+		$.ajax({
+			url:"addReplyGood.do",
+			data:{rId:rId},
+			success:function(data){
+				if(data=="AddSuccess"){
+					getReplyList(page); // 댓글 등록 성공시 댓글 부분이 setInerval 안기다리고 바로 갱신되게 함수 실행
+					alert("댓글에 '좋아요'를 추가하셨습니다. ")
+				}else{
+					alert("댓글에 '좋아요'를 취소하셨습니다. ")
+					getReplyList(page);
+					
+				}
+			},
+			error:function(request, status, errorData){
+				alert("error code: " + request.status + "\n"
+						+"message: " + request.responseText
+						+"error: " + errorData);
+			}
+		});
+		
+	}
+	
+	
+	
+	function addAnswer(rId){
+	
+		alert(rId);
+		var answerTr = $(".answerTr"+rId);
+		 if($(answerTr).css("display")== "none"){
+			 $(answerTr).css({"display":"block"})   
+	     }else{
+	    	 $(answerTr).css({"display":"none"})
+	     }
+	}
+	
+	function addAnswer2(rId, page){
+		
+		var aContent = $(".content"+rId).val();
+		var answerTr = $(".answerTr"+rId);
+		 $.ajax({
+			url:"addAnswer.do",
+			data:{rId:rId, aContent:aContent},
+			success:function(data){
+				if(data=="success"){
+					getReplyList(page); // 댓글 등록 성공시 댓글 부분이 setInerval 안기다리고 바로 갱신되게 함수 실행
+				}
+			},
+			error:function(request, status, errorData){
+				alert("error code: " + request.status + "\n"
+						+"message: " + request.responseText
+						+"error: " + errorData);
+			}
+		});
+		 
+	}
+	
+		
+	
+		
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	 function getReplyList(page){// 댓글 리스트를 불러오는 함수
+			var bId = ${board.bId};
+			
+			$.ajax({
+				url:"rList.do",
+				data:{bId:bId, page:page},
+				dataType:"json",
+				success:function(data){
+					console.log(data.rListCount);
+					$(".rcount").text(data.rListCount);
+					
+					console.log(data.pi);
+					$tableBody = $("#rtb tbody");
+				 	$tableBody.html(""); 
+					var html = "";
+					if(data.rList.length > 0){	// 댓글이 하나 이상 있으면
+						for(var i in data.rList){
+							console.log(data.rList);
+							console.log(data.goodClickList);
+							html += "<tr><td><div><div class= 'replyWriterDiv'><span class= 'replyWriterSpan'>"+data.rList[i].userNickname + "</span>";
+							html += "<span class= replyDate>"+data.rList[i].createDate+"</span>";
+							
+							if(data.goodClickList != "undefined"){
+								for(var j in data.goodClickList){
+									if( data.rList[i].rId == data.goodClickList[j]){
+										var html2 = "<span class='replyGood2' onclick='replyGood("+data.rList[i].rId +","+ data.pi.currentPage +");'><i class='far fa-thumbs-up'></i>"+ data.rList[i].rGood +"</span></div>";
+											break;  	                                        
+									}else{
+										var html2 =  "<span class='replyGood' onclick='replyGood("+data.rList[i].rId +","+ data.pi.currentPage +");'><i class='far fa-thumbs-up'></i>"+ data.rList[i].rGood +"</span></div>";
+									}
+								}
+								html += html2;
+							}else{
+								html += "<span class='replyGood' onclick='replyGood("+data.rList[i].rId +","+ data.pi.currentPage +");'><i class='far fa-thumbs-up'></i>"+ data.rList[i].rGood +"</span></div>";
+							}
+							
+							html += "<div class = contentDiv>"+ data.rList[i].rContent+"</div>";
+							html += "<div class='answerDiv'><span class= 'answerBtn' onclick='addAnswer("+data.rList[i].rId+");'>답글</span><span class= 'replyDelete' onclick='replyDelete("+data.rList[i].rId +","+ data.pi.currentPage +");'>삭제</span><span class= 'replyModify'>수정</span></div></div></td></tr>";					
+										
+							html += "<tr style='display:none' class = 'answerTr"+ data.rList[i].rId +"'><td class= 'answerInsert' style='background: #f9f9f9;'><div style='padding-left:50px;'>";
+							html += "<div class= 'replyWriterDiv'><span class = 'replyWriterSpan' >admin</span></div>";
+							html +=	"<div style='width:635px;height:65px; margin-bottom:10px;'>";
+							html +=	"<textarea class = 'content"+ data.rList[i].rId +"' style='width: 500px; height: 60px;'></textarea><button type='button' class='answerBtn2' onclick='addAnswer2("+data.rList[i].rId+","+data.pi.currentPage + ");'> 입력</button></div></div></td></tr>";
+							
+							for( var k in data.rList[i].aList){
+								html +=	"<tr><td style='background: #f9f9f9;' ><div style='padding-left:50px;'>";
+								html += "<div class= 'replyWriterDiv'><span class = 'replyWriterSpan' >"+ data.rList[i].aList[k].userNickname+ "</span><span class= 'replyDate'>"+data.rList[i].aList[k].createDate+ "</span><span class= 'replyDate answerDelete' onclick='answerDelete("+data.rList[i].aList[k].aId+","+ data.pi.currentPage +");'>삭제</span></div>";
+								html += "<div style='width:635px; margin-bottom:10px;'>"+ data.rList[i].aList[k].aContent;
+								html += "</div></div></td></tr>";
+								
+								
+							} 
+							
+							
+							
+						}
+						$tableBody.append(html); 
+						
+						
+						$pagingArea = $(".pagingArea");
+						$pagingArea.html(""); 
+						
+				
+						html = ""; 
+						html +="<button onclick='goReplyPage("+ 1 +");'> << </button>";
+				         if(data.pi.currentPage <= 1){
+				        	html += "<button disabled> < </button>";
+				         }
+				         if(data.pi.currentPage > 1){
+				        	 html += "<button onclick='goReplyPage("+ (data.pi.currentPage-1) +");'> < </button>";
+				         }
+		        	 
+		        	
+				         for(var i= data.pi.startPage; i<data.pi.endPage+1; i++) {
+				        	 	
+				        	    if( data.pi.currentPage == i ){
+				        	    	html+= "<button style='background:#ec434a;color:white' disabled >"+i+"</button>"
+				        	    }else{
+				        	    	html+= "<button class='dfsff' onclick='goReplyPage("+ i +");'>"+ i +"</button>"
+				        	    }
+				        	    
+				        	}
+				         
+				        	
+				         if(data.pi.currentPage >= data.pi.maxPage){
+					         html += " <button disabled> > </button>";
+					      }
+		        		 if(data.pi.currentPage < data.pi.maxPage){
+					         html += "<button onclick='goReplyPage("+ (data.pi.currentPage+1) +");'> > </button>";
+					      }	
+					    html+= "<button onclick='goReplyPage("+ data.pi.maxPage +");'> >> </button>";
+					    
+					    $pagingArea.append(html);    
+				        	
+					
+					}else{	// 댓글이 없으면
+					
+					}
+				},
+				error:function(request, status, errorData){
+					alert("error code: " + request.status + "\n"
+							+"message: " + request.responseText
+							+"error: " + errorData);
+				}
+			})
+		}
+	
+	
+	
+	
+	
 	     
 </script>
 	 
@@ -1235,17 +1626,12 @@
 		            minHeight: null,             // set minimum height of editor
 		            maxHeight: null,             // set maximum height of editor
 		            focus: true                  // set focus to editable area after initializing summernote
-		//     });
+		    });
 		});
 		
 		$(document).ready(function() {
 		     $('#summernote').summernote();
 		});
-		
-	
-	
-	});
-	 
 	
 </script> 
 	

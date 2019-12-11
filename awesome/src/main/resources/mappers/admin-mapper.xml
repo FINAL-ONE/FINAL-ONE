@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="adminMapper">
+
 	<resultMap type="Admin" id="sell_goodsResultSet">
 	    <id property="sellNum" column ="SELL_NUM"/>
 		
@@ -17,7 +18,7 @@
 		<result property ="modifyDate" 		column="MODIFY_DATE"/>
 		<result property ="status" 			column="STATUS"/>
 	</resultMap>
-	
+
 	<resultMap id="goodsResultSet" type="Goods">
 	  	<id property="gId" 				column="GID"/>
 	  	<result property="cateCd" 		column="CATE_CD"/>
@@ -34,7 +35,8 @@
 	  	<result property="mclCd" 		column="MCL_CD"/>
 	  	<result property="sclCd" 		column="SCL_CD"/>
 	</resultMap>
-	
+
+
 	<resultMap id="CategoryResultSet" type="Category">
 	  	<id property="cateCd" 		column="CATE_CD"/>
 	  	<result property="cateNm" 	column="CATE_NM"/>
@@ -51,6 +53,7 @@
 	  	<result property="scateNm" 	column="S_CATE_NM"/>
 
 	</resultMap>
+
 
 	<insert id ="insertSellgoods" parameterType="Admin">
 		INSERT INTO SELL_GOODS 
@@ -78,18 +81,6 @@
 	</update>
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
 <!--========================================= INSERT  =========================================-->	
 	
 	<!-- 동복 - 상품 등록 -->

@@ -17,7 +17,7 @@ public class Admin {
 	private Date sellDate;
 	private Date modifyDate;
 	private String status;
-
+	
 	public Admin() {
 	}
 

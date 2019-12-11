@@ -141,5 +141,6 @@ public class Category {
 				+ ", sclCd=" + sclCd + ", cateLvl=" + cateLvl + ", useYn=" + useYn + ", regDtm=" + regDtm + ", modDtm="
 				+ modDtm + ", lcateNm=" + lcateNm + ", mcateNm=" + mcateNm + ", scateNm=" + scateNm + "]";
 	}
-
+	
+	
 }

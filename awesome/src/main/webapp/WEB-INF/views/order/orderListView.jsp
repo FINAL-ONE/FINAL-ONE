@@ -3,6 +3,7 @@
 	<%@ page session="false" %>
 	<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<link href="https://fonts.googleapis.com/css?family=Do+Hyeon&display=swap" rel="stylesheet">
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,6 +12,16 @@
 <title>Insert title here</title>
 </head>
 <style>
+.pagingArea button {
+	  border: 1px solid #dcdcdc;
+	  outline: none;
+	  padding: 6px 12px;
+	  cursor: pointer;
+	  background: white;
+	  font-size: 13px;
+      color: #828282;
+}
+
 .centerDiv{
 	  width:880px;
       margin-left:auto;
@@ -49,13 +60,15 @@ height:170px;
 border :5px solid gray;
 }
 
+
 #tb{
 height : 170px;
 width : 880px;
 }
 
 #tb tr td{
-font-size : 25px;
+font-size : 40px;
+font-family:  'Do Hyeon', sans-serif;
 text-align: center;
 }
 
@@ -63,6 +76,8 @@ text-align: center;
 #tb tbody tr td{
 color : red;
 font-size: 30px;
+font-weight:bold;
+font-family:  'Do Hyeon', sans-serif;
 height:0px;
 }
 
@@ -83,7 +98,7 @@ height:0px;
 			<td><img src="resources/images/order.png" style="height:30%; width:33%;"><br>
 			배송전
 			</td>
-			<td><img src="resources/images/delivery.png" style="height:37%; width:40%; "><br>
+			<td><img src="resources/images/delivery2.png" style="height:39%; width:41%; "><br>
 			배송중
 			</td>
 			<td><img src="resources/images/complete.png" style="height:30%; width:33%;"><br>
@@ -162,10 +177,50 @@ height:0px;
 
 					</tr>
 				</c:forEach>
-
+				
 
 
 			</table>
+			<br>
+				<!-- 페이징처리 하쟈-->
+			 <br>
+      <div class="pagingArea" align="center">
+         <!-- 맨 처음으로(<<) -->
+         <button onclick="location.href='orderview.do?page=1'"> << </button>
+         
+         <!-- 이전 페이지로(<) -->
+        <c:if test="${pi.currentPage <= 1 }">
+            <button disabled> < </button>
+        </c:if>
+         <c:if test="${pi.currentPage > 1 }">
+         
+            <button onclick="location.href='orderview.do?page=${pi.currentPage -1}'"> < </button>
+        </c:if>
+         
+         <!-- 10개의 페이지 목록 -->
+         <c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage }">
+           <c:if test="${pi.currentPage == p }">
+               <button style="background:#ec434a;color:white" disabled >${p}</button>
+           </c:if>
+            <c:if test="${pi.currentPage != p }">
+               <button onclick="location.href='orderview.do?page=${p}'">${p}</button>
+            </c:if>
+       </c:forEach>
+	 				
+         <c:if test="${pi.currentPage >= pi.maxPage }">
+            <button disabled> > </button>
+          </c:if>
+          <c:if test="${pi.currentPage < pi.maxPage }">
+            <button onclick="location.href='orderview.do?page=${pi.currentPage + 1}'"> > </button>
+          </c:if>
+         
+         <!-- 맨 끝으로(>>) -->
+         <button onclick="location.href='orderview.do?page=${pi.maxPage}'"> >> </button>
+            </div>
+			
+			<div>
+				  
+			</div>
 			<br><br>
 		</div>
 		</div>
