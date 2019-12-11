@@ -6,6 +6,7 @@
   	<id property="bId" column = "BID"/>
   	<result property="mId" column="MID"/>
   	<result property="userId" column="USER_ID"/>
+  	<result property="userNickname" column="USER_NICKNAME"/>
   	<result property="category" column="CATEGORY"/>
   	<result property="bTitle" column="BTITLE"/>
   	<result property="bType" column="BTYPE"/>
@@ -38,11 +39,34 @@
   	<result property="status" column="STATUS"/>
   </resultMap> 
   
-	<resultMap type="Reply" id="replyResultSet">
+    <resultMap type="RGood" id="rGoodResultSet">
+  	<id property="gId" column="GID"/>
+  	<result property="bId" column="BID"/>
+  	<result property="rId" column="RID"/>
+  	<result property="mId" column="MID"/>
+  	<result property="status" column="STATUS"/>
+  </resultMap> 
+  
+ <resultMap type="Reply" id="replyResultSet">
 	  	<id property="rId" column="RID"/>
 	  	<result property="bId" column="BID"/>
 	  	 <result property="mId" column="MID"/>
+	  	 <result property="userId" column="USER_ID"/>
+		 <result property="userNickname" column="USER_NICKNAME"/>
 	  	<result property="rContent" column="RCONTENT"/>
+	  	<result property="createDate" column="CREATE_DATE"/>
+	  	<result property="modifyDate" column="MODIFY_DATE"/>
+	  	<result property="status" column="STATUS"/>
+	  	<result property="rGood" column="RGOOD"/>
+  </resultMap>
+  
+   <resultMap type="Answer" id="answerResultSet">
+	  	<id property="aId" column="AID"/>
+  		<result property="rId" column="RID"/>
+	  	 <result property="mId" column="MID"/>
+	  	 <result property="userId" column="USER_ID"/>
+		 <result property="userNickname" column="USER_NICKNAME"/>
+	  	<result property="aContent" column="ACONTENT"/>
 	  	<result property="createDate" column="CREATE_DATE"/>
 	  	<result property="modifyDate" column="MODIFY_DATE"/>
 	  	<result property="status" column="STATUS"/>
@@ -57,10 +81,23 @@
   	
   </select>
   
+   <select id="getReplylistCount" parameterType="_int" resultType="_int"> 	
+  	 SELECT COUNT(*)
+  	 FROM D_REPLY
+  	 WHERE STATUS='Y'AND BID =#{bId}
+  	
+  </select>
+  
   <select id="selectBoardGoodMemory"  parameterType="BGood" resultType="_int"> 	
 	SELECT COUNT(*) 
     FROM B_GOOD 
     WHERE BID = #{bId} AND MID = #{mId} AND STATUS='Y'
+  </select>
+  
+   <select id="selectReplyGoodMemory"  parameterType="RGood" resultType="_int"> 	
+	SELECT COUNT(*) 
+    FROM R_GOOD 
+    WHERE RID = #{rId} AND MID = #{mId} AND STATUS='Y'
   </select>
   
   
@@ -87,14 +124,15 @@
   
   
   <select id="selectFList" resultMap="boardResultSet">
-		SELECT B.BID, B.MID, M.USER_ID, CATEGORY, BTITLE, BTYPE, BCONTENT, BCOUNT, B.CREATE_DATE, B.MODIFY_DATE, B.STATUS, BLEVEL, NVL(BGOOD,0) AS BGOOD, NVL(REPLY,0) AS REPLY
+		SELECT B.BID, B.MID, M.USER_ID, M.USER_NICKNAME, CATEGORY, BTITLE, BTYPE, BCONTENT, BCOUNT, B.CREATE_DATE, B.MODIFY_DATE, B.STATUS, BLEVEL, NVL(BGOOD,0) AS BGOOD, NVL(REPLY,0) AS REPLY
 		FROM D_BOARD B
 		JOIN MEMBER M ON( B.MID = M.MID)
 		LEFT OUTER JOIN (SELECT BID, COUNT(*) AS BGOOD
 		                 FROM B_GOOD 
 		                 GROUP BY BID) BGOOD ON (B.BID = BGOOD.BID) 
 		LEFT OUTER JOIN ( SELECT BID, COUNT(*) AS REPLY
-		                  FROM D_REPLY
+		                  FROM D_REPLY R
+		                  WHERE R.STATUS = 'Y'
 		                  GROUP BY BID)REPLY ON (B.BID = REPLY.BID)
 		WHERE B.STATUS ='Y' AND CATEGORY =2
 		ORDER BY BLEVEL DESC, BID DESC
@@ -130,6 +168,25 @@
   	)
   </insert>
   
+   <insert id="insertReply" parameterType="Reply">
+  		INSERT INTO 
+  		D_REPLY
+  		VALUES (
+  			SEQ_DRID.nextval, #{bId},#{mId},#{rContent},to_char(SYSDATE,'yyyy.mm.dd hh24:mi'),to_char(SYSDATE,'yyyy.mm.dd hh24:mi'), 'Y'
+  		)
+  </insert>
+  
+   <insert id="insertAnswer" parameterType="Answer">
+  		INSERT INTO 
+  		D_ANSWER
+  		VALUES (
+  			SEQ_DAID.nextval, #{rId},#{mId},#{aContent},to_char(SYSDATE,'yyyy.mm.dd hh24:mi'),to_char(SYSDATE,'yyyy.mm.dd hh24:mi'), 'Y'
+  		)
+  </insert>
+  
+  
+  
+  
   <insert id="insertAttachment" parameterType="Attachment"> 
 	INSERT INTO 
   	D_ATTACH
@@ -138,6 +195,12 @@
   	)
   
   </insert>
+  
+  
+  
+  
+  
+  
   
     <insert id="updateAttachment" parameterType="Attachment"> 
 	INSERT INTO 
@@ -156,6 +219,15 @@
   		SEQ_BGNO.NEXTVAL,#{bId}, #{mId},'Y'  
   	)
   
+  </insert>
+  
+  
+  <insert id="addReplyGoodCount" parameterType="RGood"> 
+	INSERT INTO 
+  	R_GOOD
+  	VALUES(
+  		 SEQ_RGNO.NEXTVAL,#{rId}, #{mId},'Y'  
+  	)
   </insert>
   
   
@@ -192,6 +264,7 @@
   	UPDATE D_BOARD
   	SET BTITLE=#{bTitle}, 
   		BCONTENT=#{bContent},
+  		BTYPE=#{bType},
 		BLEVEL=#{bLevel}, 
   		MODIFY_DATE =SYSDATE
   	WHERE BID=#{bId}
@@ -202,11 +275,29 @@
     
   </delete>
   
+  <delete id="deleteAnswer" parameterType="_int">
+  	DELETE FROM D_ANSWER
+  	WHERE AID = #{aId}
+  
+  </delete>
+  
+  
+  
   <delete id="subBoardGoodCount"  parameterType="BGood">
 	DELETE FROM B_GOOD 
   	WHERE BID=#{bId} AND MID=#{mId}
   	
   </delete>
+  <delete id="subReplyGoodCount"  parameterType="RGood">
+	DELETE FROM R_GOOD 
+  	WHERE RID=#{rId} AND MID=#{mId}
+  </delete>
+  
+ 
+ <delete id='deleteReply' parameterType = "_int">
+ 	 UPDATE D_REPLY SET STATUS ='N'
+ 	WHERE RID= #{rId}
+ </delete>
   
   
   
@@ -229,8 +320,18 @@
   
    <select id="selectReplyList" resultMap="replyResultSet" parameterType="_int">
 	SELECT *
-	FROM D_REPLY
-	WHERE BID=#{bId}
+	FROM REPLY_VIEW
+	WHERE BID=#{bId} AND STATUS = 'Y'
+	ORDER BY RID ASC
   </select>
+  
+  <select id="selectAList" resultMap="answerResultSet" parameterType="_int">
+  	SELECT *
+	FROM ANSWER_VIEW
+	WHERE RID=#{rId} AND STATUS = 'Y'
+	ORDER BY RID ASC
+  </select>
+  
+  
   
 </mapper>

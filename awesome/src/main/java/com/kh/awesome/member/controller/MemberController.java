@@ -157,6 +157,7 @@ public class MemberController {
 			return "home";
 		}
 		
+		
 		// ---------------------이제 로그인/ 로그아웃, 회원가입은 완벽하게 끝냈다!--------------------------
 		
 		// 그럼 이제 로그인 이후에 자신의 정보를 보고 수정하는 페이지를 만들자
@@ -238,47 +239,48 @@ public class MemberController {
 			return mv;
 		}
 		
-		
-	// 최근가입한 5명 미리보기 리스트	
-	@RequestMapping("topList.do")
-	public void boardTopList(HttpServletResponse response) throws JsonIOException, IOException {
-		
-		ArrayList<Member> list = mService.selectTopList();
-		
-		for(Member m : list) { 
-			//인코딩 작업				(예외처리 필요)
-			m.setUserName(URLEncoder.encode(m.getUserName(), "utf-8")); // 한글이 들어있을 것에 대해선 인코딩 처리
-			m.setGender(URLEncoder.encode(m.getGender(), "utf-8")); // 한글이 들어있을 것에 대해선 인코딩 처리
+		// 최근가입한 5명 미리보기 리스트	
+		@RequestMapping("topList.do")
+		public void boardTopList(HttpServletResponse response) throws JsonIOException, IOException {
+			
+			ArrayList<Member> list = mService.selectTopList();
+			
+			for(Member m : list) {
+				//인코딩 작업				(예외처리 필요)
+				m.setUserName(URLEncoder.encode(m.getUserName(), "utf-8")); // 한글이 들어있을 것에 대해선 인코딩 처리
+				m.setGender(URLEncoder.encode(m.getGender(), "utf-8")); // 한글이 들어있을 것에 대해선 인코딩 처리
+			}
+			
+			Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+							// 예외처리 필요
+			gson.toJson(list, response.getWriter());
+			
 		}
 		
-		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-						// 예외처리 필요
-		gson.toJson(list, response.getWriter());
-		
-	}
-	
-	
-	// 회원조회시 포인트 수정
-	@RequestMapping("pointUpdate.do")	
-	public String updatePointMember(Member m, Model model, int mId, int point) {
-		m.setMid(mId);
-		m.setPoint(point);
-		
-		int result = mService.updatePointMember(m);
-		
-		if(result > 0) {
-			model.addAttribute("m" , m);
-		} else {
-			throw new MemberException("수정 실패!!");
+
+		// 회원조회시 포인트 수정
+
+		@RequestMapping("pointUpdate.do")	
+		public String updatePointMember(Member m, Model model, int mId, int point) {
+			m.setMid(mId);
+			m.setPoint(point);
+			
+			int result = mService.updatePointMember(m);
+			
+			if(result > 0) {
+				model.addAttribute("m" , m);
+			} else {
+				throw new MemberException("수정 실패!!");
+			}
+			
+			return "redirect:memberLookup.do";
 		}
 		
-		return "redirect:memberLookup.do";
-	}
-	
-	@RequestMapping("bmicalc.do")
-	public String bmiCalculator() {
-		return "common/bmiCalculator";
-	}
+		@RequestMapping("bmicalc.do")
+		public String bmiCalculator() {
+			return "common/bmiCalculator";
+		}
+			
 		
 	
 }

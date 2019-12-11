@@ -68,7 +68,7 @@ public interface AdminService {
 		public int selectsellGoodsList(String gId);
 		// 동복 - 판매 상품 조회 수정 페이지
 		public ArrayList<Admin> sell_goodsDetailView(int sellNum);	
-		// 동복 - 상품관리 화면에서 조건 검색
-		public ArrayList<Goods> checkTextSelectGoods(Goods g);
-		
-	}
+
+
+	
+}

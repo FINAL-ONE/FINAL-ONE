@@ -138,9 +138,5 @@ public class AdminDao {
 		public ArrayList<Admin> sell_goodsDetailView(int sellNum) {
 			return (ArrayList)sqlSession.selectList("adminMapper.sell_goodsDetailView",sellNum);
 		}
-		// 동복 - 상품관리 화면에서 조건 검색
-		public ArrayList<Goods> checkTextSelectGoods(Goods g) {
-			return (ArrayList)sqlSession.selectList("adminMapper.checkTextSelectGoods",g);
-		}
-
-	}
+	
+}
