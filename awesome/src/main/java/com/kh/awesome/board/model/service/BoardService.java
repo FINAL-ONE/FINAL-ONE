@@ -2,6 +2,7 @@ package com.kh.awesome.board.model.service;
 
 import java.util.ArrayList;
 
+import com.kh.awesome.board.model.vo.Answer;
 import com.kh.awesome.board.model.vo.Attachment;
 import com.kh.awesome.board.model.vo.BGood;
 import com.kh.awesome.board.model.vo.Board;
@@ -89,5 +90,11 @@ public interface BoardService {
 	public int addReplyGoodCount(RGood g);
 
 	public int subReplyGoodCount(RGood g);
+
+	public int insertAnswer(Answer a);
+
+	public ArrayList<Answer> selectAList(int rId);
+
+	public int deleteAnswer(int aId);
 	
 }

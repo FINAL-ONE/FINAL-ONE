@@ -186,7 +186,7 @@
       <div class= "menu normalMenu">공지사항</div>
       <div class= "menu communityMenu">커뮤니티</div>
       <div class =logoImg><img src="${contextPath}/resources/images/logo.png" style="height: 89px; vertical-align: middle" onclick= "location.href='home.do'"></div>
-      <div class= "menu normalMenu">BMI 계산기</div>
+       <div class= "menu normalMenu" onclick="location.href='bmicalc.do'">BMI 계산기</div>
       <c:url var="shopGoodsListView" value="shopGoodsListView.do">
 		<c:param name="mid" value="${sessionScope.loginUser.mid }"/>
 		</c:url>

@@ -26,6 +26,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
 import com.kh.awesome.board.model.exception.BoardException;
 import com.kh.awesome.board.model.service.BoardService;
+import com.kh.awesome.board.model.vo.Answer;
 import com.kh.awesome.board.model.vo.Attachment;
 import com.kh.awesome.board.model.vo.BGood;
 import com.kh.awesome.board.model.vo.Board;
@@ -53,16 +54,12 @@ public class BoardController {
 		if(page != null) {
 			currentPage = page;
 		}
-		
 		int listCount = bService.getFboardListCount();
 		
-
 		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
 		
 		ArrayList<Board> flist = bService.selectFList(pi);
 		// ArrayList<Board> flist = bService.selectList(pi);
-		
-		
 		
 		if(flist != null && flist.size() > 0) {	// 게시글이 있다면
 			mv.addObject("flist", flist);
@@ -220,12 +217,24 @@ public class BoardController {
 
 		int count = 0; 
 		
+		int attachCount = 0; 
+		for(MultipartFile file : fileList) {
+			if(!file.getOriginalFilename().contentEquals("")) {
+				attachCount ++; 
+			}
+		}
+
+		if(attachCount > 0) {
+			b.setbType("4");
+		}
+		
+		
+		
 		int result = bService.insertBoard(b);
 		
 		
 		for(MultipartFile file : fileList) {
 				if(!file.getOriginalFilename().contentEquals("")) {
-					b.setbType("4");
 					count++;
 					String renameFileName = saveFile(file, request,count);
 					if(renameFileName != null) {	// 파일이 잘 저장된 경우
@@ -303,15 +312,23 @@ public class BoardController {
 			fileList.add(file4);
 			fileList.add(file5);
 			
-			
-		HttpSession session = request.getSession(); 
-	
 		b.setbType("1");
+		
+		int attachCount = 0; 
+		for(MultipartFile file : fileList) {
+			if(!file.getOriginalFilename().contentEquals("")) {
+				attachCount ++; 
+			}
+		}
+
+		if(attachCount > 0) {
+			b.setbType("4");
+		}
+		
 		
 		int count = 0; 
 		for(MultipartFile file : fileList) {
 				if(!(file.getOriginalFilename().contentEquals(""))) {
-					b.setbType("4");
 					count++;
 					String renameFileName = saveFile(file, request,count);
 					if(renameFileName != null) {	// 파일이 잘 저장된 경우
@@ -356,15 +373,6 @@ public class BoardController {
 	
 	
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	public String saveFile(MultipartFile file, HttpServletRequest request, int count) {
@@ -480,10 +488,6 @@ public class BoardController {
 	}
 	
 	
-		
-	
-	
-	
 	// 댓글 관련 부분
 		// 댓글 리스트 불러오기
 		
@@ -559,6 +563,23 @@ public class BoardController {
 				}
 				
 			}
+		
+			for(Reply reply:rList) {
+				
+				int rId = reply.getrId();
+				
+				ArrayList<Answer> aList = bService.selectAList(rId); 
+				
+				response.setContentType("application/json;charset=utf-8");
+				for(Answer a  : aList) {
+					a.setUserNickname(a.getUserNickname());
+					a.setaContent(a.getaContent());
+				}
+				
+				if(aList != null && (!aList.isEmpty())) {
+					reply.setaList(aList);
+				}
+			}
 			
 			response.setContentType("application/json;charset=utf-8");
 			for(Reply r : rList) {
@@ -610,6 +631,24 @@ public class BoardController {
 			}
 		}
 	
+		@RequestMapping("addAnswer.do")
+		@ResponseBody
+		public String addAnswer(Answer a, HttpSession session, HttpServletResponse response) {
+			response.setContentType("application/json;charset=utf-8");
+			
+			Member loginUser = (Member)session.getAttribute("loginUser");
+			int mId = loginUser.getMid();
+			a.setmId(mId);
+			
+			int result = bService.insertAnswer(a);
+			
+			if(result > 0) {
+				return "success";
+			}else {
+				throw new BoardException("댓글 등록 실패!");
+			}
+		}
+		
 		
 		
 		@RequestMapping("addReplyGood.do")
@@ -664,6 +703,18 @@ public class BoardController {
 			}
 		}
 	
+		@RequestMapping("deleteAnswer.do")
+		@ResponseBody
+		public String deleteAnswer(int aId) {
+			
+			int result = bService.deleteAnswer(aId);
+			
+			if(result > 0) {
+				return "success";
+			}else {
+				throw new BoardException("댓글 등록 실패!");
+			}
+		}
 	
 	
 	

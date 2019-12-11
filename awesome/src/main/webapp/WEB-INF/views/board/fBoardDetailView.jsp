@@ -229,7 +229,7 @@
 	   margin: auto;
 	   padding: auto;
 	   padding-bottom:5px;
-	   word-wrap: break-word;
+	   word-break: break-all;;
 			
 	}
 	
@@ -474,19 +474,8 @@
 	}
 	
 	
-	.answerDelete{
-	   position: relative;
-	   left:3px;
-	   bottom: 5px;
-	   border: 1px solid lightgray;
-	   background: white;
-	   color: lightblack;
-	   padding: 5px;
-	}
-	
 	.answerDelete:hover{
 	 cursor:pointer;
-		color: lightgray;
 	}
 	
 	
@@ -669,6 +658,7 @@
 	
 	}
 	
+
 	
 	.bDelete:hover{
 		cursor:pointer;
@@ -733,14 +723,15 @@
 	#rtb tbody tr td div {
 		width:685px; 
 		height:auto;
+		word-break:break-all;
 	}
 	
 	.rContent{
 		width:685px; 
 		height: auto;
 		overflow:hidden;
-		word-wrap:break-word;
-
+		word-wrap:break-all;;
+		
 	}
 	
 	
@@ -750,8 +741,17 @@
 		color:#fa111a;
 	}
 	
-	.answerBtn{
-		
+	.answerBtn2{
+		position: relative;
+	    bottom: 25px;
+	    width: 60px;
+	    margin-left: 5px;
+	    height: 60px;
+	    background-color: #F0CA61;
+	    outline: none;
+	    border: none;
+	    border-radius: 6px;
+	    color: white;
 	}
 	
 	.answerBtn:hover{
@@ -846,6 +846,8 @@
 		font-size: 13px;
 		
 	}
+	
+	.answer
 	
 	</style>
 	
@@ -995,14 +997,21 @@
 							</div>
 						</td>
 					</tr>
-					
-					
-					
+					<tr> 
+						<td class= 'answerInsert' style='background: #f9f9f9;' > 
+							<div style='padding-left:50px;'>
+								<div class= 'replyWriterDiv'><span class = 'replyWriterSpan' >admin</span><span class= 'replyDate'>2015.07.13 18:09</span></div>
+								<div style="width:635px;height:65px; margin-bottom:10px;">
+									<textarea style='width: 500px; height: 60px;'></textarea><button type='button' class='answerBtn2'> 입력</button>
+								</div>
+							</div>
+						</td>
+					</tr>
 					<tr>
-						<td style="background: #f9f9f9;" >
-							<div style="padding-left:50px;">
-								<div class= "replyWriterDiv"><span class = replyWriterSpan >admin</span><span class= replyDate>2015.07.13 18:09</span><span>삭제</span></div>
-								<div style="width:635px; margin-bottom:10px;">
+						<td style='background: #f9f9f9;' >
+							<div style='padding-left:50px;'>
+								<div class= 'replyWriterDiv'><span class = 'replyWriterSpan' >admin</span><span class= 'replyDate'>2015.07.13 18:09</span><span class= 'replyDate'>삭제</span></div>
+								<div style='width:635px; margin-bottom:10px;'>
 								아무렇게나해 이자식아 아무렇게나해 이자식아 아무렇게나해 이자식아 아무렇게나해 이자식아 아무렇게나해 이자식아 아무렇게나해 이자식아 아무렇게나해 이자식아 아무렇게나해 이자식아 아무렇게나해 이자식아 아무렇게나해 이자식아 아무렇게나해 이자식아
 								</div>
 							</div>
@@ -1011,7 +1020,7 @@
 					<tr>
 						<td style="background: #f9f9f9;">
 							<div style="padding-left:50px;">
-								<div class= "replyWriterDiv"><span class = replyWriterSpan >admin</span><span class= replyDate>2015.07.13 18:09</span><span>삭제</span></div>
+								<div class= "replyWriterDiv"><span class = replyWriterSpan >admin</span><span class= replyDate>2015.07.13 18:09</span><span  class= replyDate>삭제</span></div>
 								<div style="width:635px; margin-bottom:10px;">
 									메롱 메롱 메롱 
 								</div>
@@ -1175,6 +1184,11 @@
 	        }
 	   });
 	
+
+	    
+	    
+	    
+	    
 	    
 	    function downloadAttach(thing){
 			 location.href="downloadAttach.do?fid="+thing;
@@ -1250,11 +1264,23 @@
 							}else{
 								html += "<span class='replyGood' onclick='replyGood("+data.rList[i].rId +","+ data.pi.currentPage +");'><i class='far fa-thumbs-up'></i>"+ data.rList[i].rGood +"</span></div>";
 							}
-							
-							
-							
 							html += "<div class = contentDiv>"+ data.rList[i].rContent+"</div>";
 							html += "<div class='answerDiv'><span class= 'answerBtn' onclick='addAnswer("+data.rList[i].rId+");'>답글</span><span class= 'replyDelete' onclick='replyDelete("+data.rList[i].rId +","+ data.pi.currentPage +");'>삭제</span><span class= 'replyModify'>수정</span></div></div></td></tr>";					
+										
+							html += "<tr style='display:none' class = 'answerTr"+ data.rList[i].rId +"'><td class= 'answerInsert' style='background: #f9f9f9;'><div style='padding-left:50px;'>";
+							html += "<div class= 'replyWriterDiv'><span class = 'replyWriterSpan' >admin</span></div>";
+							html +=	"<div style='width:635px;height:65px; margin-bottom:10px;'>";
+							html +=	"<textarea class = 'content"+ data.rList[i].rId +"' style='width: 500px; height: 60px;'></textarea><button type='button' class='answerBtn2' onclick='addAnswer2("+data.rList[i].rId+");'> 입력</button></div></div></td></tr>";
+							
+							for( var k in data.rList[i].aList){
+								html +=	"<tr><td style='background: #f9f9f9;' ><div style='padding-left:50px;'>";
+								html += "<div class= 'replyWriterDiv'><span class = 'replyWriterSpan' >"+ data.rList[i].aList[k].userNickname+ "</span><span class= 'replyDate'>"+data.rList[i].aList[k].createDate+ "</span><span class= 'replyDate answerDelete' onclick='answerDelete("+data.rList[i].aList[k].aId +","+ data.pi.currentPage+ ");'>삭제</span></div>";
+								html += "<div style='width:635px; margin-bottom:10px;'>"+ data.rList[i].aList[k].aContent;
+								html += "</div></div></td></tr>";
+								
+								
+							} 
+						
 						}
 						$tableBody.append(html); 
 						
@@ -1373,6 +1399,32 @@
 		
 	}
 	
+	
+	function answerDelete(aId, currentPage){
+		console.log(aId);
+		console.log(currentPage);
+	 	
+		$.ajax({
+			url:"deleteAnswer.do",
+			data:{aId:aId},
+			success:function(data){
+				if(data=="success"){
+					getReplyList(currentPage); 
+				}
+			},
+			error:function(request, status, errorData){
+				alert("error code: " + request.status + "\n"
+						+"message: " + request.responseText
+						+"error: " + errorData);
+			}
+		}); 
+		
+		
+	}
+	
+	
+	
+	
 	function replyGood(rId, page){
 		$.ajax({
 			url:"addReplyGood.do",
@@ -1398,12 +1450,41 @@
 	
 	
 	
-	
 	function addAnswer(rId){
+	
 		alert(rId);
-		
-		
+		var answerTr = $(".answerTr"+rId);
+		 if($(answerTr).css("display")== "none"){
+			 $(answerTr).css({"display":"block"})   
+	     }else{
+	    	 $(answerTr).css({"display":"none"})
+	     }
 	}
+	
+	function addAnswer2(rId, page){
+		
+		var aContent = $(".content"+rId).val();
+		var answerTr = $(".answerTr"+rId);
+		 $.ajax({
+			url:"addAnswer.do",
+			data:{rId:rId, aContent:aContent},
+			success:function(data){
+				if(data=="success"){
+					getReplyList(page); // 댓글 등록 성공시 댓글 부분이 setInerval 안기다리고 바로 갱신되게 함수 실행
+				}
+			},
+			error:function(request, status, errorData){
+				alert("error code: " + request.status + "\n"
+						+"message: " + request.responseText
+						+"error: " + errorData);
+			}
+		});
+		 
+	}
+	
+		
+	
+		
 	
 	
 	
@@ -1459,10 +1540,25 @@
 								html += "<span class='replyGood' onclick='replyGood("+data.rList[i].rId +","+ data.pi.currentPage +");'><i class='far fa-thumbs-up'></i>"+ data.rList[i].rGood +"</span></div>";
 							}
 							
-							
-							
 							html += "<div class = contentDiv>"+ data.rList[i].rContent+"</div>";
 							html += "<div class='answerDiv'><span class= 'answerBtn' onclick='addAnswer("+data.rList[i].rId+");'>답글</span><span class= 'replyDelete' onclick='replyDelete("+data.rList[i].rId +","+ data.pi.currentPage +");'>삭제</span><span class= 'replyModify'>수정</span></div></div></td></tr>";					
+										
+							html += "<tr style='display:none' class = 'answerTr"+ data.rList[i].rId +"'><td class= 'answerInsert' style='background: #f9f9f9;'><div style='padding-left:50px;'>";
+							html += "<div class= 'replyWriterDiv'><span class = 'replyWriterSpan' >admin</span></div>";
+							html +=	"<div style='width:635px;height:65px; margin-bottom:10px;'>";
+							html +=	"<textarea class = 'content"+ data.rList[i].rId +"' style='width: 500px; height: 60px;'></textarea><button type='button' class='answerBtn2' onclick='addAnswer2("+data.rList[i].rId+","+data.pi.currentPage + ");'> 입력</button></div></div></td></tr>";
+							
+							for( var k in data.rList[i].aList){
+								html +=	"<tr><td style='background: #f9f9f9;' ><div style='padding-left:50px;'>";
+								html += "<div class= 'replyWriterDiv'><span class = 'replyWriterSpan' >"+ data.rList[i].aList[k].userNickname+ "</span><span class= 'replyDate'>"+data.rList[i].aList[k].createDate+ "</span><span class= 'replyDate answerDelete' onclick='answerDelete("+data.rList[i].aList[k].aId+","+ data.pi.currentPage +");'>삭제</span></div>";
+								html += "<div style='width:635px; margin-bottom:10px;'>"+ data.rList[i].aList[k].aContent;
+								html += "</div></div></td></tr>";
+								
+								
+							} 
+							
+							
+							
 						}
 						$tableBody.append(html); 
 						

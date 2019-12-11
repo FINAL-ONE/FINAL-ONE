@@ -22,5 +22,4 @@ public interface MemberService {
 	ArrayList<Member> selectTopList();
 	//회원포인트 수정
 	int updatePointMember(Member m);
-
 }

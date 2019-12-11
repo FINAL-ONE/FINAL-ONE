@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.awesome.board.model.dao.BoardDao;
+import com.kh.awesome.board.model.vo.Answer;
 import com.kh.awesome.board.model.vo.Attachment;
 import com.kh.awesome.board.model.vo.BGood;
 import com.kh.awesome.board.model.vo.Board;
@@ -159,6 +160,22 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public int subReplyGoodCount(RGood g) {
 		return bDao.subReplyGoodCount(g); 
+	}
+
+	@Override
+	public int insertAnswer(Answer a) {
+		return bDao.insertAnswer(a);
+	}
+
+	@Override
+	public ArrayList<Answer> selectAList(int rId) {
+		return bDao.selectAList(rId);
+	}
+
+	@Override
+	public int deleteAnswer(int aId) {
+		// TODO Auto-generated method stub
+		return bDao.deleteAnswer(aId);
 	}
 
 

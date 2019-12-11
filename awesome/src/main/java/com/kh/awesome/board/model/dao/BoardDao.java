@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.awesome.board.model.vo.Answer;
 import com.kh.awesome.board.model.vo.Attachment;
 import com.kh.awesome.board.model.vo.BGood;
 import com.kh.awesome.board.model.vo.Board;
@@ -116,7 +117,7 @@ public class BoardDao {
 		int offset = (pi.getCurrentPage()-1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		
-		return (ArrayList)sqlSession.selectList("selectReplyList", bId, rowBounds);
+		return (ArrayList)sqlSession.selectList("boardMapper.selectReplyList", bId, rowBounds);
 	}
 
 	public int insertReply(Reply r) {
@@ -124,17 +125,17 @@ public class BoardDao {
 	}
 
 	public int getReplylistCount(int bId) {
-		return sqlSession.selectOne("getReplylistCount", bId);
+		return sqlSession.selectOne("boardMapper.getReplylistCount", bId);
 	}
 
 	public int deleteReply(int rId) {
 		
-		return sqlSession.delete("deleteReply",rId);
+		return sqlSession.delete("boardMapper.deleteReply",rId);
 	}
 
 	public int selectReplyGoodMemory(RGood g) {
 		// TODO Auto-generated method stub
-		return sqlSession.selectOne("selectReplyGoodMemory", g);
+		return sqlSession.selectOne("boardMapper.selectReplyGoodMemory", g);
 	}
 
 	public int addReplyGoodCount(RGood g) {
@@ -144,6 +145,18 @@ public class BoardDao {
 
 	public int subReplyGoodCount(RGood g) {
 		return sqlSession.delete("boardMapper.subReplyGoodCount", g);
+	}
+
+	public int insertAnswer(Answer a) {
+		return sqlSession.insert("boardMapper.insertAnswer",a);
+	}
+
+	public ArrayList<Answer> selectAList(int rId) {
+		return (ArrayList)sqlSession.selectList("boardMapper.selectAList", rId);
+	}
+
+	public int deleteAnswer(int aId) {
+		return sqlSession.delete("boardMapper.deleteAnswer",aId);
 	}
 	
 }
