@@ -9,7 +9,10 @@
 <title>Insert title here</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
+<!-- Star Rating -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
+
 
 .outer{
 	width : 1300px;
@@ -30,7 +33,7 @@
 	margin-left: 10px;
 	margin-right:auto;
     margin-top:20px;
-    margin-bottom: 20px;
+    margin-bottom: 50px;
 }
 
 /* banner */
@@ -41,20 +44,20 @@
 	
 .mini-banner{
 	width : 350px;
-	height : 300px;
+	height : 200px;
 	display : inline-block;
-	margin-left: 31px;
+	margin-left: 36px;
 	cursor : pointer;
 	
 }
 .goods-list{
 	width : 270px;
-	height : 300px;
+	height : 380px;
 	/* background : yellow; */
 	display : inline-block;
  	margin-left: 17px;
     margin-right:auto;
-    margin-top:20px;
+    margin-top:30px;
     cursor : pointer;
     
 }
@@ -84,7 +87,7 @@
 <body>
 
 	<jsp:include page ="../common/menubar.jsp"/>
-	<div id="container" style="overflow: auto; overflow-x : hidden;  height: auto;" ><!-- container -->
+	<div id="container" style="overflow: auto; overflow-x : hidden; height: auto;" ><!-- container -->
 	
 	
 	<div class = "outer">
@@ -99,27 +102,31 @@
 				</div>
 			</div>
 			<div class = "mini-banner">
-				<img src="resources/images/minibanner_1.png" width="350" height="250px">
+				<img src="resources/images/minibanner_1.png" width="350" height="200px">
 			</div>
 			<div class = "mini-banner">
-				<img src="resources/images/minibanner_2.png" width="350" height="250px">
+				<img src="resources/images/minibanner_2.png" width="350" height="200px">
 			</div>
 			<div class = "mini-banner">
-				<img src="resources/images/minibanner_2.png" width="350" height="250px">
+				<img src="resources/images/minibanner_3.png" width="350" height="200px">
 			</div>
 			<c:forEach var="a" items="${list}">
-				<div class = "goods-list" align ="center">
+				<div class = "goods-list">
 						<c:url var="adetail" value="adetail.do">
 							<c:param name="sellNum" value="${a.sellNum }"/>
+							<c:param name="mid" value="${sessionScope.loginUser.mid }"/>
 						</c:url>
 						<a href="${adetail}" style="text-decoration:none">
-							<div class = "goods-img">
+							<div class="goods-img" style ="margin-bottom: 10px;">
 								<img src="resources/auploadFiles/${a.filePath}" width ="200px" height ="200px">
 							</div>
-							<br>
-								<span>${a.goodsTitle}</span><br>
-							<div class= "good-info">
-								<span>${a.goodsContent}</span><br>
+							<div class="good-info" style="margin-left : 36px;">
+								<span style="font-weight: bold; color:black;">${a.goodsTitle}</span>
+								<img src="resources/images/line.png">
+								<span style="color:gray;">${a.goodsContent}</span>
+								<span style="font-weight: bold; font-size: 18px; color:black;">${a.goodsPrice}원</span><br>
+								<input type="hidden" name ="star" value = "1" style="size : 10px">
+									<span class="fa fa-star checked"></span>
 							</div>
 						</a>
 				</div>

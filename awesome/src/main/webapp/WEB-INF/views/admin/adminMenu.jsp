@@ -1,11 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-      <title>jQuery Multidraggable Plugin Demo</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
         <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
         <link rel="stylesheet" href="js/Drag-Drop/demo/styles.css" media="screen" title="no title" charset="utf-8">
         <script src="http://code.jquery.com/jquery-3.1.0.min.js"></script>
@@ -137,8 +140,8 @@ body {
 	  </div>
 	  
 	  <div class = "contentDiv" id = "contentDiv3" onclick= "location.href='memberLookup.do'">
-	  	최근 회원 가입 회원 테이블 5명 미리보기
-	  	ajax 이후에 작업 한 부분 
+	  		최근 회원 가입 회원 테이블 5명 미리보기
+	  		ajax 이후에 작업 한 부분 
 			페이지가 열리면 바로 DB를 갔다와서 top5를 불러오고 
 			<h1 align="center">최신 가입 회원</h1>
 			<table align="center" border="1" cellspacing="0" width="600" id="tb">

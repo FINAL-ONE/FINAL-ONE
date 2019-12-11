@@ -3,53 +3,39 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:aop="http://www.springframework.org/schema/aop"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
-		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<annotation-driven />
 
-	<!-- 어노테이션 방식으로 AOP설정  -->
-	<!-- @Aspect가 선언된 클래스를 모두 애스팩트로 등록해주기 위해 작성하는 부분
-	(xml방식 설정할때 namespaces추가하는 부분은 @어노테이션때도 해줘야함 -->
-	<aop:aspectj-autoproxy/> 
-	
-	
-	
-	
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<resources mapping="/resources/**" location="/resources/" />
-	
 
-	
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
-		
-	<!-- aop 이후에 aopTest 패키지도 추가됨 -->
 	
-	<context:component-scan base-package="com.kh.awesome, aopTest"/>
+	<context:component-scan base-package="com.kh.awesome" />
 	
-	<!-- jsonView를 활용할 때 필요한 클래스들에 대한 bean 설정 등록 -->
-	<beans:bean id="jsonView" class="net.sf.json.spring.web.servlet.view.JsonView" />
 	
-	<!-- ViewResolver라 하면, viewName과 view 단을 연결해주는 역할을 하는데
-		BeanNameViewResolver는 요청한 viewName과 실제 bean이름을 매핑해주는 역할을 한다.
-		-->
-	<beans:bean id="viewResolver" class="org.springframework.web.servlet.view.BeanNameViewResolver">
-		<beans:property name="order" value="0"/>	<!-- 우선순위를 value=0 으로 주면 가장 먼저 실행된다. 위에  InternalResourceViewResolver 보다-->
+	<beans:bean id="pi" class="com.kh.awesome.board.model.vo.PageInfo">
 	</beans:bean>
 	
 	
 	
+	<!-- jasonView를 활용할 때 필요한 클래스들에 대한 bean 설정 등록 -->
+	<beans:bean id="jsonView" class="net.sf.json.spring.web.servlet.view.JsonView"/>
 	
+	
+	<beans:bean id="viewResolver" class="org.springframework.web.servlet.view.BeanNameViewResolver">
+		<beans:property name="order" value="0"/>
+	</beans:bean>
 	
 	
 	

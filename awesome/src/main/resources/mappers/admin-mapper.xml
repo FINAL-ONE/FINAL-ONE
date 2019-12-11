@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="adminMapper">
+
 	<resultMap type="Admin" id="sell_goodsResultSet">
-		<id property="sellNum" column ="SELL_NUM"/>
-		<!-- <id property="gId" column ="GID"/> -->
+	    <id property="sellNum" column ="SELL_NUM"/>
 		
 		<result property ="gId" 			column ="GID"/>
+		<result property ="mId" 			column ="MID"/>
 		<result property="cateCd" 			column="CATE_CD"/>
 		<result property ="goodsTitle" 		column ="GOODS_TITLE"/>
 		<result property="goodsPrice" 		column="GOODS_PRICE"/>
@@ -17,7 +18,7 @@
 		<result property ="modifyDate" 		column="MODIFY_DATE"/>
 		<result property ="status" 			column="STATUS"/>
 	</resultMap>
-	
+
 	<resultMap id="goodsResultSet" type="Goods">
 	  	<id property="gId" 				column="GID"/>
 	  	<result property="cateCd" 		column="CATE_CD"/>
@@ -34,7 +35,8 @@
 	  	<result property="mclCd" 		column="MCL_CD"/>
 	  	<result property="sclCd" 		column="SCL_CD"/>
 	</resultMap>
-	
+
+
 	<resultMap id="CategoryResultSet" type="Category">
 	  	<id property="cateCd" 		column="CATE_CD"/>
 	  	<result property="cateNm" 	column="CATE_NM"/>
@@ -52,24 +54,16 @@
 
 	</resultMap>
 
-	<select id ="selectList" resultMap="sell_goodsResultSet">
-		SELECT *
-        FROM(SELECT * 
-        FROM SELL_GOODSSELECTVIEW 
-        WHERE STATUS='Y')
-        ORDER BY SELL_NUM DESC
-		<!-- ORDER BY N_CREATE_DATE DESC -->
-	</select>
 
 	<insert id ="insertSellgoods" parameterType="Admin">
 		INSERT INTO SELL_GOODS 
-		VALUES(SELL_NUM.NEXTVAL, #{gId}, #{cateCd}, #{goodsTitle}, #{goodsContent}, #{filePath}, #{contentFilePath}, SYSDATE, SYSDATE, DEFAULT
+		VALUES(SELL_NUM.NEXTVAL, #{gId}, #{mId}, #{cateCd}, #{goodsTitle}, #{goodsContent}, #{filePath}, #{contentFilePath}, SYSDATE, SYSDATE, DEFAULT
 		)
 	</insert>
 	
 	<select id ="selectshopgoods" resultMap="sell_goodsResultSet">
 		SELECT *
-		FROM SELL_GOODS
+		FROM SELL_GOODSSELECTVIEW
 		WHERE SELL_NUM=#{sellNum}
 		AND STATUS='Y'
 	</select>
@@ -77,44 +71,17 @@
 	
 	<update id = "updateAdminStatus" parameterType ="Admin">
 		UPDATE SELL_GOODS
-		SET STATUS='N'
+		<if test='status == "Y"'>
+    		SET STATUS='N'
+		</if>
+		<if test='status == "N"'>
+    		SET STATUS='Y'
+		</if>		
 		WHERE SELL_NUM=#{sellNum}
-
 	</update>
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	<!-- 동복 - 상품 리스트 조회 --> 	
-	<select id="goodsList" resultMap="goodsResultSet">
-		SELECT  G.GID,
-		        G.CATE_CD,
-		        G.GOODS_NAME,
-		        G.GOODS_PRICE,
-		        G.COUNT,
-		        G.GOODS_STATUS,
-		        G.SOLDOUT,
-		        G.REGISTER_DATE,
-		        G.MODIFY_DATE,
-		        C.CATE_NM,
-		        C.LCL_CD,
-		        C.MCL_CD,
-		        C.SCL_CD
-		  FROM GOODS G
-		  JOIN CATEGORY C ON(G.CATE_CD = C.CATE_CD)
-		  ORDER BY 1
-	</select>
-	
+<!--========================================= INSERT  =========================================-->	
 	
 	<!-- 동복 - 상품 등록 -->
 	<insert id ="insertgoods" parameterType="Goods">
@@ -123,11 +90,7 @@
 		)
 	</insert>
 	
-	<!-- 동복 - 등록한 상품의 카테고리 코드 조회 (상품등록시 사용 시퀀스로 안함 : 상품등록후 카테고리도 등록해야되서 )--> 	
-	<select id="categoryCDselect" resultMap="CategoryResultSet" parameterType="Goods">
-		SELECT MAX(CATE_CD)+1 AS CATE_CD
-		  FROM GOODS
-	</select>
+
 	
 	<!-- 동복 - 카테고리 등록 -->
 	<insert id ="insertCategory" parameterType="Category">
@@ -136,12 +99,7 @@
 		)
 	</insert>	
 
-	<!-- 동복 - 상품 수정 리스트 조회-->
-	<select id="goodsUpdateList" resultMap="goodsResultSet" parameterType="_int" >
-	  	SELECT *
-	  	  FROM GOODS
-	  	 WHERE GID = #{gId}
-	</select>
+<!--========================================= UPDATE  =========================================-->
   
   	<!-- 동복 - 상품 수정-->
   	<update id="Updategoods" parameterType="Goods">
@@ -165,14 +123,104 @@
   		   	   MOD_DTM = SYSDATE
   		 WHERE CATE_CD = #{cateCd}
   	</update>  	
+
+  	<!-- 동복 - 상품판매 등록시 가격 과 수량을 변경했다면 상품테이블도 변경 (1:1 매핑임)-->
+  	<update id="sellUpdategoods" parameterType="Goods">
+  		UPDATE GOODS 
+  		   SET GOODS_PRICE = #{goodsPrice},
+  		   	   COUNT = #{count},
+  		   	   MODIFY_DATE = SYSDATE
+  		 WHERE GID = #{gId}  
+  	</update>
+
+  	<!-- 동복 : 판매상품 품절 처리시 상품과 판매가 1:1 이라 상품 상태도 N으로 변경-->
+  	<update id="updateGoodsStatus" parameterType="Admin">
+  		UPDATE GOODS
+  		<if test='status == "Y"'>
+    		SET GOODS_STATUS = 'N',
+		</if>
+		<if test='status == "N"'>
+    		SET GOODS_STATUS = 'Y',
+		</if>		
+  		   	   MODIFY_DATE = SYSDATE
+  		 WHERE GID = #{gId}
+  	</update>
+
+  	<!-- 동복 - 판매 상품 조회 내역 수정-->
+  	<update id="UpdateSellGoods" parameterType="Admin">
+  		UPDATE SELL_GOODS 
+  		   SET	GOODS_TITLE = #{goodsTitle},
+				GOODS_CONTENT = #{goodsContent},
+  		   		GOODS_FILE_PATH = #{filePath},
+  		   		GOODS_CONTENT_FILE_PATH = #{contentFilePath},
+  		   		MODIFY_DATE = SYSDATE
+  		WHERE SELL_NUM = #{sellNum}
+  	</update>
   	
+  	<!-- 동복 - 상품관리에서 수정시 판매중인 상품리스트에 대한 상태도 변경 -->
+  	<update id = "updateSellGoodsStatus" parameterType ="Admin">
+		UPDATE SELL_GOODS
+		<if test='status == "Y"'>
+    		SET STATUS='Y'
+		</if>
+		<if test='status == "N"'>
+    		SET STATUS='N'
+		</if>		
+		WHERE GID = #{gId}
+	</update>
   	
-  	
-  	
-  	
-  	
-  	
-  	
+<!--========================================= SELECT  =========================================-->
+
+	<!-- 동복 - 수정(품절처리된 상품도 List에 보여줌(추후에 재판매 가능하도록)) -->
+	<select id ="selectList" resultMap="sell_goodsResultSet">
+		
+		<!-- SELECT *
+        FROM(SELECT * 
+        FROM SELL_GOODSSELECTVIEW 
+        WHERE STATUS='Y')
+        ORDER BY SELL_NUM DESC -->
+        
+		SELECT *
+        FROM(SELECT * 
+        FROM SELL_GOODSSELECTVIEW)
+        ORDER BY SELL_NUM DESC        
+        
+		<!-- ORDER BY N_CREATE_DATE DESC -->
+	</select>
+	
+	<!-- 동복 - 상품 리스트 조회 --> 	
+	<select id="goodsList" resultMap="goodsResultSet">
+		SELECT  G.GID,
+		        G.CATE_CD,
+		        G.GOODS_NAME,
+		        G.GOODS_PRICE,
+		        G.COUNT,
+		        G.GOODS_STATUS,
+		        G.SOLDOUT,
+		        G.REGISTER_DATE,
+		        G.MODIFY_DATE,
+		        C.CATE_NM,
+		        C.LCL_CD,
+		        C.MCL_CD,
+		        C.SCL_CD
+		  FROM GOODS G
+		  JOIN CATEGORY C ON(G.CATE_CD = C.CATE_CD)
+		  ORDER BY 1
+	</select>
+	
+	<!-- 동복 - 등록한 상품의 카테고리 코드 조회 (상품등록시 사용 시퀀스로 안함 : 상품등록후 카테고리도 등록해야되서 )--> 	
+	<select id="categoryCDselect" resultMap="CategoryResultSet" parameterType="Goods">
+		SELECT MAX(CATE_CD)+1 AS CATE_CD
+		  FROM GOODS
+	</select>
+	
+	<!-- 동복 - 상품 수정 리스트 조회-->
+	<select id="goodsUpdateList" resultMap="goodsResultSet" parameterType="_int" >
+	  	SELECT *
+	  	  FROM GOODS
+	  	 WHERE GID = #{gId}
+	</select>
+	
 	<!-- 동복 - 상품판매 시 상품리스트 조회 -->
 	<select id="selectGoodsValue" resultMap="goodsResultSet">
 	  	SELECT * 
@@ -221,12 +269,21 @@
          WHERE GOODS_NAME = #{goodsName}
 	</select>
 	
+	<!-- 동복 - 상품 수정시 현재 해당 상품이 판매 중인지 조회 -->
+	<select id="selectsellGoodsList" parameterType="string" resultType="_int">
+		 SELECT COUNT(*)
+		  FROM SELL_GOODS
+         WHERE GID = #{gId}
+	</select>
+	
+	
 	<!-- 동복 - 상품 수정 카테고리 조회-->
 	<select id="goodsUpdateClist" resultMap="CategoryResultSet" parameterType="_int" >
 		SELECT *
 		  FROM CATEGORY
 		 WHERE CATE_LVL = 1
 	</select>	
+	
 	<!-- 동복 - 상품 수정 (대)카테고리 조회-->
 	<select id="goodsUpdateLlist" resultMap="CategoryResultSet" parameterType="_int" >
 		SELECT *
@@ -239,6 +296,7 @@
 						  WHERE G.GID = #{gId}
 		 				)
 	</select>
+	
 	<!-- 동복 - 상품 수정 (중)카테고리 조회-->
 	<select id="goodsUpdateMlist" resultMap="CategoryResultSet" parameterType="_int" >
 		SELECT *
@@ -292,8 +350,177 @@
 		         )S
 	</select>
 	
+	<!-- 동복 - 판매 상품 조회 수정 페이지 -->
+	<select id="sell_goodsDetailView" resultMap="sell_goodsResultSet">
+		SELECT S.SELL_NUM
+		      ,S.GID
+		      ,S.CATE_CD
+		      ,S.GOODS_TITLE
+		      ,S.GOODS_CONTENT
+		      ,S.GOODS_FILE_PATH
+		      ,S.GOODS_CONTENT_FILE_PATH
+		      ,S.SELL_DATE
+		      ,S.MODIFY_DATE
+		      ,S.STATUS
+		      ,G.GOODS_NAME
+		      ,G.GOODS_PRICE
+		      ,G.COUNT
+		  FROM SELL_GOODS S
+		  JOIN GOODS G ON(S.GID = G.GID)
+         WHERE SELL_NUM = #{sellNum}
+	</select>
 	
+	<!-- 동복 - 상품관리 화면에서 조건 검색 -->
+	<select id="checkTextSelectGoods" resultMap="goodsResultSet">
 	
+<!-- 		SELECT  G.GID,
+	        G.CATE_CD,
+	        G.GOODS_NAME,
+	        G.GOODS_PRICE,
+	        G.COUNT,
+	        G.GOODS_STATUS,
+	        G.SOLDOUT,
+	        G.REGISTER_DATE,
+	        G.MODIFY_DATE,
+	        C.CATE_NM,
+	        C.LCL_CD,
+	        C.MCL_CD,
+	        C.SCL_CD,
+	        C.CATE_LVL
+	  FROM GOODS G
+	  JOIN CATEGORY C ON(G.CATE_CD = C.CATE_CD)
+	<if test='whereNum == "4"'> 상품명 들어오면 이거부터 4
+	 WHERE GOODS_NAME LIKE '%'||#{goodsName}||'%'
+	</if> -->
+ 
+ 
+ 
+ 
+  		<!-- SELECT  G.GID,
+	        G.CATE_CD,
+	        G.GOODS_NAME,
+	        G.GOODS_PRICE,
+	        G.COUNT,
+	        G.GOODS_STATUS,
+	        G.SOLDOUT,
+	        G.REGISTER_DATE,
+	        G.MODIFY_DATE,
+	        C.CATE_NM,
+	        C.LCL_CD,
+	        C.MCL_CD,
+	        C.SCL_CD,
+	        C.CATE_LVL
+	  FROM GOODS G
+	  JOIN CATEGORY C ON(G.CATE_CD = C.CATE_CD)
+	<if test='whereNum == "2"'> 상태 들어오면 2
+	 WHERE GOODS_STATUS = #{goodsStatus}
+		<if test='goodsName != "null"'>
+		   AND G.GOODS_NAME LIKE '%'||#{goodsName}||'%'
+		</if>
+	</if> -->
+ 
+ 
+ 
+ 
+ 		SELECT  G.GID,
+	        G.CATE_CD,
+	        G.GOODS_NAME,
+	        G.GOODS_PRICE,
+	        G.COUNT,
+	        G.GOODS_STATUS,
+	        G.SOLDOUT,
+	        G.REGISTER_DATE,
+	        G.MODIFY_DATE,
+	        C.CATE_NM,
+	        C.LCL_CD,
+	        C.MCL_CD,
+	        C.SCL_CD,
+	        C.CATE_LVL
+	  FROM GOODS G
+	  JOIN CATEGORY C ON(G.CATE_CD = C.CATE_CD)
+	<if test='whereNum == "1"'> <!-- 카테고리 들어오면 이거 1 -->
+	 WHERE C.LCL_CD = #{lclCd}
+		<if test="mclCd != ''">
+		   AND C.MCL_CD = #{mclCd}
+		</if>   
+		<if test="sclCd != ''">
+		   AND C.SCL_CD = #{sclCd}
+		</if>
+		<if test="goodsName != ''">
+		   AND G.GOODS_NAME LIKE '%'||#{goodsName}||'%'
+		</if>
+		<if test="goodsStatus != ''">
+		   AND G.GOODS_STATUS = #{goodsStatus}
+		</if>
+		<if test="soldout != ''">
+		   AND G.SOLDOUT = #{soldout}
+		</if>
+	</if>
+
+	<if test='whereNum == "2"'> <!-- 상태 들어오면 2 -->
+	 WHERE GOODS_STATUS = #{goodsStatus}
+  	  <choose>
+	    <when test="soldout != ''">
+	      AND SOLDOUT = #{soldout}
+	    </when>
+	    <when test="lclCd != ''">
+	      AND C.LCL_CD = #{lclCd}
+	    </when>
+	    <when test="mclCd != ''">
+	      AND C.MCL_CD = #{mclCd}
+	    </when>
+	    <when test="sclCd != ''">
+	      AND C.SCL_CD = #{sclCd}
+	    </when>
+	    <when test="goodsName != ''">
+	      AND G.GOODS_NAME LIKE '%'||#{goodsName}||'%'
+	    </when>
+	    <otherwise>
+	      AND ORDER BY 1
+	    </otherwise>
+	  </choose>
+	</if>
+
+	<if test='whereNum == "3"'> <!-- 매진 구분 들어오면 3 -->
+	 WHERE SOLDOUT = #{soldout}
+		<if test="goodsStatus != ''">
+		   AND GOODS_STATUS = #{goodsStatus}
+		</if>   
+		<if test="lclCd != ''">
+		   AND C.LCL_CD = #{lclCd}
+		</if>  
+		<if test="mclCd != ''">
+		   AND C.MCL_CD = #{mclCd}
+		</if>  
+		<if test="sclCd != ''">
+		   AND C.SCL_CD = #{sclCd}
+		</if>  
+		<if test="goodsName != ''">
+		   AND G.GOODS_NAME LIKE '%'||#{goodsName}||'%'
+		</if>  
+	</if>
+	
+	<if test='whereNum == "4"'> <!-- 상품명 들어오면 이거부터 4 -->
+	 WHERE GOODS_NAME LIKE '%'||#{goodsName}||'%'
+		<if test="goodsStatus != ''">
+		   AND GOODS_STATUS = #{goodsStatus}
+		</if> 
+		<if test="soldout != ''">
+		   AND SOLDOUT = #{soldout}
+		</if> 
+		<if test="lclCd != ''">
+		   AND C.LCL_CD = #{lclCd}
+		</if> 
+		<if test="mclCd != ''">
+		   AND C.MCL_CD = #{mclCd}
+		</if> 
+		<if test="sclCd != ''">
+		   AND C.SCL_CD = #{sclCd} 
+		</if> 
+	</if>
+ 
+ 
+	</select>
 	
 	
 	

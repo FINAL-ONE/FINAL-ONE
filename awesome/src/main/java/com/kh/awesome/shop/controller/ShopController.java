@@ -17,6 +17,7 @@ import com.kh.awesome.admin.model.exception.AdminException;
 import com.kh.awesome.admin.model.vo.Admin;
 import com.kh.awesome.shop.model.exception.ShopException;
 import com.kh.awesome.shop.model.serivce.ShopService;
+import com.kh.awesome.shop.model.vo.Cart;
 import com.kh.awesome.shop.model.vo.SellReply;
 
 
@@ -28,13 +29,13 @@ public class ShopController {
 	@Autowired
 	private ShopService ShopService;
 	
-	/*
+/*
 	@RequestMapping("afterWrite.do")
 	public String goodsWriterView() {
 		
 		return "shop/sell_afterWriteView";	
 	}
-	*/
+*/
 	
 	/*
 	@RequestMapping("afterWrite.do") 
@@ -47,21 +48,15 @@ public class ShopController {
 			 mv.addObject("list", list)
 			 .setViewName("shop/sell_afterWriteView");
 		 } else { 
-			 throw new AdminException("상품 정보 불러오기실패!"); }
-		 */
-		 
-		 
-		 
-		/*
-		 * mv.addObject("list", ShopService.selectReply(sellNum))
-		 * .setViewName("shop/sell_afterWriteView");
+			 throw new AdminException("상품 정보 불러오기실패!"); 
+		}
 		
-		 
-		 
+		 mv.addObject("list", ShopService.selectReply(sellNum))
+		 .setViewName("shop/sell_afterWriteView");
 	 return mv;
 	 
 	 }
-	 */
+	*/
 	
 	
 	@RequestMapping("sellafterInsert.do")
@@ -69,7 +64,6 @@ public class ShopController {
 									@RequestParam(name="afteruploadFiles", required=false) MultipartFile file1,
 									@RequestParam(value="star", required=false) Integer star)
 									{
-									
 		if(!file1.getOriginalFilename().contentEquals("")) {
 			String savePath1 = saveFile(file1, request);
 			
@@ -174,6 +168,31 @@ public class ShopController {
 	}
 	
 
+	// 카트에 상품 추가
+	@RequestMapping("goCart.do")
+	public String goodsgoCartView(HttpServletRequest request, Cart c, Admin a) {
+		
+		/* ArrayList<Cart> list = ShopService.selectList(); */
+		System.out.println("Cart : " + c);
+		System.out.println("Admin : " + a);
+		
+		int result = ShopService.CartInsert(c);
+		System.out.println(result);
+		
+		
+		if(result > 0 ) {
+			return "redirect:moveCart.do";
+		} else {
+			throw new ShopException("장바구니 이동 실패!!");
+		}	
+	}
 	
+	// 카트 뷰로 이동
+	@RequestMapping("moveCart.do")
+	public String moveCart() {
+		
+		return "shop/shopCartView";	
+	}							
+		
 	
 }

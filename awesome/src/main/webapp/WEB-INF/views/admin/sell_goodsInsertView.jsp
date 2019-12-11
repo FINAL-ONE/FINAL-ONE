@@ -12,7 +12,7 @@
  select[multiple]{
      height: 100%;
    }
-	select, option {
+	select, option input{
 	    width: 100%;
 	    /* overflow-y: auto; */
 	}
@@ -28,6 +28,14 @@
 
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
+
+<!-- include summernote css/js-->
+<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
+   
 </head>
 <body>
 
@@ -44,9 +52,10 @@
 		<table class="type02" align="center">	
 			<tr>
 				<td><input id="cateCd" type="hidden" width="100%" name ="cateCd" readonly /></td>
+				<td><input id="gId" type="hidden" width="100%" name ="gId" readonly /></td>
 			<tr>
 				<th>상품 제목  <span style = "color:red; font-size : 1.5em;">*</span> </th>
-				<td><input type="text" size ="89" name ="goodsTitle" style="height:20px;"></td>
+				<td><input id="goodsTitle" type="text" name ="goodsTitle" style="height:20px;"></td>
 			</tr>
 			<tr>
 	            <th> 상품 선택  <span style = "color:red; font-size : 1.5em;">*</span> </th>
@@ -71,33 +80,34 @@
 			</tr>
 			<tr>
 				<th>상품 가격  <span style = "color:red; font-size : 1.5em;">*</span> </th>
-				<td><input id="goodsPrice" type="number" size ="108" name ="goodsPrice" style="height:20px;"></td>
+				<td><input id="goodsPrice" type="text" name ="goodsPrice" style="height:20px;" numberOnly></td>
 			</tr>
 			<tr>
 				<th>상품 수량  <span style = "color:red; font-size : 1.5em;">*</span> </th>
-				<td><input id="count" type="number" size ="108" name ="count" style="height:20px;"></td>
+				<td><input id="count" type="text" name ="count" style="height:20px;" numberOnly></td>
 			</tr>
 			<tr>
-				<th> 대표이미지  <span style = "color:red; font-size : 1.5em;">*</span> </th>
+				<th>상품 내용 <span style = "color:red; font-size : 1.5em;">*</span></th>
+					<td><textarea id ="summernote" name="goodsContent" rows="10" cols ="81" size ="resize:none" required></textarea>
+				<!-- <td><textarea id ="goodsContent" name="goodsContent" rows="10" cols ="81" size ="resize:none" required></textarea> -->
+				</td>
+			</tr>
+			<tr>
+				<th>대표이미지  <span style = "color:red; font-size : 1.5em;">*</span> </th>
 				<td>
 					<div id = "titleImgArea" >
-						<img id ="titleImg" width ="600" height ="600">
+						<img id ="titleImg" style="width:100%; min-height:100px; height: auto;" >
 					</div>
 				</td>
 			</tr>
 			<tr>
-				<th> 내용사진 </th>
-				<td>
-					<div id="contentImgArea1">
-						<img id ="contentImg1" width ="600" height ="2500">
+				<th>내용사진 </th>
+				<td> 
+					<div id="contentImgArea1"> 
+						<img id ="contentImg1" style="width:100%; min-height:100px; height: auto;">
 					</div>						
 				</td>
 			</tr>
-			<tr>
-				<th>상품 내용 <span style = "color:red; font-size : 1.5em;">*</span></th>
-				<td><textarea id ="goodsContent" name="goodsContent" rows="10" cols ="81" size ="resize:none" required></textarea>
-				</td>
-			</tr>		
 				<!-- 파일 업로드 하는 부분(file 타입형 input태그들) -->
 				<div id ="fileArea">							   <!-- input태그가 눌리면 this(객체)와1을 매개변수로 LoadImg함수발동 -->	
 					<input type="file" id ="thumbnailImg1" multiple="multiple" name="titlethumbnailImg" onchange="LoadImg(this,1)">
@@ -148,7 +158,21 @@
 					} 
 				</script>
 				
+				<script> 
+				$(document).ready(function() {
+				    $('#summernote').summernote({
+				            height: 150,                 // set editor height
+				            minHeight: null,             // set minimum height of editor
+				            maxHeight: null,             // set maximum height of editor
+				            focus: true                  // set focus to editable area after initializing summernote
+				    });
+				});
 				
+				$(document).ready(function() {
+				     $('#summernote').summernote();
+				});
+				</script>
+
 				<!-- InsertThumbnailServlet 만들러 ㄱㄱ!!!! -->
 	</form>	
 	
@@ -191,6 +215,8 @@
 							$("#goodsPrice").val($gPrice);
 							$("#count").val($gCount);
 							$("#cateCd").val($gcateCd);
+							$("#gId").val($gId);
+							 
 						}
 					},
 					error:function(request, status, errorData){
@@ -260,12 +286,27 @@
 //str 등록버튼 클릭시----------------------------------------------------------------------------------------------------
 
 	function validate(){
-		if($("#goodsPrice").val()==0){
+		/* else if($("#goodsName").val()==0){
+			alert("사용 가능한 상품명을 입력해 주세요");
+			$("#goodsName").focus();
+		} */
+		
+		if($("#goodsTitle").val()==0){
+			alert("제목을 입력해 주세요");
+		}else if($("#goodsPrice").val()==0){
 			alert("상품가격을 입력해 주세요");
 			$("#goodsPrice").focus();			
 		}else if($("#count").val()==0){
 			alert("상품수량을 입력해 주세요");
 			$("#count").focus();
+		}else if($("#summernote").val()==0){
+			alert("상품내용을 입력해 주세요");
+		    $('#summernote').summernote({
+	            focus: true
+	    	});
+		}else if($("#thumbnailImg1").val()==0){
+			alert("대표 이미지를 넣어주세요");
+			$("#thumbnailImg1").click();
 		}else if($("#goodsName").val()==0){
 			alert("사용 가능한 상품명을 입력해 주세요");
 			$("#goodsName").focus();
@@ -276,9 +317,10 @@
 			var targetForm = $("#sellgoodsInsertForm :input");
 			// ,콤마 제거
 			$.each(targetForm, function(index, elem){
-			      $(this).val($(this).val().replace(/,/g, ''));
+			      $("#goodsPrice").val($("#goodsPrice").val().replace(/,/g, ''));
+			      $("#count").val($("#count").val().replace(/,/g, ''));
 			});
-			
+ 			
 			$("#sellgoodsInsertForm").submit();
 		} 
 	}	

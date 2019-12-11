@@ -9,7 +9,13 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link href="js/Modal.js-master/build/css/modal.css" rel="stylesheet">
 <style>
+	.outer{
+		width : 100%;
+		height : 100%;
+	}
+
  select[multiple]{
      height: 100%;
    }
@@ -27,6 +33,12 @@
 	span.ok{color:green;}
 	span.error{color:red;}
 
+/* 모달 css */
+  *, *:before, *:after {
+    box-sizing: border-box; }
+    body { font-family: 'Roboto'; }
+    .modal_container {text-align: center; }
+
 </style>
 </head>
 <body>
@@ -38,136 +50,163 @@
 <h1 align="center"> 상품 수정 페이지 </h1>
 	
 	<br><br>
-	<form action="goodsUpdate.do" method="post" enctype="Multipart/form-data" id="goodsUpdateForm">
-		<table class="type02" align="center"><!--  style="border-spacing:60px" -->	
-		
-		<!-- <input type="hidden" name="lidDuplicateCheck" id="lidDuplicateCheck" value="0">
-		<input type="hidden" name="midDuplicateCheck" id="midDuplicateCheck" value="0">
-		<input type="hidden" name="sidDuplicateCheck" id="sidDuplicateCheck" value="0"> -->
-		
-				<!-- <th>카테고리 코드  <span style = "color:red; font-size : 1.5em;">*</span> </th> -->
-				<%-- <td><input id="selectlclCd" type="hidden" width="100%" name ="lclCd" value="${lclCd}"/></td> --%>
-				<!-- <th>대 코드  <span style = "color:red; font-size : 1.5em;">*</span> </th> -->
-				<%-- <td><input id="selectmclCd" type="hidden"  width="100%" name ="mclCd" value="${mclCd}"/></td> --%>
-				<!-- <th>중 코드  <span style = "color:red; font-size : 1.5em;">*</span> </th> --> 
-				<%-- <td><input id="selectsclCd" type="hidden"  width="100%" name ="sclCd" value="${sclCd}"/></td> --%>
-				<!-- <th>소 코드  <span style = "color:red; font-size : 1.5em;">*</span> </th> -->
-				<td><input id="selectcateCd" type="hidden"  width="100%" name ="cateCd" value="${cateCd}" /></td>
-			<tr>
-				<td><input id="gId" width="100%" type="hidden" name ="gId" value="${goods.gId}"/></td><!-- type="hidden"  -->
-			</tr>
+	<div class = "outer">
+		<form action="goodsUpdate.do" method="post" enctype="Multipart/form-data" id="goodsUpdateForm">
+			<table class="type02" align="center"><!--  style="border-spacing:60px" -->	
 			
-			<tr>
-	            <th>카테고리<span style = "color:red; font-size : 1.5em;">*</span> </th>
-	            <td>	    
-					<select id="lclCd" name="lclCd">
-						<c:forEach var="c" items="${gClist}">
-							<c:if test="${c.cateCd eq lclCd}">
-								<option value="${c.cateCd}" selected="${lclCd}">${c.cateNm}</option>
-							</c:if>
-							<c:if test="${c.cateCd != lclCd}">
-								<option value="${c.cateCd}">${c.cateNm}</option>
-							</c:if>
-							
-						</c:forEach>
-
-					</select>
-				</td>
-			</tr>
+			<!-- <input type="hidden" name="lidDuplicateCheck" id="lidDuplicateCheck" value="0">
+			<input type="hidden" name="midDuplicateCheck" id="midDuplicateCheck" value="0">
+			<input type="hidden" name="sidDuplicateCheck" id="sidDuplicateCheck" value="0"> -->
 			
-			<tr>
-	            <th>대 선택  <span style = "color:red; font-size : 1.5em;">*</span> </th>
-	            <td>
-					<select id="mclCd" name="mclCd">
-						<c:forEach var="l" items="${gLlist}">
-							<c:if test="${l.cateCd eq mclCd}">
-								<option value="${l.cateCd}" selected="${mclCd}">${l.cateNm}</option>
-							</c:if>
-							<c:if test="${l.cateCd != mclCd}">
-								<option value="${l.cateCd}">${l.cateNm}</option>
-							</c:if>
-						</c:forEach> 
-					</select>
-				</td>
-			</tr>
-			<tr>
-	            <th>중 선택  <span style = "color:red; font-size : 1.5em;">*</span> </th>
-	            <td>
-					<select id="sclCd" name="sclCd">
-						<c:forEach var="m" items="${gMlist}">
-							<c:if test="${m.cateCd eq sclCd}">
-								<option value="${m.cateCd}" selected="${sclCd}">${m.cateNm}</option>
-							</c:if>
-							<c:if test="${m.cateCd != sclCd}">
-								<option value="${m.cateCd}">${m.cateNm}</option>
-							</c:if>							
-						</c:forEach>
-					</select>
-				</td>
-			</tr>
-			
-			<tr>
-				<th>상품이름  <span style = "color:red; font-size : 1.5em;">*</span> </th>
-				<td><input id="goodsName" type="text" width="100%" name ="goodsName" value="${goods.goodsName}"/></td>
-			</tr>
-			<tr>
-				<th>상품가격  <span style = "color:red; font-size : 1.5em;">*</span> </th>
-				<td><input id="goodsPrice"  type="text" width="100%" name ="goodsPrice" numberOnly value="${goods.goodsPrice}"/></td>
-			</tr>
-			<tr>
-				<th>상품수량  <span style = "color:red; font-size : 1.5em;">*</span> </th>
-				<td><input id="count"  type="text" width="100%" name ="count" numberOnly value="${goods.count}"/></td> 
-			</tr>
-
-			<tr>
-				<th>상품상태</th>
-				<td>
-					<select name ="goodsStatus">
-						<c:if test="${goods.goodsStatus eq 'Y'}">
-		                    <option value="Y" selected="selected">사용
-		                    <option value="N">미사용
-						</c:if>
-						<c:if test="${goods.goodsStatus eq 'N'}">
-		                    <option value="Y">사용
-		                    <option value="N" selected="selected">미사용
-						</c:if>
-	                </select>
-				</td>
-			</tr>
-			<tr>
-				<th>매진구분</th> 
-				<td>
-					<select name ="soldout">
-						<c:if test="${goods.soldout eq 'Y'}">
-							<option value="Y" selected="selected">매진
-							<option value="N">판매
-						</c:if>
-						<c:if test="${goods.soldout eq 'N'}">
-							<option value="Y">매진
-							<option value="N" selected="selected">판매
-						</c:if>
-	                </select>
-				</td>
-			</tr>
-			<tr>
-				<td colspan="2" align="center">
-					<!-- <input type="submit" value="등록하기"> &nbsp; -->
-					<input type="button" onclick="validate()" value="수정하기"> &nbsp;
-					<input type="reset" value="수정취소">
-				</td> 
-			</tr>
-		</table>
+					<!-- <th>카테고리 코드  <span style = "color:red; font-size : 1.5em;">*</span> </th> -->
+					<%-- <td><input id="selectlclCd" type="hidden" width="100%" name ="lclCd" value="${lclCd}"/></td> --%>
+					<!-- <th>대 코드  <span style = "color:red; font-size : 1.5em;">*</span> </th> -->
+					<%-- <td><input id="selectmclCd" type="hidden"  width="100%" name ="mclCd" value="${mclCd}"/></td> --%>
+					<!-- <th>중 코드  <span style = "color:red; font-size : 1.5em;">*</span> </th> --> 
+					<%-- <td><input id="selectsclCd" type="hidden"  width="100%" name ="sclCd" value="${sclCd}"/></td> --%>
+					<!-- <th>소 코드  <span style = "color:red; font-size : 1.5em;">*</span> </th> -->
+					<td><input id="selectcateCd" type="hidden"  width="100%" name ="cateCd" value="${cateCd}" /></td>
+				<tr>
+					<td><input id="gId" width="100%" type="hidden" name ="gId" value="${goods.gId}"/></td><!-- type="hidden"  -->
+				</tr>
 				
+				<tr>
+		            <th>카테고리<span style = "color:red; font-size : 1.5em;">*</span> </th>
+		            <td>	    
+						<select id="lclCd" name="lclCd">
+							<c:forEach var="c" items="${gClist}">
+								<c:if test="${c.cateCd eq lclCd}">
+									<option value="${c.cateCd}" selected="${lclCd}">${c.cateNm}</option>
+								</c:if>
+								<c:if test="${c.cateCd != lclCd}">
+									<option value="${c.cateCd}">${c.cateNm}</option>
+								</c:if>
+								
+							</c:forEach>
+	
+						</select>
+					</td>
+				</tr>
 				
-				<!-- InsertThumbnailServlet 만들러 ㄱㄱ!!!! -->
-	</form>	
+				<tr>
+		            <th>대 선택  <span style = "color:red; font-size : 1.5em;">*</span> </th>
+		            <td>
+						<select id="mclCd" name="mclCd">
+							<c:forEach var="l" items="${gLlist}">
+								<c:if test="${l.cateCd eq mclCd}">
+									<option value="${l.cateCd}" selected="${mclCd}">${l.cateNm}</option>
+								</c:if>
+								<c:if test="${l.cateCd != mclCd}">
+									<option value="${l.cateCd}">${l.cateNm}</option>
+								</c:if>
+							</c:forEach> 
+						</select>
+					</td>
+				</tr>
+				<tr>
+		            <th>중 선택  <span style = "color:red; font-size : 1.5em;">*</span> </th>
+		            <td>
+						<select id="sclCd" name="sclCd">
+							<c:forEach var="m" items="${gMlist}">
+								<c:if test="${m.cateCd eq sclCd}">
+									<option value="${m.cateCd}" selected="${sclCd}">${m.cateNm}</option>
+								</c:if>
+								<c:if test="${m.cateCd != sclCd}">
+									<option value="${m.cateCd}">${m.cateNm}</option>
+								</c:if>							
+							</c:forEach>
+						</select>
+					</td>
+				</tr>
+				
+				<tr>
+					<th>상품이름  <span style = "color:red; font-size : 1.5em;">*</span> </th>
+					<td><input id="goodsName" type="text" width="100%" name ="goodsName" value="${goods.goodsName}"/></td>
+				</tr>
+				<tr>
+					<th>상품가격  <span style = "color:red; font-size : 1.5em;">*</span> </th>
+					<td><input id="goodsPrice"  type="text" width="100%" name ="goodsPrice" numberOnly value="${goods.goodsPrice}"/></td>
+				</tr>
+				<tr>
+					<th>상품수량  <span style = "color:red; font-size : 1.5em;">*</span> </th>
+					<td><input id="count"  type="text" width="100%" name ="count" numberOnly value="${goods.count}"/></td> 
+				</tr>
+	
+				<tr>
+					<th>상품상태</th>
+					<td>
+						<select name ="goodsStatus">
+							<c:if test="${goods.goodsStatus eq 'Y'}">
+			                    <option value="Y" selected="selected">사용
+			                    <option value="N">미사용
+							</c:if>
+							<c:if test="${goods.goodsStatus eq 'N'}">
+			                    <option value="Y">사용
+			                    <option value="N" selected="selected">미사용
+							</c:if>
+		                </select>
+					</td>
+				</tr>
+				<tr>
+					<th>매진구분</th> 
+					<td>
+						<select name ="soldout">
+							<c:if test="${goods.soldout eq 'Y'}">
+								<option value="Y" selected="selected">매진
+								<option value="N">판매
+							</c:if>
+							<c:if test="${goods.soldout eq 'N'}">
+								<option value="Y">매진
+								<option value="N" selected="selected">판매
+							</c:if>
+		                </select>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2" align="center">
+						<!-- <input type="submit" value="등록하기"> &nbsp; -->
+						<input type="button" onclick="validate()" value="수정하기"> &nbsp;
+						<input type="reset" value="수정취소">
+					</td> 
+				</tr>
+			</table>
+					
+					
+					<!-- InsertThumbnailServlet 만들러 ㄱㄱ!!!! -->
+		</form>	
+		
+			<div class="modal_container">
+			  <div class="css-script-ads">
+			    	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+				<!-- CSSScript Demo Page -->
+				<ins class="adsbygoogle"
+				     style="display:inline-block;width:728px;height:90px"
+				     data-ad-client="ca-pub-2783044520727903"
+				     data-ad-slot="3025259193"></ins>
+					<script>
+						(adsbygoogle = window.adsbygoogle || []).push({});
+					</script> 
+				</div>
+			</div>
+			<script src="js/Modal.js-master/modal.js"></script>
+			<script>
+			  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+			
+			  ga('create', 'UA-46156385-1', 'cssscript.com');
+			  ga('send', 'pageview');
+			
+			</script>
+		
+	</div>
 	
 	<p align="center">
 		<a href="adminMain.do">관리자페이지로 이동</a>
 		<a href="goodsList.do">목록 보기로 이동</a>
 	</p>
-	
-	
+
 <script>
 //-----------------------------------
 		$("#lclCd").on("change",function(){
@@ -500,9 +539,35 @@
 			      $(this).val($(this).val().replace(/,/g, ''));
 			});
 			
-			$("#goodsUpdateForm").submit();
+			var gId = $("#gId").val();
+			// 현재 해당 상품이 판매 중인지 조회
+			$.ajax({
+				url:"selectsellGoodsList.do",
+				data:{gId:gId},
+				success:function(data){
+					if(data.isUsable != true){	// 판매중인 상품이 있다면 팝업 메세지 띄워서 진행여부 확인
+						soldout();
+					}else{
+						// 데이터 없으면
+						 $("#goodsUpdateForm").submit();
+					}
+				},
+				error:function(request, status, errorData){
+					alert("error code : " + request.status + "\n"
+										  + "message : " + request.responseText
+										  + "error : " + errorData);
+				}
+			});
+
+			
+			//$("#goodsUpdateForm").submit();
 		} 
 	}
+	
+	
+	
+	
+	
 	/*
 	function validate(){
 		var targetForm = $("#goodsUpdateForm :input");
@@ -517,6 +582,24 @@
 //end 등록버튼 클릭시----------------------------------------------------------------------------------------------------
 
 </script>
+	
+		<script>
+			function soldout(){
+				Modal.confirm({
+					title: '수정 진행 여부',
+					message: 'OK 클릭시 현재 판매중인 상품의 상태도 변경됩니다.',
+					onConfirm: function() {
+						$("#goodsUpdateForm").submit();
+					    //alert('완료되었습니다');
+			  		},
+					  	onCancel: function() {
+					    //alert('취소되었습니다.');
+			  		},
+				});
+				return;
+			}
+		</script>
+	
 	
 </body>
 </html>

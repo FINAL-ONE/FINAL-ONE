@@ -8,6 +8,7 @@
 		
 		<result property ="sellNum" column ="SELL_NUM"/>
 		<result property ="gId" column ="GID"/>
+	    <result property="cateCd" column="CATE_CD"/>
 		<result property ="mId" column="MID"/>
 		<result property ="rContent" column="RCONTENT"/>
 		<result property ="sellStart" column="SELL_START"/>
@@ -18,27 +19,24 @@
 		<result property ="status" column="STATUS"/>
 	</resultMap>
 
-<!-- 	<resultMap type="SellReply" id="sell_After_goodsResultSet">
-		<id property="rId" column ="RID"/>
-		<id property="gId" column ="GID"/>
+	
+	
+	<resultMap type="Cart" id ="CartResultSet">
+		<result property="mId" column="MID"/>
 		
-	<result property ="rId" column ="RID"/>
 		<result property ="gId" column ="GID"/>
-		<result property ="goodsTitle" column="GOODS_TITLE"/>
-		<result property ="goodContent" column="GOODS_CONTENT"/>
-		<result property ="sgFilePath" column="SG_FILE_PATH"/>
-		<result property ="sgContentFilePath" column="SG_CONTENT_FILE_PATH"/>
-		<result property ="rContent" column="RCONTENT"/>
-		<result property ="sellStart" column="SELL_START"/>
-		<result property ="srFilePath" column="SR_FILE_PATH"/>
-		<result property ="sellDate" column="SELL_DATE"/>
-		<result property ="ModifyDate" column="MODIFY_DATE"/>
-		<result property ="Status" column="STATUS"/>
-	</resultMap> -->
+		<result property ="cateCd" column ="CATE_CD"/>
+		<result property ="goodsTitle" column ="GOODS_TITLE"/>
+		<result property ="goodsPrice" column ="GOODS_PRICE"/>
+		<result property ="count" column ="COUNT"/>
+		
+	</resultMap>
+	
+	
 	
 	<insert id="insertSellAftergoods" parameterType="SellReply">
 		INSERT INTO SELL_REPLY
-		VALUES(SEQ_RID.NEXTVAL, #{sellNum}, #{gId}, #{mId}, #{rContent}, #{sellStart}, #{filePath}, #{contentFilePath}, SYSDATE, SYSDATE, DEFAULT
+		VALUES(SEQ_RID.NEXTVAL, #{sellNum}, #{gId}, #{cateCd}, #{mId}, #{rContent}, #{sellStart}, #{filePath}, #{contentFilePath}, SYSDATE, SYSDATE, DEFAULT
 		)
 	</insert>
 	
@@ -56,7 +54,12 @@
 		AND STATUS='Y'
 	</select>
 
+	<insert id="CartInsert" parameterType="Cart">
+		INSERT INTO CART
+		VALUES(#{mId}, #{gId}, #{cateCd}, #{goodsTitle}, #{goodsPrice}, #{count}
+		)
+	</insert>
 
 
-
+	
 </mapper>
