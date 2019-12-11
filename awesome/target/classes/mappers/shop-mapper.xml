@@ -3,58 +3,42 @@
 <mapper namespace="shopMapper">
 
 
-	<resultMap type="SellReply" id="sell_After_goodsResultSet">
-		<id property="rId" column ="RID"/>
-		
-		<result property ="sellNum" column ="SELL_NUM"/>
-		<result property ="gId" column ="GID"/>
-		<result property ="mId" column="MID"/>
-		<result property ="rContent" column="RCONTENT"/>
-		<result property ="sellStart" column="SELL_START"/>
-		<result property ="filePath" column="REP_FILE_PATH"/>
-		<result property ="contentFilePath" column="REP_CONTENT_FILE_PATH"/>
-		<result property ="createDate" column="CREATE_DATE"/>
-		<result property ="modifyDate" column="MODIFY_DATE"/>
-		<result property ="status" column="STATUS"/>
-	</resultMap>
+   <resultMap type="SellReply" id="sell_After_goodsResultSet">
+      <id property="rId" column ="RID"/>
+      
+      <result property ="sellNum" column ="SELL_NUM"/>
+      <result property ="gId" column ="GID"/>
+       <result property="cateCd" column="CATE_CD"/>
+      <result property ="mId" column="MID"/>
+      <result property ="rContent" column="RCONTENT"/>
+      <result property ="sellStart" column="SELL_START"/>
+      <result property ="filePath" column="REP_FILE_PATH"/>
+      <result property ="contentFilePath" column="REP_CONTENT_FILE_PATH"/>
+      <result property ="createDate" column="CREATE_DATE"/>
+      <result property ="modifyDate" column="MODIFY_DATE"/>
+      <result property ="status" column="STATUS"/>
+   </resultMap>
 
-<!-- 	<resultMap type="SellReply" id="sell_After_goodsResultSet">
-		<id property="rId" column ="RID"/>
-		<id property="gId" column ="GID"/>
-		
-	<result property ="rId" column ="RID"/>
-		<result property ="gId" column ="GID"/>
-		<result property ="goodsTitle" column="GOODS_TITLE"/>
-		<result property ="goodContent" column="GOODS_CONTENT"/>
-		<result property ="sgFilePath" column="SG_FILE_PATH"/>
-		<result property ="sgContentFilePath" column="SG_CONTENT_FILE_PATH"/>
-		<result property ="rContent" column="RCONTENT"/>
-		<result property ="sellStart" column="SELL_START"/>
-		<result property ="srFilePath" column="SR_FILE_PATH"/>
-		<result property ="sellDate" column="SELL_DATE"/>
-		<result property ="ModifyDate" column="MODIFY_DATE"/>
-		<result property ="Status" column="STATUS"/>
-	</resultMap> -->
-	
-	<insert id="insertSellAftergoods" parameterType="SellReply">
-		INSERT INTO SELL_REPLY
-		VALUES(SEQ_RID.NEXTVAL, #{sellNum}, #{gId}, #{mId}, #{rContent}, #{sellStart}, #{filePath}, #{contentFilePath}, SYSDATE, SYSDATE, DEFAULT
-		)
-	</insert>
-	
-	<select id ="sellafterSelectList" resultMap="sell_After_goodsResultSet">
-		SELECT *
-		FROM SELL_REPLY SR
+   
+   <insert id="insertSellAftergoods" parameterType="SellReply">
+      INSERT INTO SELL_REPLY
+      VALUES(SEQ_RID.NEXTVAL, #{sellNum}, #{gId}, #{cateCd}, #{mId}, #{rContent}, #{sellStart}, #{filePath}, #{contentFilePath}, SYSDATE, SYSDATE, DEFAULT
+      )
+   </insert>
+   
+   <select id ="sellafterSelectList" resultMap="sell_After_goodsResultSet">
+      SELECT *
+      FROM SELL_REPLY SR
         JOIN SELL_GOODS SG ON (SR.SELL_NUM = SG.SELL_NUM)
-		ORDER BY RID DESC
-	</select>
-	
-	<select id ="selectReply" resultMap="sell_After_goodsResultSet">
-		SELECT *
-		FROM SELL_REPLY
-		WHERE SELL_NUM=#{sellNum}
-		AND STATUS='Y'
-	</select>
+      ORDER BY RID DESC
+   </select>
+   
+   <select id ="selectReply" resultMap="sell_After_goodsResultSet">
+      SELECT *
+      FROM SELL_REPLY
+      WHERE SELL_NUM=#{sellNum}
+      AND STATUS='Y'
+   </select>
 
 
 

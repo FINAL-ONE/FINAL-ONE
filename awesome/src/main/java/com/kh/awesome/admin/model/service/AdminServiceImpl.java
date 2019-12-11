@@ -43,31 +43,65 @@ public class AdminServiceImpl implements AdminService{
 		return aDao.updateAdminStatus(a);
 	}
 
-	// 동복- 상품 리스트 조회
-	@Override
-	public ArrayList<Goods> goodsList() {
-		return aDao.goodsList();
-	}
+
+	
+	
+	
+//---------------------------- INSERT ----------------------------
 	// 동복- 상품 등록
 	@Override
 	public int insertgoods(Goods g) {
 		return aDao.insertgoods(g);
 	}
+	// 동복- 상품 등록시 카테고리(소) 추가
+	@Override
+	public int insertCategory(Category c) {
+		return aDao.insertCategory(c);
+	}
+
+//---------------------------- UPDATE ----------------------------	
 	// 동복 - 상품 수정 페이지 이동(조회후)
 	@Override
 	public Goods goodsUpdateList(int gId) {
 		return aDao.goodsUpdateList(gId);
 	}
-	// 동복- 상품 수정
+	// 동복 : 판매상품 품절 처리시 상품과 판매가 1:1 이라 상품 상태도 N으로 변경
 	@Override
-	public int Updategoods(Goods g) {
-		return aDao.Updategoods(g);
+	public int updateGoodsStatus(Admin a) {
+		return aDao.updateGoodsStatus(a);
 	}
 	// 동복 - 상품 수정(카테고리 수정)
 	@Override
 	public int UpdateCategory(Category c) {
 		return aDao.UpdateCategory(c);
 	}	
+	// 동복 - 상품판매 등록시 가격 과 수량을 변경했다면 상품테이블도 변경 (1:1 매핑임)
+	@Override
+	public int sellUpdategoods(Goods g) {
+		return aDao.sellUpdategoods(g);
+	}
+	// 동복- 상품 수정
+	@Override
+	public int Updategoods(Goods g) {
+		return aDao.Updategoods(g);
+	}
+	// 동복 - 판매 상품 조회 내역 수정
+	@Override
+	public int UpdateSellGoods(Admin a) {
+		return aDao.UpdateSellGoods(a);
+	}
+	// 동복 - 상품관리에서 수정시 판매중인 상품리스트에 대한 상태도 변경 
+	@Override
+	public int updateSellGoodsStatus(Admin a) {
+		return aDao.updateSellGoodsStatus(a);
+	}
+	
+//---------------------------- SELECT ----------------------------	
+	// 동복- 상품 리스트 조회
+	@Override
+	public ArrayList<Goods> goodsList() {
+		return aDao.goodsList();
+	}
 	// 동복 - 상품판매 시 상품리스트 조회
 	@Override
 	public ArrayList<Goods> checkIdDup(String goodsName) {
@@ -98,16 +132,6 @@ public class AdminServiceImpl implements AdminService{
 	public Category categoryCDselect() {
 		return aDao.categoryCDselect();
 	}
-	// 동복- 상품 등록시 카테고리(소) 추가
-	@Override
-	public int insertCategory(Category c) {
-		return aDao.insertCategory(c);
-	}
-	// 동복 - 상품 등록 시 상품이름 중복 체크	
-	@Override
-	public int checkGoodsNm(String goodsName) {
-		return aDao.checkGoodsNm(goodsName);
-	}
 	// 동복 - 상품 수정 카테고리 조회
 	@Override
 	public ArrayList<Category> goodsUpdateClist(int gId) {
@@ -133,6 +157,25 @@ public class AdminServiceImpl implements AdminService{
 	public ArrayList<Category> updateCategorylist(String gId) {
 		return aDao.updateCategorylist(gId);
 	}
-	
-	
+	// 동복 - 상품 등록 시 상품이름 중복 체크	
+	@Override
+	public int checkGoodsNm(String goodsName) {
+		return aDao.checkGoodsNm(goodsName);
+	}
+	// 동복 - 상품 수정시 현재 해당 상품이 판매 중인지 조회	
+	@Override
+	public int selectsellGoodsList(String gId) {
+		return aDao.selectsellGoodsList(gId);
+	}	
+	// 동복 - 판매 상품 조회 수정 페이지
+	@Override
+	public ArrayList<Admin> sell_goodsDetailView(int sellNum) {
+		return aDao.sell_goodsDetailView(sellNum);
+	}
+	// 동복 - 상품관리 화면에서 조건 검색
+	@Override
+	public ArrayList<Goods> checkTextSelectGoods(Goods g) {
+		return aDao.checkTextSelectGoods(g);
+	}
+
 }
