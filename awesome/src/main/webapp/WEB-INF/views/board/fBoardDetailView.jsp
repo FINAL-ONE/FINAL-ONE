@@ -48,6 +48,20 @@
 	}
 	
 
+	.best{
+	    padding: 3px;
+	    background: #f53f29;
+	    color: white;
+	    font-weight: bold;
+	    border-radius: 5px;
+	    margin-left: 3px;
+	    margin-right: 5px;
+	    position: relative;
+	    bottom: 1px;
+	    font-size: 11px;
+	}
+
+
 	
 	   #outer{
 	       	
@@ -538,20 +552,6 @@
 		cursor:pointer;	
 	}
 	
-	
-	.best{
-		padding: 3px;
-		background: #f53f29; 
-		color: white;
-		font-weight: bold;
-		border-radius: 5px;
-		margin-left: 3px;
-		margin-right: 5px;
-		position: relative;
-		bottom: 45px;
-	
-	}
-	
 	.refresh:hover{
 	
 		color:  gray;	
@@ -847,7 +847,49 @@
 		
 	}
 	
-	.answer
+	/* 모달창 css */
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  /* margin: auto; */
+  margin-top : 100px;
+  margin-left : 30%;
+  padding: 40px;
+  border: 1px solid #888;
+  width: 40%;
+
+}
+
+/* The Close Button */
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
 	
 	</style>
 	
@@ -1091,6 +1133,38 @@
 			
 			</div>	<!--centerDiv 끝 -->
 		</div>
+		
+		
+		
+		 <button id= "myBtn" class="myBtn success" style="display: none;"> 수정 </button> 
+		<div id="myModal" class="modal">
+			  <!-- Modal content -->
+			  <div class="modal-content">
+				  <span class="close">&times;</span>
+				 <span style="font-size: 18px;font-weight:bold" > 댓글 수정</span>
+		    	
+			    	<div id= modifyWriter style="margin-top:10px; padding-top:20px; padding-left:33px; font-weight:bold; background:#f9f9f9;"> </div>
+			    	<div style=" background:#f9f9f9; padding-top:10px; padding-left:33px;"> 
+				    	<textarea id= "modifyContent"  style="width:540px; height:60px; "value = ""> </textarea>
+				    	<input id="modifyRid"   type="hidden" value="" name = "rId">
+				    	<input id="modifyMid"  type="hidden" value="${loginUser.mid}" name ="mId">
+				    	<button class="myBtn success answerBtn2" type="button" onclick= "replyModify2(${currentPage});">수정</button>&nbsp;
+			    	</div>
+			  </div>
+	 	 </div>
+		
+		
+			
+	
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	</body>
 	
 	<footer>
@@ -1184,8 +1258,7 @@
 	        }
 	   });
 	
-
-	    
+	  
 	    
 	    
 	    
@@ -1244,44 +1317,108 @@
 					$tableBody = $("#rtb tbody");
 				 	$tableBody.html(""); 
 					var html = "";
+				
+					if(data.pi.currentPage == 1){
+						if(data.bestReplyList.length>0){
+							for(var i in data.bestReplyList){
+								html += "<tr><td><div><div class= 'replyWriterDiv'><span class= 'replyWriterSpan'>"+data.bestReplyList[i].userNickname + "</span>";
+								html += "<span class= replyDate>"+data.bestReplyList[i].createDate+"</span>";
+								
+								if(data.goodClickList != "undefined"){
+									for(var j in data.goodClickList){
+										if( data.bestReplyList[i].rId == data.goodClickList[j]){
+											var html2 = "<span class='replyGood2' onclick='replyGood("+data.bestReplyList[i].rId +","+ data.pi.currentPage +");'><i class='far fa-thumbs-up'></i>"+ data.bestReplyList[i].rGood +"</span></div>";
+												break;  	                                        
+										}else{
+											var html2 =  "<span class='replyGood' onclick='replyGood("+data.bestReplyList[i].rId +","+ data.pi.currentPage +");'><i class='far fa-thumbs-up'></i>"+ data.bestReplyList[i].rGood +"</span></div>";
+										}
+									}
+									html += html2;
+								}else{
+									html += "<span class='replyGood' onclick='replyGood("+data.bestReplyList[i].rId +","+ data.pi.currentPage +");'><i class='far fa-thumbs-up'></i>"+ data.bestReplyList[i].rGood +"</span></div>";
+								}
+								html += "<div class = contentDiv><span class= 'best'>BEST</span>"+ data.bestReplyList[i].rContent+"</div>";
+								
+								
+								
+								html += "<input id= 'rContent" + data.bestReplyList[i].rId + "' type='hidden' value = '"+ data.bestReplyList[i].rContent+"'>"; 
+								
+								html += "<div class='answerDiv'><span class= 'answerBtn' onclick='addAnswer("+data.bestReplyList[i].rId+");'>답글</span><span class= 'replyDelete' onclick='replyDelete("+data.bestReplyList[i].rId +","+ data.pi.currentPage +");'>삭제</span><span class= 'replyModify' onclick='replyModify("+data.bestReplyList[i].rId+")'>수정</span></div></div></td></tr>";					
+											
+								html += "<tr style='display:none' class = 'answerTr"+ data.bestReplyList[i].rId +"'><td class= 'answerInsert' style='background: #f9f9f9;'><div style='padding-left:50px;'>";
+								html += "<div class= 'replyWriterDiv'><span class = 'replyWriterSpan' >admin</span></div>";
+								html +=	"<div style='width:635px;height:65px; margin-bottom:10px;'>";
+								html +=	"<textarea class = 'content"+ data.bestReplyList[i].rId +"' style='width: 500px; height: 60px;'></textarea><button type='button' class='answerBtn2' onclick='addAnswer2("+data.bestReplyList[i].rId+");'> 입력</button></div></div></td></tr>";
+								
+								for( var k in data.bestReplyList[i].aList){
+									html +=	"<tr><td style='background: #f9f9f9;' ><div style='padding-left:50px;'>";
+									html += "<div class= 'replyWriterDiv'><span class = 'replyWriterSpan' >"+ data.bestReplyList[i].aList[k].userNickname+ "</span><span class= 'replyDate'>"+data.bestReplyList[i].aList[k].createDate+ "</span><span class= 'replyDate answerDelete' onclick='answerDelete("+data.bestReplyList[i].aList[k].aId +","+ data.pi.currentPage+ ");'>삭제</span></div>";
+									html += "<div style='width:635px; margin-bottom:10px;'>"+ data.bestReplyList[i].aList[k].aContent;
+									html += "</div></div></td></tr>";
+								} 
+							}
+						}
+					}
+					
+					
 					if(data.rList.length > 0){	// 댓글이 하나 이상 있으면
 						for(var i in data.rList){
-							console.log(data.rList);
-							console.log(data.goodClickList);
-							html += "<tr><td><div><div class= 'replyWriterDiv'><span class= 'replyWriterSpan'>"+data.rList[i].userNickname + "</span>";
-							html += "<span class= replyDate>"+data.rList[i].createDate+"</span>";
 							
-							if(data.goodClickList != "undefined"){
-								for(var j in data.goodClickList){
-									if( data.rList[i].rId == data.goodClickList[j]){
-										var html2 = "<span class='replyGood2' onclick='replyGood("+data.rList[i].rId +","+ data.pi.currentPage +");'><i class='far fa-thumbs-up'></i>"+ data.rList[i].rGood +"</span></div>";
-											break;  	                                        
-									}else{
-										var html2 =  "<span class='replyGood' onclick='replyGood("+data.rList[i].rId +","+ data.pi.currentPage +");'><i class='far fa-thumbs-up'></i>"+ data.rList[i].rGood +"</span></div>";
-									}
-								}
-								html += html2;
-							}else{
-								html += "<span class='replyGood' onclick='replyGood("+data.rList[i].rId +","+ data.pi.currentPage +");'><i class='far fa-thumbs-up'></i>"+ data.rList[i].rGood +"</span></div>";
+							var flag = -1    
+							
+							for(var index in data.bestReplyList){
+								if(data.rList[i].rId == data.bestReplyList[index].rId){
+									flag =  1;
+									break; 
+								} 
+									
 							}
-							html += "<div class = contentDiv>"+ data.rList[i].rContent+"</div>";
-							html += "<div class='answerDiv'><span class= 'answerBtn' onclick='addAnswer("+data.rList[i].rId+");'>답글</span><span class= 'replyDelete' onclick='replyDelete("+data.rList[i].rId +","+ data.pi.currentPage +");'>삭제</span><span class= 'replyModify'>수정</span></div></div></td></tr>";					
-										
-							html += "<tr style='display:none' class = 'answerTr"+ data.rList[i].rId +"'><td class= 'answerInsert' style='background: #f9f9f9;'><div style='padding-left:50px;'>";
-							html += "<div class= 'replyWriterDiv'><span class = 'replyWriterSpan' >admin</span></div>";
-							html +=	"<div style='width:635px;height:65px; margin-bottom:10px;'>";
-							html +=	"<textarea class = 'content"+ data.rList[i].rId +"' style='width: 500px; height: 60px;'></textarea><button type='button' class='answerBtn2' onclick='addAnswer2("+data.rList[i].rId+");'> 입력</button></div></div></td></tr>";
 							
-							for( var k in data.rList[i].aList){
-								html +=	"<tr><td style='background: #f9f9f9;' ><div style='padding-left:50px;'>";
-								html += "<div class= 'replyWriterDiv'><span class = 'replyWriterSpan' >"+ data.rList[i].aList[k].userNickname+ "</span><span class= 'replyDate'>"+data.rList[i].aList[k].createDate+ "</span><span class= 'replyDate answerDelete' onclick='answerDelete("+data.rList[i].aList[k].aId +","+ data.pi.currentPage+ ");'>삭제</span></div>";
-								html += "<div style='width:635px; margin-bottom:10px;'>"+ data.rList[i].aList[k].aContent;
-								html += "</div></div></td></tr>";
+							if( flag == -1){
+								
+								console.log(data.rList);
+								console.log(data.goodClickList);
+								html += "<tr><td><div><div class= 'replyWriterDiv'><span class= 'replyWriterSpan'>"+data.rList[i].userNickname + "</span>";
+								html += "<span class= replyDate>"+data.rList[i].createDate+"</span>";
+								
+								if(data.goodClickList != "undefined"){
+									for(var j in data.goodClickList){
+										if( data.rList[i].rId == data.goodClickList[j]){
+											var html2 = "<span class='replyGood2' onclick='replyGood("+data.rList[i].rId +","+ data.pi.currentPage +");'><i class='far fa-thumbs-up'></i>"+ data.rList[i].rGood +"</span></div>";
+												break;  	                                        
+										}else{
+											var html2 =  "<span class='replyGood' onclick='replyGood("+data.rList[i].rId +","+ data.pi.currentPage +");'><i class='far fa-thumbs-up'></i>"+ data.rList[i].rGood +"</span></div>";
+										}
+									}
+									html += html2;
+								}else{
+									html += "<span class='replyGood' onclick='replyGood("+data.rList[i].rId +","+ data.pi.currentPage +");'><i class='far fa-thumbs-up'></i>"+ data.rList[i].rGood +"</span></div>";
+								}
+								html += "<div class = contentDiv>"+ data.rList[i].rContent+"</div>";
 								
 								
-							} 
-						
+								html += "<input id= 'rContent" + data.rList[i].rId + "' type='hidden' value = '"+ data.rList[i].rContent+"'>"; 
+								html += "<div class='answerDiv'><span class= 'answerBtn' onclick='addAnswer("+data.rList[i].rId+");'>답글</span><span class= 'replyDelete' onclick='replyDelete("+data.rList[i].rId +","+ data.pi.currentPage +");'>삭제</span><span class= 'replyModify'  onclick='replyModify(" +data.rList[i].rId+");'>수정</span></div></div></td></tr>";					
+								
+								html += "<tr style='display:none' class = 'answerTr"+ data.rList[i].rId +"'><td class= 'answerInsert' style='background: #f9f9f9;'><div style='padding-left:50px;'>";
+								html += "<div class= 'replyWriterDiv'><span class = 'replyWriterSpan' >admin</span></div>";
+								html +=	"<div style='width:635px;height:65px; margin-bottom:10px;'>";
+								html +=	"<textarea class = 'content"+ data.rList[i].rId +"' style='width: 500px; height: 60px;'></textarea><button type='button' class='answerBtn2' onclick='addAnswer2("+data.rList[i].rId+");'> 입력</button></div></div></td></tr>";
+								
+								for( var k in data.rList[i].aList){
+									html +=	"<tr><td style='background: #f9f9f9;' ><div style='padding-left:50px;'>";
+									html += "<div class= 'replyWriterDiv'><span class = 'replyWriterSpan' >"+ data.rList[i].aList[k].userNickname+ "</span><span class= 'replyDate'>"+data.rList[i].aList[k].createDate+ "</span><span class= 'replyDate answerDelete' onclick='answerDelete("+data.rList[i].aList[k].aId +","+ data.pi.currentPage+ ");'>삭제</span></div>";
+									html += "<div style='width:635px; margin-bottom:10px;'>"+ data.rList[i].aList[k].aContent;
+									html += "</div></div></td></tr>";
+									
+								} 
+							}
 						}
+					
+					
+					
+					
+					
 						$tableBody.append(html); 
 						
 						
@@ -1484,17 +1621,75 @@
 	
 		
 	
+	function replyModify(rId){
+		content = $("#rContent" + rId).val()
+		
+		$("#modifyWriter").html('${loginUser.userNickname}');
+		$("#modifyContent").val(content);
+		$("#modifyRid").val(rId); 
+		
+		$("#myBtn").click();
+	}
+	
+	
+	function replyModify2(currentPage){
+		
+		
+		rContent = $("#modifyContent").val();
+		rId= $("#modifyRid").val(); 
+		mId= $("#modifyMid").val(); 
+	
+	
+		
+		$.ajax({
+			url:"modifyReply.do",
+			data:{rId:rId, rContent:rContent, mId:mId},
+			type: "post",
+			success:function(data){
+				if(data=="success"){
+					getReplyList(currentPage); 
+					alert("댓글이 수정되었습니다");
+				}
+			},
+			error:function(request, status, errorData){
+				alert("error code: " + request.status + "\n"
+						+"message: " + request.responseText
+						+"error: " + errorData);
+			}
+		});
+		
+		
 		
 	
+		var modal = document.getElementById("myModal");
+		modal.style.display="none";
+		
+		
+	}
 	
 	
 	
+/* 	
+	<div id="myModal" class="modal">
+	  <!-- Modal content -->
+	  <div class="modal-content">
+	    <span class="close">&times;</span>
+			
+
+  	 	<form action="modifyReply.do" method="post">
+  	 			<span><b> 댓글 수정 </b></span><br>
+			    	<b id= modifyWriter> </b>
+			    	<textarea id= "modifyContent" value = ""> </textarea>
+			    	<input id="modifyRid"   type="hidden" value="" name = "rId">
+			    	<input id="modifyMid"  type="hidden" value="${loginUser.mid}" name ="mId">
+			    	<button class="myBtn success" type="button" onclick= "modifyReply2">댓글 수정</button>&nbsp;
+	    	</form>
+	  </div>
+</div>
 	
 	
 	
-	
-	
-	
+	 */
 	
 	
 	
@@ -1519,47 +1714,104 @@
 					$tableBody = $("#rtb tbody");
 				 	$tableBody.html(""); 
 					var html = "";
+				
+					if(data.pi.currentPage == 1){
+						if(data.bestReplyList.length>0){
+							for(var i in data.bestReplyList){
+								html += "<tr><td><div><div class= 'replyWriterDiv'><span class= 'replyWriterSpan'>"+data.bestReplyList[i].userNickname + "</span>";
+								html += "<span class= replyDate>"+data.bestReplyList[i].createDate+"</span>";
+								
+								if(data.goodClickList != "undefined"){
+									for(var j in data.goodClickList){
+										if( data.bestReplyList[i].rId == data.goodClickList[j]){
+											var html2 = "<span class='replyGood2' onclick='replyGood("+data.bestReplyList[i].rId +","+ data.pi.currentPage +");'><i class='far fa-thumbs-up'></i>"+ data.bestReplyList[i].rGood +"</span></div>";
+												break;  	                                        
+										}else{
+											var html2 =  "<span class='replyGood' onclick='replyGood("+data.bestReplyList[i].rId +","+ data.pi.currentPage +");'><i class='far fa-thumbs-up'></i>"+ data.bestReplyList[i].rGood +"</span></div>";
+										}
+									}
+									html += html2;
+								}else{
+									html += "<span class='replyGood' onclick='replyGood("+data.bestReplyList[i].rId +","+ data.pi.currentPage +");'><i class='far fa-thumbs-up'></i>"+ data.bestReplyList[i].rGood +"</span></div>";
+								}
+								html += "<div class = contentDiv><span class= 'best'>BEST</span>"+ data.bestReplyList[i].rContent+"</div>";
+								
+								html += "<div class='answerDiv'><span class= 'answerBtn' onclick='addAnswer("+data.bestReplyList[i].rId+");'>답글</span><span class= 'replyDelete' onclick='replyDelete("+data.bestReplyList[i].rId +","+ data.pi.currentPage +");'>삭제</span><span class= 'replyModify'  onclick='replyModify(" +data.bestReplyList[i].rId+");'>수정</span></div></div></td></tr>";					
+											
+								html += "<input id= 'rContent" + data.bestReplyList[i].rId + "' type='hidden' value = '"+ data.bestReplyList[i].rContent+"'>"; 
+								
+								html += "<tr style='display:none' class = 'answerTr"+ data.bestReplyList[i].rId +"'><td class= 'answerInsert' style='background: #f9f9f9;'><div style='padding-left:50px;'>";
+								html += "<div class= 'replyWriterDiv'><span class = 'replyWriterSpan' >admin</span></div>";
+								html +=	"<div style='width:635px;height:65px; margin-bottom:10px;'>";
+								html +=	"<textarea class = 'content"+ data.bestReplyList[i].rId +"' style='width: 500px; height: 60px;'></textarea><button type='button' class='answerBtn2' onclick='addAnswer2("+data.bestReplyList[i].rId+");'> 입력</button></div></div></td></tr>";
+								
+								for( var k in data.bestReplyList[i].aList){
+									html +=	"<tr><td style='background: #f9f9f9;' ><div style='padding-left:50px;'>";
+									html += "<div class= 'replyWriterDiv'><span class = 'replyWriterSpan' >"+ data.bestReplyList[i].aList[k].userNickname+ "</span><span class= 'replyDate'>"+data.bestReplyList[i].aList[k].createDate+ "</span><span class= 'replyDate answerDelete' onclick='answerDelete("+data.bestReplyList[i].aList[k].aId +","+ data.pi.currentPage+ ");'>삭제</span></div>";
+									html += "<div style='width:635px; margin-bottom:10px;'>"+ data.bestReplyList[i].aList[k].aContent;
+									html += "</div></div></td></tr>";
+								} 
+							}
+						}
+					}
+					
+					
 					if(data.rList.length > 0){	// 댓글이 하나 이상 있으면
 						for(var i in data.rList){
-							console.log(data.rList);
-							console.log(data.goodClickList);
-							html += "<tr><td><div><div class= 'replyWriterDiv'><span class= 'replyWriterSpan'>"+data.rList[i].userNickname + "</span>";
-							html += "<span class= replyDate>"+data.rList[i].createDate+"</span>";
 							
-							if(data.goodClickList != "undefined"){
-								for(var j in data.goodClickList){
-									if( data.rList[i].rId == data.goodClickList[j]){
-										var html2 = "<span class='replyGood2' onclick='replyGood("+data.rList[i].rId +","+ data.pi.currentPage +");'><i class='far fa-thumbs-up'></i>"+ data.rList[i].rGood +"</span></div>";
-											break;  	                                        
-									}else{
-										var html2 =  "<span class='replyGood' onclick='replyGood("+data.rList[i].rId +","+ data.pi.currentPage +");'><i class='far fa-thumbs-up'></i>"+ data.rList[i].rGood +"</span></div>";
-									}
-								}
-								html += html2;
-							}else{
-								html += "<span class='replyGood' onclick='replyGood("+data.rList[i].rId +","+ data.pi.currentPage +");'><i class='far fa-thumbs-up'></i>"+ data.rList[i].rGood +"</span></div>";
+							var flag = -1    
+							
+							for(var index in data.bestReplyList){
+								if(data.rList[i].rId == data.bestReplyList[index].rId){
+									flag =  1;
+									break; 
+								} 
+									
 							}
 							
-							html += "<div class = contentDiv>"+ data.rList[i].rContent+"</div>";
-							html += "<div class='answerDiv'><span class= 'answerBtn' onclick='addAnswer("+data.rList[i].rId+");'>답글</span><span class= 'replyDelete' onclick='replyDelete("+data.rList[i].rId +","+ data.pi.currentPage +");'>삭제</span><span class= 'replyModify'>수정</span></div></div></td></tr>";					
-										
-							html += "<tr style='display:none' class = 'answerTr"+ data.rList[i].rId +"'><td class= 'answerInsert' style='background: #f9f9f9;'><div style='padding-left:50px;'>";
-							html += "<div class= 'replyWriterDiv'><span class = 'replyWriterSpan' >admin</span></div>";
-							html +=	"<div style='width:635px;height:65px; margin-bottom:10px;'>";
-							html +=	"<textarea class = 'content"+ data.rList[i].rId +"' style='width: 500px; height: 60px;'></textarea><button type='button' class='answerBtn2' onclick='addAnswer2("+data.rList[i].rId+","+data.pi.currentPage + ");'> 입력</button></div></div></td></tr>";
-							
-							for( var k in data.rList[i].aList){
-								html +=	"<tr><td style='background: #f9f9f9;' ><div style='padding-left:50px;'>";
-								html += "<div class= 'replyWriterDiv'><span class = 'replyWriterSpan' >"+ data.rList[i].aList[k].userNickname+ "</span><span class= 'replyDate'>"+data.rList[i].aList[k].createDate+ "</span><span class= 'replyDate answerDelete' onclick='answerDelete("+data.rList[i].aList[k].aId+","+ data.pi.currentPage +");'>삭제</span></div>";
-								html += "<div style='width:635px; margin-bottom:10px;'>"+ data.rList[i].aList[k].aContent;
-								html += "</div></div></td></tr>";
+							if( flag == -1){
 								
+								console.log(data.rList);
+								console.log(data.goodClickList);
+								html += "<tr><td><div><div class= 'replyWriterDiv'><span class= 'replyWriterSpan'>"+data.rList[i].userNickname + "</span>";
+								html += "<span class= replyDate>"+data.rList[i].createDate+"</span>";
 								
-							} 
-							
-							
-							
+								if(data.goodClickList != "undefined"){
+									for(var j in data.goodClickList){
+										if( data.rList[i].rId == data.goodClickList[j]){
+											var html2 = "<span class='replyGood2' onclick='replyGood("+data.rList[i].rId +","+ data.pi.currentPage +");'><i class='far fa-thumbs-up'></i>"+ data.rList[i].rGood +"</span></div>";
+												break;  	                                        
+										}else{
+											var html2 =  "<span class='replyGood' onclick='replyGood("+data.rList[i].rId +","+ data.pi.currentPage +");'><i class='far fa-thumbs-up'></i>"+ data.rList[i].rGood +"</span></div>";
+										}
+									}
+									html += html2;
+								}else{
+									html += "<span class='replyGood' onclick='replyGood("+data.rList[i].rId +","+ data.pi.currentPage +");'><i class='far fa-thumbs-up'></i>"+ data.rList[i].rGood +"</span></div>";
+								}
+								html += "<div class = contentDiv>"+ data.rList[i].rContent+"</div>";
+								html += "<input id= 'rContent" + data.rList[i].rId + "' type='hidden' value = '"+ data.rList[i].rContent+"'>";
+								html += "<div class='answerDiv'><span class= 'answerBtn' onclick='addAnswer("+data.rList[i].rId+");'>답글</span><span class= 'replyDelete' onclick='replyDelete("+data.rList[i].rId +","+ data.pi.currentPage +");'>삭제</span><span class= 'replyModify'  onclick='replyModify(" +data.rList[i].rId+");'>수정</span></div></div></td></tr>";					
+											
+								html += "<tr style='display:none' class = 'answerTr"+ data.rList[i].rId +"'><td class= 'answerInsert' style='background: #f9f9f9;'><div style='padding-left:50px;'>";
+								html += "<div class= 'replyWriterDiv'><span class = 'replyWriterSpan' >admin</span></div>";
+								html +=	"<div style='width:635px;height:65px; margin-bottom:10px;'>";
+								html +=	"<textarea class = 'content"+ data.rList[i].rId +"' style='width: 500px; height: 60px;'></textarea><button type='button' class='answerBtn2' onclick='addAnswer2("+data.rList[i].rId+");'> 입력</button></div></div></td></tr>";
+								
+								for( var k in data.rList[i].aList){
+									html +=	"<tr><td style='background: #f9f9f9;' ><div style='padding-left:50px;'>";
+									html += "<div class= 'replyWriterDiv'><span class = 'replyWriterSpan' >"+ data.rList[i].aList[k].userNickname+ "</span><span class= 'replyDate'>"+data.rList[i].aList[k].createDate+ "</span><span class= 'replyDate answerDelete' onclick='answerDelete("+data.rList[i].aList[k].aId +","+ data.pi.currentPage+ ");'>삭제</span></div>";
+									html += "<div style='width:635px; margin-bottom:10px;'>"+ data.rList[i].aList[k].aContent;
+									html += "</div></div></td></tr>";
+									
+								} 
+							}
 						}
+					
+					
+					
+					
+					
 						$tableBody.append(html); 
 						
 						
@@ -1602,6 +1854,7 @@
 					}else{	// 댓글이 없으면
 					
 					}
+					
 				},
 				error:function(request, status, errorData){
 					alert("error code: " + request.status + "\n"
@@ -1634,6 +1887,48 @@
 		});
 	
 </script> 
+	
+	
+	
+	<!--  modal popup -->
+		<script>
+			// 포인트 팝업 모달
+			// Get the modal
+			var modal = document.getElementById("myModal");
+			var list1 = new Array();
+
+			for (var i = 0; i < list1.length; i++) {
+			    alert(list1[i]);
+			}
+
+			// Get the button that opens the modal
+			/* var btn = document.getElementById("myBtn"); */
+			var btn = document.getElementsByClassName("myBtn")[i];
+		
+			
+			// Get the <span> element that closes the modal
+			var span = document.getElementsByClassName("close")[0];
+			
+			// When the user clicks the button, open the modal 
+			btn.onclick = function() {
+			  modal.style.display = "block";
+			}
+			// When the user clicks on <span> (x), close the modal
+			span.onclick = function() {
+			  modal.style.display = "none";
+			}
+			
+			// When the user clicks anywhere outside of the modal, close it
+			window.onclick = function(event) {
+			  if (event.target == modal) {
+			    modal.style.display = "none";
+			  }
+			}
+			
+		</script>
+	
+	
+	
 	
 	
 	</html>

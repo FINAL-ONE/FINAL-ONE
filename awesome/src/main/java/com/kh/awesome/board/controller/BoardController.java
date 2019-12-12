@@ -545,6 +545,9 @@ public class BoardController {
 			PageInfo pi = Pagination.getPageInfo(rCurrentPage, rListCount );
 			
 			ArrayList<Reply> rList = bService.selectReplyList(bId, pi);
+			ArrayList<Reply> bestReplyList = bService.selectBestReplyList(bId); 
+			System.out.println("베스트 리플: "  + bestReplyList);	
+			
 			
 			System.out.println(rList);
 			
@@ -552,7 +555,13 @@ public class BoardController {
 			int mId= loginUser.getMid(); 
 			g.setmId(mId);
 			int result = 0; 
+			
+			
+			
 			ArrayList goodClickList = new ArrayList(); 
+			
+			
+			
 			for(Reply reply: rList) {
 				g.setrId(reply.getrId());
 				result = bService.selectReplyGoodMemory(g);
@@ -570,7 +579,7 @@ public class BoardController {
 				
 				ArrayList<Answer> aList = bService.selectAList(rId); 
 				
-				response.setContentType("application/json;charset=utf-8");
+				response.setContentType("application/json;charset=utf-8") ;
 				for(Answer a  : aList) {
 					a.setUserNickname(a.getUserNickname());
 					a.setaContent(a.getaContent());
@@ -580,6 +589,20 @@ public class BoardController {
 					reply.setaList(aList);
 				}
 			}
+			
+			
+			for(Reply bestReply: bestReplyList) {
+				
+				for(Reply reply:rList) {
+					if( bestReply.getrId() == reply.getrId()) {
+						bestReply.setaList(reply.getaList());
+					}
+				}
+			}
+			
+			
+			
+			
 			
 			response.setContentType("application/json;charset=utf-8");
 			for(Reply r : rList) {
@@ -595,7 +618,7 @@ public class BoardController {
 			map.put("rList", rList);
 			map.put("rListCount", rListCount);
 			map.put("goodClickList", goodClickList);
-			
+			map.put("bestReplyList",bestReplyList);
 			// addAllObjects 메소드를 이용하여 map 객체에 저장된 모든 속성(key, value)를 모델에 저장함
 			// addObject로 하게 되면 안된다!
 			mv.addAllObjects(map);
@@ -702,6 +725,31 @@ public class BoardController {
 				throw new BoardException("댓글 등록 실패!");
 			}
 		}
+		
+		
+		@RequestMapping("modifyReply.do")
+		@ResponseBody
+		public String modifyReply(Reply r) {
+			
+			System.out.println("들어왔냐?");
+			System.out.println(r);
+			
+		
+		 int result = bService.modifyReply(r);
+		 
+		 if(result > 0) { 
+			 return "success"; 
+		 
+		 }else { 
+			 throw new BoardException("댓글 수정 실패!"); }
+		
+		}
+		
+		
+		
+		
+		
+		
 	
 		@RequestMapping("deleteAnswer.do")
 		@ResponseBody

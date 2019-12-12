@@ -76,7 +76,7 @@
       color: #fa4a4a;
       cursor: pointer;
    }
-	
+   
    
 
    body{ 
@@ -104,7 +104,7 @@
    }
    
    .loginMenu:hover{
-    	cursor: pointer;
+       cursor: pointer;
    }
 
 
@@ -127,7 +127,7 @@
     border-left: 6px solid transparent;
     border-bottom: 8px solid #fa4a4a;
     top: -41px;
-    left: 550px;	/* 상위 메뉴바 마우스오버시 화살표 위치   */
+    left: 550px;   /* 상위 메뉴바 마우스오버시 화살표 위치   */
 }
 
 
@@ -143,7 +143,7 @@
 }   */
 
 #loginuserInfo{
-	  font-size: 11px; 
+     font-size: 11px; 
       line-height:2.2; 
       position: absolute; 
       right: 0px;
@@ -158,46 +158,46 @@
 
 <c:set var="contextPath" value="${pageContext.servletContext.contextPath }" scope="application"/>
 <div style= "height: 25px; width: 100%; background: #EEEEEE; margin-bottom:10px;">
-	<c:if test="${empty sessionScope.loginUser }">
-	    <span class= "loginMenu" style="right: 65px;" onclick= "location.href='loginView.do'">로그인 &nbsp;|</span>
-	    <span class= "loginMenu" style="right: 15px;" onclick= "location.href='enrollView.do'">&nbsp;회원가입</span>
+   <c:if test="${empty sessionScope.loginUser }">
+       <span class= "loginMenu" style="right: 65px;" onclick= "location.href='loginView.do'">로그인 &nbsp;|</span>
+       <span class= "loginMenu" style="right: 15px;" onclick= "location.href='enrollView.do'">&nbsp;회원가입</span>
    <!-- <span style="font-size: 11px; line-height:2; position: fixed; right: 0px;"> <b>관리자</b>님 환영합니다. &nbsp;&nbsp;&nbsp;</span> -->
-	</c:if>
+   </c:if>
 
-	<c:if test="${!empty sessionScope.loginUser }">
-			<!-- 로그인했을떄 -->
-			<!-- 여기 이 부분은 DB로부터 객체 받아오는거 확인하고 나서 작성하자!!  -->
-			<span id ="loginuserInfo">
-				<c:out value = "${loginUser.userName }님 환영 합니다."/>
-				<!-- 정보 수정용 페이지로 갈 때 쓸 변수와 로그아웃용 경로 변수 지정 -->
-				<c:url var ="myinfo" value="myinfo.do"/>
-				<c:url var ="logout" value="logout.do"/>
-						<!-- // 쿼리 스트링 방식으로 보내면 GET방식이라 POST- > GET으로  -->
-				<span onclick ="location.href='${myinfo }'">정보수정  &nbsp;|</span>
-				<span onclick ="location.href='${logout }'">&nbsp;로그아웃</span>
-			</span>
-			<!-- 이 부분 작성 후 다시 MemberController가서 로그아웃 작성하자 !! -->
-	</c:if>
+   <c:if test="${!empty sessionScope.loginUser }">
+         <!-- 로그인했을떄 -->
+         <!-- 여기 이 부분은 DB로부터 객체 받아오는거 확인하고 나서 작성하자!!  -->
+         <span id ="loginuserInfo">
+            <c:out value = "${loginUser.userName }님 환영 합니다."/>
+            <!-- 정보 수정용 페이지로 갈 때 쓸 변수와 로그아웃용 경로 변수 지정 -->
+            <c:url var ="myinfo" value="myinfo.do"/>
+            <c:url var ="logout" value="logout.do"/>
+                  <!-- // 쿼리 스트링 방식으로 보내면 GET방식이라 POST- > GET으로  -->
+            <span onclick ="location.href='${myinfo }'">정보수정  &nbsp;|</span>
+            <span onclick ="location.href='${logout }'">&nbsp;로그아웃</span>
+         </span>
+         <!-- 이 부분 작성 후 다시 MemberController가서 로그아웃 작성하자 !! -->
+   </c:if>
 </div>
 
 <div class= menubar1>
-   <div class= nav> 	
+   <div class= nav>    
       <div class= "menu normalMenu">소개</div>
       <div class= "menu normalMenu">공지사항</div>
       <div class= "menu communityMenu">커뮤니티</div>
       <div class =logoImg><img src="${contextPath}/resources/images/logo.png" style="height: 89px; vertical-align: middle" onclick= "location.href='home.do'"></div>
        <div class= "menu normalMenu" onclick="location.href='bmicalc.do'">BMI 계산기</div>
       <c:url var="shopGoodsListView" value="shopGoodsListView.do">
-		<c:param name="mid" value="${sessionScope.loginUser.mid }"/>
-		</c:url>
+      <c:param name="mid" value="${sessionScope.loginUser.mid }"/>
+      </c:url>
       <div class= "menu normalMenu"><a href="${shopGoodsListView}" style="text-decoration: none; color : black;">SHOP</a></div>
-		<%-- <a href="${shopGoodsListView}"><div>SHOP</div></a> --%>
-							
-   	  <c:if test="${sessionScope.loginUser.userId ne 'admin'}">
-   	  	<div class= "menu myPageMenu">마이페이지</div> 
+      <%-- <a href="${shopGoodsListView}"><div>SHOP</div></a> --%>
+                     
+        <c:if test="${sessionScope.loginUser.userId ne 'admin'}">
+           <div class= "menu myPageMenu">마이페이지</div> 
       </c:if>
       <c:if test="${sessionScope.loginUser.userId eq 'admin' }">
-      	<div class= "menu myPageMenu" onclick ="location.href='adminMain.do'">관리자페이지</div> 
+         <div class= "menu myPageMenu" onclick ="location.href='adminMain.do'">관리자페이지</div> 
       </c:if>
    </div>
 </div> 
@@ -211,7 +211,7 @@
  -->
 
 <div class="menubar2 normalMenubar">
-	
+   
 </div>   
  
 <div class="menubar2 communityMenubar communityMenu" style="display:none;">
@@ -226,7 +226,7 @@
    <div class= "myPageNav">
       <span class= menu2 style="left: 637px;" onclick= "location.href='myinfo.do'">내정보보기</span>
       <!-- <span class= menu2 style="left: 652px;" onclick= "location.href=#">장바구니</span> -->
-      <span class= menu2 style="left: 667px;" onclick= "location.href='orderview.do'">주문조회</span>
+      <span class= menu2 style="left: 667px;" onclick= "location.href='orderView.do'" >주문조회</span>
       <span class= menu2 style="left: 682px;">다이어트 일지</span>
    </div>
 </div>   
@@ -248,6 +248,13 @@
 </body>
 
 <script>
+
+function goOrderView(){
+	alert("fsdf");
+	;
+	
+}
+
 
 
 $(function(){

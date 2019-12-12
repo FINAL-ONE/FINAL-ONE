@@ -238,6 +238,14 @@
   	WHERE BID = #{bId}
   </update>
   
+  
+    <update id="modifyReply" parameterType = "Reply">
+  	UPDATE D_REPLY
+  	SET RCONTENT = #{rContent}
+  	WHERE RID = #{rId}
+  </update>
+  
+  
   <select id="selectBoardOne" parameterType = "_int" resultMap="boardResultSet">
   	SELECT *
   	FROM BOARD_VIEW 
@@ -324,6 +332,13 @@
 	WHERE BID=#{bId} AND STATUS = 'Y'
 	ORDER BY RID ASC
   </select>
+  
+   <select id="selectBestReplyList" resultMap="replyResultSet" parameterType="_int">
+	SELECT  *
+	FROM REPLY_VIEW
+	WHERE bid = #{bId} AND RGOOD >= 2 AND STATUS = 'Y' AND ROWNUM <![CDATA[ <= ]]> 3 
+  </select>
+  
   
   <select id="selectAList" resultMap="answerResultSet" parameterType="_int">
   	SELECT *
