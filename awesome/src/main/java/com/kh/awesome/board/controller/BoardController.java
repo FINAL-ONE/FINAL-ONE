@@ -149,9 +149,10 @@ public class BoardController {
 		}else {
 			PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
 			ArrayList<Board> flist = bService.selectSeacrchFList(pi, sc);
-			// ArrayList<Board> flist = bService.selectList(pi);
+
+				System.out.println("써치 리스트: " + flist);
 			
-			/* System.out.println("BoardController, flist" + flist.get(0)); */
+			
 			if(flist != null && flist.size() > 0) {	// 게시글이 있다면
 				mv.addObject("flist", flist);
 				mv.addObject("pi", pi);

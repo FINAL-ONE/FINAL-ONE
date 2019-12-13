@@ -144,14 +144,14 @@
 	  	WHERE (STATUS='Y'AND CATEGORY = 2 )
 	 		<if test='type.equals("all")'>
 	 		    AND ( BTITLE LIKE '%' ||  #{searchWord} || '%'
-	 			or USER_ID LIKE '%' || #{searchWord} || '%'
+	 			or USER_NICKNAME LIKE '%' || #{searchWord} || '%'
 	 			or BCONTENT LIKE '%' || #{searchWord} || '%')
 	 		</if>
 	 		<if test='type.equals("bTitle")'>
 	 		    AND ( BTITLE LIKE '%' ||  #{searchWord} || '%')
 	 		</if>
 	 		<if test='type.equals("bWriter")'>
-	 		    AND ( USER_ID LIKE '%' ||  #{searchWord} || '%')
+	 		    AND ( USER_NICKNAME LIKE '%' ||  #{searchWord} || '%')
 	 		</if>
 	 		<if test='type.equals("bContent")'>
 	 		    AND ( BCONTENT LIKE '%' || #{searchWord} || '%')

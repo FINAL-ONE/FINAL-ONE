@@ -23,6 +23,7 @@
     font-size: 18px;
     position: relative;
     bottom: -2px;
+    margin-left: 6px;
 }
 
 
@@ -59,15 +60,15 @@
 }
 
 .previewBoard{
-	border: 1px solid black; 
 	height: 200px; 
 	wdith: 100%;
-	
+	border: none;	
+	margin-top: 11px;
 }
 
 .previewBoard2{
 	  width:880px;
-  	  border: 1px solid pink; 
+  	  border: none; 
       margin-left:auto;
       margin-right:auto;
       height: 100%;
@@ -76,23 +77,31 @@
 }
 
 .advertisement{
-	border: 1px solid blue; 
+	border: 1px solid #dbdbdb; 
 	height: 200px;
-	width: 620px;  
+	width: 625px;  
 	display: inline-block;
-	margin-right: 10px;
+	margin-right: 5px;
+	position:relative;
+	background-image:url("resources/images/advertise4.jpeg");
+}
+
+
+.advertisement:hover{
+	cursor:pointer;
 }
 
 .noticeList{
-	border: 1px solid red; 
 	height: 200px;
-	width: 240px; 
+	width: 247px; 
 	display: inline-block;
+	position: absolute;
+	border: 1px solid #dbdbdb;
 }
 
 .centerDiv{
 	  width:880px;
-  	  border: 1px solid pink; 
+  	  border: none; 
       margin-left:auto;
       margin-right:auto;
       height: auto;
@@ -170,6 +179,46 @@
 }
 
 
+
+
+.noticeListDiv{
+	margin-bottom: 5px;
+	width: 200px;
+    text-overflow:ellipsis;
+	white-space:nowrap; 
+	overflow: hidden;
+	color: #787878;
+	font-size: 13px;
+	margin-bottom: 10px;
+}
+
+.noticeListDiv:hover{
+	cursor:pointer;
+
+}
+
+
+.fa-bell:before {
+    content: "\f0f3";
+    color:#787878;
+}
+
+
+.fa-plus-square:before {
+    content: "\f0fe";
+    position: relative;
+    left: 140px;
+    top: 1px;
+    color: lightgray;
+    font-size: 20px;
+}
+
+
+.fa-plus-square:hover{
+ 	cursor:pointer;
+}
+
+
 </style>
 
 <body>
@@ -180,12 +229,19 @@
 
 <div class= "previewBoard" >
 	<div class= "previewBoard2"> 
-		<div class= "advertisement"> 광고 (이미지슬라이더) </div>
-		<div class= "noticeList">  공지사항(미리보기) </div> 
+		<div class= "advertisement"></div>
+		<div class= "noticeList">
+		 	<div style="font-size: 15px; font-weight: bold; margin-left: 15px; margin-top: 15px;">공지사항<i class="far fa-plus-square"></i></div>
+		 	<div style="height: 140px; margin-top: 15px; padding-left: 18px;">
+			<c:forEach var="b" begin="0" end="4" items="${flist}">
+	    				<div class="noticeListDiv"><i class="fas fa-bell"></i>&nbsp;${b.bTitle} </div>
+			</c:forEach>
+			</div>
+		</div> 
 	</div> 
 </div >
 
-<div class = "centerDiv"> 
+<div clAss = "centerDiv"> 
 	<div> 
 		<h2 style="font-size: 26px;"> 자유게시판 </h2> 
 		<table  align="center" cellspacing="0" width="880px" id="boardTable"> 
@@ -209,7 +265,6 @@
 			</c:if>
 				<td id="bTitle${b.bId}" align="left" style=" padding-left: 10px;" > ${b.bTitle }&nbsp;
 			     <script> 
-				    	
 				     function checkImgTag(str){ 
 				    	 var content = str;
 				    	 
@@ -235,13 +290,6 @@
 				<fmt:parseDate var="bDate" value="${b.createDate}" pattern="yyyy-MM-dd" />
 				<fmt:formatDate var= "bDate2" value="${bDate}" pattern="yyyy-MM-dd" />
 	
-	
-	
-		 <%-- 	<fmt:parseNumber value="${today2.time / (1000*60*60*24)}" integerOnly="true" var="todayDate"></fmt:parseNumber>
-				<fmt:parseNumber value="${bDate2.time / (1000*60*60*24)}" integerOnly="true" var="boardDate"></fmt:parseNumber>  --%>
-				
-				
-
 
 			<c:if test="${today2 <= bDate2}">
 					<span class="new"> NEW </span>
@@ -276,7 +324,7 @@
    <!-- 페이징 처리 시작 -->
    <br>
       <div class="pagingArea" align="center">
-      <button type= "button" style="border:none; background: none; height: 30px; color:white;padding-bottom:14px; position:relative; float:left;">글쓰기</button>
+      <button type= "button" style="visibility:hidden; border:none; background: none; height: 30px; color:white;padding-bottom:14px; position:relative; float:left;">글쓰기</button>
          <!-- 맨 처음으로(<<) -->
          <button onclick="location.href='fBoardListView.do?page=1'"> << </button>
          

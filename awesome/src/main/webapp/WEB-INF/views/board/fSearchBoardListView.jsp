@@ -1,11 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+      <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <link href="${contextPath}/resources/fontawesome-free/css/all.css" rel="stylesheet">
 	<title>Awesome 자유게시판</title>
 </head>
 
@@ -128,6 +130,21 @@
 }
 
 
+.fa-paperclip:before {
+    content: "\f0c6";
+    color: gray;
+    margin-left: 5px;
+}
+
+.fa-image:before {
+    content: "\f03e";
+    color: gray;
+    font-size: 18px;
+    position: relative;
+    bottom: -2px;
+}
+
+
 
 .searchResult{
      border-radius: 8px;
@@ -143,6 +160,16 @@
     margin-bottom: 10px;
 }
 
+.new {
+	font-size: 10px;
+	font-weight: bold;
+	background: #ffca0b;
+	border-radius: 4px;
+	padding: 2px;
+	margin-left:7px;
+}
+
+
 </style>
 
 <body>
@@ -153,7 +180,7 @@
 
 <div class= "previewBoard" >
 	<div class= "previewBoard2"> 
-		<div class= "advertisement">광고</div>
+		<div class= "advertisement"></div>
 		<div class= "noticeList">공지사항(미리보기) </div> 
 	</div> 
 </div >
@@ -213,10 +240,47 @@
 			</tr>
 		<c:forEach var="b" items="${flist}">
 			<tr align="center" class = "normalTr"> 
-			
 				<td><input type="hidden" value = "${b.bId}"> [자유게시판]</td>
-				<td align="left" style=" padding-left: 10px;" > ${b.bTitle }&nbsp;<span style="color:#e11c24;font-weight:bold;margin-left:8px;">${b.reply}</span></td>
-				<td> ${b.userId}</td>
+				<td id="bTitle${b.bId}" align="left" style=" padding-left: 10px;" > ${b.bTitle}&nbsp;
+			     <script> 
+				     function checkImgTag(str){ 
+				    	 var content = str;
+				    	 
+				     	if(content.match(/<img/)){
+				     		return true   
+				     	}else{
+				     		return false 
+				     	}
+				     }
+				     if(checkImgTag('${b.bContent}') == true){
+				    	 $("#bTitle"+${b.bId}).html( "${b.bTitle}&nbsp;<i class='fas fa-image'></i>" );
+				     }
+				     
+					</script> 
+				<c:if test = "${b.bType == 4}">
+						<span><i class="fas fa-paperclip"></i></span>					
+			   	</c:if>
+				 	<span style="color:#e11c24;font-weight:bold;margin-left:8px;">${b.reply}</span>
+				 	
+							
+			 	<jsp:useBean id="today" class="java.util.Date" /> 
+	 			<fmt:formatDate var= "today2" value="${today}" pattern="yyyy-MM-dd" />
+				<fmt:parseDate var="bDate" value="${b.createDate}" pattern="yyyy-MM-dd" />
+				<fmt:formatDate var= "bDate2" value="${bDate}" pattern="yyyy-MM-dd" />
+	
+
+				<c:if test="${today2 <= bDate2}">
+						<span class="new"> NEW </span>
+				</c:if>
+				 	
+				 	
+				 	
+				
+				
+				</td>
+				
+				
+				<td> ${b.userNickname}</td>
 				<td>${b.bCount }</td>
 				<c:if test="${b.bGood > 0 }">
 				<td ><span style="color:#e11c24;font-weight:bold;">${b.bGood}</span></td>
@@ -236,7 +300,7 @@
    <!-- 페이징 처리 시작 -->
    <br>
       <div class="pagingArea" align="center">
-      <button type= "button" style="border:none; background: none; height: 30px; color:white;padding-bottom:14px; position:relative; float:left;">글쓰기</button>
+      <button type= "button" style=" visibility:hidden; border:none; background: none; height: 30px; color:white;padding-bottom:14px; position:relative; float:left;">글쓰기</button>
          <!-- 맨 처음으로(<<) -->
        	<c:url var="blistNextNumber" value="searchFboardList.do">
 					<c:param name="page" value="1"/>
@@ -341,18 +405,7 @@ function searchList(){
 
 
 
-/*  $(function(){
-    $(".normalTr td").mouseenter(function(){
-    	
-   	   $(this).parent().children().css({"cursor":"pointer").click(function(){ 
-           var bid = $(this).parent().children().eq(0).text(); // 게시글의  글번호 
-           $("#bid").val(bid);            
-           $("#formTag").submit(); 
-       });
-    }).mouseout(function(){
-    	$(this).parent().css({"background":"white"});
-    });
- });  */
+
 </script>
 
 
