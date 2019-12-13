@@ -19,6 +19,8 @@ public class Order {
 	private int rowCount;
 	private int usedPoint;
 	private int orderPrice;
+	private String goodsTitle;
+	private String filePath;
 	
 	private Date date1;
 	private Date date2;
@@ -29,7 +31,7 @@ public class Order {
 
 	public Order(int oId, int gId, String gName, int gPrice, String gImage, int mId, String userName, String phone,
 			String address, String orderNum, int orderCount, Date orderDate, String orderStatus, int rowCount,
-			int usedPoint, int orderPrice, Date date1, Date date2) {
+			int usedPoint, int orderPrice, String goodsTitle, String filePath, Date date1, Date date2) {
 		super();
 		this.oId = oId;
 		this.gId = gId;
@@ -47,6 +49,8 @@ public class Order {
 		this.rowCount = rowCount;
 		this.usedPoint = usedPoint;
 		this.orderPrice = orderPrice;
+		this.goodsTitle = goodsTitle;
+		this.filePath = filePath;
 		this.date1 = date1;
 		this.date2 = date2;
 	}
@@ -179,6 +183,22 @@ public class Order {
 		this.orderPrice = orderPrice;
 	}
 
+	public String getGoodsTitle() {
+		return goodsTitle;
+	}
+
+	public void setGoodsTitle(String goodsTitle) {
+		this.goodsTitle = goodsTitle;
+	}
+
+	public String getFilePath() {
+		return filePath;
+	}
+
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
+	}
+
 	public Date getDate1() {
 		return date1;
 	}
@@ -201,8 +221,10 @@ public class Order {
 				+ ", mId=" + mId + ", userName=" + userName + ", phone=" + phone + ", address=" + address
 				+ ", orderNum=" + orderNum + ", orderCount=" + orderCount + ", orderDate=" + orderDate
 				+ ", orderStatus=" + orderStatus + ", rowCount=" + rowCount + ", usedPoint=" + usedPoint
-				+ ", orderPrice=" + orderPrice + ", date1=" + date1 + ", date2=" + date2 + "]";
+				+ ", orderPrice=" + orderPrice + ", goodsTitle=" + goodsTitle + ", filePath=" + filePath + ", date1="
+				+ date1 + ", date2=" + date2 + "]";
 	}
+
 	
 	
 }

@@ -81,30 +81,95 @@ font-weight:bold;
 font-family:  'Do Hyeon', sans-serif;
 height:0px;
 }
+input::placeholder {
+  color: DB6666;
+  font-style: italic;
+  text-align: center;
+  margin-bottom: 
+}
 
-a {
+.date{
+	height: 30px;
+	width: 100px;
+	padding-top: 6px;
+	cursor: pointer;
+}
+
+#search {
 	-webkit-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
 	-moz-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
 	-ms-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
 	-o-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
 	transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
-	display: block;
-	max-width: 150px;
-	text-decoration: none;
+
+	max-width: 32px;
+
 	border-radius: 4px;
-	padding: 10px 20px;
+	padding: 6px;
+
+	text-align: center;
 }
 
 
-a.button {
+#search.button {
+	color: gray;
+	box-shadow: gray 0 0px 0px 2px inset;
+	cursor: pointer;
+}
+
+#search.button:hover {
+	color: rgba(255, 255, 255, 0.85);
+	box-shadow: #fa4a4a 0 80px 0px 2px inset;
+}
+.term{
+	-webkit-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+	-moz-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+	-ms-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+	-o-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+	transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+
+	max-width: 32px;
+
+	border-radius: 4px;
+	padding: 6px;
+
+	text-align: center;
 	color: gray;
 	box-shadow: gray 0 0px 0px 2px inset;
 }
 
-a.button:hover {
+
+
+.term:hover {
 	color: rgba(255, 255, 255, 0.85);
 	box-shadow: #fa4a4a 0 80px 0px 2px inset;
+	cursor: pointer;
 }
+#back{
+	-webkit-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+	-moz-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+	-ms-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+	-o-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+	transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+
+	max-width: 32px;
+
+	border-radius: 4px;
+	padding: 6px;
+
+	text-align: center;
+	color: gray;
+	box-shadow: gray 0 0px 0px 2px inset;
+}
+
+
+
+#back:hover {
+	color: rgba(255, 255, 255, 0.85);
+	box-shadow: #fa4a4a 0 80px 0px 2px inset;
+	cursor: pointer;
+
+
 
 </style>
 <body>
@@ -115,8 +180,9 @@ a.button:hover {
 		<div>
 		<h1>주문/배송 조회</h1>
 	
-		<input type="text" id="date1" value="${os.date1 }"><input type="text" id="date2" value="${os.date2 }"><button id=search onclick="search()">검색</button><button onclick="location.href='orderview.do'">전체목록조회하기</button><br>
-	
+		<div align="right">
+		<a id=week onclick="searchWeek()" class="term">1주일</a>&nbsp;<a id=oneMon onclick="searchAmon()" class="term">1개월</a>&nbsp;<a id=threeMon onclick="searchTmon()" class="term">3개월</a>&nbsp;<a id=sixMon onclick="searchSmon()" class="term">6개월</a>&nbsp;<input class="date" type="text" id="date1" placeholder="시작날짜" value="${os.date1 }" readonly>&nbsp;<input class="date" type="text" id="date2" placeholder="마지막날짜" size="25px" value="${os.date2 }" readonly>&nbsp;<a id=search onclick="search2()" class="button">검색</a>
+		</div>
 		<br>
 
 			<table align="center" cellspacing="0" width="880px" id="orderTable">
@@ -157,8 +223,8 @@ a.button:hover {
 					
 					</c:if>
 					<c:set var="orderNum" value="${o.orderNum }" scope="application"/>
-						<td>이미지추가</td>
-						<td>${o.gName}</td>
+						<td><img src="resources/auploadFiles/${o.filePath }" style="height:200px; width:150px;"></td>
+						<td><${o.goodsTitle}><br>${o.gName}</td>
 						<td>${o.orderCount }</td>
 						<td>${o.gPrice * o.orderCount }</td>
 						<c:if test = "${o.orderStatus eq 'B'}">
@@ -182,8 +248,11 @@ a.button:hover {
 
 
 			</table>
+			<br><br><div align="right">
+					<a id=back onclick="location.href='orderview.do'">목록으로 돌아가기</a>
+					</div>
 					<!-- 페이징처리 하쟈-->
-			 <br>
+			 <br><br>
       <div class="pagingArea" align="center">
          <!-- 맨 처음으로(<<) -->
 
@@ -235,26 +304,28 @@ var from ='${os.date2}';
 
 $(function() {
 	   $( "#date1" ).datepicker({
- 	dateFormat: "yy-mm-dd"
+ 	dateFormat: "yy-mm-dd",
+	changeMonth: true, 
+    changeYear: true,
+    nextText: '다음 달',
+    prevText: '이전 달',
+    maxDate: 0
  		
 		 	});
 		});
 	
 	$(function() {
 	    $( "#date2" ).datepicker({
-	    	dateFormat: "yy-mm-dd"
+	    	dateFormat: "yy-mm-dd",
+	    	changeMonth: true, 
+	         changeYear: true,
+	         nextText: '다음 달',
+	         prevText: '이전 달',
+	         maxDate: 0
 	    });
 	});
 	
-	function search(){
-		
-		var date1 = $("#date1").datepicker({dateFormat : "yy/mm/dd"}).val();
-		var date2 = $("#date2").datepicker({dateFormat : "yy/mm/dd"}).val();
 
-		location.href="orderSearch.do?date1="+date1+"&date2="+date2;
-		
-	}
-	
 	function nextPageSearch(){
 	 	location.href="orderSearch.do?page=${pi.currentPage + 1}&date1="+to+"&date2="+from; 
 	}
@@ -270,5 +341,231 @@ $(function() {
 	function minPageSearch(){
 		location.href="orderSearch.do?page=1&date1="+to+"&date2="+from;
 	}
+	function search2(){
+		
+		var date1 = $("#date1").datepicker({dateFormat : "yy/mm/dd"}).val();
+		var date2 = $("#date2").datepicker({dateFormat : "yy/mm/dd"}).val();
+			
+ 		if(date1==null || date1<=0){
+ 			if( date2==null || date2<=0){
+ 				alert("날짜를 입력하세요");
+ 			}else{
+ 				alert("시작날짜를 입력하세요");
+ 			}
+ 		}else if(date2==null || date2<=0){
+ 			alert("마지막날짜를 입력하세요");
+ 		}else{
+ 			
+ 			location.href="orderSearch.do?date1="+date1+"&date2="+date2;
+ 		}
+ 		
+		
+	}
+	
+	 function searchWeek(){
+			
+			
+			var sysdate = new Date();
+			var dd = sysdate.getDate();
+			var mm = sysdate.getMonth()+1; //January is 0!
+			var yy = sysdate.getFullYear();
+	
+ 
+		/* 	if(yy>100){
+				yy=yy-100;
+			}
+*/
+			 if(dd<10) {
+			    dd='0'+dd;
+			} 
+
+			if(mm<10) {
+			    mm='0'+mm;
+			}  
+			
+			var to = yy+"/"+mm+"/"+dd;
+			var date2 = to;
+			
+			var Ago = new Date(sysdate);
+			
+			
+			Ago.setDate(Ago.getDate() - 7);
+			
+			dd = Ago.getDate();
+			mm = Ago.getMonth()+1; //January is 0!
+			yy = Ago.getFullYear(); 
+			
+			/* if(yy>100){
+				yy=yy-100;
+			} */
+			 if(dd<10) {
+				    dd='0'+dd
+				} 
+
+				if(mm<10) {
+				    mm='0'+mm
+				}  
+				
+			
+			var from = ""+yy+"/"+mm+"/"+dd;
+			var date1 = from;
+
+		 location.href="termSearch.do?date3="+date1+"&date4="+date2;  
+			
+		}
+		
+	 function searchAmon(){
+			var sysdate = new Date();
+			var dd = sysdate.getDate();
+			var mm = sysdate.getMonth()+1; //January is 0!
+			var yy = sysdate.getFullYear();
+	
+ 
+		/* 	if(yy>100){
+				yy=yy-100;
+			}
+*/
+			 if(dd<10) {
+			    dd='0'+dd;
+			} 
+
+			if(mm<10) {
+			    mm='0'+mm;
+			}  
+			
+			var to = yy+"/"+mm+"/"+dd;
+			var date2 = to;
+			
+			var Ago = new Date(sysdate);
+	
+			Ago.setMonth(Ago.getMonth() - 1);
+			
+			dd = Ago.getDate();
+			mm = Ago.getMonth()+1; //January is 0!
+			yy = Ago.getFullYear(); 
+			
+			/* if(yy>100){
+				yy=yy-100;
+			} */
+			 if(dd<10) {
+				    dd='0'+dd
+				} 
+
+				if(mm<10) {
+				    mm='0'+mm
+				}  
+				
+			
+			var from = ""+yy+"/"+mm+"/"+dd;
+			var date1 = from;
+
+
+		 location.href="termSearch.do?date3="+date1+"&date4="+date2; 
+	 }
+	 
+	 function searchTmon(){
+		 var sysdate = new Date();
+			var dd = sysdate.getDate();
+			var mm = sysdate.getMonth()+1; //January is 0!
+			var yy = sysdate.getFullYear();
+	
+ 
+		/* 	if(yy>100){
+				yy=yy-100;
+			}
+*/
+			 if(dd<10) {
+			    dd='0'+dd;
+			} 
+
+			if(mm<10) {
+			    mm='0'+mm;
+			}  
+			
+			var to = yy+"/"+mm+"/"+dd;
+			var date2 = to;
+			
+			var Ago = new Date(sysdate);
+	
+			Ago.setMonth(Ago.getMonth() - 3);
+			
+			dd = Ago.getDate();
+			mm = Ago.getMonth()+1; //January is 0!
+			yy = Ago.getFullYear(); 
+			
+			/* if(yy>100){
+				yy=yy-100;
+			} */
+			 if(dd<10) {
+				    dd='0'+dd
+				} 
+
+				if(mm<10) {
+				    mm='0'+mm
+				}  
+				
+			
+			var from = ""+yy+"/"+mm+"/"+dd;
+			var date1 = from;
+
+
+		 location.href="termSearch.do?date3="+date1+"&date4="+date2; 
+	 }
+	 
+	 function searchSmon(){
+		 var sysdate = new Date();
+			var dd = sysdate.getDate();
+			var mm = sysdate.getMonth()+1; //January is 0!
+			var yy = sysdate.getFullYear();
+	
+ 
+		/* 	if(yy>100){
+				yy=yy-100;
+			}
+*/
+			 if(dd<10) {
+			    dd='0'+dd;
+			} 
+
+			if(mm<10) {
+			    mm='0'+mm;
+			}  
+			
+			var to = yy+"/"+mm+"/"+dd;
+			var date2 = to;
+			
+			var Ago = new Date(sysdate);
+	
+			Ago.setMonth(Ago.getMonth() - 6);
+			
+			dd = Ago.getDate();
+			mm = Ago.getMonth()+1; //January is 0!
+			yy = Ago.getFullYear(); 
+			
+			/* if(yy>100){
+				yy=yy-100;
+			} */
+			 if(dd<10) {
+				    dd='0'+dd
+				} 
+
+				if(mm<10) {
+				    mm='0'+mm
+				}  
+				
+			
+			var from = ""+yy+"/"+mm+"/"+dd;
+			var date1 = from;
+
+
+		 location.href="termSearch.do?date3="+date1+"&date4="+date2; 
+		 
+	 }
+	 
+	 
 </script>
+
+<footer>
+	<jsp:include page ="../common/footer.jsp"/>
+</footer>
 </html>
