@@ -96,5 +96,9 @@ public interface BoardService {
 	public ArrayList<Answer> selectAList(int rId);
 
 	public int deleteAnswer(int aId);
+
+	public ArrayList<Reply> selectBestReplyList(int bId);
+
+	public int modifyReply(Reply r);
 	
 }

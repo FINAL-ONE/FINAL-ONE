@@ -144,14 +144,14 @@
 	  	WHERE (STATUS='Y'AND CATEGORY = 2 )
 	 		<if test='type.equals("all")'>
 	 		    AND ( BTITLE LIKE '%' ||  #{searchWord} || '%'
-	 			or USER_ID LIKE '%' || #{searchWord} || '%'
+	 			or USER_NICKNAME LIKE '%' || #{searchWord} || '%'
 	 			or BCONTENT LIKE '%' || #{searchWord} || '%')
 	 		</if>
 	 		<if test='type.equals("bTitle")'>
 	 		    AND ( BTITLE LIKE '%' ||  #{searchWord} || '%')
 	 		</if>
 	 		<if test='type.equals("bWriter")'>
-	 		    AND ( USER_ID LIKE '%' ||  #{searchWord} || '%')
+	 		    AND ( USER_NICKNAME LIKE '%' ||  #{searchWord} || '%')
 	 		</if>
 	 		<if test='type.equals("bContent")'>
 	 		    AND ( BCONTENT LIKE '%' || #{searchWord} || '%')
@@ -237,6 +237,14 @@
   	SET BCOUNT = BCOUNT + 1
   	WHERE BID = #{bId}
   </update>
+  
+  
+    <update id="modifyReply" parameterType = "Reply">
+  	UPDATE D_REPLY
+  	SET RCONTENT = #{rContent}
+  	WHERE RID = #{rId}
+  </update>
+  
   
   <select id="selectBoardOne" parameterType = "_int" resultMap="boardResultSet">
   	SELECT *
@@ -324,6 +332,13 @@
 	WHERE BID=#{bId} AND STATUS = 'Y'
 	ORDER BY RID ASC
   </select>
+  
+   <select id="selectBestReplyList" resultMap="replyResultSet" parameterType="_int">
+	SELECT  *
+	FROM REPLY_VIEW
+	WHERE bid = #{bId} AND RGOOD >= 2 AND STATUS = 'Y' AND ROWNUM <![CDATA[ <= ]]> 3 
+  </select>
+  
   
   <select id="selectAList" resultMap="answerResultSet" parameterType="_int">
   	SELECT *

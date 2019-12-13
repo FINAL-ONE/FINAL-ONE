@@ -34,7 +34,9 @@
 		
 	</servlet-mapping>
 	
-	
+	<listener>
+  <listener-class>se.jiderhamn.classloader.leak.prevention.ClassLoaderLeakPreventor</listener-class>
+</listener>
 	
 	<!-- 로그인 만들다가 MemberController부분에서 예외 처리 할때 작성 할 부분 -->
 	<!-- 에러페이지를 등록해주면 공용으로 사용할수 있다. (스프링에서 지원) -->

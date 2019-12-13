@@ -131,10 +131,6 @@ public class Reply {
 				+ ", status=" + status + ", rGood=" + rGood + ", aList=" + aList + "]";
 	}
 
-
-	
-
-	
-	
 	
 }
+

@@ -31,9 +31,8 @@ public class OrderController {
 
 	@Autowired
 	OrderService oService;
-
-	@RequestMapping("orderview.do")
-	public ModelAndView boardList(ModelAndView mv, @RequestParam(value = "page", required = false) Integer page,
+	@RequestMapping("orderView.do")
+	public ModelAndView abc(ModelAndView mv, @RequestParam(value = "page", required = false) Integer page,
 			HttpServletRequest request, HttpSession session) {
 		
 		int currentPage = 1;
@@ -48,18 +47,21 @@ public class OrderController {
 		
 		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
 		session = request.getSession(true);
-
 		
-
-		ArrayList<Order> list = oService.selectList(mId,pi);
-
-		if (list != null && list.size() > 0) {
+		ArrayList<Order> list = oService.selectList(mId,pi); 
+		
+		System.out.println(listCount);
+		System.out.println(pi);
+		System.out.println(list);
+		
+		 if(list != null && !list.isEmpty()) {
 			mv.addObject("list", list);
 			mv.addObject("pi", pi);
+		 } 
 			mv.setViewName("order/orderListView");
-		}
 		return mv;
 	}
+	
 
 	@RequestMapping("orderCount.do")
 	public void orderCount(HttpServletRequest request, HttpServletResponse response)

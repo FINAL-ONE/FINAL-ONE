@@ -178,6 +178,16 @@ public class BoardServiceImpl implements BoardService {
 		return bDao.deleteAnswer(aId);
 	}
 
+	@Override
+	public ArrayList<Reply> selectBestReplyList(int bId) {
+		return bDao.selectBestReplyList(bId);
+	}
+
+	@Override
+	public int modifyReply(Reply r) {
+		return bDao.modifyReply(r);
+	}
+
 
 	
 }

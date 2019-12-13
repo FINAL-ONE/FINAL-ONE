@@ -158,5 +158,13 @@ public class BoardDao {
 	public int deleteAnswer(int aId) {
 		return sqlSession.delete("boardMapper.deleteAnswer",aId);
 	}
+
+	public ArrayList<Reply> selectBestReplyList(int bId) {
+		return (ArrayList)sqlSession.selectList("selectBestReplyList", bId);
+	}
+
+	public int modifyReply(Reply r) {
+		return sqlSession.update("modifyReply", r);
+	}
 	
 }
