@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
   <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:400,700,800&display=swap&subset=korean" rel="stylesheet">
 <title>Insert title here</title>
+
 <style>
    .menubar1{
       /*border:1px solid black;   */
@@ -154,6 +155,13 @@
 
 </head>
 <body>
+<c:if test = "${!empty sessionScope.loginUser}">
+	<input id="loginUserMid"  value = "${loginUser.mid}"/> 
+</c:if>
+<c:if test = "${empty sessionScope.loginUser}">
+	<input id="loginUserMid"  value = "0"/> 
+</c:if>
+
 
 
 <c:set var="contextPath" value="${pageContext.servletContext.contextPath }" scope="application"/>
