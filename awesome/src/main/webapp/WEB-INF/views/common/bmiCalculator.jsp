@@ -7,6 +7,8 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link href="https://fonts.googleapis.com/css?family=Gaegu&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Lilita+One&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Jua&display=swap" rel="stylesheet">
 <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="//code.jquery.com/jquery-latest.min.js"></script>
 <script src="jquery.progress.js"></script>
@@ -170,19 +172,68 @@ progress::-moz-progress-bar {
 	text-align: right;
 }
 
+
+.progress-meter2 {
+/* 	min-height: px; */
+/* 	border-bottom: 2px solid rgb(160, 160, 160); */
+}
+
+.progress-meter2 > .meter {
+	position: relative;
+	float: left;
+	min-height: 15px;
+	border-width: 0px;
+	border-style: solid;
+	border-color: rgb(160, 160, 160);
+}
+
+
+/* .progress-meter > .meter-right {
+	float: right;
+	border-right-width: 2px;
+}
+
+.progress-meter > .meter-right:last-child {
+	border-left-width: 2px;
+} */
+
+.progress-meter2 > .meter > .meter-text {
+	position: absolute;
+	display: inline-block;
+	bottom: 57px;
+	width: 100%;
+/* 	font-weight: 700; */
+	font-size: 20px;
+	color: white;
+	font-family: 'Lilita One', cursive;
+	text-align: left;
+}
+
+.progress-meter2 > .meter.meter-right > .meter-text {
+	text-align: right;
+}
+
+
 #cmt{
 	font-size:80px;
 	font-family: 'Gaegu', cursive;
+	
 }
 
 #bmi{
-	font-size:30px;
-	font-weight: 10px;
+	font-size:40px;
+	font-weight: 18px;
+/* 	font-family: 'Rubik', sans-serif; */
 }
 
 #result{
 	font-size:30px;
 	font-weight: 15px;
+}
+
+#nahyezzang{
+	font-size : 30px;
+	font-family: 'Jua', sans-serif;
 }
 
 </style>
@@ -226,12 +277,14 @@ progress::-moz-progress-bar {
 		<div align="center">
 			<a id="a" onclick="bmicheck()" class="button">결과 확인</a>
 		</div>
-
+	<br>
 
 	
-		<div id="myProgress" style="display:none">
-		<h2 class="text-center">당신의 비만도는?</h2>
-		당신의 bmi지수는 <span id="bmi"></span>% 입니다<br><br>
+		<div id="myProgress"  style="display:none">
+		<!-- -->
+<!-- 		<h1 class="text-center">당신의 비만도는?</h2> -->
+		
+		<div id="nahyezzang">당신의 bmi지수는 <span id="bmi"></span>% 입니다</div><br><br>
 <!-- 				 <span id="result"></span><br><br> -->
 		  <div id="myBar"></div>
 
@@ -248,11 +301,20 @@ progress::-moz-progress-bar {
 				<div class="meter meter-right" style="width: 7.15%;"><span class="meter-text">고도비만</span></div>
 				<div class="meter meter-right" style="width: 7.15%;"><span class="meter-text"></span></div>
 			</div>
+			<br>
+			<div class="progress-meter2">
+				<div class="meter meter-right" style="width: 0%;"><span class="meter-text">&nbsp;0</span></div>
+				<div class="meter meter-right" style="width: 52.8%;"><span class="meter-text">18.5</span></div>
+				<div class="meter meter-right" style="width: 12.9%;"><span class="meter-text">23</span></div>
+				<div class="meter meter-right" style="width: 5.7%;"><span class="meter-text">25</span></div>
+				<div class="meter meter-right" style="width: 14.3%;"><span class="meter-text">30</span></div>
+				<div class="meter meter-right" style="width: 14.3%;"><span class="meter-text"></span></div>
+			</div>
 <br><br>
 		</div>
 		<div align="center">
  
-		  <img src="" name=edit-save id="img"/><br>
+		  <img src="" name="edit-save" id="img"/><br>
 		  <span id="cmt"></span>
 		  </div>
 		  

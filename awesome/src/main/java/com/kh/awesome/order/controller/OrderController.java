@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
+import com.kh.awesome.board.model.vo.Answer;
 import com.kh.awesome.board.model.vo.PageInfo;
 import com.kh.awesome.common.Pagination;
 import com.kh.awesome.member.model.vo.Member;
@@ -82,10 +83,12 @@ public class OrderController {
 	}
 
 	@RequestMapping("orderDetail.do")
-	public ModelAndView orderDetail(ModelAndView mv, HttpServletRequest request, String orderNum) {
+	public ModelAndView orderDetail(ModelAndView mv, HttpServletRequest request, String orderNum, HttpServletResponse response) {
 		// System.out.println(orderNum);
 		ArrayList<Order> list = oService.orderDetail(orderNum);
 		// System.out.println(list);
+		
+	
 		if (list != null && list.size() > 0) {
 			mv.addObject("list", list);
 			mv.addObject("orderNum", orderNum);
@@ -144,6 +147,7 @@ public class OrderController {
 		
 		for(Order o :order) {
 			o.setgName(URLEncoder.encode(o.getgName(), "utf-8"));	
+			o.setGoodsTitle(URLEncoder.encode(o.getGoodsTitle(), "utf-8"));	
 		}
 
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
@@ -158,11 +162,8 @@ public class OrderController {
 		int mid = loginUser.getMid();
 		
 		
-		Date d1 = Date.valueOf(date1); Date d2 = Date.valueOf(date2);
-
-		
-		os.setDate1(d1);
-		os.setDate2(d2);
+		os.setDate1(date1);
+		os.setDate2(date2);
 		os.setMid(mid);
 		
 		int currentPage = 1;
@@ -188,19 +189,22 @@ public class OrderController {
 			mv.addObject("list", list);
 			mv.addObject("pi", pi);
 			mv.setViewName("order/orderSearchView");
+		}else {
+			mv.setViewName("order/emptyOrderSearch");
 		}
 		System.out.println("searchController2 : " + list);
 		return mv;
 	}
 	
 	@RequestMapping("termSearch.do")
-	public ModelAndView searchList(ModelAndView mv, OrderSearch os,HttpSession session,HttpServletRequest request, @RequestParam(value = "page", required = false) Integer page) {
+	public ModelAndView searchList(ModelAndView mv,String date3, String date4, OrderSearch os,HttpSession session,HttpServletRequest request, @RequestParam(value = "page", required = false) Integer page) {
 		
 		Member loginUser = (Member) session.getAttribute("loginUser");
 		int mid = loginUser.getMid();
 		
 
-
+		os.setDate1(date3);
+		os.setDate2(date4);
 		os.setMid(mid);
 		
 		int currentPage = 1;

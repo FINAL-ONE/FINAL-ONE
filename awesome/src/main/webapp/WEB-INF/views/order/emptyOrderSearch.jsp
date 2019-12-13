@@ -148,188 +148,54 @@ input::placeholder {
 	box-shadow: #fa4a4a 0 80px 0px 2px inset;
 	cursor: pointer;
 }
+#back{
+	-webkit-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+	-moz-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+	-ms-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+	-o-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+	transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+
+	max-width: 32px;
+
+	border-radius: 4px;
+	padding: 6px;
+
+	text-align: center;
+	color: gray;
+	box-shadow: gray 0 0px 0px 2px inset;
+}
+
+
+
+#back:hover {
+	color: rgba(255, 255, 255, 0.85);
+	box-shadow: #fa4a4a 0 80px 0px 2px inset;
+	cursor: pointer;
+}
 </style>
 <body>
 	<jsp:include page="../common/menubar.jsp" />
 
 <div class = "centerDiv"> 
-		<div>
+		
 		<h1>주문/배송 조회</h1>
 		<div align="right">
 		<a id=week onclick="searchWeek()" class="term">1주일</a>&nbsp;<a id=oneMon onclick="searchAmon()" class="term">1개월</a>&nbsp;<a id=threeMon onclick="searchTmon()" class="term">3개월</a>&nbsp;<a id=sixMon onclick="searchSmon()" class="term">6개월</a>&nbsp;<input class="date" type="text" id="date1" placeholder="시작날짜" readonly>&nbsp;<input class="date" type="text" id="date2" placeholder="마지막날짜" size="25px" readonly>&nbsp;<a id=search onclick="search2()" class="button">검색</a>
 		</div>
 	<br>
-	<div class="countBox">
-		<table id="tb">
-		<thead>
-		 	<tr>
-			<td width="220px"><img src="resources/images/order3.png" style="height:15%; width:40%; "><br>
-			배송전
-			</td>
-			<td width="220px"><img src="resources/images/delivery3.png" style="height:15%; width:40%; "><br>
-			배송중
-			</td>
-			<td width="220px"><img src="resources/images/complete3.png" style="height:15%; width:40%; "><br>
-			배송완료
-			</td>
-			<td width="220px">
-			<img src="resources/images/cancel3.png" style="height:15%; width:40%; "><br>
-			주문취소
-			</td>
-			</tr> 
-			</thead>
-			<tbody>
-			</tbody>
 
-		</table>
-	
-	</div>
 	<br>
-	
-			<table align="center" cellspacing="0" width="880px" id="orderTable">
-				<tr id="th">
-					<td style="width: 130px">주문일자<br>[주문번호]</td>
-					<td style="width: 200px" align="center">이미지</td>
-					<td style="width: 300px" align="center">상품정보</td>
-					<td style="width: 100px">수량</td>
-					<td style="width: 100px">주문금액</td>
-					<td style="width: 150px">진행상태</td>
-				</tr>
-				<c:forEach var="t" items="${list }">
-					<c:forEach var="r" items="${rowCount }">
-							<c:if test="${t.orderNum eq r.orderNum }">
-								${r.orderNum }
-								${r.rowCount }
-							</c:if>
-						</c:forEach>
-					</c:forEach>
-				
-				
-				
-				
-				<c:set var="orderNum" value="0" scope="application"/>
-				
-				<c:forEach var="o" items="${list}">	
-					<tr>
-					<c:if test ="${applicationScope.orderNum ne o.orderNum}"  > 
-							<td rowspan="${o.rowCount }">${o.orderDate }<br>
-								<c:url var="odetail" value="orderDetail.do">
-									<c:param name="orderNum" value="${o.orderNum}"/>
-								</c:url>
-								<a href="${odetail }">[${o.orderNum}]</a>
-							</td>
-					</c:if>
-	
-					<c:if test="${applicationScope.orderNum eq o.orderNum}">
-					
-					</c:if>
-					<c:set var="orderNum" value="${o.orderNum }" scope="application"/>
-						<td><img src="resources/auploadFiles/${o.filePath }" style="height:200px; width:150px;"></td>
-						<td><${o.goodsTitle}><br>${o.gName}</td>
-						<td>${o.orderCount }</td>
-						<td>${o.gPrice * o.orderCount }</td>
-						<c:if test = "${o.orderStatus eq 'B'}">
-						<td>
-						배송전
-						</td>
-						</c:if>
-						<c:if test = "${o.orderStatus eq 'I'}">
-						<td>배송중</td>
-						</c:if>
-						<c:if test = "${o.orderStatus eq 'C'}">
-						<td>배송완료</td>
-						</c:if>
-						<c:if test = "${o.orderStatus eq 'X'}">
-						<td>주문취소</td>
-						</c:if>
+		<div align="center">
+		<h2>주문할 데이터가 없습니다.</h2>
 
-					</tr>
-				</c:forEach>
-				
-
-
-			</table>
 			<br>
-				<!-- 페이징처리 하쟈-->
-			 <br>
-      <div class="pagingArea" align="center">
-         <!-- 맨 처음으로(<<) -->
-         <button onclick="location.href='orderview.do?page=1'"> << </button>
-         
-         <!-- 이전 페이지로(<) -->
-        <c:if test="${pi.currentPage <= 1 }">
-            <button disabled> < </button>
-        </c:if>
-         <c:if test="${pi.currentPage > 1 }">
-         
-            <button onclick="location.href='orderview.do?page=${pi.currentPage -1}'"> < </button>
-        </c:if>
-         
-         <!-- 10개의 페이지 목록 -->
-         <c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage }">
-           <c:if test="${pi.currentPage == p }">
-               <button style="background:#ec434a;color:white" disabled >${p}</button>
-           </c:if>
-            <c:if test="${pi.currentPage != p }">
-               <button onclick="location.href='orderview.do?page=${p}'">${p}</button>
-            </c:if>
-       </c:forEach>
-	 				
-         <c:if test="${pi.currentPage >= pi.maxPage }">
-            <button disabled> > </button>
-          </c:if>
-          <c:if test="${pi.currentPage < pi.maxPage }">
-            <button onclick="location.href='orderview.do?page=${pi.currentPage + 1}'"> > </button>
-          </c:if>
-         
-         <!-- 맨 끝으로(>>) -->
-         <button onclick="location.href='orderview.do?page=${pi.maxPage}'"> >> </button>
-            </div>
-			
-			<div>
-				  
-			</div>
-			<br><br>
+			<a id=back onclick="location.href='orderview.do'">목록으로 돌아가기</a>
+			<br><br><br>
 		</div>
 		</div>
- 		<script>
-		function orderCount(){
-			$.ajax({
-				url:"orderCount.do",
-				dataType:"json",
-				success:function(data){
-					//alert(data);
-					$tableBody = $("#tb tbody");
-					$tableBody.html(" ");
-					
-			
-						var $tr = $("<tr>");
-						var $beforeCount = $("<td>").text(data[0]);
-						var $deliverCount = $("<td>").text(data[1]);
-						var $completeCount = $("<td>").text(data[2]);
-						var $cancelCount = $("<td>").text(data[3]);
-					
-						$tr.append($beforeCount);
-						$tr.append($deliverCount);
-						$tr.append($completeCount);
-						$tr.append($cancelCount);
-						
-						$tableBody.append($tr);
-					
-					
-				},
-				error:function(request, status, errorData){
-					alert("error code: " + request.status + "\n"
-							+"message: " + request.responseText
-							+"error: " + errorData);
-				}
-			})
-		}
 		
-		$(function(){
-			orderCount();
+ 		<script>
 
-		})
 		
 		$(function() {
  		   $( "#date1" ).datepicker({
@@ -337,8 +203,7 @@ input::placeholder {
 	    	changeMonth: true, 
 	         changeYear: true,
 	         nextText: '다음 달',
-	         prevText: '이전 달',
-	         maxDate: 0
+	         prevText: '이전 달'
 	    	
 	   		 	});
 			});
@@ -349,8 +214,7 @@ input::placeholder {
 		    	changeMonth: true, 
 		         changeYear: true,
 		         nextText: '다음 달',
-		         prevText: '이전 달',
-		         maxDate: 0
+		         prevText: '이전 달'
 		    });
 		});
 		
@@ -380,7 +244,6 @@ input::placeholder {
 			
 		}
 		}
-		
 		 function searchWeek(){
 				
 				
@@ -595,4 +458,4 @@ input::placeholder {
 	<jsp:include page ="../common/footer.jsp"/>
 </footer>
 
-</html>	
+</html>
