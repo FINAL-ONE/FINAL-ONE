@@ -346,7 +346,6 @@
                <button onclick="location.href='fBoardListView.do?page=${p}'">${p}</button>
             </c:if>
        </c:forEach>
-	 				
          <c:if test="${pi.currentPage >= pi.maxPage }">
             <button disabled> > </button>
           </c:if>

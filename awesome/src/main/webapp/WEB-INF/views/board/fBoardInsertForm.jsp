@@ -305,6 +305,8 @@
 
 <body>
 
+
+
 <jsp:include page="../common/menubar.jsp"/>   
 <div id="container" style="overflow: auto; height: auto;"><!-- container -->
    
@@ -335,9 +337,13 @@
             <tr>
                <td class= "titleTd tableTd"><b>제목</b></td>
                <td class ="tableTd"><input type="text" name= "bTitle" class="inputTd" >
-               <label for="superCheck" id=checkLabel><span style="font-size: 14px;">공지사항</span></label>
-               <input id = superCheck type="checkbox" name="bLevel" value="4" onclick="checkBox();">
-               <input id = noCheck type= "hidden" name="bLevel" value="1">
+               	
+               	<c:if test="${loginUser.admin eq 'Y'}">
+	               <label for="superCheck" id=checkLabel><span style="font-size: 14px;">공지사항</span></label>
+	               <input id = superCheck type="checkbox" name="bLevel" value="4" onclick="checkBox();">
+	               <input id = noCheck type= "hidden" name="bLevel" value="1">
+    			</c:if>  
+               
                </td> 
             </tr>
             <tr>
@@ -352,6 +358,8 @@
          <div id="textareaDiv">
             <textArea id= summernote rows=30 col=100 name = "bContent" placeholder="내용을 입력해주세요"></textArea>
          </div>
+         
+         	<c:if test="${loginUser.admin eq 'Y'}">
          <table id = "attachTable">
             <tr>
                <td rowspan=9 class= "titleTd" style= "border-right: 1px solid #dbdbdb">
@@ -377,7 +385,9 @@
             </tr>
                
          </table>
-      
+      	</c:if>
+      	
+      	
          <br><br>
          <div class= btnDiv>
                <button type='button'id=listBtn onclick="goBoardListView();"><b>취소</b></button>&nbsp;&nbsp;
@@ -398,7 +408,7 @@
 
 
 
-
+		<br><br>
    </div>
 </div>
 </body>

@@ -155,11 +155,13 @@
 
 </head>
 <body>
+
+
 <c:if test = "${!empty sessionScope.loginUser}">
-	<input id="loginUserMid"  value = "${loginUser.mid}"/> 
+	<input id="loginUserMid"  type="hidden" value = "${loginUser.mid}"/> 
 </c:if>
 <c:if test = "${empty sessionScope.loginUser}">
-	<input id="loginUserMid"  value = "0"/> 
+	<input id="loginUserMid"  type="hidden" value = "0"/> 
 </c:if>
 
 
@@ -224,7 +226,7 @@
  
 <div class="menubar2 communityMenubar communityMenu" style="display:none;">
    <div class= "conmmunityNav">
-      <span class= menu2 style="left: 285px;" onclick= "location.href='fBoardListView.do'">자유게시판</span>
+      <span class= menu2 style="left: 285px;" onclick= "goFboardList();">자유게시판</span>
       <span class= menu2 style="left: 315px;">Before & After </span>
    </div>
 </div>   
@@ -256,6 +258,20 @@
 </body>
 
 <script>
+
+function goFboardList(){
+	
+	if($("#loginUserMid").val() >0){
+		location.href='fBoardListView.do'
+			
+	}else{
+		alert("로그인을 해야지만 이용하실 수 있습니다.")
+		location.href='loginView.do'	
+	}
+	
+	
+}
+
 
 function goOrderView(){
 	alert("fsdf");
