@@ -22,12 +22,12 @@ public class BoardDao {
 	@Autowired
 	SqlSessionTemplate sqlSession;
 
-	public int getFboardListCount() {
+	public int getBoardListCount(int category) {
 		
-		return sqlSession.selectOne("boardMapper.getFboardListCount");
+		return sqlSession.selectOne("boardMapper.getBoardListCount", category);
 	}
 
-	public ArrayList<Board> selectFList(PageInfo pi) {
+	public ArrayList<Board> selectList(PageInfo pi, int category) {
 		
 		//pageInfo가 넘어왔을때 rowBounds 설정 방법 
 		// 현재 페이지 전까지의 모든 게시글. 
@@ -35,7 +35,8 @@ public class BoardDao {
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		
 		
-		return (ArrayList)sqlSession.selectList("boardMapper.selectFList", null, rowBounds);
+		
+		return (ArrayList)sqlSession.selectList("boardMapper.selectList", category, rowBounds);
 	}
 
 	public int insertBoard(Board b) {
@@ -160,11 +161,18 @@ public class BoardDao {
 	}
 
 	public ArrayList<Reply> selectBestReplyList(int bId) {
-		return (ArrayList)sqlSession.selectList("selectBestReplyList", bId);
+		return (ArrayList)sqlSession.selectList("boardMapper.selectBestReplyList", bId);
 	}
 
 	public int modifyReply(Reply r) {
-		return sqlSession.update("modifyReply", r);
+		return sqlSession.update("boardMapper.modifyReply", r);
 	}
-	
+
+	public ArrayList<Board> selectBestList() {
+		return (ArrayList)sqlSession.selectList("boardMapper.selectBestList");
+	}
+
+	public ArrayList<Board> selectNoticeList() {
+		return (ArrayList)sqlSession.selectList("boardMapper.selectNoticeList");
+	}
 }

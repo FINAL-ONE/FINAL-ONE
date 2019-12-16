@@ -117,7 +117,7 @@
     border-left: 6px solid transparent;
     border-bottom: 8px solid #fa4a4a;
     top: -41px;
-    left: 123px;
+    left: -55px;
 }
 
  .myPageNav:after {
@@ -193,7 +193,7 @@
 <div class= menubar1>
    <div class= nav>    
       <div class= "menu normalMenu">소개</div>
-      <div class= "menu normalMenu">공지사항</div>
+      <div class= "menu normalMenu" onclick= "goNboardList();">공지사항</div> 
       <div class= "menu communityMenu">커뮤니티</div>
       <div class =logoImg><img src="${contextPath}/resources/images/logo.png" style="height: 89px; vertical-align: middle" onclick= "location.href='home.do'"></div>
        <div class= "menu normalMenu" onclick="location.href='bmicalc.do'">BMI 계산기</div>
@@ -218,8 +218,11 @@
  
 <div class="menubar2 communityMenubar communityMenu" style="display:none;">
    <div class= "conmmunityNav">
-      <span class= menu2 style="left: 285px;" onclick= "goFboardList();">자유게시판</span>
-      <span class= menu2 style="left: 315px;">Before & After </span>
+   	  <span class= menu2 style="left: 215px;" onclick= "goBoardList(10);">전체</span>
+      <span class= menu2 style="left: 245px;" onclick= "goBoardList(2);">자유게시판</span>
+      <span class= menu2 style="left: 275px;" onclick= "goBoardList(3);">팁&노하우</span>
+      <span class= menu2 style="left: 305px;" onclick= "goBoardList(4);">비포&애프터</span>
+      <span class= menu2 style="left: 335px;" onclick= "goBoardList(5);">자극 사진</span>
    </div>
 </div>   
    
@@ -251,10 +254,10 @@
 
 <script>
 
-function goFboardList(){
+function goBoardList(category){
 	
 	if($("#loginUserMid").val() >0){
-		location.href='fBoardListView.do'
+		location.href='boardListView.do?category='+category
 			
 	}else{
 		alert("로그인을 해야지만 이용하실 수 있습니다.")
@@ -263,6 +266,17 @@ function goFboardList(){
 	
 	
 }
+
+function goNboardList(){
+	if($("#loginUserMid").val() >0){
+		location.href='boardListView.do?category=1'
+	}else{
+		alert("로그인을 해야지만 이용하실 수 있습니다.")
+		location.href='loginView.do'	
+	}
+}
+
+
 
 
 function goOrderView(){

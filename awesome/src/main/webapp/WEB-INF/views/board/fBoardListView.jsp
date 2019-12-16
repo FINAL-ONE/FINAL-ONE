@@ -207,7 +207,7 @@
 .fa-plus-square:before {
     content: "\f0fe";
     position: relative;
-    left: 140px;
+    left: 120px;
     top: 1px;
     color: lightgray;
     font-size: 20px;
@@ -231,19 +231,56 @@
 	<div class= "previewBoard2"> 
 		<div class= "advertisement"></div>
 		<div class= "noticeList">
-		 	<div style="font-size: 15px; font-weight: bold; margin-left: 15px; margin-top: 15px;">공지사항<i class="far fa-plus-square"></i></div>
-		 	<div style="height: 140px; margin-top: 15px; padding-left: 18px;">
-			<c:forEach var="b" begin="0" end="4" items="${flist}">
-	    				<div class="noticeListDiv"><i class="fas fa-bell"></i>&nbsp;${b.bTitle} </div>
-			</c:forEach>
-			</div>
+		
+			<c:if test= "${category != 1}">
+			 	<div style="font-size: 15px; font-weight: bold; margin-left: 15px; margin-top: 15px;">공지사항&nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-plus-square" onclick="goNoticeList();"></i></div>
+			 	<div style="height: 140px; margin-top: 15px; padding-left: 18px;">
+				<c:forEach var="n" items="${noticeList}">	
+		    				<div class="noticeListDiv"><i class="fas fa-bell"></i>&nbsp;${n.bTitle} </div>
+				</c:forEach>
+				</div>
+			</c:if>
+			<c:if test= "${category eq 1}">
+			 	<div style="font-size: 15px; font-weight: bold; margin-left: 15px; margin-top: 15px; ">인기 게시글<i class="far fa-plus-square" style="left:120px;"></i></div>
+			 	<div style="height: 140px; margin-top: 15px; padding-left: 18px;">
+				<c:forEach var="b" items="${bestList}">	
+		    				<div class="noticeListDiv"><i class="fas fa-bell"></i>&nbsp;${b.bTitle} </div>
+				</c:forEach>
+				</div>
+			</c:if>
+		
 		</div> 
 	</div> 
 </div >
 
 <div clAss = "centerDiv"> 
 	<div> 
+	
+		<c:if test = "${category eq 1 }">
+		<h2 style="font-size: 26px;">공지사항</h2> 
+		</c:if>
+	
+		<c:if test = "${category eq 2 }">
 		<h2 style="font-size: 26px;"> 자유게시판 </h2> 
+		</c:if>
+		
+	
+		<c:if test = "${category eq 3 }">
+		<h2 style="font-size: 26px;"> 팁&노하우 </h2> 
+		</c:if>
+		
+		<c:if test = "${category eq 4 }">
+		<h2 style="font-size: 26px;"> 비포&애프터 </h2> 
+		</c:if>
+	
+		<c:if test = "${category eq 5 }">
+		<h2 style="font-size: 26px;"> 자극사진 </h2> 
+		</c:if>
+		
+		<c:if test="${category eq 10 }">
+		<h2 style="font-size: 26px;"> 전체 </h2> 
+		</c:if>
+		
 		<table  align="center" cellspacing="0" width="880px" id="boardTable"> 
 			<tr id= "th">
 				<td style= "width: 100px">게시판</td>
@@ -257,11 +294,31 @@
 		<c:forEach var="b" items="${flist}">		
 			<c:if test = "${b.bLevel == 4}">
 				<tr align="center" class = "superTr"> 
-					<td><input type="hidden" value = "${b.bId}"> [공지사항]</td>
+					<td style="color:#e11c24;"><input type="hidden" value = "${b.bId}"> [필독]</td>
 			</c:if>
 			<c:if test = "${b.bLevel != 4}">
 				<tr align="center" class = "normalTr"> 
-					<td><input type="hidden" value = "${b.bId}"> [자유게시판]</td>
+				
+				<c:if test = "${b.category eq 1 }">
+				<td><input type="hidden" value = "${b.bId}"> [공지사항]</td>
+			</c:if>
+	
+			<c:if test = "${b.category eq 2 }">
+				<td><input type="hidden" value = "${b.bId}"> [자유게시판]</td>		
+			</c:if>
+			
+			<c:if test = "${b.category eq 3 }">
+				<td><input type="hidden" value = "${b.bId}"> [팁&노하우]</td>		
+			</c:if>
+			
+			<c:if test = "${b.category eq 4 }">
+				<td><input type="hidden" value = "${b.bId}"> [비포&애프터]</td>		
+			</c:if>
+			
+			<c:if test = "${b.category eq 5 }">
+				<td><input type="hidden" value = "${b.bId}"> [자극사진]</td>		
+			</c:if>
+				
 			</c:if>
 				<td id="bTitle${b.bId}" align="left" style=" padding-left: 10px;" > ${b.bTitle }&nbsp;
 			     <script> 
@@ -326,7 +383,7 @@
       <div class="pagingArea" align="center">
       <button type= "button" style="visibility:hidden; border:none; background: none; height: 30px; color:white;padding-bottom:14px; position:relative; float:left;">글쓰기</button>
          <!-- 맨 처음으로(<<) -->
-         <button onclick="location.href='fBoardListView.do?page=1'"> << </button>
+         <button onclick="location.href='boardListView.do?page=1&category=${category}'"> << </button>
          
          <!-- 이전 페이지로(<) -->
         <c:if test="${pi.currentPage <= 1 }">
@@ -334,7 +391,7 @@
         </c:if>
          <c:if test="${pi.currentPage > 1 }">
          
-            <button onclick="location.href='fBoardListView.do?page=${pi.currentPage -1}'"> < </button>
+            <button onclick="location.href='boardListView.do?page=${pi.currentPage -1}&category=${category}'"> < </button>
         </c:if>
          
          <!-- 10개의 페이지 목록 -->
@@ -343,21 +400,21 @@
                <button style="background:#ec434a;color:white" disabled >${p}</button>
            </c:if>
             <c:if test="${pi.currentPage != p }">
-               <button onclick="location.href='fBoardListView.do?page=${p}'">${p}</button>
+               <button onclick="location.href='boardListView.do?page=${p}&category=${category}'">${p}</button>
             </c:if>
        </c:forEach>
          <c:if test="${pi.currentPage >= pi.maxPage }">
             <button disabled> > </button>
           </c:if>
           <c:if test="${pi.currentPage < pi.maxPage }">
-            <button onclick="location.href='fBoardListView.do?page=${pi.currentPage + 1}'"> > </button>
+            <button onclick="location.href='boardListView.do?page=${pi.currentPage + 1}&category=${category}'"> > </button>
           </c:if>
          
          <!-- 맨 끝으로(>>) -->
-         <button onclick="location.href='fBoardListView.do?page=${pi.maxPage}'"> >> </button>
+         <button onclick="location.href='boardListView.do?page=${pi.maxPage}&category=${category}'"> >> </button>
      
       
-      	<button style="border:none; background: #585858; height: 30px; color:white;padding-bottom:14px; position:relative; float:right;" onclick = "location.href='fBoardInsertForm.do?category=2'">글쓰기</button>
+      	<button style="border:none; background: #585858; height: 30px; color:white;padding-bottom:14px; position:relative; float:right;" onclick = "location.href='fBoardInsertForm.do?category=${category}'">글쓰기</button>
       </div>
       
       
@@ -367,7 +424,8 @@
 			
 	<br>		
 	<div class ="searchArea" align ="center" style="background:#f6f6f6;"> 
-	<form id ="searchForm" action = "searchFboardList.do" method="post">
+	<form id ="searchForm" action = "searchBoardList.do" method="post">
+	<input type = "hidden" name="category" value= "${category}"> 
 	<select name = "type" style= "height:26px">
 		<option value="all" > 전체</option>
 	 	<option value="bTitle" >제목</option>
@@ -397,12 +455,9 @@
 <script>
 
 
-
-
-
-
-
-
+function goNoticeList(){
+	location.href='boardListView.do?category=1'
+}
 
 
 

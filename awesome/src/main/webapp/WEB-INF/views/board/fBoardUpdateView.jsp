@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"  import="java.util.*, java.text.*"%>
 <%@ page import = "com.kh.awesome.board.model.vo.Board"%>
+<%@ page import = "com.kh.awesome.member.model.vo.Member"%>
 <%@ page import = "com.kh.awesome.board.model.vo.Attachment"%> 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -29,7 +30,8 @@
 	  String originName3= flist.get(2).getOriginName();
 	  String originName4= flist.get(3).getOriginName();
 	  String originName5= flist.get(4).getOriginName();
-
+	
+	  Member loginUser = (Member)session.getAttribute("loginUser"); 
 	  
 
 %>
@@ -262,6 +264,7 @@
 		background-color: white;
 		border: 1px solid black;
 		outline: none;
+		margin-top: 5px;
 	}
 	
 	#checkLabel{
@@ -348,16 +351,22 @@
 </style>
 
 <body>
-
 <jsp:include page="../common/menubar.jsp"/>	
+
+
+	<input type="text" value="<%=loginUser.getAdmin()%>">
+	 	<input type="text" value="fdsafasd">
+
 <div id="container" style="overflow: auto; height: auto;"><!-- container -->
    
    
 <div class= "previewBoard" >
 	<div class= "previewBoard2"> 
-		<div class= "advertisement">광고 <%=category%> </div>
+		<div class= "advertisement">광고 </div>
 		<div class= "noticeList">  공지사항(미리보기) </div> 
 	</div> 
+	
+	 
 </div >
 
 <div class = "centerDiv">
@@ -373,12 +382,16 @@
 					<td class="tableTd"> &nbsp;&nbsp;
 						
 
-						<select class="categorySelect" name = "category" style="height: 35px;"> 
-							<option id =  "category2" value = 2>자유게시판 </option>
-							<option id =  "category3" value = 3>팁&노하우</option>
-							<option id =  "category4" value = 4>비포&애프터 </option>
-							<option id =  "category5" value = 5>자극사진</option>
-						</select>
+					  <select class="categorySelect" name = "category" style="height: 35px;"> 
+                  
+                <% if (loginUser.getUserId().equals("admin")){%>
+                  	 <option id= "category1" value = "1"> 공지사항 </option>
+                  <%}%>
+                     <option id =  "category2"   value = "2">자유게시판 </option>
+                     <option id =  "category3"  value = "3">팁&노하우</option>
+                     <option id =  "category4"  value = "4">비포&애프터 </option>
+                     <option id =  "category5"  value = "5">자극사진</option>
+                  </select>
 					</td>
 				</tr>
 				<tr>
@@ -386,21 +399,24 @@
 							
 					<td class ="tableTd"><input type="text" name= "bTitle" class="inputTd" value = "<%=b.getbTitle()%>" >
 					
-					<label for="superCheck" id=checkLabel><span style="font-size: 14px;">공지사항</span></label>
+			  <% if (loginUser.getUserId().equals("admin")){%>
+	
+					<label for="superCheck" id=checkLabel><span style="font-size: 14px;">필독</span></label>
 
-					<%if(b.getbLevel() < 4){ %>
-						<input id = superCheck type="checkbox" name="blevel" value="4" onclick="checkBox();">
-					<%} else{%>
-						<input id = superCheck type="checkbox" name="blevel" value="4" onclick="checkBox();" checked>
-					<%} %>
-			
+					    	 
+						<%if(b.getbLevel() < 4){ %>
+							<input id = superCheck type="checkbox" name="blevel" value="4" onclick="checkBox();">
+						<%} else{%>
+							<input id = superCheck type="checkbox" name="blevel" value="4" onclick="checkBox();" checked>
+						<%} %>
+					 <%}%>
 					
 					<input id = noCheck type= "hidden" name="bLevel" value="1">
 					</td> 
 				</tr>
 				<tr>
 					<td class= "titleTd tableTd"><b>작성자</b></td>
-					<td  class ="tableTd"><span style="padding-left: 17px; font-size: 16px;"><%=b.getUserId()%></span></td>
+					<td  class ="tableTd"><span style="padding-left: 17px; font-size: 16px;"><%=b.getUserNickname()%></span></td>
 				</tr>
 				<tr>
 					<td class= "titleTd tableTd"><b>작성일</b></td>
@@ -410,68 +426,72 @@
 			<div id="textareaDiv">
 				<textArea id= summernote rows=30 col=100 name = "bContent" placeholder="내용을 입력해주세요"> <%=b.getbContent() %></textArea>
 			</div>
-			<table id = "attachTable">
-				<tr>
-					<td rowspan=9 class= "titleTd" style= "border-right: 1px solid #dbdbdb">
-						<b>첨부파일</b>
-					</td>
-					<td  style= "border:none; height:30px; color:gray; padding:12px;padding-left:15px">
-						<select id= attachCount onchange="changeSelect();" style="color:black" disabled>
-							   <option name= aCount value=1>1</option>
-			                   <option name= aCount value=2>2</option>
-			                   <option name= aCount value=3>3</option>
-			                   <option name= aCount value=4>4</option>
-			                   <option name= aCount value=5 SELECTED >5</option>
-							 
-						</select>
-						&nbsp;<span style="font-size: 15px">파일 갯수를 지정해주세요</span>
-						<button type="button" id= "resetBtn" class="attachBtn" onclick="selectReset();"><b>리셋</b></button>
-					</td>
-				</tr> 
-				 <tr class= attachTr>
-		            <td class= attachTd>
-		               <input id = "attachInput1" type="text" placeholder="첨부파일을 등록하세요" readonly value ="<%=originName1%>" >&nbsp;
-		               <button type="button" id= "attachBtn1" class="attachBtn" onclick="fileInputClick1();"><b>찾아보기</b></button>&nbsp;
-		               <button type="button" id= "delAttachBtn1" class="delAttachBtn" onclick="delAttach1();"><b>삭제</b></button>
-		            </td>
-		         </tr>
-		          <tr class= attachTr>
-		            <td class= attachTd>
-		               <input id = "attachInput2" type="text" placeholder="첨부파일을 등록하세요" readonly value ="<%=originName2%>" >&nbsp;
-		               <button type="button" id= "attachBtn2" class="attachBtn" onclick="fileInputClick2();"><b>찾아보기</b></button>&nbsp;
-		               <button type="button" id= "delAttachBtn2" class="delAttachBtn" onclick="delAttach2();"><b>삭제</b></button>
-		            </td>
-		         </tr>
-		          <tr class= attachTr>
-		            <td class= attachTd>
-		               <input id = "attachInput3" type="text" placeholder="첨부파일을 등록하세요" readonly value ="<%=originName3%>" >&nbsp;
-		               <button type="button" id= "attachBtn3" class="attachBtn" onclick="fileInputClick3();"><b>찾아보기</b></button>&nbsp;
-		               <button type="button" id= "delAttachBtn3" class="delAttachBtn" onclick="delAttach3();"><b>삭제</b></button>
-		            </td>
-		         </tr>
-		         <tr class= attachTr>
-		            <td class= attachTd>
-		               <input id = "attachInput4" type="text" placeholder="첨부파일을 등록하세요" readonly value ="<%=originName4%>" >&nbsp;
-		               <button type="button" id= "attachBtn4" class="attachBtn" onclick="fileInputClick4();"><b>찾아보기</b></button>&nbsp;
-		               <button type="button" id= "delAttachBtn4" class="delAttachBtn" onclick="delAttach4();"><b>삭제</b></button>
-		            </td>
-		         </tr>
-		         <tr class= attachTr>
-		            <td class= attachTd>
-		               <input id = "attachInput5" type="text" placeholder="첨부파일을 등록하세요" readonly value ="<%=originName5%>" >&nbsp;
-		               <button type="button" id= "attachBtn5" class="attachBtn" onclick="fileInputClick5();"><b>찾아보기</b></button>&nbsp;
-		               <button type="button" id= "delAttachBtn5" class="delAttachBtn" onclick="delAttach5();"><b>삭제</b></button>
-		            </td>
-		         </tr>
-			</table>
-		
+			
+			
+			
+			  <% if (loginUser.getUserId().equals("admin")){%>
+				<table id = "attachTable">
+					<tr>
+						<td rowspan=9 class= "titleTd" style= "border-right: 1px solid #dbdbdb">
+							<b>첨부파일</b>
+						</td>
+						<td  style= "border:none; height:30px; color:gray; padding:12px;padding-left:15px">
+							<select id= attachCount onchange="changeSelect();" style="color:black" disabled>
+								   <option name= aCount value=1>1</option>
+				                   <option name= aCount value=2>2</option>
+				                   <option name= aCount value=3>3</option>
+				                   <option name= aCount value=4>4</option>
+				                   <option name= aCount value=5 SELECTED >5</option>
+								 
+							</select>
+							&nbsp;<span style="font-size: 15px">파일 갯수를 지정해주세요</span>
+							<button type="button" id= "resetBtn" class="attachBtn" onclick="selectReset();"><b>리셋</b></button>
+						</td>
+					</tr> 
+					 <tr class= attachTr>
+			            <td class= attachTd>
+			               <input id = "attachInput1" type="text" placeholder="첨부파일을 등록하세요" readonly value ="<%=originName1%>" >&nbsp;
+			               <button type="button" id= "attachBtn1" class="attachBtn" onclick="fileInputClick1();"><b>찾아보기</b></button>&nbsp;
+			               <button type="button" id= "delAttachBtn1" class="delAttachBtn" onclick="delAttach1();"><b>삭제</b></button>
+			            </td>
+			         </tr>
+			          <tr class= attachTr>
+			            <td class= attachTd>
+			               <input id = "attachInput2" type="text" placeholder="첨부파일을 등록하세요" readonly value ="<%=originName2%>" >&nbsp;
+			               <button type="button" id= "attachBtn2" class="attachBtn" onclick="fileInputClick2();"><b>찾아보기</b></button>&nbsp;
+			               <button type="button" id= "delAttachBtn2" class="delAttachBtn" onclick="delAttach2();"><b>삭제</b></button>
+			            </td>
+			         </tr>
+			          <tr class= attachTr>
+			            <td class= attachTd>
+			               <input id = "attachInput3" type="text" placeholder="첨부파일을 등록하세요" readonly value ="<%=originName3%>" >&nbsp;
+			               <button type="button" id= "attachBtn3" class="attachBtn" onclick="fileInputClick3();"><b>찾아보기</b></button>&nbsp;
+			               <button type="button" id= "delAttachBtn3" class="delAttachBtn" onclick="delAttach3();"><b>삭제</b></button>
+			            </td>
+			         </tr>
+			         <tr class= attachTr>
+			            <td class= attachTd>
+			               <input id = "attachInput4" type="text" placeholder="첨부파일을 등록하세요" readonly value ="<%=originName4%>" >&nbsp;
+			               <button type="button" id= "attachBtn4" class="attachBtn" onclick="fileInputClick4();"><b>찾아보기</b></button>&nbsp;
+			               <button type="button" id= "delAttachBtn4" class="delAttachBtn" onclick="delAttach4();"><b>삭제</b></button>
+			            </td>
+			         </tr>
+			         <tr class= attachTr>
+			            <td class= attachTd>
+			               <input id = "attachInput5" type="text" placeholder="첨부파일을 등록하세요" readonly value ="<%=originName5%>" >&nbsp;
+			               <button type="button" id= "attachBtn5" class="attachBtn" onclick="fileInputClick5();"><b>찾아보기</b></button>&nbsp;
+			               <button type="button" id= "delAttachBtn5" class="delAttachBtn" onclick="delAttach5();"><b>삭제</b></button>
+			            </td>
+			         </tr>
+				</table>
+				     <%}%>
 			<br><br>
 			<div class= btnDiv>
 					<button type='button'id=listBtn onclick="goBoardListView();"><b>취소</b></button>&nbsp;&nbsp;
 					<button id=insertBtn type="button" onclick="insertSubmit();"><b>확인</b></button>
 			</div>
 		
-			<div style="display:block">
+			<div style="display:none">
 				<input type="file" id="fileInput1" name = "file1" onchange="loadAttachName(this,1);">
 				<input type="file" id="fileInput2" name = "file2" onchange="loadAttachName(this,2);">
 				<input type="file" id="fileInput3" name = "file3" onchange="loadAttachName(this,3);">
@@ -479,7 +499,7 @@
 				<input type="file" id="fileInput5" name = "file5" onchange="loadAttachName(this,5);">
 			</div> 
 			
-			<div style="display:block">
+			<div style="display:none">
 			   <br>
 			   <input type = "text" id="delFid1" name = "delFid1" value = "0" ><br>
 			   <input type = "text" id="delFid2" name = "delFid2" value = "0"><br>
@@ -489,7 +509,7 @@
 			</div>
 			
 			</form>
-			<div style="display:block">
+			<div style="display:none">
 					<br>
 				   <input type = "text" id="originFid1" name = "originFid1" value =<%=flist.get(0).getfId()%> ><br>
 				   <input type = "text" id="originFid2" name = "originFid2" value =<%=flist.get(1).getfId()%> ><br>
@@ -511,7 +531,29 @@
 
 <script>
 
-	function checkBox(){
+$(function(){
+	   var category =  <%=category%>;  
+
+	   if( category == "2" ){
+	      $("#category2").prop("selected", true);
+	   }else if(   category == "3"   ) {
+		   $("#category3").prop("selected", true); 
+	   }else if ( category == "4"  ){
+		   $("#category4").prop("selected", true); 
+	   } else if ( category == "5") {
+		   $("#category5").prop("selected", true);
+	   }else if ( category == "1") {
+		   $("#category1").prop("selected", true);
+	   }
+	});
+
+
+
+
+
+
+
+function checkBox(){
 		if(document.getElementById("superCheck").checked == true){
 			document.getElementById("noCheck").disabled = true;
 		}else{
@@ -582,15 +624,17 @@
 $(function(){
 	var category = <%=category%>;   
 
-	if( category == "2" ){
-		$("#category2").prop("selected", true);
-	}else if(   category == '3'   ) {
-		alert(3); 
-	}else if ( category == '4'  ){
-		alert(4); 
-	} else if ( category == '5') {
-		alert(5); 
-	}
+	  if( category == "2" ){
+	      $("#category2").prop("selected", true);
+	   }else if(   category == "3"   ) {
+		   $("#category3").prop("selected", true); 
+	   }else if ( category == "4"  ){
+		   $("#category4").prop("selected", true); 
+	   } else if ( category == "5") {
+		   $("#category5").prop("selected", true);
+	   }else if ( category == "1") {
+		   $("#category1").prop("selected", true);
+	   }
 
 });
 

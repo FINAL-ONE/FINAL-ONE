@@ -45,25 +45,32 @@ public class BoardController {
 	@Autowired
 	BoardService bService;
 	
-	@RequestMapping("fBoardListView.do")
+	@RequestMapping("boardListView.do")
 	public ModelAndView boardList(ModelAndView mv,
-									@RequestParam(value="page", required=false) Integer page) {
+									@RequestParam(value="page", required=false) Integer page, int category) {
 		// 마이바티스 때 했던 PageInfo와 Pagination을 그대로 쓰자.
 		
 		int currentPage = 1;
 		if(page != null) {
 			currentPage = page;
 		}
-		int listCount = bService.getFboardListCount();
+		int listCount = bService.getBoardListCount(category);
 		
 		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
 		
-		ArrayList<Board> flist = bService.selectFList(pi);
+		ArrayList<Board> noticeList = bService.selectNoticeList();
+		ArrayList<Board> bestList= bService.selectBestList(); 
+		
+		
+		ArrayList<Board> flist = bService.selectList(pi, category);
 		// ArrayList<Board> flist = bService.selectList(pi);
 		
-		if(flist != null && flist.size() > 0) {	// 게시글이 있다면
+		if(flist != null ) {	// 게시글이 있다면
 			mv.addObject("flist", flist);
+			mv.addObject("bestList", bestList);
+			mv.addObject("noticeList", noticeList);
 			mv.addObject("pi", pi);
+			mv.addObject("category", category);
 			mv.setViewName("board/fBoardListView");
 		}else {
 			throw new BoardException("게시글 전체 조회 실패!!");
@@ -71,6 +78,12 @@ public class BoardController {
 		return mv;
 		
 	}
+	
+
+	
+	
+	
+	
 	
 	
 	@RequestMapping("fBoardDetailView.do")
@@ -114,11 +127,11 @@ public class BoardController {
 	
 	
 	
-	@RequestMapping("searchFboardList.do")
+	@RequestMapping("searchBoardList.do")
 	public ModelAndView searchFboardList(ModelAndView mv,
 					@RequestParam(value="page", required=false) Integer page,
 					@RequestParam(value="type", required=false)	String type, 
-					@RequestParam(value="searchWord", required=false) String searchWord) {
+					@RequestParam(value="searchWord", required=false) String searchWord, int category) {
 		
 		int currentPage = 1;
 		if(page != null) {
@@ -133,7 +146,7 @@ public class BoardController {
 			searchWord ="";
 		}
 		
-		Search sc = new Search(type, searchWord); 
+		Search sc = new Search(type, searchWord, category); 
 				
 		int listCount = bService.getSearchFboardListCount(sc);
 		
@@ -157,6 +170,7 @@ public class BoardController {
 				mv.addObject("flist", flist);
 				mv.addObject("pi", pi);
 				mv.addObject("sc", sc);
+				mv.addObject("category", category);
 				mv.setViewName("board/fSearchBoardListView");
 			}else {
 				throw new BoardException("게시글 전체 조회 실패!!");
@@ -192,7 +206,6 @@ public class BoardController {
 							@RequestParam(value="file5", required=false)MultipartFile file5) {
 		// NoticeController 가서 ninsert.do메소드랑 saveFiel메소드까지 싹 복사해 와서 수정하자.
 		
-	
 			ArrayList<MultipartFile> fileList = new ArrayList<MultipartFile>(); 
 		
 			fileList.add(file1);
@@ -201,7 +214,7 @@ public class BoardController {
 			fileList.add(file4);
 			fileList.add(file5);
 			
-		
+	
 		HttpSession session = request.getSession(); 
 		Member loginUser = (Member) session.getAttribute("loginUser"); 
 		
@@ -210,11 +223,7 @@ public class BoardController {
 		b.setbType("1");
 		
 		int blevel = Integer.parseInt(bLevel);
-		b.setbLevel(blevel);
-		
-	
-		
-		
+		b.setbLevel(blevel); 
 
 		int count = 0; 
 		
@@ -253,11 +262,10 @@ public class BoardController {
 				}
 		}
 		
-		System.out.println("controller, fboarInser.do: " + b);
 	
 
 		if(result > 0) {
-			return "redirect:fBoardListView.do";
+			return "redirect:boardListView.do?category="+b.getCategory();
 		}else {
 			throw new BoardException("게시글 등록 실패!");
 		}
@@ -367,7 +375,7 @@ public class BoardController {
 		// 결과 값 반환 
 		
 		if(result > 0) {
-			return "redirect:fBoardListView.do?page=" + page;
+			return "redirect:boardListView.do?page=" + page +"&category=" + b.getCategory();
 		}else {
 			throw new BoardException("게시글 등록 실패!");
 		}
@@ -442,7 +450,7 @@ public class BoardController {
 	}
 	
 	@RequestMapping("deleteBoard.do")
-	public String deleteBoard(int bId, HttpServletRequest request) {
+	public String deleteBoard(int bId, int category,  HttpServletRequest request) {
 		ArrayList<Attachment> attachments = bService.selectAttachments(bId);
 		
 		System.out.println(bId);
@@ -457,7 +465,7 @@ public class BoardController {
 		
 		
 		if(result >0) {
-			return "redirect:fBoardListView.do";
+			return "redirect:boardListView.do?category=" +category;
 		}else{
 			throw new BoardException("게시물 삭제 실패!");
 		}

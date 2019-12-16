@@ -15,12 +15,12 @@ public interface BoardService {
 	/*
 	 * 1_1. 자유 게시판 전체 수 조회
 	 */
-	public int getFboardListCount();
+	public int getBoardListCount(int category);
 	
 	/*
 	 * 1_2. 게시판 전체 조회
 	 */
-	public ArrayList<Board> selectFList(PageInfo pi);
+	public ArrayList<Board> selectList(PageInfo pi, int category);
 	
 	/*
 	 * 2. 게시판 등록
@@ -100,5 +100,9 @@ public interface BoardService {
 	public ArrayList<Reply> selectBestReplyList(int bId);
 
 	public int modifyReply(Reply r);
+
+	public ArrayList<Board> selectBestList();
+
+	public ArrayList<Board> selectNoticeList();
 	
 }

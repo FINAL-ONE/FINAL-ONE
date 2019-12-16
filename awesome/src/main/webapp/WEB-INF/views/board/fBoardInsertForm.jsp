@@ -218,6 +218,7 @@
       background-color: white;
       border: 1px solid black;
       outline: none;
+          margin-top: 5px;
    }
    
    #checkLabel{
@@ -306,6 +307,7 @@
 <body>
 
 
+	<input type="text" value="${sessionScope.loginUser.admin}">
 
 <jsp:include page="../common/menubar.jsp"/>   
 <div id="container" style="overflow: auto; height: auto;"><!-- container -->
@@ -327,10 +329,14 @@
                <td class="titleTd tableTd"><b>카테고리</b></td>
                <td class="tableTd"> &nbsp;&nbsp;
                   <select class="categorySelect" name = "category" style="height: 35px;"> 
-                     <option id =  "category2" value = 2>자유게시판 </option>
-                     <option id =  "category3" value = 3>팁&노하우</option>
-                     <option id =  "category4" value = 4>비포&애프터 </option>
-                     <option id =  "category5" value = 5>자극사진</option>
+                  
+                  	<c:if test="${sessionScope.loginUser.userId eq 'admin'}">
+                  	 <option id= "category1" value = "1"> 공지사항 </option>
+                  	 </c:if>  
+                     <option id =  "category2"   value = "2">자유게시판 </option>
+                     <option id =  "category3"  value = "3">팁&노하우</option>
+                     <option id =  "category4"  value = "4">비포&애프터 </option>
+                     <option id =  "category5"  value = "5">자극사진</option>
                   </select>
                </td>
             </tr>
@@ -338,17 +344,17 @@
                <td class= "titleTd tableTd"><b>제목</b></td>
                <td class ="tableTd"><input type="text" name= "bTitle" class="inputTd" >
                	
-               	<c:if test="${loginUser.admin eq 'Y'}">
-	               <label for="superCheck" id=checkLabel><span style="font-size: 14px;">공지사항</span></label>
+               	<c:if test="${sessionScope.loginUser.userId eq 'admin'}">
+	               <label for="superCheck" id=checkLabel><span style="font-size: 14px;">필독</span></label>
 	               <input id = superCheck type="checkbox" name="bLevel" value="4" onclick="checkBox();">
-	               <input id = noCheck type= "hidden" name="bLevel" value="1">
     			</c:if>  
+	               <input id = noCheck type= "hidden" name="bLevel" value="1">
                
                </td> 
             </tr>
             <tr>
                <td class= "titleTd tableTd"><b>작성자</b></td>
-               <td  class ="tableTd"><span style="padding-left: 17px; font-size: 16px;">${loginUser.userId }</span></td>
+               <td  class ="tableTd"><span style="padding-left: 17px; font-size: 16px;">${loginUser.userNickname }</span></td>
             </tr>
             <tr>
                <td class= "titleTd tableTd"><b>작성일</b></td>
@@ -359,7 +365,8 @@
             <textArea id= summernote rows=30 col=100 name = "bContent" placeholder="내용을 입력해주세요"></textArea>
          </div>
          
-         	<c:if test="${loginUser.admin eq 'Y'}">
+        <c:if test="${sessionScope.loginUser.userId eq 'admin'}">
+         
          <table id = "attachTable">
             <tr>
                <td rowspan=9 class= "titleTd" style= "border-right: 1px solid #dbdbdb">
@@ -383,14 +390,14 @@
                   <input id = "attachInput1" type="text" placeholder="첨부파일을 등록하세요" readonly>&nbsp;
                   <button type="button" id= "attachBtn1" class="attachBtn" onclick="fileInputClick1();"><b>찾아보기</b></button>
             </tr>
-               
          </table>
+         
       	</c:if>
       	
       	
          <br><br>
          <div class= btnDiv>
-               <button type='button'id=listBtn onclick="goBoardListView();"><b>취소</b></button>&nbsp;&nbsp;
+               <button type='button'id=listBtn onclick="goBoardListView(${category});"><b>취소</b></button>&nbsp;&nbsp;
                <button id=insertBtn type="button" onclick="insertSubmit();"><b>확인</b></button>
          </div>
       
@@ -498,14 +505,15 @@ $(function(){
 
    if( category == "2" ){
       $("#category2").prop("selected", true);
-   }else if(   category == '3'   ) {
-      alert(3); 
-   }else if ( category == '4'  ){
-      alert(4); 
-   } else if ( category == '5') {
-      alert(5); 
+   }else if(   category == "3"   ) {
+	   $("#category3").prop("selected", true); 
+   }else if ( category == "4"  ){
+	   $("#category4").prop("selected", true); 
+   } else if ( category == "5") {
+	   $("#category5").prop("selected", true);
+   }else if ( category == "1") {
+	   $("#category1").prop("selected", true);
    }
-
 });
 
 
@@ -518,8 +526,8 @@ function loadAttachName(attach,num){
    }
 }
 
-function goBoardListView(){
-   location.href="fBoardListView.do"   
+function goBoardListView(category){
+   location.href="boardListView.do?category="+category;
 }
 
 

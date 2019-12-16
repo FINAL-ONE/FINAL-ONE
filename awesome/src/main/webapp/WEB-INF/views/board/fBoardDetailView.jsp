@@ -896,9 +896,9 @@
 	</style>
 	
 	<body>
-	<input id="loginUserMid" value="${loginUser.mid}"> 
-	<input id="loginUserAdmin" value="${loginUser.admin}" >
-	<input id="loginUserNickname" value="${loginUser.userNickname }">
+	<input id="loginUserMid" value="${loginUser.mid}" type="text"> 
+	<input id="loginUserAdmin" value="${loginUser.admin}" type="text" >
+	<input id="loginUserNickname" value="${loginUser.userNickname }" type="text">
 	
 	<jsp:include page="../common/menubar.jsp"/>	
 	<div id="container" style="overflow: auto; height: auto;"><!-- container -->
@@ -1190,7 +1190,7 @@
 		
 		$(".bDelete").click(function(){
 			if (confirm("이 게시 글을 삭제 하시겠습니까?") == true){    //확인
-				location.href = 'deleteBoard.do?bId=' + ${board.bId};
+				location.href = 'deleteBoard.do?bId=${board.bId}&category=${board.category}';
 			}else{   //취소
 		
 			    return;

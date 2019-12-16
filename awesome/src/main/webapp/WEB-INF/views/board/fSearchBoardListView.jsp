@@ -187,7 +187,33 @@
 
 
 <div class = "centerDiv"> 
-	<h2 style="font-size: 26px;"> 자유게시판 </h2> 
+
+	<c:if test = "${category eq 1 }">
+		<h2 style="font-size: 26px;">공지사항</h2> 
+		</c:if>
+	
+		<c:if test = "${category eq 2 }">
+		<h2 style="font-size: 26px;"> 자유게시판 </h2> 
+		</c:if>
+	
+		<c:if test = "${category eq 3 }">
+		<h2 style="font-size: 26px;"> 팁&노하우 </h2> 
+		</c:if>
+		
+		<c:if test = "${category eq 4 }">
+		<h2 style="font-size: 26px;"> 비포&애프터 </h2> 
+		</c:if>
+	
+		<c:if test = "${category eq 5 }">
+		<h2 style="font-size: 26px;"> 자극사진 </h2> 
+		</c:if>
+		
+		<c:if test="${category eq 10 }">
+		<h2 style="font-size: 26px;"> 전체 </h2> 
+		</c:if>
+	
+
+
 	<div class= "searchResult"> 
 	
 		<div style="margin-bottom:13px; margin-top: 7px; text-align:center"> 
@@ -211,14 +237,14 @@
 	
 		<div >
 			<div style="margin-left:auto; margin-right:auto; width: 573px;" >
-				<form id ="searchForm" action = "searchFboardList.do" method="post">
-			<select  name = "type" style= "height:42px; width: 130px; font-size: 16px; padding-left: 8px"> 
+				<form id ="searchForm" action = "searchBoardList.do" method="post">
+					<select  name = "type" style= "height:42px; width: 130px; font-size: 16px; padding-left: 8px"> 
 						<option value="all" > 전체</option>
 					 	<option value="bTitle" >제목</option>
 				        <option value= "bWriter" >작성자</option>
 				        <option value="bContent" >내용</option>
 					</select>
-			
+					<input type="hidden" name="category" value="${category}">
 					<input style= "font-size: 18px; position: relative; top: -1.5px; width: 350px; height:35px; margin:0px; padding-left:10px" name ="searchWord"> 
 				
 			
@@ -240,7 +266,18 @@
 			</tr>
 		<c:forEach var="b" items="${flist}">
 			<tr align="center" class = "normalTr"> 
-				<td><input type="hidden" value = "${b.bId}"> [자유게시판]</td>
+			
+			
+			<c:if test = "${category eq 1 }">
+				<td><input type="hidden" value = "${b.bId}"> [공지사항]</td>
+			</c:if>
+	
+			<c:if test = "${category eq 2 }">
+				<td><input type="hidden" value = "${b.bId}"> [자유게시판]</td>		
+			</c:if>
+			
+			
+			
 				<td id="bTitle${b.bId}" align="left" style=" padding-left: 10px;" > ${b.bTitle}&nbsp;
 			     <script> 
 				     function checkImgTag(str){ 
@@ -302,24 +339,24 @@
       <div class="pagingArea" align="center">
       <button type= "button" style=" visibility:hidden; border:none; background: none; height: 30px; color:white;padding-bottom:14px; position:relative; float:left;">글쓰기</button>
          <!-- 맨 처음으로(<<) -->
-       	<c:url var="blistNextNumber" value="searchFboardList.do">
+       	<c:url var="blistNextNumber" value="searchBoardList.do">
 					<c:param name="page" value="1"/>
 					<c:param name="type" value= "${sc.type}" />
 					<c:param name="searchWord" value= "${sc.searchWord}" />
 				</c:url>
-               <button onclick="location.href='${blistNextNumber}'"><<</button>
+               <button onclick="location.href='${blistNextNumber}&category=${category}'"><< </button>
          
          <!-- 이전 페이지로(<) -->
         <c:if test="${pi.currentPage <= 1 }">
             <button disabled> < </button>
         </c:if>
          <c:if test="${pi.currentPage > 1 }">
-        	 <c:url var="blistBack" value="searchFboardList.do">
+        	 <c:url var="blistBack" value="searchBoardList.do">
 				<c:param name="page" value="${pi.currentPage -1}"/>
 				<c:param name="type" value= "${sc.type}" />
 				<c:param name="searchWord" value= "${sc.searchWord}" />
 			</c:url>
-            <button onclick="location.href='${blistBack}'"> < </button>
+            <button onclick="location.href='${blistBack}&category=${category}'"> < </button>
         </c:if>
          
          <!-- 10개의 페이지 목록 -->
@@ -328,12 +365,12 @@
                <button style="background:#ec434a;color:white" disabled >${p}</button>
            </c:if>
             <c:if test="${pi.currentPage != p }">
-            	<c:url var="blistNextNumber" value="searchFboardList.do">
+            	<c:url var="blistNextNumber" value="searchBoardList.do">
 					<c:param name="page" value="${p}"/>
 					<c:param name="type" value= "${sc.type}" />
 					<c:param name="searchWord" value= "${sc.searchWord}" />
 				</c:url>
-               <button onclick="location.href='${blistNextNumber}'">${p}</button>
+               <button onclick="location.href='${blistNextNumber}&category=${category}'">${p}</button>
             </c:if>
        </c:forEach>
 	 				
@@ -341,26 +378,26 @@
             <button disabled> > </button>
           </c:if>
           <c:if test="${pi.currentPage < pi.maxPage }">
-          		<c:url var="blistNext" value="searchFboardList.do">
+          		<c:url var="blistNext" value="searchBoardList.do">
 					<c:param name="page" value="${pi.currentPage + 1}"/>
 					<c:param name="type" value= "${sc.type}" />
 					<c:param name="searchWord" value= "${sc.searchWord}" />
 				</c:url>
-               <button onclick="location.href='${blistNext}'">></button>
+               <button onclick="location.href='${blistNext}&category=${category}'">></button>
           </c:if>
          
          <!-- 맨 끝으로(>>) -->
-         <c:url var="blistEnd" value="searchFboardList.do">
+         <c:url var="blistEnd" value="searchBoardList.do">
 			<c:param name="page" value="${pi.maxPage}"/>
 			<c:param name="type" value= "${sc.type}" />
 			<c:param name="searchWord" value= "${sc.searchWord}" />
 		</c:url>
 			
 			<c:if test = "${pi.listCount == 0}">
-					<button onclick="location.href='${blistEnd}'"disabled>>></button>
+					<button onclick="location.href='${blistEnd}&category=${category}'"disabled>>></button>
 			</c:if>
            <c:if test = "${pi.listCount != 0}">
-					<button onclick="location.href='${blistEnd}'">>></button>
+					<button onclick="location.href='${blistEnd}&category=${category}'">>></button>
 			</c:if>
          
       
