@@ -212,14 +212,6 @@
    </div>
 </div> 
 
-
-
-
-<!-- <div class="menubar2" style="display:block;">
-   
-</div>
- -->
-
 <div class="menubar2 normalMenubar">
    
 </div>   
