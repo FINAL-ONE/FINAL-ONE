@@ -65,6 +65,9 @@ public class BoardController {
 		ArrayList<Board> flist = bService.selectList(pi, category);
 		// ArrayList<Board> flist = bService.selectList(pi);
 		
+		
+		
+		
 		if(flist != null ) {	// 게시글이 있다면
 			mv.addObject("flist", flist);
 			mv.addObject("bestList", bestList);
@@ -157,10 +160,12 @@ public class BoardController {
 			PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
 			mv.addObject("pi", pi);
 			mv.addObject("sc", sc);
+			mv.addObject("category", category);
 			mv.setViewName("board/fSearchBoardListView");
 			return mv;
 		}else {
 			PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
+			
 			ArrayList<Board> flist = bService.selectSeacrchFList(pi, sc);
 
 				System.out.println("써치 리스트: " + flist);

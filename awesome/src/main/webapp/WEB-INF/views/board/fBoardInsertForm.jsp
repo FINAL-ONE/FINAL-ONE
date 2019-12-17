@@ -6,6 +6,8 @@
     String today = formatter.format(new java.util.Date());
     
      String category = request.getParameter("category"); 
+     
+     int category2 = Integer.parseInt(category); 
 %>
 
 
@@ -397,7 +399,7 @@
       	
          <br><br>
          <div class= btnDiv>
-               <button type='button'id=listBtn onclick="goBoardListView(${category});"><b>취소</b></button>&nbsp;&nbsp;
+               <button type='button'id=listBtn onclick="goBoardListView(<%=category2%>);"><b>취소</b></button>&nbsp;&nbsp;
                <button id=insertBtn type="button" onclick="insertSubmit();"><b>확인</b></button>
          </div>
       
@@ -527,7 +529,7 @@ function loadAttachName(attach,num){
 }
 
 function goBoardListView(category){
-   location.href="boardListView.do?category="+category;
+	location.href="boardListView.do?category="+category;
 }
 
 

@@ -81,6 +81,14 @@
   	
   </select>
   
+  <select id="getBoardAllListCount" resultType="_int"> 	
+  	 SELECT COUNT(*)
+  	 FROM D_BOARD
+  	 WHERE STATUS='Y'AND NOT CATEGORY = 1 AND NOT BLEVEL = 4
+  	
+  </select>
+  
+  
    <select id="getReplylistCount" parameterType="_int" resultType="_int"> 	
   	 SELECT COUNT(*)
   	 FROM D_REPLY
@@ -122,6 +130,28 @@
   </select>
   
   
+    
+   <select id="getSearchFboardAllListCount" resultType="_int">
+ 	SELECT COUNT(*)
+  	FROM BOARD_VIEW
+  	WHERE (STATUS='Y'AND NOT CATEGORY = 1 AND NOT BLEVEL = 4)
+ 		<if test='type.equals("all")'>
+ 		    AND ( BTITLE LIKE '%' ||  #{searchWord} || '%'
+ 			or USER_NICKNAME LIKE '%' || #{searchWord} || '%'
+ 			or BCONTENT LIKE '%' || #{searchWord} || '%')
+ 		</if>
+ 		<if test='type.equals("bTitle")'>
+ 		    AND ( BTITLE LIKE '%' ||  #{searchWord} || '%')
+ 		</if>
+ 		<if test='type.equals("bWriter")'>
+ 		    AND ( USER_NICKNAME LIKE '%' ||  #{searchWord} || '%')
+ 		</if>
+ 		<if test='type.equals("bContent")'>
+ 		    AND ( BCONTENT LIKE '%' || #{searchWord} || '%')
+ 		</if>
+  </select>
+  
+  
   
   <select id="selectList" parameterType="_int" resultMap="boardResultSet">
 		SELECT B.BID, B.MID, M.USER_ID, M.USER_NICKNAME, CATEGORY, BTITLE, BTYPE, BCONTENT, BCOUNT, B.CREATE_DATE, B.MODIFY_DATE, B.STATUS, BLEVEL, NVL(BGOOD,0) AS BGOOD, NVL(REPLY,0) AS REPLY
@@ -135,6 +165,23 @@
 		                  WHERE R.STATUS = 'Y'
 		                  GROUP BY BID)REPLY ON (B.BID = REPLY.BID)
 		WHERE B.STATUS ='Y' AND CATEGORY = #{category}
+		ORDER BY BLEVEL DESC, BID DESC
+  </select>
+  
+  
+  
+    <select id="selectAllList" resultMap="boardResultSet">
+		SELECT B.BID, B.MID, M.USER_ID, M.USER_NICKNAME, CATEGORY, BTITLE, BTYPE, BCONTENT, BCOUNT, B.CREATE_DATE, B.MODIFY_DATE, B.STATUS, BLEVEL, NVL(BGOOD,0) AS BGOOD, NVL(REPLY,0) AS REPLY
+		FROM D_BOARD B
+		JOIN MEMBER M ON( B.MID = M.MID)
+		LEFT OUTER JOIN (SELECT BID, COUNT(*) AS BGOOD
+		                 FROM B_GOOD 
+		                 GROUP BY BID) BGOOD ON (B.BID = BGOOD.BID) 
+		LEFT OUTER JOIN ( SELECT BID, COUNT(*) AS REPLY
+		                  FROM D_REPLY R
+		                  WHERE R.STATUS = 'Y'
+		                  GROUP BY BID)REPLY ON (B.BID = REPLY.BID)
+		WHERE B.STATUS ='Y'  AND NOT CATEGORY = 1 AND NOT BLEVEL = 4
 		ORDER BY BLEVEL DESC, BID DESC
   </select>
   
@@ -158,7 +205,28 @@
   </select>
   
   
-  <select id="selectSeacrchFList" resultMap="boardResultSet">
+  <select id="selectSeacrchAllList" resultMap="boardResultSet">
+	  	SELECT *
+	  	FROM BOARD_VIEW
+	  	WHERE (STATUS='Y'AND NOT CATEGORY = 1 AND NOT BLEVEL = 4)
+	 		<if test='type.equals("all")'>
+	 		    AND ( BTITLE LIKE '%' ||  #{searchWord} || '%'
+	 			or USER_NICKNAME LIKE '%' || #{searchWord} || '%'
+	 			or BCONTENT LIKE '%' || #{searchWord} || '%')
+	 		</if>
+	 		<if test='type.equals("bTitle")'>
+	 		    AND ( BTITLE LIKE '%' ||  #{searchWord} || '%')
+	 		</if>
+	 		<if test='type.equals("bWriter")'>
+	 		    AND ( USER_NICKNAME LIKE '%' ||  #{searchWord} || '%')
+	 		</if>
+	 		<if test='type.equals("bContent")'>
+	 		    AND ( BCONTENT LIKE '%' || #{searchWord} || '%')
+	 		</if>
+	 	ORDER BY BID DESC
+   </select>
+   
+     <select id="selectSeacrchFList" resultMap="boardResultSet">
 	  	SELECT *
 	  	FROM BOARD_VIEW
 	  	WHERE (STATUS='Y'AND CATEGORY = #{category} )
@@ -178,6 +246,7 @@
 	 		</if>
 	 	ORDER BY BID DESC
    </select>
+   
   
   <insert id="insertBoard" parameterType="Board">
   	INSERT INTO 

@@ -181,14 +181,14 @@
 <div class= "previewBoard" >
 	<div class= "previewBoard2"> 
 		<div class= "advertisement"></div>
-		<div class= "noticeList">공지사항(미리보기) </div> 
+		<div class= "noticeList"> </div> 
 	</div> 
 </div >
 
 
 <div class = "centerDiv"> 
 
-	<c:if test = "${category eq 1 }">
+		<c:if test = "${category eq 1 }">
 		<h2 style="font-size: 26px;">공지사항</h2> 
 		</c:if>
 	
@@ -205,11 +205,11 @@
 		</c:if>
 	
 		<c:if test = "${category eq 5 }">
-		<h2 style="font-size: 26px;"> 자극사진 </h2> 
+			<h2 style="font-size: 26px;"> 자극사진 </h2> 
 		</c:if>
 		
 		<c:if test="${category eq 10 }">
-		<h2 style="font-size: 26px;"> 전체 </h2> 
+			<h2 style="font-size: 26px;"> 전체 </h2> 
 		</c:if>
 	
 
@@ -264,18 +264,38 @@
 				<td>공감</td> 
 				<td style= "width: 130px; border-right: none;">작성일</td> 
 			</tr>
+			
+			
+			
 		<c:forEach var="b" items="${flist}">
-			<tr align="center" class = "normalTr"> 
-			
-			
-			<c:if test = "${category eq 1 }">
+			<c:if test = "${b.bLevel == 4}">
+				<tr align="center" class = "superTr"> 
+					<td style="color:#e11c24;"><input type="hidden" value = "${b.bId}"> [필독]</td>
+			</c:if>
+			<c:if test = "${b.bLevel != 4}">
+				<tr align="center" class = "normalTr"> 
+				
+				<c:if test = "${b.category eq 1 }">
 				<td><input type="hidden" value = "${b.bId}"> [공지사항]</td>
 			</c:if>
 	
-			<c:if test = "${category eq 2 }">
+			<c:if test = "${b.category eq 2 }">
 				<td><input type="hidden" value = "${b.bId}"> [자유게시판]</td>		
 			</c:if>
 			
+			<c:if test = "${b.category eq 3 }">
+				<td><input type="hidden" value = "${b.bId}"> [팁&노하우]</td>		
+			</c:if>
+			
+			<c:if test = "${b.category eq 4 }">
+				<td><input type="hidden" value = "${b.bId}"> [비포&애프터]</td>		
+			</c:if>
+			
+			<c:if test = "${b.category eq 5 }">
+				<td><input type="hidden" value = "${b.bId}"> [자극사진]</td>		
+			</c:if>
+				
+			</c:if>
 			
 			
 				<td id="bTitle${b.bId}" align="left" style=" padding-left: 10px;" > ${b.bTitle}&nbsp;

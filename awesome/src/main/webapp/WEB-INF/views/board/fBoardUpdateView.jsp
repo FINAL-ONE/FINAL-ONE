@@ -354,7 +354,7 @@
 <jsp:include page="../common/menubar.jsp"/>	
 
 
-	<input type="text" value="<%=loginUser.getAdmin()%>">
+	<input type="text" value="">
 	 	<input type="text" value="fdsafasd">
 
 <div id="container" style="overflow: auto; height: auto;"><!-- container -->

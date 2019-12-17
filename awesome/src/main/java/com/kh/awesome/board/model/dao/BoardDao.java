@@ -24,7 +24,13 @@ public class BoardDao {
 
 	public int getBoardListCount(int category) {
 		
-		return sqlSession.selectOne("boardMapper.getBoardListCount", category);
+	
+		if (category == 10 ) {
+			return sqlSession.selectOne("boardMapper.getBoardAllListCount", category);
+		}else {
+			return sqlSession.selectOne("boardMapper.getBoardListCount", category);
+		}
+		
 	}
 
 	public ArrayList<Board> selectList(PageInfo pi, int category) {
@@ -36,7 +42,12 @@ public class BoardDao {
 		
 		
 		
-		return (ArrayList)sqlSession.selectList("boardMapper.selectList", category, rowBounds);
+		if (category == 10 ) {
+			return  (ArrayList)sqlSession.selectList("boardMapper.selectAllList", null, rowBounds); 
+		}else {
+			return (ArrayList)sqlSession.selectList("boardMapper.selectList", category, rowBounds);
+		}
+		
 	}
 
 	public int insertBoard(Board b) {
@@ -63,14 +74,27 @@ public class BoardDao {
 	public int getSearchFboardListCount(Search sc) {
 		System.out.println("dao, type: " + sc.getType());
 		System.out.println( "dao, searchWord: " + sc.getSearchWord());
-		return sqlSession.selectOne("boardMapper.getSearchFboardListCount", sc);
+		
+		if (sc.getCategory() == 10 ) {
+			return sqlSession.selectOne("boardMapper.getSearchFboardAllListCount", sc);
+		}else {
+			return sqlSession.selectOne("boardMapper.getSearchFboardListCount", sc);
+		}
+		
+		
 	}
 
 	public ArrayList<Board> selectSeacrchFList(PageInfo pi, Search sc) {
 		int offset = (pi.getCurrentPage()-1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		
-		return (ArrayList)sqlSession.selectList("boardMapper.selectSeacrchFList", sc, rowBounds);
+		
+		if (sc.getCategory() == 10 ) {
+			return (ArrayList)sqlSession.selectList("boardMapper.selectSeacrchAllList", sc, rowBounds);
+		}else {
+			return (ArrayList)sqlSession.selectList("boardMapper.selectSeacrchFList", sc, rowBounds);
+		}
+		
 	}
 
 	public int insertAttachment(Attachment attachment) {

@@ -236,15 +236,15 @@
 			 	<div style="font-size: 15px; font-weight: bold; margin-left: 15px; margin-top: 15px;">공지사항&nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-plus-square" onclick="goNoticeList();"></i></div>
 			 	<div style="height: 140px; margin-top: 15px; padding-left: 18px;">
 				<c:forEach var="n" items="${noticeList}">	
-		    				<div class="noticeListDiv"><i class="fas fa-bell"></i>&nbsp;${n.bTitle} </div>
+		    				<div class="noticeListDiv" onclick ="goBoardDetailView(${n.bId});"><i class="fas fa-bell"></i>&nbsp;${n.bTitle} </div>
 				</c:forEach>
 				</div>
 			</c:if>
 			<c:if test= "${category eq 1}">
-			 	<div style="font-size: 15px; font-weight: bold; margin-left: 15px; margin-top: 15px; ">인기 게시글<i class="far fa-plus-square" style="left:120px;"></i></div>
+			 	<div style="font-size: 15px; font-weight: bold; margin-left: 15px; margin-top: 15px; ">인기 게시글<i class="far fa-plus-square" style="left:120px;" onclick="goAllList();" ></i></div>
 			 	<div style="height: 140px; margin-top: 15px; padding-left: 18px;">
 				<c:forEach var="b" items="${bestList}">	
-		    				<div class="noticeListDiv"><i class="fas fa-bell"></i>&nbsp;${b.bTitle} </div>
+		    				<div class="noticeListDiv" onclick ="goBoardDetailView(${b.bId});"><i class="fas fa-bell"></i>&nbsp;${b.bTitle} </div>
 				</c:forEach>
 				</div>
 			</c:if>
@@ -454,9 +454,19 @@
 
 <script>
 
+function goBoardDetailView(bId){
+	location.href='fBoardDetailView.do?page=1&bId='+bId;
+	
+}
+
 
 function goNoticeList(){
 	location.href='boardListView.do?category=1'
+}
+
+
+function goAllList(){
+	location.href='boardListView.do?category=10'
 }
 
 
