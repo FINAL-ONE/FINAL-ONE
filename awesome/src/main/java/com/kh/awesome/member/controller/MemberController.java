@@ -3,14 +3,18 @@
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.mail.HtmlEmail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,6 +22,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.awesome.common.Pagination;
 import com.kh.awesome.member.model.exception.MemberException;
 import com.kh.awesome.member.model.service.MemberService;
 import com.kh.awesome.member.model.vo.Member;
@@ -62,7 +67,7 @@ public class MemberController {
 	@RequestMapping("enrollView.do")
 	public String enrollView() {
 		
-		return "member/memberJoin2";
+		return "member/memberJoin";
 	}
 	
 	
@@ -107,20 +112,21 @@ public class MemberController {
 		// 1. spring-security.xml이라고 하는 bean설정을 만들자. spring bean ~~~.xml 로 생성
 		// 2. web.xml에 1번에서 만든 spring-security.xml을 등록해주자
 		
-		System.out.println("encPwd : " +encPwd);
+		//System.out.println("encPwd : " +encPwd);
 		
 		// setter를 통해 Member 객체의 pwd 값 변경
 		m.setUserPwd(encPwd);
 		// 주소값들을 ',' 구분자로 합쳐주고 Member 객체의 address 값 변경
 		m.setAddress(post + "," + address1 + "," + address2);
-		System.out.println("add1 :" + address1);
-		System.out.println("add2 :" + address2);
+		/*
+		 * System.out.println("add1 :" + address1);
+		 */System.out.println("add2 :" + address2);
 		// 이제 서비스로 넘기자 
 		int result = mService.insertMember(m);
 		
-		System.out.println(result);
+		//System.out.println(result);
 		if(result > 0) {
-			return "home";
+			return "member/afterJoin";
 		} else {
 			throw new MemberException("회원 가입 실패!!");
 		}
@@ -167,6 +173,13 @@ public class MemberController {
 		public String myInfoView() {
 			
 			return "member/mypage";		// mypage.jsp 만들자.
+		}
+		
+		//관리자에게 이메일 전송
+		@RequestMapping("email.do")
+		public String email() {
+			
+			return "common/email";		
 		}
 		
 		
@@ -281,6 +294,72 @@ public class MemberController {
 			return "common/bmiCalculator";
 		}
 			
+		@RequestMapping("dupNickName.do")
+		public ModelAndView nickNameDuplicateCheck(String nickName, ModelAndView mv) {
+			
+				
+			System.out.println("컨트롤 닉네임: " + nickName);
+				
+			
+			 Map map = new HashMap();
+			 boolean isUsable = mService.checkNickNameDup(nickName) == 0? true : false;
+			
+			 map.put("isUsable", isUsable);
+			
+			 System.out.println("isUsable: "  + isUsable);
+			 
+			 
+			 mv.addAllObjects(map);
+			  
+			 mv.setViewName("jsonView");
+			 
+			return mv;
+		}
+			
+				
+	
+	
+			@RequestMapping("dupid.do")
+			public ModelAndView idDuplicateCheck(String id, ModelAndView mv) {
+				Map map = new HashMap();
+				
+				boolean isUsable = mService.checkIdDup(id) == 0? true : false;
+				
+				map.put("isUsable", isUsable);
+				
+				mv.addAllObjects(map);
+				
+				mv.setViewName("jsonView");
+				
+				return mv;
+			}
+			
+			// 아이디 찾기 
+			@RequestMapping(value = "find_id_form.do")
+			public String find_id_form() throws Exception{
+				return "/member/find_id_form";
+			}
+			
+			// 비밀번호 찾기 X
+			@RequestMapping(value = "find_pw_form.do")
+			public String find_pw_form() throws Exception{
+				return "/member/find_pw_form";
+			}
+			
+			// 아이디 찾기
+			@RequestMapping(value = "find_id.do", method = RequestMethod.POST)
+			public String find_id(HttpServletResponse response, @RequestParam("email") String email, Model md) throws Exception{
+				md.addAttribute("userId", mService.find_id(response, email));
+				return "/member/find_id";
+			}
 		
+			// 비밀번호 찾기
+			@RequestMapping(value = "find_pw.do", method = RequestMethod.POST)
+			public void find_pw(@ModelAttribute Member member, HttpServletResponse response) throws Exception{
+				System.out.println(member.getUserId());
+				mService.find_pw(response, member);
+			}
+			
+				
 	
 }

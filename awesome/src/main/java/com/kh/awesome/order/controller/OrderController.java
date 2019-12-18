@@ -30,36 +30,40 @@ public class OrderController {
 
 	@Autowired
 	OrderService oService;
-
-	@RequestMapping("orderview.do")
-	public ModelAndView boardList(ModelAndView mv, @RequestParam(value = "page", required = false) Integer page,
+	
+	@RequestMapping("orderView.do")
+	public ModelAndView abc(ModelAndView mv, @RequestParam(value = "page", required = false) Integer page,
 			HttpServletRequest request, HttpSession session) {
+		
 		int currentPage = 1;
 		if(page != null) {
 			currentPage = page;
 		}
-		Member loginUser = (Member)session.getAttribute("loginUser");
+		Member loginUser = (Member) session.getAttribute("loginUser");
 		int mId = loginUser.getMid();
-		System.out.println("order:"  +mId);
+		
 		
 		int listCount = oService.getOrderListCount(mId);
 		
 		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
-		session = request.getSession(true);
-
 		
-
-		ArrayList<Order> list = oService.selectList(mId,pi);
-		System.out.println(mId);
+		
+		session = request.getSession(true);
+		
+		ArrayList<Order> list = oService.selectList(mId,pi); 
+		
+		System.out.println(listCount);
 		System.out.println(pi);
 		System.out.println(list);
-		if (list != null && list.isEmpty()) {
+		
+		 if(list != null && list.size()>0) {
 			mv.addObject("list", list);
 			mv.addObject("pi", pi);
+		 } 
 			mv.setViewName("order/orderListView");
-		}
 		return mv;
 	}
+	
 
 	@RequestMapping("orderCount.do")
 	public void orderCount(HttpServletRequest request, HttpServletResponse response)
@@ -83,10 +87,12 @@ public class OrderController {
 	}
 
 	@RequestMapping("orderDetail.do")
-	public ModelAndView orderDetail(ModelAndView mv, HttpServletRequest request, String orderNum) {
+	public ModelAndView orderDetail(ModelAndView mv, HttpServletRequest request, String orderNum, HttpServletResponse response) {
 		// System.out.println(orderNum);
 		ArrayList<Order> list = oService.orderDetail(orderNum);
 		// System.out.println(list);
+		
+	
 		if (list != null && list.size() > 0) {
 			mv.addObject("list", list);
 			mv.addObject("orderNum", orderNum);
@@ -145,6 +151,7 @@ public class OrderController {
 		
 		for(Order o :order) {
 			o.setgName(URLEncoder.encode(o.getgName(), "utf-8"));	
+			o.setGoodsTitle(URLEncoder.encode(o.getGoodsTitle(), "utf-8"));	
 		}
 
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
@@ -159,11 +166,8 @@ public class OrderController {
 		int mid = loginUser.getMid();
 		
 		
-		Date d1 = Date.valueOf(date1); Date d2 = Date.valueOf(date2);
-
-		
-		os.setDate1(d1);
-		os.setDate2(d2);
+		os.setDate1(date1);
+		os.setDate2(date2);
 		os.setMid(mid);
 		
 		int currentPage = 1;
@@ -189,19 +193,22 @@ public class OrderController {
 			mv.addObject("list", list);
 			mv.addObject("pi", pi);
 			mv.setViewName("order/orderSearchView");
+		}else {
+			mv.setViewName("order/emptyOrderSearch");
 		}
-		System.out.println("searchController2 : " + list);
+		//System.out.println("searchController2 : " + list);
 		return mv;
 	}
 	
 	@RequestMapping("termSearch.do")
-	public ModelAndView searchList(ModelAndView mv, OrderSearch os,HttpSession session,HttpServletRequest request, @RequestParam(value = "page", required = false) Integer page) {
+	public ModelAndView searchList(ModelAndView mv,String date3, String date4, OrderSearch os,HttpSession session,HttpServletRequest request, @RequestParam(value = "page", required = false) Integer page) {
 		
 		Member loginUser = (Member) session.getAttribute("loginUser");
 		int mid = loginUser.getMid();
 		
 
-
+		os.setDate1(date3);
+		os.setDate2(date4);
 		os.setMid(mid);
 		
 		int currentPage = 1;
@@ -227,8 +234,13 @@ public class OrderController {
 			mv.addObject("list", list);
 			mv.addObject("pi", pi);
 			mv.setViewName("order/orderSearchView");
+		}else {
+			
+			mv.setViewName("order/emptyOrderSearch");
+		
 		}
-		System.out.println("searchController2 : " + list);
+		//System.out.println("searchController2 : " + list);
+		
 		return mv;
 	}
 

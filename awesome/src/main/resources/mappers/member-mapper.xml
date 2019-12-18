@@ -4,7 +4,6 @@
 	
 	<resultMap type="Member" id="memberResultSet">
 		<id property ="mid" column="MID"/>
-		
 		<result property ="userId" column="USER_ID"/>
 		<result property ="userPwd" column ="USER_PWD"/>
 		<result property ="userName" column ="USER_NAME"/>
@@ -16,7 +15,7 @@
 		<result property ="point" column ="POINT"/>
 		<result property ="enrollDate" column ="ENROLL_DATE"/>
 		<result property ="modifyDate" column ="MODIFY_DATE"/>
-		<result property ="admin" column ="ADMIN"/>
+		<result property ="manager" column ="MANAGER"/>
 		<result property ="status" column ="STATUS"/>
 	  	<result property="userNickname" column="USER_NICKNAME"/>
 	</resultMap>
@@ -33,7 +32,7 @@
 	
 	<insert id ="insertMember" parameterType ="Member">
 		INSERT INTO MEMBER
-		VALUES(SEQ_MID.NEXTVAL, #{userId}, #{userPwd}, #{userName}, #{gender}, #{birthday}, #{phone}, #{email}, #{address}, DEFAULT, SYSDATE, SYSDATE, DEFAULT, DEFAULT)
+		VALUES(SEQ_MID.NEXTVAL, #{userId}, #{userPwd}, #{userName}, #{gender}, #{birthday}, #{phone}, #{email}, #{address}, DEFAULT, SYSDATE, SYSDATE, DEFAULT, DEFAULT, #{userNickname})
 	</insert>
 	
 	<update id = "updateMember" parameterType ="Member">
@@ -88,6 +87,32 @@
 		SET POINT=#{point}
 		WHERE MID=#{mid}
 	</update>
+		<select id="idCheck" parameterType="string" resultType="_int">
+		SELECT COUNT(*)
+		FROM MEMBER
+		WHERE USER_ID=#{userId}
+	</select>
 	
+	
+	<select id="nickNameCheck" parameterType="string" resultType="_int">
+		SELECT COUNT(*)
+		FROM MEMBER
+		WHERE USER_NICKNAME=#{nickName}
+	</select>
+
+	<!-- 아이디 찾기 -->
+	<select id="find_id" parameterType="String" resultType="String">
+		SELECT USER_ID
+		FROM MEMBER WHERE NAME = #{userName}
+		Birthday = #{birthday}
+		EMAIL = #{email}
+		
+	</select>
+
+<!-- 비밀번호 변경 -->
+	<update id="update_pw" parameterType="member">
+		UPDATE MEMBER
+		SET USER_PWD = #{userPwd} where user_id = #{userId}
+	</update>
 	
 </mapper>

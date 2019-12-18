@@ -143,33 +143,28 @@ public class ShopController {
 
 
 		
-	// 카트에 상품 추가
-	@RequestMapping("goCart.do")
-	public String goodsgoCartView(HttpServletRequest request, Cart c, Admin a) {
-		
-		/* ArrayList<Cart> list = ShopService.selectList(); */
-		System.out.println("Cart : " + c);
-		System.out.println("Admin : " + a);
-		
-		int result = ShopService.CartInsert(c);
-		System.out.println(result);
-		
-		
-		if(result > 0 ) {
-			return "redirect:moveCart.do";
-		} else {
-			throw new ShopException("장바구니 이동 실패!!");
-		}	
-	}
-	
-	// 카트 뷰로 이동
-	@RequestMapping("moveCart.do")
-	public String moveCart() {
-		
-		return "shop/shopCartView";	
-	}							
-		
-	
+	/*
+	 * // 카트에 상품 추가
+	 * 
+	 * @RequestMapping("goCart.do") public String goodsgoCartView(HttpServletRequest
+	 * request, Cart2 c, Admin a) {
+	 * 
+	 * ArrayList<Cart> list = ShopService.selectList(); System.out.println("Cart : "
+	 * + c); System.out.println("Admin : " + a);
+	 * 
+	 * int result = ShopService.CartInsert(c); System.out.println(result);
+	 * 
+	 * 
+	 * if(result > 0 ) { return "redirect:moveCart.do"; } else { throw new
+	 * ShopException("장바구니 이동 실패!!"); } }
+	 * 
+	 * // 카트 뷰로 이동
+	 * 
+	 * @RequestMapping("moveCart.do") public String moveCart() {
+	 * 
+	 * return "shop/shopCartView"; }
+	 */
+
 	// 상품별 평균 조회
 	@RequestMapping("stargIdSelect.do")
 	public ModelAndView stargIdSelect(ModelAndView mv, int gId) {

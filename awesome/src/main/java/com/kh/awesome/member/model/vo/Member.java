@@ -16,7 +16,7 @@ public class Member {
 	private int point;
 	private Date enrollDate;
 	private Date modifyDate;
-	private String admin;
+	private String manager;
 	private String status;
 	private String userNickname;  
 	
@@ -24,8 +24,9 @@ public class Member {
 	}
 
 	public Member(int mid, String userId, String userPwd, String userName, String gender, String birthday, String phone,
-			String email, String address, int point, Date enrollDate, Date modifyDate, String admin, String status,
+			String email, String address, int point, Date enrollDate, Date modifyDate, String manager, String status,
 			String userNickname) {
+		super();
 		this.mid = mid;
 		this.userId = userId;
 		this.userPwd = userPwd;
@@ -38,7 +39,7 @@ public class Member {
 		this.point = point;
 		this.enrollDate = enrollDate;
 		this.modifyDate = modifyDate;
-		this.admin = admin;
+		this.manager = manager;
 		this.status = status;
 		this.userNickname = userNickname;
 	}
@@ -139,12 +140,12 @@ public class Member {
 		this.modifyDate = modifyDate;
 	}
 
-	public String getAdmin() {
-		return admin;
+	public String getManager() {
+		return manager;
 	}
 
-	public void setAdmin(String admin) {
-		this.admin = admin;
+	public void setManager(String manager) {
+		this.manager = manager;
 	}
 
 	public String getStatus() {
@@ -168,7 +169,14 @@ public class Member {
 		return "Member [mid=" + mid + ", userId=" + userId + ", userPwd=" + userPwd + ", userName=" + userName
 				+ ", gender=" + gender + ", birthday=" + birthday + ", phone=" + phone + ", email=" + email
 				+ ", address=" + address + ", point=" + point + ", enrollDate=" + enrollDate + ", modifyDate="
-				+ modifyDate + ", admin=" + admin + ", status=" + status + ", userNickname=" + userNickname + "]";
+				+ modifyDate + ", manager=" + manager + ", status=" + status + ", userNickname=" + userNickname + "]";
 	}
+
+	
+	
+	
+	
+
+	
 	
 }
