@@ -99,6 +99,57 @@
 	border: 1px solid #dbdbdb;
 }
 
+
+
+.noticeListDiv{
+	margin-bottom: 5px;
+	width: 200px;
+    text-overflow:ellipsis;
+	white-space:nowrap; 
+	overflow: hidden;
+	color: #787878;
+	font-size: 13px;
+	margin-bottom: 10px;
+}
+
+.noticeListDiv:hover{
+	cursor:pointer;
+
+}
+
+
+.fa-bell:before {
+    content: "\f0f3";
+    color:#787878;
+}
+
+
+.fa-plus-square:before {
+    content: "\f0fe";
+    position: relative;
+    left: 120px;
+    top: 1px;
+    color: lightgray;
+    font-size: 20px;
+}
+
+
+.fa-plus-square:hover{
+ 	cursor:pointer;
+}
+
+
+
+
+/**/
+
+
+
+
+
+
+
+
 .centerDiv{
 	  width:880px;
   	  border: none; 
@@ -127,6 +178,18 @@
 /*     border-right: 1px solid #d0d0d0; */
     border-bottom: 1px solid #d0d0d0;
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 #boardTable{
@@ -181,42 +244,6 @@
 
 
 
-.noticeListDiv{
-	margin-bottom: 5px;
-	width: 200px;
-    text-overflow:ellipsis;
-	white-space:nowrap; 
-	overflow: hidden;
-	color: #787878;
-	font-size: 13px;
-	margin-bottom: 10px;
-}
-
-.noticeListDiv:hover{
-	cursor:pointer;
-
-}
-
-
-.fa-bell:before {
-    content: "\f0f3";
-    color:#787878;
-}
-
-
-.fa-plus-square:before {
-    content: "\f0fe";
-    position: relative;
-    left: 120px;
-    top: 1px;
-    color: lightgray;
-    font-size: 20px;
-}
-
-
-.fa-plus-square:hover{
- 	cursor:pointer;
-}
 
 
 </style>
@@ -226,7 +253,7 @@
 <jsp:include page="../common/menubar.jsp"/>	
 <div id="container" style="overflow: auto; height: auto;" ><!-- container -->
 
-
+<!-- 광고 및 미리보기  -->
 <div class= "previewBoard" >
 	<div class= "previewBoard2"> 
 		<div class= "advertisement"></div>
@@ -244,7 +271,7 @@
 			 	<div style="font-size: 15px; font-weight: bold; margin-left: 15px; margin-top: 15px; ">인기 게시글<i class="far fa-plus-square" style="left:120px;" onclick="goAllList();" ></i></div>
 			 	<div style="height: 140px; margin-top: 15px; padding-left: 18px;">
 				<c:forEach var="b" items="${bestList}">	
-		    				<div class="noticeListDiv" onclick ="goBoardDetailView(${b.bId});"><i class="fas fa-bell"></i>&nbsp;${b.bTitle} </div>
+		    				<div class="noticeListDiv" onclick ="goBoardDetailView2(${b.bId} , ${b.category});"><i class="fas fa-bell"></i>&nbsp;${b.bTitle} </div>
 				</c:forEach>
 				</div>
 			</c:if>
@@ -252,7 +279,7 @@
 		</div> 
 	</div> 
 </div >
-
+<!-- 광고 및 미리보기  -->
 <div clAss = "centerDiv"> 
 	<div> 
 	
@@ -294,33 +321,37 @@
 		<c:forEach var="b" items="${flist}">		
 			<c:if test = "${b.bLevel == 4}">
 				<tr align="center" class = "superTr"> 
-					<td style="color:#e11c24;"><input type="hidden" value = "${b.bId}"> [필독]</td>
+					<td style="color:#e11c24;">
+						<input type="hidden" value = "${b.bId}"> 
+						<input id="category${b.bId}" type="hidden" value= "${b.category}">
+						[필독]
+					</td>
 			</c:if>
 			<c:if test = "${b.bLevel != 4}">
 				<tr align="center" class = "normalTr"> 
 				
 				<c:if test = "${b.category eq 1 }">
-				<td><input type="hidden" value = "${b.bId}"> [공지사항]</td>
+				<td><input type="hidden" value = "${b.bId}"><input id="category${b.bId}" type="hidden" value= "${b.category}"> [공지사항]</td>
 			</c:if>
 	
 			<c:if test = "${b.category eq 2 }">
-				<td><input type="hidden" value = "${b.bId}"> [자유게시판]</td>		
+				<td><input type="hidden" value = "${b.bId}"><input id="category${b.bId}" type="hidden" value= "${b.category}"> [자유게시판]</td>		
 			</c:if>
 			
 			<c:if test = "${b.category eq 3 }">
-				<td><input type="hidden" value = "${b.bId}"> [팁&노하우]</td>		
+				<td><input type="hidden" value = "${b.bId}"><input id="category${b.bId}" type="hidden" value= "${b.category}"> [팁&노하우]</td>		
 			</c:if>
 			
 			<c:if test = "${b.category eq 4 }">
-				<td><input type="hidden" value = "${b.bId}"> [비포&애프터]</td>		
+				<td><input type="hidden" value = "${b.bId}"><input id="category${b.bId}" type="hidden" value= "${b.category}"> [비포&애프터]</td>		
 			</c:if>
 			
 			<c:if test = "${b.category eq 5 }">
-				<td><input type="hidden" value = "${b.bId}"> [자극사진]</td>		
+				<td><input type="hidden" value = "${b.bId}"><input id="category${b.bId}"  type="hidden" value= "${b.category}"> [자극사진]</td>		
 			</c:if>
 				
 			</c:if>
-				<td id="bTitle${b.bId}" align="left" style=" padding-left: 10px;" > ${b.bTitle }&nbsp;
+				<td id="bTitle${b.bId}" align="left" style=" padding-left: 10px;"> ${b.bTitle }&nbsp;
 			     <script> 
 				     function checkImgTag(str){ 
 				    	 var content = str;
@@ -447,6 +478,7 @@
   <form id= "formTag" action="fBoardDetailView.do" method="post">
     	<input id= "bId" type= hidden value="" name = bId >
     	<input id= "page" type= hidden value = "${pi.currentPage}" name= page> 
+    	<input id="category" type="hidden" value="" name="category">
   </form>
 
 
@@ -454,8 +486,14 @@
 
 <script>
 
+
+// 광고 및 미리보기 
 function goBoardDetailView(bId){
-	location.href='fBoardDetailView.do?page=1&bId='+bId;
+	location.href='fBoardDetailView.do?page=1&category=1&bId='+bId;
+	
+}
+function goBoardDetailView2(bId, category){
+	location.href='fBoardDetailView.do?page=1&category='+ category+ '&bId='+bId;
 	
 }
 
@@ -468,14 +506,15 @@ function goNoticeList(){
 function goAllList(){
 	location.href='boardListView.do?category=10'
 }
-
-
+//광고 및 미리보기 
 
 $(function(){
     $(".normalTr td").mouseenter(function(){
        $(this).parent().children().css({"background":"#FFF7D5","cursor":"pointer"}).click(function(){
    	     	var bId = $(this).parent().children().find('input').val(); // 게시글의  글번호 
+   	     	var category = $("#category"+bId).val();
    	      	$("#bId").val(bId);
+   	     	$("#category").val(category);
           	$("#formTag").submit(); 
        });
   
@@ -487,8 +526,9 @@ $(function(){
      $(".superTr td").mouseenter(function(){
        $(this).parent().children().css({"cursor":"pointer"}).click(function(){
    	     	var bId = $(this).parent().children().find('input').val(); // 게시글의  글번호 
-   	     	
-   	      	$("#bId").val(bId);
+   	 		var category = $("#category"+bId).val();
+	      	$("#bId").val(bId);
+	      	$("#category").val(category);
           	$("#formTag").submit(); 
        });
   

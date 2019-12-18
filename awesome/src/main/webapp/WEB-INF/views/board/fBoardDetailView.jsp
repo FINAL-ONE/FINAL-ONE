@@ -616,42 +616,94 @@
 	
 	
 	.previewBoard{
-		border: 1px solid black; 
-		height: 200px; 
-		wdith: 100%;
-		
-	}
-	
-	.previewBoard2{
-		  width:880px;
-	  	  border: 1px solid pink; 
-	      margin-left:auto;
-	      margin-right:auto;
-	      height: 100%;
-	      padding-left: 40px;
-	      
-	}
-	
-	.advertisement{
-		border: 1px solid blue; 
-		height: 200px;
-		width: 590px;  
-		display: inline-block;
-		margin-right: 10px;
-	}
-	
-	.noticeList{
-		border: 1px solid red; 
-		height: 200px;
-		width: 234px; 
-		display: inline-block;
-	}
+	height: 200px; 
+	wdith: 100%;
+	border: none;	
+	margin-top: 11px;
+}
+
+.previewBoard2{
+	  width:880px;
+  	  border: none; 
+      margin-left:auto;
+      margin-right:auto;
+      height: 100%;
+      padding-left: 18px;
+      
+}
+
+.advertisement{
+	border: 1px solid #dbdbdb; 
+	height: 200px;
+	width: 625px;  
+	display: inline-block;
+	margin-right: 5px;
+	position:relative;
+	background-image:url("resources/images/advertise4.jpeg");
+}
+
+
+.advertisement:hover{
+	cursor:pointer;
+}
+
+.noticeList{
+	height: 200px;
+	width: 247px; 
+	display: inline-block;
+	position: absolute;
+	border: 1px solid #dbdbdb;
+}
+
+
+
+.noticeListDiv{
+	margin-bottom: 5px;
+	width: 200px;
+    text-overflow:ellipsis;
+	white-space:nowrap; 
+	overflow: hidden;
+	color: #787878;
+	font-size: 13px;
+	margin-bottom: 10px;
+}
+
+.noticeListDiv:hover{
+	cursor:pointer;
+
+}
+
+
+.fa-bell:before {
+    content: "\f0f3";
+    color:#787878;
+}
+
+
+.fa-plus-square:before {
+    content: "\f0fe";
+    position: relative;
+    left: 120px;
+    top: 1px;
+    color: lightgray;
+    font-size: 20px;
+}
+
+
+.fa-plus-square:hover{
+ 	cursor:pointer;
+}
+
+
+
+
+/**/
 	
 	.centerDiv{
 	
 		  width:880px;
-			border:none;
-	 /*  	  border: 1px solid pink;  */
+		  border:none;
+	 /*  border: 1px solid pink;  */
 	      margin-left:auto;
 	      margin-right:auto;
 	      height: auto;
@@ -897,29 +949,78 @@
 	
 	<body>
 	<input id="loginUserMid" value="${loginUser.mid}" type="text"> 
-	<input id="loginUserAdmin" value="${loginUser.admin}" type="text" >
+	<input id="loginUserAdmin" value="${loginUser.manager}" type="text" >
 	<input id="loginUserNickname" value="${loginUser.userNickname }" type="text">
 	
 	<jsp:include page="../common/menubar.jsp"/>	
 	<div id="container" style="overflow: auto; height: auto;"><!-- container -->
 	   
 	   
-	<div class= "previewBoard" >
-		<div class= "previewBoard2"> 
-			<div class= "advertisement"> 디테일 뷰 잘 들어오니?   </div>
-			<div class= "noticeList">  공지사항(미리보기) </div> 
+
+<!-- 광고 및 미리보기  -->
+<div class= "previewBoard" >
+	<div class= "previewBoard2"> 
+		<div class= "advertisement"></div>
+		<div class= "noticeList">
+		
+			<c:if test= "${board.category != 1}">
+			 	<div style="font-size: 15px; font-weight: bold; margin-left: 15px; margin-top: 15px;">공지사항&nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-plus-square" onclick="goNoticeList();"></i></div>
+			 	<div style="height: 140px; margin-top: 15px; padding-left: 18px;">
+				<c:forEach var="n" items="${noticeList}">	
+		    				<div class="noticeListDiv" onclick ="goBoardDetailView(${n.bId});"><i class="fas fa-bell"></i>&nbsp;${n.bTitle} </div>
+				</c:forEach>
+				</div>
+			</c:if>
+			<c:if test= "${board.category eq 1}">
+			 	<div style="font-size: 15px; font-weight: bold; margin-left: 15px; margin-top: 15px; ">인기 게시글<i class="far fa-plus-square" style="left:120px;" onclick="goAllList();" ></i></div>
+			 	<div style="height: 140px; margin-top: 15px; padding-left: 18px;">
+				<c:forEach var="b" items="${bestList}">	
+		    				<div class="noticeListDiv" onclick ="goBoardDetailView2(${b.bId} , ${b.category});"><i class="fas fa-bell"></i>&nbsp;${b.bTitle} </div>
+				</c:forEach>
+				</div>
+			</c:if>
+		
 		</div> 
-	</div >
+	</div> 
+</div >
+<!-- 광고 및 미리보기  -->
 	
 	<div class = "centerDiv">
-		<h2 style="font-size: 26px; font-weight: bold;margin-top: 40px;">자유게시판</h2> 
+		
+		
+		<c:if test = "${board.category eq 1 }">
+		<h2 style="font-size: 26px; font-weight:bold">공지사항</h2> 
+		</c:if>
+	
+		<c:if test = "${board.category eq 2 }">
+		<h2 style="font-size: 26px; font-weight:bold"> 자유게시판 </h2> 
+		</c:if>
+		
+	
+		<c:if test = "${board.category eq 3 }">
+		<h2 style="font-size: 26px; font-weight:bold"> 팁&노하우 </h2> 
+		</c:if>
+		
+		<c:if test = "${board.category eq 4 }">
+		<h2 style="font-size: 26px; font-weight:bold"> 비포&애프터 </h2> 
+		</c:if>
+	
+		<c:if test = "${board.category eq 5 }">
+		<h2 style="font-size: 26px; font-weight:bold"> 자극사진 </h2> 
+		</c:if>
+		
+		<c:if test="${board.category eq 10 }">
+		<h2 style="font-size: 26px; font-weight:bold"> 전체 </h2> 
+		</c:if>
+		
+		 
 		<hr style="border: 1px solid black; margin-bottom: 5px;" >
 			<table align="center" width="840px" >
 				<tr style="padding:none;">
 					<td style="font-size: 25px;padding:0px; padding-bottom: 10px;height:60px;border-bottom: 1px; font-weight: 100px; font-family:none">
 						${board.bTitle} 
 						
-						<c:if test= "${ loginUser.admin = 'Y' || loginUser.mid == board.mId}">
+						<c:if test= "${ loginUser.manager == 'Y' || loginUser.mid == board.mId}">
 							<div style="font-size: 13px; position:relative; float:right; height:40px; padding-top: 20px; padding-right: 10px;"><span class="bModify" style="color: #8d8d8d;">수정</span>&nbsp;|&nbsp;<span class="bDelete" style="color: #8d8d8d;">삭제</span> </div>			
 						</c:if>
 					
@@ -1053,13 +1154,14 @@
 				<form id= "formTag" action="fBoardDetailView.do" method="post">
 		    		<input id= "bId" type= hidden value="" name = bId >
 		    		<input id= "page" type= hidden value = "${currentPage}" name= page> 
-	 			 </form>
+		    		<input id="category" type="hidden" value = "${board.category}" name =category>
+	 			 </form> 
 	 			 
 				<%if(nextBoard != null) {%>
 					<tr class="previewTr" style="border-bottom: 1px solid #e9e9e9;"> 
 						<input type = "hidden" name= "bId" value="${nextBoard.bId}"/> 
-						<td>&nbsp;&nbsp;다음글&nbsp;&nbsp;<i class="fas fa-caret-up"></i></td>
-						<td>${nextBoard.bTitle }</td> 
+						<td style="width: 90px;" >&nbsp;&nbsp;다음글&nbsp;&nbsp;<i class="fas fa-caret-up"></i></td>
+						<td  style="width: 568px;" >${nextBoard.bTitle }</td> 
 						<td style="color:#9e9e9e;">${nextBoard.createDate} &nbsp;&nbsp;|&nbsp;&nbsp; 조회수: ${nextBoard.bCount} </td>
 					</tr>
 				<%}%>
@@ -1129,6 +1231,28 @@
 	
 	
 <script>
+
+
+//광고 및 미리보기 
+function goBoardDetailView(bId){
+	location.href='fBoardDetailView.do?page=1&category=1&bId='+bId;
+	
+}
+function goBoardDetailView2(bId, category){
+	location.href='fBoardDetailView.do?page=1&category='+ category+ '&bId='+bId;
+	
+}
+
+
+function goNoticeList(){
+	location.href='boardListView.do?category=1'
+}
+
+
+function goAllList(){
+	location.href='boardListView.do?category=10'
+}
+//광고 및 미리보기 
 	
 	$(function(){
 		

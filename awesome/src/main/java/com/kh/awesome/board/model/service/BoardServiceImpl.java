@@ -44,8 +44,8 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public Board selectBoard(int bId) {
-		return bDao.selectBoard(bId);
+	public Board selectBoard(Board b) {
+		return bDao.selectBoard(b);
 	}
 
 	@Override
@@ -119,8 +119,8 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public Board selectBoardAsRnum(int rNum) {
-		return bDao.selectBoardAsRnum(rNum); 
+	public Board selectBoardAsRnum(Board b) {
+		return bDao.selectBoardAsRnum(b); 
 	}
 
 	@Override

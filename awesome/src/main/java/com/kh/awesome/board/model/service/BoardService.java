@@ -35,7 +35,7 @@ public interface BoardService {
 	/*
 	 * 3_2. 게시판 상세 조회
 	 */
-	public Board selectBoard(int bId);
+	public Board selectBoard(Board b);
 	
 	/*
 	 * 4. 게시판 수정
@@ -75,7 +75,7 @@ public interface BoardService {
 
 	public int updateAttachment(Attachment attachment);
 
-	public Board selectBoardAsRnum(int rNum);
+	public Board selectBoardAsRnum(Board b);
 
 	public ArrayList<Reply> selectReplyList(int bId, PageInfo pi);
 

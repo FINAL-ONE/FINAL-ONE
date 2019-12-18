@@ -58,8 +58,15 @@ public class BoardDao {
 		return sqlSession.update("boardMapper.updateCount", bId);
 	}
 
-	public Board selectBoard(int bId) {
-		return sqlSession.selectOne("boardMapper.selectBoardOne", bId);
+	public Board selectBoard(Board b) {
+		
+		if(b.getCategory() == 0) {
+			return sqlSession.selectOne("boardMapper.selectBoardOne", b.getbId());
+		}else {
+			return sqlSession.selectOne("boardMapper.selectBoardOne2", b);
+		}
+		
+	
 	}
 
 	public int updateBoard(Board b) {
@@ -133,8 +140,8 @@ public class BoardDao {
 		return  sqlSession.insert("boardMapper.updateAttachment", attachment);
 	}
 
-	public Board selectBoardAsRnum(int rNum) {
-		return sqlSession.selectOne("boardMapper.selectBoardAsRnum", rNum);
+	public Board selectBoardAsRnum(Board b) {
+		return sqlSession.selectOne("boardMapper.selectBoardAsRnum", b);
 	}
 
 	public ArrayList<Reply> selectReplyList(int bId, PageInfo pi) {

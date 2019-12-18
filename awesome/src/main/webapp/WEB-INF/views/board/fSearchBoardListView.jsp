@@ -45,16 +45,17 @@
 	cursor:pointer;
 }
 
+
 .previewBoard{
-	border: 1px solid black; 
 	height: 200px; 
 	wdith: 100%;
-	
+	border: none;	
+	margin-top: 11px;
 }
 
 .previewBoard2{
 	  width:880px;
-  	  border: 1px solid pink; 
+  	  border: none; 
       margin-left:auto;
       margin-right:auto;
       height: 100%;
@@ -63,23 +64,68 @@
 }
 
 .advertisement{
-	border: 1px solid blue; 
+	border: 1px solid #dbdbdb; 
 	height: 200px;
-	width: 620px;  
+	width: 625px;  
 	display: inline-block;
-	margin-right: 10px;
+	margin-right: 5px;
+	position:relative;
+	background-image:url("resources/images/advertise4.jpeg");
+}
+
+
+.advertisement:hover{
+	cursor:pointer;
 }
 
 .noticeList{
-	border: 1px solid red; 
 	height: 200px;
-	width: 240px; 
+	width: 247px; 
 	display: inline-block;
+	position: absolute;
+	border: 1px solid #dbdbdb;
+}
+
+
+
+.noticeListDiv{
+	margin-bottom: 5px;
+	width: 200px;
+    text-overflow:ellipsis;
+	white-space:nowrap; 
+	overflow: hidden;
+	color: #787878;
+	font-size: 13px;
+	margin-bottom: 10px;
+} 
+
+.noticeListDiv:hover{
+	cursor:pointer;
+
+}
+
+.fa-bell:before {
+    content: "\f0f3";
+    color:#787878;
+}
+
+
+.fa-plus-square:before {
+    content: "\f0fe";
+    position: relative;
+    left: 120px;
+    top: 1px;
+    color: lightgray;
+    font-size: 20px;
+}
+
+
+.fa-plus-square:hover{
+ 	cursor:pointer;
 }
 
 .centerDiv{
 	  width:880px;
-  	  border: 1px solid pink; 
       margin-left:auto;
       margin-right:auto;
       height: auto;
@@ -178,12 +224,35 @@
 <div id="container" style="overflow: auto; height: auto;" ><!-- container -->
 
 
+
+  
+<!-- 광고 및 미리보기  -->
 <div class= "previewBoard" >
 	<div class= "previewBoard2"> 
 		<div class= "advertisement"></div>
-		<div class= "noticeList"> </div> 
+		<div class= "noticeList">
+		
+			<c:if test= "${category != 1}">
+			 	<div style="font-size: 15px; font-weight: bold; margin-left: 15px; margin-top: 15px;">공지사항&nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-plus-square" onclick="goNoticeList();"></i></div>
+			 	<div style="height: 140px; margin-top: 15px; padding-left: 18px;">
+				<c:forEach var="n" items="${requestScope.noticeList}">	
+		    				<div class="noticeListDiv" onclick ="goBoardDetailView(${n.bId});"><i class="fas fa-bell"></i>&nbsp;${n.bTitle} </div>
+				</c:forEach>
+				</div>
+			</c:if>
+			<c:if test= "${category eq 1}">
+			 	<div style="font-size: 15px; font-weight: bold; margin-left: 15px; margin-top: 15px; ">인기 게시글<i class="far fa-plus-square" style="left:120px;" onclick="goAllList();" ></i></div>
+			 	<div style="height: 140px; margin-top: 15px; padding-left: 18px;">
+				<c:forEach var="b" items="${requestScope.bestList}">	
+		    				<div class="noticeListDiv" onclick ="goBoardDetailView2(${b.bId} , ${b.category});"><i class="fas fa-bell"></i>&nbsp;${b.bTitle} </div>
+				</c:forEach>
+				</div>
+			</c:if>
+		
+		</div> 
 	</div> 
 </div >
+<!-- 광고 및 미리보기  -->
 
 
 <div class = "centerDiv"> 
@@ -421,7 +490,7 @@
 			</c:if>
          
       
-      	<button style="border:none; background: #585858; height: 30px; color:white;padding-bottom:14px; position:relative; float:right;" onclick = "location.href='fBoardInsertForm.do'">글쓰기</button>
+      	<button style="border:none; background: #585858; height: 30px; color:white;padding-bottom:14px; position:relative; float:right;" onclick = "location.href='fBoardInsertForm.do?category=${category}'">글쓰기</button>
       </div>
 			
 	<br>		
@@ -440,6 +509,29 @@
 
 
 <script>
+
+//광고 및 미리보기 
+function goBoardDetailView(bId){
+	location.href='fBoardDetailView.do?page=1&category=1&bId='+bId;
+	
+}
+function goBoardDetailView2(bId, category){
+	location.href='fBoardDetailView.do?page=1&category='+ category+ '&bId='+bId;
+	
+}
+
+
+function goNoticeList(){
+	location.href='boardListView.do?category=1'
+}
+
+
+function goAllList(){
+	location.href='boardListView.do?category=10'
+}
+
+//광고 및 미리보기 
+
 
 $(function(){
     $(".normalTr td").mouseenter(function(){

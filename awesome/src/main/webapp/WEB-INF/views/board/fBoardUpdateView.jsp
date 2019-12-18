@@ -46,6 +46,7 @@
 <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
+  <link href="${contextPath}/resources/fontawesome-free/css/all.css" rel="stylesheet">
 
 <!-- include summernote css/js-->
 <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
@@ -236,6 +237,7 @@
 		height: 80px;
 		text-align: center;
 		padding-top: 30px;
+		margin-left: 7px;
 	}
 	
 
@@ -295,46 +297,93 @@
 
 
 
+
 .previewBoard{
-	border: 1px solid black; 
 	height: 200px; 
 	wdith: 100%;
-	
+	border: none;	
+	margin-top: 11px;
 }
 
 .previewBoard2{
 	  width:880px;
-  	  border: 1px solid pink; 
+  	  border: none; 
       margin-left:auto;
       margin-right:auto;
       height: 100%;
-      padding-left: 40px;
+      padding-left: 18px;
       
 }
 
 .advertisement{
-	border: 1px solid blue; 
+	border: 1px solid #dbdbdb; 
 	height: 200px;
-	width: 590px;  
+	width: 625px;  
 	display: inline-block;
-	margin-right: 10px;
+	margin-right: 5px;
+	position:relative;
+	background-image:url("resources/images/advertise4.jpeg");
+}
+
+
+.advertisement:hover{
+	cursor:pointer;
 }
 
 .noticeList{
-	border: 1px solid red; 
 	height: 200px;
-	width: 234px; 
+	width: 247px; 
 	display: inline-block;
+	position: absolute;
+	border: 1px solid #dbdbdb;
+}
+
+
+
+.noticeListDiv{
+	margin-bottom: 5px;
+	width: 200px;
+    text-overflow:ellipsis;
+	white-space:nowrap; 
+	overflow: hidden;
+	color: #787878;
+	font-size: 13px;
+	margin-bottom: 10px;
+}
+
+.noticeListDiv:hover{
+	cursor:pointer;
+
+}
+
+
+.fa-bell:before {
+    content: "\f0f3";
+    color:#787878;
+}
+
+
+.fa-plus-square:before {
+    content: "\f0fe";
+    position: relative;
+    left: 120px;
+    top: 1px;
+    color: lightgray;
+    font-size: 20px;
+}
+
+
+.fa-plus-square:hover{
+ 	cursor:pointer;
 }
 
 .centerDiv{
-	  width:880px;
-  	  border: 1px solid pink; 
-      margin-left:auto;
-      margin-right:auto;
-      height: auto;
-      padding-left: 40px;
-      
+    width: 910px;
+    /* border: 1px solid pink; */
+    margin-left: auto;
+    margin-right: auto;
+    height: auto;
+    padding-left: 33px;
 
 }
 
@@ -348,29 +397,54 @@
     background: #fff;
 }
 
+ #attachTable{
+      border: 1px solid #dbdbdb;
+	    width: 840px;
+	    position: relative;
+	    left: 20px;
+   }   
+
+
 </style>
 
 <body>
 <jsp:include page="../common/menubar.jsp"/>	
 
 
-	<input type="text" value="">
-	 	<input type="text" value="fdsafasd">
+	<input type="hidden" value="${loginUser.manager}">
+	 	<input type="hidden" value="${loginUser.userNickname} ">
 
 <div id="container" style="overflow: auto; height: auto;"><!-- container -->
    
    
 <div class= "previewBoard" >
 	<div class= "previewBoard2"> 
-		<div class= "advertisement">광고 </div>
-		<div class= "noticeList">  공지사항(미리보기) </div> 
+		<div class= "advertisement"></div>
+		<div class= "noticeList">
+		
+			<c:if test= "${category != 1}">
+			 	<div style="font-size: 15px; font-weight: bold; margin-left: 15px; margin-top: 15px;">공지사항&nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-plus-square" onclick="goNoticeList();"></i></div>
+			 	<div style="height: 140px; margin-top: 15px; padding-left: 18px;">
+				<c:forEach var="n" items="${noticeList}">	
+		    				<div class="noticeListDiv" onclick ="goBoardDetailView(${n.bId});"><i class="fas fa-bell"></i>&nbsp;${n.bTitle} </div>
+				</c:forEach>
+				</div>
+			</c:if>
+			<c:if test= "${category eq 1}">
+			 	<div style="font-size: 15px; font-weight: bold; margin-left: 15px; margin-top: 15px; ">인기 게시글<i class="far fa-plus-square" style="left:120px;" onclick="goAllList();" ></i></div>
+			 	<div style="height: 140px; margin-top: 15px; padding-left: 18px;">
+				<c:forEach var="b" items="${bestList}">	
+		    				<div class="noticeListDiv" onclick ="goBoardDetailView2(${b.bId} , ${b.category});"><i class="fas fa-bell"></i>&nbsp;${b.bTitle} </div>
+				</c:forEach>
+				</div>
+			</c:if>
+		
+		</div> 
 	</div> 
-	
-	 
 </div >
 
 <div class = "centerDiv">
-	<h2 style="font-size: 26px; font-weight: bold;">글쓰기</h2> 
+	<h2 style="font-size: 26px; font-weight: bold;padding-left:20px;">글쓰기</h2> 
 		<form id= insertForm action = "boardUpdate.do" method="post" encType="multipart/form-data">
 			<input type= "hidden" name="page" value = "${currentPage}" >
 			<input type= "hidden" name="bId" value = "${board.bId}" >
@@ -384,7 +458,7 @@
 
 					  <select class="categorySelect" name = "category" style="height: 35px;"> 
                   
-                <% if (loginUser.getUserId().equals("admin")){%>
+                <% if (loginUser.getManager().equals("Y")){%>
                   	 <option id= "category1" value = "1"> 공지사항 </option>
                   <%}%>
                      <option id =  "category2"   value = "2">자유게시판 </option>
@@ -429,7 +503,7 @@
 			
 			
 			
-			  <% if (loginUser.getUserId().equals("admin")){%>
+			  <% if (loginUser.getManager().equals("Y")){%>
 				<table id = "attachTable">
 					<tr>
 						<td rowspan=9 class= "titleTd" style= "border-right: 1px solid #dbdbdb">
@@ -530,6 +604,29 @@
 
 
 <script>
+
+//광고 및 미리보기 
+function goBoardDetailView(bId){
+	location.href='fBoardDetailView.do?page=1&category=1&bId='+bId;
+	
+}
+function goBoardDetailView2(bId, category){
+	location.href='fBoardDetailView.do?page=1&category='+ category+ '&bId='+bId;
+	
+}
+
+
+function goNoticeList(){
+	location.href='boardListView.do?category=1'
+}
+
+
+function goAllList(){
+	location.href='boardListView.do?category=10'
+}
+
+//광고 및 미리보기 
+
 
 $(function(){
 	   var category =  <%=category%>;  
