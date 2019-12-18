@@ -137,4 +137,76 @@ public class OrderController {
 
 	}
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	// 동복 결제 진행중 ------------------------------------------------------------------------------------------------------------------------------------------------	
+	
+	
+		// 동복 - 결제 화면으로 이동 Test
+		@RequestMapping("paymentView.do")
+		public ModelAndView paymentView(ModelAndView mv) {
+
+			mv.setViewName("order/paymentView");
+
+			return mv;
+		}		
+		
+		// 동복 - 결제 진행 ( TABLE INSERT && UPDATE )
+		@RequestMapping("paymentViewSuccess.do")
+		public ModelAndView paymentViewSuccess(ModelAndView mv, Order o, int gId, int mId, int orderCount, String orderStatus, int usedPoint, String dName, String dAddress, String dPhone, int orderPrice ) {
+
+			System.out.println(" gId : " + gId +", mId : " + mId +", orderCount : " + orderCount +", orderStatus : " + orderStatus +
+			", usedPoint : " +usedPoint +", dName : " + dName +", dAddress : " + dAddress +", dPhone : " + dPhone +", orderPrice : " + orderPrice);
+
+			o.setgId(gId);
+			o.setmId(mId);
+			o.setOrderCount(orderCount);
+			o.setOrderStatus(orderStatus);
+			
+			o.setUsedPoint(usedPoint);
+			o.setdName(dName);
+			o.setdAddress(dAddress);
+			o.setdPhone(dPhone);
+			o.setOrderPrice(orderPrice);
+			
+			/* 주문 테이블 생성 */
+			int result = oService.insertPaymentList(o);
+			System.out.println("result 결제완료 : " + result);		
+			
+	/* 위에 insertPaymentList 실행되면 만들어진 시퀀스 orderNum값 필요함  */
+			
+			if(result > 0) {
+				/* 결제 테이블 생성 */
+				int result2 = oService.insertPayment(o);
+				System.out.println("result2 결제완료 : " + result2);		
+				/* 받는이 테이블 생성 */
+				int result3 = oService.insertPaymentDinfo(o);
+				System.out.println("result3 결제완료 : " + result3);					
+				/* 포인트 적립(결제시 사용포인트 차감 ) */
+				int result4 = oService.updateMemberPoint(o);
+				System.out.println("result4 결제완료 : " + result4);					
+				mv.setViewName("order/paymentView");
+			}
+			
+			return mv;
+		}	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

@@ -5,19 +5,40 @@
 		<id property ="mid" column="MID"/>
 		
 		<result property="gid" column="GID"/>
-		<result property="mid" column="MID"/>
-		<result property="goodsName" column="GOODS_NAME"/>
-		<result property="goodsPrice" column="GOODS_PRICE"/>
-		<result property="count" column="COUNT"/>
-		<result property="goodsStatus" column="GOODS_STATUS"/>
-		<result property="goodsFilePath" column="GOODS_FILE_PATH"/>
-		<result property="soldOut" column="SOLDOUT"/>
 	</resultMap>
 	
+	<!-- 저장될 VO -->
+   <resultMap type="CartList" id="cartListResultSet">
+      <id property ="cartNum" column="CARTNUM"/>
+      
+      <result property="gId" column="GID"/>
+      <result property="mId" column="MID"/>
+      <result property="count" column="COUNT"/>
+      <result property="goodsName" column="GOODS_NAME"/>
+      <result property="goodsPrice" column="GOODS_PRICE"/>
+      <result property="filePath" column="GOODS_FILE_PATH"/>
+      <result property="soldout" column="SOLDOUT"/>
+      <result property="name" column="USER_NAME"/>
+      <result property="phone" column="PHONE"/>
+      <result property="address" column="ADDRESS"/>
+      <result property="point" column="POINT"/>
+   </resultMap>
 	
-	<select id="sele">
+  <!-- 카트 리스트 -->
+   <select id="cartList" resultMap="cartListResultSet">
+      SELECT C.CARTNUM, C.GID, G.GOODS_NAME, G.GOODS_PRICE, M.MID, C.COUNT, SG.GOODS_FILE_PATH, G.SOLDOUT, M.USER_NAME, M.PHONE, M.ADDRESS, M.POINT
+      FROM GOODS G, SELL_GOODS SG, CART C, MEMBER M
+      WHERE G.GID = SG.GID
+      AND G.GID = C.GID
+      AND M.MID = #{mId}
+   </select>
 	
-	</select>
+	<!-- 카트 삭제 -->
+	<delete id="deleteCart">
+		DELETE CART
+		WHERE CARTNUM = #{cartNum}
+		AND MID=#{mid}
+	</delete>
 	
 	
 	

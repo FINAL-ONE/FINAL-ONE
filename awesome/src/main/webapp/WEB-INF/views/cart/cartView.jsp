@@ -9,7 +9,7 @@
 <link rel="stylesheet" type="text/css" href="css/cart3.css">
 <!-- <link rel="stylesheet" type="text/css" href="css/cart.css"> -->
 <!-- <link rel="stylesheet" type="text/css" href="css/cart2.css"> -->
-
+ 
 <style>
 @charset "utf-8";
 
@@ -1011,11 +1011,11 @@ table, th, td { border: medium none; border-collapse: collapse; border-spacing: 
 							<col width="180">
 						</colgroup>
 
+						<c:forEach items="${cartList}" var="cartList">
 						<!-- 개별 상품 시작 -->
 						<tbody>
 							<tr id="cartgoods7891782" data-cartidx="7891782" data-goodsidx="11379" data-activeyn="Y" data-delivtype="P" data-delivfee="3000" data-delivcon="30000" data-setyn="N">
 								<td valign="top" align="center">
-								<!-- <label class="order_chk_type">  -->
 								<input type="checkbox" checked="checked" class="chBox><!--체크박스선택시-->
 								<script>
 								$(".chBox").click(function(){
@@ -1024,9 +1024,8 @@ table, th, td { border: medium none; border-collapse: collapse; border-spacing: 
 								</script>
 								</td>
 								<td class="order_thmb">
-									<a href="${Cart.goodsFilePath }" onclick="hitRecentLog('11379');"> 
-									<img alt="temp thmb" src="http://data.0app0.com/diet/shop/goods/20190528/m_20190528152633_1478357212.jpg">
-									</a>
+									<a href="${cartList.filePath}" onclick="hitRecentLog('11379');"> 
+									<img alt="temp thmb" src="${cartList.filePath}"></a>
 								</td>
 								<td class="order_info2" colspan="3"><a class="order_deal" href="/goods/view.asp?g=11379">상품명1</a>
 									<ul class="order_option_area">
@@ -1039,14 +1038,14 @@ table, th, td { border: medium none; border-collapse: collapse; border-spacing: 
 										<span class="price_input2">
 										<!-- <input type="number" value="1" class="inputno2" style="outline: none;" oninput="this.value=this.value.slice(0,this.maxLength)"
 																maxlength="4" data-idx="6681" data-uc="50"> -->
-										<input class="amount" name="amount" type="number" value="1" min="1" max="10" required>
+										<input class="amount" name="amount" type="number" value="1" min="1" max="${cartList.count}" required>
 										</span>
 										</span> 
 										<a class="plus" id="plsbtn" onclick="javascript:this.form.amount.value--">+</a></span>
 										</span>
 										</span> 
 										<span class="order_option_amounts2" data-price="TKDVNA">
-											<em class="b">상품1 가격</em>원
+											<em class="b">${cartList.goodsPrice}</em>원
 										</span><span><a href="javascript:$.optDel(6681);"
 												class="cart_btn_del"></a> </span></li>
 										
@@ -1059,6 +1058,7 @@ table, th, td { border: medium none; border-collapse: collapse; border-spacing: 
 										<!-- 상품 옵션 종료 -->
 									</ul> <!-- //옵션명 노출--></td>
 							</tr>
+							</c:forEach>
 							<!-- 개별 상품 종료 -->
 
 							<!-- 다음 상품들 추가추가 -->

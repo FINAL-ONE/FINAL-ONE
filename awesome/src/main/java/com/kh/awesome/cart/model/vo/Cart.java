@@ -14,17 +14,30 @@ public class Cart implements Serializable{
 	private static final long serialVersionUID = 6877298557144984488L;
 	
 	
+	
+	private int cartNum;
 	private int gid;
 	private int mid;
+	private int count;
 	
 	public Cart() {
 		
 	}
 
-	public Cart(int gid, int mid) {
+	public Cart(int cartNum, int gid, int mid, int count) {
 		super();
+		this.cartNum = cartNum;
 		this.gid = gid;
 		this.mid = mid;
+		this.count = count;
+	}
+
+	public int getCartNum() {
+		return cartNum;
+	}
+
+	public void setCartNum(int cartNum) {
+		this.cartNum = cartNum;
 	}
 
 	public int getGid() {
@@ -43,11 +56,25 @@ public class Cart implements Serializable{
 		this.mid = mid;
 	}
 
+	public int getCount() {
+		return count;
+	}
+
+	public void setCount(int count) {
+		this.count = count;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 
 	@Override
 	public String toString() {
-		return "Cart [gid=" + gid + ", mid=" + mid + "]";
+		return "Cart [cartNum=" + cartNum + ", gid=" + gid + ", mid=" + mid + ", count=" + count + "]";
 	}
 	
+	
+	
+
 
 }

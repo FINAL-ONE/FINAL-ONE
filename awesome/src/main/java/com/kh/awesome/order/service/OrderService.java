@@ -31,6 +31,14 @@ public interface OrderService {
 
 
 
-
+	//---------------------------- INSERT ----------------------------	
+	// 동복 - 결제 진행 ( TABLE INSERT && UPDATE )
+	int insertPaymentList(Order o);
+	
+	int insertPayment(Order o);
+	
+	int insertPaymentDinfo(Order o);
+	
+	int updateMemberPoint(Order o);
 
 }

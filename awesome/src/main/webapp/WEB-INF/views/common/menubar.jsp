@@ -221,7 +221,7 @@
 <div class="menubar2 myPageMenubar myPageMenu" style="display:none;">
    <div class= "myPageNav">
       <span class= menu2 style="left: 637px;" onclick= "location.href='myinfo.do'">내정보보기</span>
-      <!-- <span class= menu2 style="left: 652px;" onclick= "location.href=#">장바구니</span> -->
+      <span class= menu2 style="left: 652px;" onclick= "location.href='cartList.do'">장바구니</span>
       <span class= menu2 style="left: 667px;" onclick= "location.href='orderview.do'">주문조회</span>
       <span class= menu2 style="left: 682px;">다이어트 일지</span>
    </div>
@@ -230,7 +230,7 @@
 <c:if test="${sessionScope.loginUser.userId eq 'admin' }">
 <div class="menubar2 myPageMenubar myPageMenu" style="display:none;">
    <div class= "myPageNav">
-
+					<span class= menu2 style="left: 612px;" onclick= "location.href='paymentView.do'">결제Test</span>
       <span class= menu2 style="left: 647px;" onclick= "location.href='goodsWriterView.do'">상품판매</span>
       <span class= menu2 style="left: 682px;" onclick= "location.href='sell_goodsList.do'">판매상품조회</span>
       <span class= menu2 style="left: 717px;" onclick= "location.href='goodsList.do'">상품관리</span>
