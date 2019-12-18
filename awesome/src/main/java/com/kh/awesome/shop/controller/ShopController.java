@@ -29,36 +29,7 @@ public class ShopController {
 	@Autowired
 	private ShopService ShopService;
 	
-/*
-	@RequestMapping("afterWrite.do")
-	public String goodsWriterView() {
-		
-		return "shop/sell_afterWriteView";	
-	}
-*/
-	
-	/*
-	@RequestMapping("afterWrite.do") 
-	 public ModelAndView goodsWriterView(ModelAndView mv, int sellNum) {
-		 System.out.println("sellNum :" + sellNum);
-	
-		 ArrayList<SellReply> list = ShopService.selectReply(sellNum);
-		 
-		 if(list != null) {
-			 mv.addObject("list", list)
-			 .setViewName("shop/sell_afterWriteView");
-		 } else { 
-			 throw new AdminException("상품 정보 불러오기실패!"); 
-		}
-		
-		 mv.addObject("list", ShopService.selectReply(sellNum))
-		 .setViewName("shop/sell_afterWriteView");
-	 return mv;
-	 
-	 }
-	*/
-	
-	
+	// 댓글 insert
 	@RequestMapping("sellafterInsert.do")
 	public String sellafterInsert(HttpServletRequest request, SellReply sr,
 									@RequestParam(name="afteruploadFiles", required=false) MultipartFile file1,
@@ -102,13 +73,14 @@ public class ShopController {
 		System.out.println(result);
 		
 		if(result > 0 ) {
-			/* return "redirect:sellafterSelectList.do"; */
-			return "redirect:sellafterlistView.do";
+			return "redirect:shopGoodsListView.do";
 		} else {
 			throw new ShopException("후기 등록 실패!!");
 		}	
 		
 	}
+
+	
 	
 	public String saveFile(MultipartFile file, HttpServletRequest request) {
 		// 파일이 저장될 경로를 설정하는 메소드
@@ -149,25 +121,28 @@ public class ShopController {
 	}
 	
 	
-	// 상품 후기리스트 목록으로 이동
-	@RequestMapping("sellafterlistView.do")
-	public ModelAndView sellafterlistView(ModelAndView mv) {
+	
+	// 메뉴바에서 관리자가 후기 리뷰 조회 클릭하면 select로 목록 뿌려주기 
+	@RequestMapping("sellafterlistViewAdmin.do")
+	public ModelAndView sellafterlistViewAdmin(ModelAndView mv) {
 		
 		ArrayList<SellReply> aflist = ShopService.sellafterSelectList();
+		System.out.println("관리자용 후기리스트 : " + aflist);
 		
 		if(aflist != null) {
 			mv.addObject("aflist", aflist);
+			
 			mv.setViewName("shop/sell_afterList");
-			/* mv.setViewName("shop/shopGoodsDetail"); */
 		}else {
-			throw new AdminException("상품 후기 목록 보기 실패!!");
+			throw new ShopException("관리자용 상품 후기 목록 보기 실패!!");
 				// RuntimeException을 받으면 에러 처리 안해도된다
 		}
 		
 		return mv;
 	}
-	
 
+
+		
 	// 카트에 상품 추가
 	@RequestMapping("goCart.do")
 	public String goodsgoCartView(HttpServletRequest request, Cart c, Admin a) {
@@ -195,4 +170,48 @@ public class ShopController {
 	}							
 		
 	
+	// 상품별 평균 조회
+	@RequestMapping("stargIdSelect.do")
+	public ModelAndView stargIdSelect(ModelAndView mv, int gId) {
+		System.out.println("gId : " + gId);
+		
+		ArrayList<SellReply> aflist = ShopService.stargIdSelect(gId);
+		System.out.println("aflist: " + aflist);
+		
+		
+		ArrayList<SellReply> sAvgList = ShopService.sAvgListSelect(gId);
+		
+		System.out.println("sAvgList: " + sAvgList);
+		
+		
+		if(aflist != null) {
+			mv.addObject("aflist", aflist);
+			mv.addObject("sAvgList", sAvgList);
+			mv.setViewName("shop/sell_afterList");
+		}else {
+			throw new ShopException("관리자용 후기 평점 보기 실패!!");
+				// RuntimeException을 받으면 에러 처리 안해도된다
+		}
+		return mv;
+	}	
+	
+	// 내가 쓴 후기 수정 뷰 이동
+	@RequestMapping("afterdelete.do")
+	public ModelAndView afterDelView(ModelAndView mv, int mid) {
+		System.out.println("mId : "+ mid);
+		
+		ArrayList<SellReply> mflist = ShopService.myafterSelectList(mid);
+		System.out.println("내 후기리스트 : " + mflist);
+		
+		if(mflist != null) {
+			mv.addObject("mflist", mflist);
+			
+			mv.setViewName("shop/myafterView");
+		}else {
+			throw new ShopException("내 후기 목록 보기 실패!!");
+				// RuntimeException을 받으면 에러 처리 안해도된다
+		}
+		
+		return mv;
+	}	
 }

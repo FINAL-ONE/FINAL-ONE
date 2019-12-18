@@ -75,7 +75,7 @@
 				<td>
 					<!-- <span class="guide ok">이 상품명은 사용 가능합니다.</span> -->
 					<span class="guide error">이 상품은 사용할수 없습니다.</span>
-					<input type="hidden" name="idDuplicateCheck" id="idDuplicateCheck" value="0">
+					<input type="hidden" name="id	DuplicateCheck" id="idDuplicateCheck" value="0">
 				</td>
 			</tr>
 			<tr>

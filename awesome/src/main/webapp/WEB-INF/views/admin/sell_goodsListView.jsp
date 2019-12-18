@@ -12,22 +12,33 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <link href="js/Modal.js-master/build/css/modal.css" rel="stylesheet">
 
+<!-- switch버튼 css -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="js/switch-master/css/style.css">
+
 <style>
 .outer{
 	width : 100%;
 	height : 100%;
 }
-.goodsTable {
+#checkboxTestTbl{
   border-collapse: collapse;
   border-spacing: 0;
-  width: 90%;
+  width: 1300px;
   border: 1px solid #ddd;
-  /* text-align :center; */
+  text-align :center;
 }
-th, td {
+#checkboxTestTbl2{
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100px;
+  border: 1px solid #ddd;
+  text-align :center;
+}
 
-  /* text-align: left; */
-  padding: 13px;
+th, td {
+  text-align: center;
+  padding: 16px;
   
 }
 
@@ -44,18 +55,54 @@ tr:nth-child(even) {
 .tablestatus{
 	min-width: 100px;
 }
-
-.tableLeft{
-	float: left;
-} 
-
-#checkboxTestTbl{
-	/* margin: 0px; */
-	margin-right: 0px;
-
+#tableLeft1{
+	float : left;
+	margin-left : 165px;
 }
-#checkboxTestTbl2{
-	/* margin: 0px; */ 
+#tableLeft2{
+	float : left;
+}
+
+
+/*상품 등록하기  버튼 css  */
+.myBtn{
+	width :145px;
+	height : 40px;
+	font-size : 15px;
+	border-radius: 4px;
+	background-color: #4CAF50;
+	border: none;
+	color: #FFFFFF;
+	text-align: center;
+	padding: 6px;
+	transition: all 0.5s;
+	cursor: pointer;
+	margin: 3px;
+}
+
+.myBtn span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.myBtn span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.myBtn:hover span {
+  padding-right: 25px;
+}
+
+.myBtn:hover span:after {
+  opacity: 1;
+  right: 0;
 }
 </style>
 
@@ -67,15 +114,14 @@ tr:nth-child(even) {
 		<div id="container" style= "height: auto; overflow: auto;"><!-- container -->
 
 			<c:if test="${!empty loginUser }">
-		   		<div align ="center">
-		   			<button onclick="location.href='goodsWriterView.do'">상품 등록하기</button>
+		   		<div style="margin-left : 1420px; margin-top : 20px;">
+		   			<button class="myBtn success" onclick="location.href='goodsWriterView.do'"><span>상품 등록</span></button>
 		   		</div>
 			</c:if>
-			<br>
 		<form id = "goodsInsertForm" action="aStatusUpdate.do" method="post">
-			<div class="tableLeft" style= "width: auto;">
-				<table id ="checkboxTestTbl" class = "goodsTable" align="center" border="1" >
-						<tr bgcolor ="#99ccff" >
+			 <div id="tableLeft1" style= "width: auto;">
+				<table align="center" id ="checkboxTestTbl" class = "goodsTable" border="1" cellspacing="1">
+						<tr bgcolor ="#fa4a4a" style = "color : white">
 							<th><input type="checkbox" name="user_CheckBox"></th>
 							<th>상품번호</th>
 							<th>이미지</th>
@@ -86,7 +132,7 @@ tr:nth-child(even) {
 							<th>등록날짜</th>
 							<th>수정날짜</th>
 							<th>상태</th>
-							<!-- <th>품절</th> -->
+							<!-- <th width = "200px">품절</th> -->
 						</tr>
 						
 						<c:forEach var="a" items="${list}">
@@ -117,10 +163,10 @@ tr:nth-child(even) {
 							</tr>
 						</c:forEach>
 					</table> 
-				</div>
-				<div class="tableLeft" style= "width: auto;">
-					<table id ="checkboxTestTbl2" class = "goodsTable" align="center" border="1" cellspacing="0" style="clear:right;">
-						<tr bgcolor ="#99ccff" >
+				 </div> 
+ 				<div id="tableLeft2" style= "width: auto;">
+					<table id ="checkboxTestTbl2" class = "goodsTable" align="center" border="1" cellspacing="1" style="clear:right;">
+						<tr bgcolor ="#fa4a4a" style = "color : white">
 							<th>품절</th>
 						</tr>
 						<c:forEach var="a" items="${list}">
@@ -128,13 +174,38 @@ tr:nth-child(even) {
 								<input id=gId  			type = "hidden" name="gId" 			value = "${a.gId}">
 								<input id=sellNum2  	type = "hidden" name="sellNum2" 	 value = "${a.sellNum}">
 								<input id=status2  		type = "hidden" name="statusUpdate2" value = "${a.status}">
-								<td class="tablestatus">상태변경</td>
+								<!-- <td class="tablestatus">상태변경</td> -->
+								<td>
+								<c:if test="${a.status eq 'Y'}">
+							           <label class="switch">
+							             <input id = "statusCheck"type="checkbox" checked>
+							             <span></span>
+							           </label>
+					           	   </c:if>
+					           	   <c:if test="${a.status eq 'N'}">
+							           <label class="switch">
+							             <input id = "statusCheck" type="checkbox">
+							             <span></span>
+							           </label>
+					           	   </c:if>
+								</td>
 							</tr>
 						</c:forEach>
 					</table> 
-				</div>
+				</div> 
 			</form>
 			
+	
+			</div>
+			<p align="center">
+				<c:url var ="adminMain" value="adminMain.do"/>
+				<a href="${adminMain}" style="text-decoration: none;">관리자페이지 이동</a>&nbsp;
+				<c:url var ="sell_goodsList" value="sell_goodsList.do"/>
+				<a href="${sell_goodsList}" style="text-decoration: none;">목록전체보기</a>
+			</p>
+	</div> 
+	
+
 		<!-- 체크박스 전체선택 -->	
 		  <script>
 		        $(document).ready(function(){
@@ -234,16 +305,7 @@ tr:nth-child(even) {
 		
 		</script>
 
-			<p align="center">
-				<c:url var ="adminMain" value="adminMain.do"/>
-				<a href="${adminMain}">관리자페이지 이동</a>&nbsp;
-				<c:url var ="sell_goodsList" value="sell_goodsList.do"/>
-				<a href="${sell_goodsList}">목록전체보기</a>
-			</p>
-	
-		</div>
-	</div> 
-	
+
 	
 	<script type="text/javascript">
 		$(function(){
@@ -271,7 +333,7 @@ tr:nth-child(even) {
 //--------------------------------------------------------------------------------------------------
 
 			$("#checkboxTestTbl2 td").mouseenter(function(){
-				$(this).parent().css({"background":"#fa4a4a","cursor":"pointer"});
+				$(this).parent().css({"background":"#FFF7D5","cursor":"pointer"});
 			}).mouseout(function(){ ;
 				$(this).parent().css({"background":"white"});
 			}).click(function(){	
@@ -315,6 +377,20 @@ tr:nth-child(even) {
 	}); 
 
 </script>
+		
+		
+		
+		<!-- switch script -->
+		<script>
+			  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+			
+			  ga('create', 'UA-46156385-1', 'cssscript.com');
+			  ga('send', 'pageview');
+		</script>
+		
 		
 </body>
 <footer>

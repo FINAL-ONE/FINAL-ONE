@@ -9,7 +9,17 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!-- 모달 -->
 <link href="js/Modal.js-master/build/css/modal.css" rel="stylesheet">
+
+<!-- Star Rating -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+
+
+
+
 
 
 <style>
@@ -20,7 +30,7 @@ body{
 	/* border : 1px solid red; */
 	width : 800px;
 	height : 90%;
-	margin-left : 350px;
+	margin-left : 450px;
 }
 .goods-Area{
 	width : 800px;
@@ -64,9 +74,9 @@ body{
 }
 
 .Quantity{
-	display : inline-block;
+/* 	display : inline-block; */
 	margin-left : 100px;
-	
+	/* background : red; */
 }
 
 #increaseQuantity{
@@ -123,6 +133,9 @@ body{
   background-color: #f2f2f2;
   cursor : pointer;
 }
+#afterWrite tr {
+  cursor : pointer;
+}
 #afterWriteBtn{
 	float: right;
 	margin-bottom: 20px;
@@ -131,7 +144,7 @@ body{
 
 /* 맨위로 버튼  */
 
-#myBtn {
+#upBtn {
   display: none;
   position: fixed;
   bottom: 20px;
@@ -147,7 +160,7 @@ body{
   border-radius: 4px;
 }
 
-#myBtn:hover {
+#upBtn:hover {
   background-color: #555;
 }
 
@@ -242,6 +255,14 @@ body{
   cursor: pointer;
 }
 
+/* 별점  */
+.fa-star{
+	color : dark-gray;
+}
+.checked {
+  	color: orange;
+}
+
 
 /* 장바구니 버튼 클릭 팝업 css */
 .popup {
@@ -252,12 +273,16 @@ body{
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  background : #fa4a4a;
+  color : white;
+  font-size : 18px;
+  
 }
 
 /* The actual popup */
 .popup .popuptext {
   visibility: hidden;
-  width: 200px;
+  width: 250px;
   background-color: #555;
   color: #fff;
   text-align: center;
@@ -267,7 +292,7 @@ body{
   z-index: 1;
   bottom: 125%;
   left: 50%;
-  margin-left: -80px;
+  margin-left: -120px;
 }
 
 /* Popup arrow */
@@ -303,6 +328,245 @@ body{
   from {opacity: 0;}
   to {opacity:1 ;}
   
+  
+.goodshare-color{
+	width : 200px;
+	height : 100px;
+	background : red;
+}  
+
+
+.pagingArea button {
+	  border: 1px solid #dcdcdc;
+	  outline: none;
+	  padding: 6px 12px;
+	  cursor: pointer;
+	  background: white;
+	  font-size: 13px;
+      color: #828282;
+}
+
+.searchArea{
+	padding-top: 12px;
+	height: 38px;
+}
+
+.searchBtn{
+	height: 42px;
+	width: 60px;
+	background:#6d6d6e; 
+	border-radius:3px; 
+	outline:none;
+	border:none;
+	color:white; 
+	vertical-align: top;
+	font-size: 12px;
+	padding-bottom: 4px;
+}
+
+.searchBtn:hover{
+	cursor:pointer;
+}
+
+.previewBoard{
+	border: 1px solid black; 
+	height: 200px; 
+	wdith: 100%;
+	
+}
+
+.previewBoard2{
+	  width:880px;
+  	  border: 1px solid pink; 
+      margin-left:auto;
+      margin-right:auto;
+      height: 100%;
+      padding-left: 40px;
+      
+}
+
+.advertisement{
+	border: 1px solid blue; 
+	height: 200px;
+	width: 620px;  
+	display: inline-block;
+	margin-right: 10px;
+}
+
+.noticeList{
+	border: 1px solid red; 
+	height: 200px;
+	width: 240px; 
+	display: inline-block;
+}
+
+.centerDiv{
+	  width:880px;
+  	  border: 1px solid pink; 
+      margin-left:auto;
+      margin-right:auto;
+      height: auto;
+      padding-left: 40px;
+      
+
+}
+
+.centerDiv tr {
+
+
+}
+
+
+.centerDiv #th td{	
+	text-align: center;
+	font-weight: 600;
+	height: 50px;
+	font-size: 14px;
+	background: #fbfbfb;
+	border-top: 1px solid black;
+    border-left: 0 none;
+/*     border-right: 1px solid #d0d0d0; */
+    border-bottom: 1px solid #d0d0d0;
+}
+
+
+#boardTable{
+	border:none;
+	border-bottom: 1px solid black;
+}
+.centerDiv #tr td{	
+	text-align: center;
+	font-weight: 600;
+	height: 50px;
+	font-size: 14px;
+	border-top : none;
+    border-left: 0 none;
+/*     border-right: 1px solid #d0d0d0; */
+    border-bottom: 1px solid #d0d0d0;
+  
+}
+
+#boardTable tr td{
+	height: 50px;
+	border-bottom:  1px solid #d0d0d0;
+	font-size: 14px;
+}
+
+
+
+.searchResult{
+     border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #cfcfcf;
+    font-size: 20px;
+    color: #383838;
+    height: 100px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 25px;
+    padding-right: 25px;
+    margin-bottom: 10px;
+}
+
+
+
+
+
+/* 버튼 css  */
+.myBtn{
+	width :80px;
+	height : 30px;
+	font-size : 13px;
+	border-radius: 4px;
+	background-color: #4CAF50;
+	border: none;
+	color: #FFFFFF;
+	text-align: center;
+	padding: 6px;
+	transition: all 0.5s;
+	cursor: pointer;
+	margin: 3px;
+}
+
+.myBtn span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.myBtn span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.myBtn:hover span {
+  padding-right: 25px;
+}
+
+.myBtn:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+#updateafter {
+		display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+
+}
+
+#updateafter .updateafter_content {
+  		background-color: #fefefe;
+        margin: 15% auto; /* 15% from the top and centered */
+        padding: 20px;
+        border: 1px solid #888;
+        width: 30%; /* Could be more or less, depending on screen size */ 
+}
+.updateafter_content{
+		text-align:center; 
+		width: 500px;
+		height: 500px;
+		margin-top: 100px;
+		margin-left: auto;
+		margin-right: auto;
+}
+.close{
+	display : inline-block;
+	float : right;
+	color: #aaaaaa;
+  	font-size: 28px;
+  	font-weight: bold;
+}
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
 
 </style>
 
@@ -342,40 +606,57 @@ body{
 								<span>배송비 : 무료</span><br><br>
 								<hr>
 										
-								<div class="number" style= "width : 130px; height : 50px;">
+								<div class="number" style= "width : 200px; height : 50px;">
 									<div class="UpDown" style="padding-top: 13px;">
-										수량 선택 : <span id="numberUpDown">1</span>
+										수량 선택 : 
+									    <a href="#" id="decreaseQuantity"><span style="font-weight: bold; font-size:40px;" >-</span></a>
+										<span id="numberUpDown">1</span>
+										<a href="#" id="increaseQuantity"><span style="font-weight: bold; font-size:30px;">+</span></a>
 										<input id="numberCount" type="hidden" name="count">
-									</div>
-									<div class="Quantity" style="width : 50px;">
-										<a href="#" id="increaseQuantity">▲</a><br>
-									    <a href="#" id="decreaseQuantity">▼</a>
+										<!-- <div class="Quantity" style="width : 50px;"> -->
+										<!-- </div> -->
 									</div>
 								</div>
 								<br>
 								<c:if test="${empty sessionScope.loginUser }">
-									<button type="button" style="width : 110px; height : 40px;" onclick="notLogin();">장바구니</button>
+									<button type="button" style="width : 110px; height : 40px; background : green;" onclick="notLogin();">장바구니</button>
 						        </c:if>
 						        <c:if test="${!empty sessionScope.loginUser }">
-									<button class="popup" type="button" style="width : 100px; height : 40px;" onclick="goCart();">장바구니 <span class="popuptext" id="myPopup">장바구니에 추가되었습니다.</span></button>
+									<button class="popup" type="button" style="width : 200px; height : 40px;" onclick="goCart();">장바구니 <span class="popuptext" id="myPopup">장바구니에 추가되었습니다.</span></button>
 								</c:if>
-									<input type="button" value="찜하기" style="width : 110px; height : 40px;"/>
+									<!-- <input type="button" value="찜하기" style="width : 110px; height : 40px;"/> -->
+									
+									<!-- 소셜에 공유 -->
+									<div class="goodshare-color" style = "margin-top : 20px;">
+									  <span>공유하기</span>
+									  <br>
+								      <a href="#" class="goodshare" data-type="vk"><img class="socialImg" src="resources/images/vk.png" style="width : 30px; height : 30px;"></a> 
+								      <a href="#" class="goodshare" data-type="fb"><img class="socialImg" src="resources/images/f.png" style="width : 30px; height : 30px;"></a> 
+								      <a href="#" class="goodshare" data-type="tw"><img class="socialImg" src="resources/images/tw.png" style="width : 30px; height : 30px;"></a> 
+								      <a href="#" class="goodshare" data-type="gp"><img class="socialImg" src="resources/images/g.png" style="width : 30px; height : 30px;"></a> 
+								      <a href="#" class="goodshare" data-type="li"><img class="socialImg" src="resources/images/in.png" style="width : 30px; height : 30px;"></a> 
+								    </div>
+					  	
+
 							</div>
 						</div>
 					</div>
 				</form>
-		<!-- 장바구니 클릭시 form 경로로 안넘어가고 화면유지  -->
-		<iframe src="#" name="iframe" style="width:1px; height:1px; border:0; visibility:hidden;"></iframe>
+			</c:forEach>
+			
+			<!-- 장바구니 클릭시 form 경로로 안넘어가고 화면유지  -->
+			<iframe src="#" name="iframe" style="width:1px; height:1px; border:0; visibility:hidden;"></iframe>
 		
 				<div id = "tablinkDiv">
 					<button class="tablink" id="defaultOpen"><a href="#goods-img1" style="color:white">상세설명</a></button>
 					<button class="tablink"><a href="#sell-infoDiv" style="color:white">구매정보</a></button>	
 					<button class="tablink"><a href="#afterWriteDiv" style="color:white">상품후기</a></button>
 				</div>	
-				
+				<c:forEach var="a" items="${list}">
 					<div id ="goods-img1" class = "goods-img1" style = "margin-bottom: 15px;">
 							<img src="resources/auploadFiles/${a.contentFilePath}" width ="800px" height ="4500px">
 					</div>
+				</c:forEach>
 					<div id="sell-infoDiv">
 						<h3 align="left"> 구매정보 </h3>
 						<div id="sell-info" align="left" style="font-size : 13px";>
@@ -423,34 +704,154 @@ body{
 								<th width ="200px">작성자</th>
 								<th width ="200px">평점</th>
 							</tr>
-							<%-- <c:forEach var="afterlist" items="${afterlist}"> --%>
-							<c:forEach var="aflist" items="${aflist}">
+							<c:forEach var="r" items="${replylist}">
 								<tr>
-									<td><img src="resources/afteruploadFiles/${aflist.filePath}" width ="200px" height ="200px"></td>
-									<td>${aflist.rContent}</td>
-									<td>${loginUser.userId }</td>
-									<td></td>
-									<td></td>
+									
+									<td><img src="resources/afteruploadFiles/${r.filePath}" width ="50px" height ="50px"></td>
+									<td>${r.rContent}</td>
+									<td>${r.userId }</td>
+									<td>
+										 <c:if test="${r.sellStart eq '1'}">
+												<span class="fa fa-star checked"></span>
+												<span class="fa fa-star"></span>
+												<span class="fa fa-star"></span>
+												<span class="fa fa-star"></span>
+												<span class="fa fa-star"></span>
+										</c:if>
+								      	 <c:if test="${r.sellStart eq '2'}">
+										   	   <span class="fa fa-star checked"></span>
+												<span class="fa fa-star checked"></span>
+												<span class="fa fa-star"></span>
+												<span class="fa fa-star"></span>
+												<span class="fa fa-star"></span>
+								      	 </c:if>
+								    
+								      	 <c:if test="${r.sellStart eq '3'}">
+										   	    <span class="fa fa-star checked"></span>
+												<span class="fa fa-star checked"></span>
+												<span class="fa fa-star checked"></span>
+												<span class="fa fa-star"></span>
+												<span class="fa fa-star"></span>
+								      	 </c:if>
+								      	 <c:if test="${r.sellStart eq '4'}">
+										   	    <span class="fa fa-star checked"></span>
+												<span class="fa fa-star checked"></span>
+												<span class="fa fa-star checked"></span>
+												<span class="fa fa-star checked"></span>
+												<span class="fa fa-star"></span>
+								      	 </c:if>
+								      	 <c:if test="${r.sellStart eq '5'}">
+										   	    <span class="fa fa-star checked"></span>
+												<span class="fa fa-star checked"></span>
+												<span class="fa fa-star checked"></span>
+												<span class="fa fa-star checked"></span>
+												<span class="fa fa-star checked"></span>
+								      	 </c:if>
+									</td>
 									<!-- <td></td>
 									<td></td> -->
 								</tr>
-						</c:forEach>
-						</table>
-							<c:url var="afterWrite" value="afterWrite.do">
-								<c:param name="sellNum" value="${a.sellNum }"/>
-							</c:url>
-							<a href="${afterWrite}"><button>후기작성</button></a>
+							</c:forEach>
+							<!-- 페이징 부분 -->
+							<tr align ="center" height ="20">
+								<td colspan="12">
+									<!-- [맨처음으로] -->
+									<c:url var = "blistfirstBack" value ="/adetail.do">
+										<c:forEach var="a" items="${list}">
+											<c:param name="sellNum" value="${a.sellNum }"/>
+											<c:param name="page" value="1"/>
+										</c:forEach>
+									</c:url>
+										<a href ="${blistfirstBack }"> <font color="lightgray">[맨처음으로]</font></a>	
+										
+										<!-- [이전] -->
+									<c:if test="${pi.currentPage <= 1 }">
+										[이전]&nbsp;
+									</c:if>
+									
+									<c:if test="${pi.currentPage > 1 }">
+										<c:url var = "blistBack" value ="/adetail.do">
+											<c:forEach var="a" items="${list}">
+												<c:param name="sellNum" value="${a.sellNum }"/>
+												<c:param name="page" value="${pi.currentPage - 1 }"/>
+											</c:forEach>
+										</c:url>
+										<a href ="${blistBack }"> <font color="lightgray">[이전]</font></a>
+									</c:if>
+									
+									<!-- [번호들 ]-->
+									<c:forEach var = "p" begin="${pi.startPage }" end= "${pi.endPage }">
+										<c:if test ="${p eq pi.currentPage }">${pi.startPage }
+											<font color ="red" size ="4"><b>[${p}]</b></font>
+										</c:if>
+									
+										<c:if test="${p ne pi.currentPage }">
+											<c:url var ="blistCheck" value="adetail.do">
+												<c:forEach var="a" items="${list}">
+													<c:param name="sellNum" value="${a.sellNum }"/>
+													<c:param name="page" value="${p}"/>
+												</c:forEach>	
+											</c:url>
+											<a href ="${blistCheck }"><font color="lightgray">${p }</font></a>
+										</c:if>
+									</c:forEach>
+									
+									<!-- [다음]  -->
+									<c:if test="${pi.currentPage >= pi.maxPage }">
+										&nbsp;[다음]
+									</c:if>
+									
+									<c:if test="${pi.currentPage < pi.maxPage}">
+										<c:url var ="blistEnd" value ="adetail.do">
+											<c:forEach var="a" items="${list}">
+												<c:param name="sellNum" value="${a.sellNum }"/>
+												<c:param name ="page" value = "${pi.currentPage + 1 }"/>
+											</c:forEach>
+										</c:url>
+										<a href ="${blistEnd }"><font color="lightgray">[다음]</font></a>		
+									</c:if>
+									
+									<!-- [맨끝으로] -->
+									<c:url var = "blistlastBack" value ="/adetail.do">
+										<c:forEach var="a" items="${list}">
+											<c:param name="sellNum" value="${a.sellNum }"/>
+											<c:param name="page" value="${pi.maxPage }"/>
+										</c:forEach>
+									</c:url>
+										<a href ="${blistlastBack }"><font color="lightgray">[맨끝으로]</font> </a>
+								</td>
+									<c:url var="afterWrite" value="afterWrite.do">
+										<c:forEach var="a" items="${list}">
+											<c:param name="sellNum" value="${a.sellNum }"/>
+											<c:param name="mId" value="${sessionScope.loginUser.mid }"/>
+										</c:forEach>
+									</c:url>
+									<c:if test="${empty sessionScope.loginUser}">
+										<button type="button" class="myBtn success" style="width : 110px; height : 40px;" onclick="notLogin()"><span>후기작성</span></button>
+							        </c:if>
+							        
+							         <c:if test="${sessionScope.loginUser.userId eq 'admin'}">
+							         	<button type="button" class="myBtn success" style="width : 110px; height : 40px;" onclick="alertAdmin()"><span>후기작성</span></button>
+							        </c:if>
+							        
+							        <c:if test="${!empty sessionScope.loginUser and sessionScope.loginUser.userId ne 'admin'}">
+										<%-- <button type="button" class="myBtn success" style="width : 100px; height : 40px;"><a style ="text-decoration: none;" href="${afterWrite}">후기작성</a></button> --%>
+										<button type="button" class="myBtn success" style="width : 110px; height : 40px; background : #fa4a4a; "><a style ="text-decoration: none; color : white; font-weight: bold;" href="${afterWrite}">후기작성</a></button>
+									</c:if>
+										
+								</tr>
+							</table>
 					</div>
-					
-			</c:forEach>
-		
 			</div>
 		</div>
-			
+				
+
+
+
+
 
 	
 	<div id="loginmodal">
-	 
 	    <div class="login_modal_content">
 			<b style="font-size:36px">LOGIN</b>	
 	    	<span class="close">&times;</span>
@@ -476,6 +877,34 @@ body{
 	   
 	    <div class="login_modal_layer"></div>
 	</div>
+	
+
+	<div id="updateafter" style="display : none;">
+		<div class="updateafter_content">
+			<b style="font-size:36px">LOGIN</b>	
+	    	<span class="close">&times;</span>
+			<br><br>
+			<p style="font-size: 13px; color:#888888; font-weight: bold;line-height:1.5">
+				AWESOME의 다양한 서비스를 이용하시려면 로그인을 해주세요.<br>
+				회원가입을 하시면 다양한 서비스를 받으실 수 있습니다<br><br>
+			</p>
+	        <form id= "loginForm" action="login.do" method="post">
+				<input type="hidden" name="mId" value="mId">
+				<input class= "loginInput" name="userId" style="margin-bottom:10px;"placeholder="아이디 입력	"> <br>
+				<input class= "loginInput" type="password" name="userPwd" style="margin-bottom:5px;" placeholder="비밀번호 입력" type="password"><br>
+				<button class= "loginBtn">로그인</button><br>
+				<button class="findLogin">아이디 / 비밀번호 찾기</button><br>
+			</form>
+	       <br><br>
+			<p style="color:#666666; font-size:12px; margin:0px; line-height:1.5">
+			문제가 있거나 문의 사항이 있으시면 아래의 주소로 문의하시기 바랍니다.<br>
+			고객지원: <a href="">hokwan92@naver.com</a> 
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			</p>
+	    </div>
+		   
+		    <div class="updateafter_modal_layer"></div>
+	</div> 
 		<!-- 하단 tab -->
 		<script>
 			function openCity(cityName,elmnt,color) {
@@ -553,8 +982,15 @@ body{
 		     $(".close").click(function(){
 		        $("#loginmodal").attr("style", "display:none");
 		    });      
+		     
+
 		</script>
 		
+		<script>
+	     function alertAdmin(){
+	    		alert('관리자는 작성할 수 없습니다.'); 
+	     	}
+		</script>
 		<script src="js/Modal.js-master/modal.js"></script>
 
 		<script>
@@ -579,6 +1015,31 @@ body{
 		</script>
 		
 		
+		<!-- 후기작성 테이블에서 td 선택시 수정 팝업 -->
+		 <script>
+			$('#afterWrite td').click(function(event){
+					Modal.confirm({
+						  title: '후기수정여부',
+						  message: '후기를 수정 하시겠습니까?',
+						  onConfirm: function() {
+							  /* $("#updateafter").attr("style", "display:block"); */
+							  location.href="afterdelete.do?";
+				  		},
+						  onCancel: function() {
+				  		},
+					});
+			       
+			    });
+			   
+			     $(".close").click(function(){
+			        /* $("#updateafter").attr("style", "display:none"); */
+			    });      
+		 
+		</script>
+		
+		
+		
+		
 		<!-- 모달창 script -->
 		<script>
 			  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -591,11 +1052,11 @@ body{
 		
 		</script>
 		
-		<button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
+		<button onclick="topFunction()" id="upBtn" title="Go to top">Top</button>
 		
 		<script>
 			//Get the button
-			var mybutton = document.getElementById("myBtn");
+			var mybutton = document.getElementById("upBtn");
 			
 			// When the user scrolls down 20px from the top of the document, show the button
 			window.onscroll = function() {scrollFunction()};
@@ -614,6 +1075,25 @@ body{
 			  document.documentElement.scrollTop = 0;
 			}
 	
+		</script>
+		
+		
+		<!-- 소셜에 공유 -->
+		<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script> -->
+		<script src="js/jQuery-Plugin-To-Create-Custom-Social-Share-Buttons-goodshare-js/jQuery-Plugin-To-Create-Custom-Social-Share-Buttons-goodshare-js/goodshare.js"></script>
+		<script type="text/javascript">
+		
+			  var _gaq = _gaq || [];
+			  _gaq.push(['_setAccount', 'UA-36251023-1']);
+			  _gaq.push(['_setDomainName', 'jqueryscript.net']);
+			  _gaq.push(['_trackPageview']);
+			
+			  (function() {
+			    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+			  })();
+			
 		</script>
 
 

@@ -171,9 +171,4 @@ public class Member {
 				+ modifyDate + ", admin=" + admin + ", status=" + status + ", userNickname=" + userNickname + "]";
 	}
 	
-	
-	
-
-	
-	
 }

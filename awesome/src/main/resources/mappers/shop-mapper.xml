@@ -10,24 +10,33 @@
 		<result property ="gId" column ="GID"/>
 	    <result property="cateCd" column="CATE_CD"/>
 		<result property ="mId" column="MID"/>
+		<result property ="goodsTitle" column="GOODS_TITLE"/>
 		<result property ="rContent" column="RCONTENT"/>
 		<result property ="sellStart" column="SELL_START"/>
-		<result property ="filePath" column="REP_FILE_PATH"/>
-		<result property ="contentFilePath" column="REP_CONTENT_FILE_PATH"/>
+		<result property ="ref_filePath" column="REP_FILE_PATH"/>
+		<result property ="ref_contentFilePath" column="REP_CONTENT_FILE_PATH"/>
 		<result property ="createDate" column="CREATE_DATE"/>
 		<result property ="modifyDate" column="MODIFY_DATE"/>
 		<result property ="status" column="STATUS"/>
+		
+		
+		
+		<result property ="userId" column="USER_ID"/>
+		
+		
+		<result property="goodsPrice"       column="GOODS_PRICE"/>
+		<result property="count"          column="COUNT"/>
+		<result property ="goodsContent"    column ="GOODS_CONTENT"/>
+		<result property ="filePath"       column="GOODS_FILE_PATH"/>
+		<result property ="contentFilePath" column="GOODS_CONTENT_FILE_PATH"/>
 	</resultMap>
 
 	
 	
 	<resultMap type="Cart" id ="CartResultSet">
+		<result property="cartNum" column="CARTNUM"/>
 		<result property="mId" column="MID"/>
-		
 		<result property ="gId" column ="GID"/>
-		<result property ="cateCd" column ="CATE_CD"/>
-		<result property ="goodsTitle" column ="GOODS_TITLE"/>
-		<result property ="goodsPrice" column ="GOODS_PRICE"/>
 		<result property ="count" column ="COUNT"/>
 		
 	</resultMap>
@@ -41,25 +50,60 @@
 	</insert>
 	
 	<select id ="sellafterSelectList" resultMap="sell_After_goodsResultSet">
-		SELECT *
+		 
+		SELECT * 
+		FROM SELL_REPLY_AFTERVIEW
+		WHERE STATUS='Y'
+		
+		
+		<!-- SELECT *
 		FROM SELL_REPLY SR
-        JOIN SELL_GOODS SG ON (SR.SELL_NUM = SG.SELL_NUM)
-		ORDER BY RID DESC
+		JOIN SELL_GOODSSELECTVIEW SGV ON (SGV.SELL_NUM = SR.SELL_NUM)
+		JOIN MEMBER M ON(M.MID = SR.MID)
+		WHERE SR.SELL_NUM=#{sellNum}
+		ORDER BY RID DESC  -->
 	</select>
 	
 	<select id ="selectReply" resultMap="sell_After_goodsResultSet">
 		SELECT *
-		FROM SELL_REPLY
+		FROM SELL_REPLY_AFTERVIEW
 		WHERE SELL_NUM=#{sellNum}
 		AND STATUS='Y'
 	</select>
 
+
+   	<!-- 카트에 담기 -->
 	<insert id="CartInsert" parameterType="Cart">
 		INSERT INTO CART
-		VALUES(#{mId}, #{gId}, #{cateCd}, #{goodsTitle}, #{goodsPrice}, #{count}
+		VALUES(TBL_CART_SEQ.NEXTVAL, #{mId}, #{gId}, #{count}
 		)
 	</insert>
 
-
+	<!-- 후기 관리자용 조회 -->
+	<select id ="gIdViewList" resultMap="sell_After_goodsResultSet">
+		SELECT *
+		FROM SELL_REPLY_AFTERVIEW
+		WHERE GID=#{gId}
+	</select>
+	
+	
+	<!-- 상품별 후기 평균 -->
+	<select id ="starAvgCount" parameterType="_int" resultType="_double">
+		SELECT ROUND(AVG(SELL_START),1)
+		FROM SELL_REPLY_AFTERVIEW
+		WHERE GID=#{gId}
+	</select>
+	
+	<!-- 내 후기 조회  -->
+	
+	<select id ="myafterSelectList" resultMap="sell_After_goodsResultSet">
+		SELECT *
+		FROM SELL_REPLY_AFTERVIEW SRA
+		JOIN MEMBER M ON(M.MID = SRA.MID)
+		WHERE SRA.MID=#{mId}
+		ORDER BY RID DESC
+	</select>
+	
+	
 	
 </mapper>

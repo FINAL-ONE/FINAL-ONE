@@ -28,8 +28,11 @@ import com.kh.awesome.admin.model.service.AdminService;
 import com.kh.awesome.admin.model.vo.Admin;
 import com.kh.awesome.admin.model.vo.Category;
 import com.kh.awesome.admin.model.vo.Goods;
+import com.kh.awesome.admin.model.vo.PageInfo;
+import com.kh.awesome.common.Pagination;
 import com.kh.awesome.member.model.exception.MemberException;
 import com.kh.awesome.member.model.vo.Member;
+import com.kh.awesome.shop.model.serivce.ShopService;
 import com.kh.awesome.shop.model.vo.SellReply;
 
 
@@ -185,15 +188,36 @@ public class AdminController {
 		return filePath;
 	}
 	
-	
 	// 상품메인 페이지에서 상품 클릭시 디테일페이지 보여줄 리스트 불러오기 --준배 (동복 list 추가)
 	@RequestMapping("adetail.do")
-	public ModelAndView shopgoodsDetail(ModelAndView mv, int sellNum) {
+	public ModelAndView shopgoodsDetail(ModelAndView mv, int sellNum, 
+					@RequestParam(value="page", required=false) Integer page) {
+		
+		int rCurrentPage = 1;
+		if(page != null) {
+			rCurrentPage = page;
+		}
+		
+		
+		int rListCount = aService.getReplylistCount(sellNum);
+		
+		
+		System.out.println("리플리스트 카운트:" + rListCount );
+		
+		
+		PageInfo pi = Pagination.getPageInfo3(rCurrentPage, rListCount );
 		
 		ArrayList<Admin> list = aService.selectshopgoods(sellNum);
+		ArrayList<Admin> replylist = aService.selectreply(sellNum, pi);
+		
+		System.out.println("상품디테일 list : "+ list);
+		System.out.println("pi :" + pi);
+		
 		
 		if(list != null) {
 			mv.addObject("list", list)
+			.addObject("replylist", replylist)
+			.addObject("pi", pi)
 			.setViewName("shop/shopGoodsDetail");
 		
 		} else {
@@ -205,24 +229,23 @@ public class AdminController {
 	// 상품메인 페이지에서 상품 클릭시 디테일페이지 보여줄 리스트 불러오기 --준배
 	
 	
-	// 상품 디테일 페이지에서 후기작성 버튼 클릭시 후기 리스트 불러오기 -- 준배
+	// 상품 디테일 페이지에서 후기작성 버튼 클릭시 후기 작성하기로 -- 준배
 	@RequestMapping("afterWrite.do") 
 	 public ModelAndView goodsWriterView(ModelAndView mv, int sellNum) {
 	 
-		 ArrayList<Admin> list = aService.selectshopgoods(sellNum);
-		/* ArrayList<SellReply> list = aService.selectReply(rId); */
+		ArrayList<Admin> list = aService.selectshopgoods(sellNum);
+
 	 
 	 if(list != null) {
-			 mv.addObject("list", list)
-			 .setViewName("shop/sell_afterWriteView");
+		 	mv.addObject("list", list)
+		 	.setViewName("shop/sell_afterWriteView");
 		 } else { 
 			 throw new AdminException("후기 불러오기실패!"); }
 	 
 	 return mv;
 	 
 	 }
-
-	// 상품 디테일 페이지에서 후기작성 버튼 클릭시 후기 리스트 불러오기 -- 준배
+	// 상품 디테일 페이지에서 후기작성 버튼 클릭시 후기 작성하기로 -- 준배
 	
 	 
 	// 상품조회 페이지에서 상품 품절 처리 -- 준배(동복 : 판매상품 품절 처리시 상품과 판매가 1:1 이라 상품 상태도 N으로 변경)
@@ -263,7 +286,15 @@ public class AdminController {
 		// 상품조회 페이지에서 상품 품절 처리 -- 준배
 		
 	
-	
+		// 소개페이지 이동
+		
+		@RequestMapping("info.do")
+		public String infoPageView() {
+			
+			return "common/infoPage";	
+		}
+				
+			
 	
 	
 	

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.kh.awesome.admin.model.vo.Admin;
 import com.kh.awesome.admin.model.vo.Category;
 import com.kh.awesome.admin.model.vo.Goods;
+import com.kh.awesome.admin.model.vo.PageInfo;
 
 public interface AdminService {
 	
@@ -12,10 +13,20 @@ public interface AdminService {
 
 	public int insertSell_goods(Admin a);
 	
+	// 상품조회
 	public ArrayList<Admin> selectshopgoods(int sellNum);
 
 	public int updateAdminStatus(Admin a);
 	
+	// 리플 조회
+	public ArrayList<Admin> selectreply(int sellNum, PageInfo pi);	
+	
+	// 해당 글의 리플 갯수 조회
+	public int getReplylistCount(int sellNum);
+	
+	
+	
+
 	//---------------------------- INSERT ----------------------------	
 		// 동복- 상품 등록
 		int insertCategory(Category c);
@@ -67,7 +78,8 @@ public interface AdminService {
 		// 동복 - 상품 수정시 현재 해당 상품이 판매 중인지 조회
 		public int selectsellGoodsList(String gId);
 		// 동복 - 판매 상품 조회 수정 페이지
-		public ArrayList<Admin> sell_goodsDetailView(int sellNum);	
+		public ArrayList<Admin> sell_goodsDetailView(int sellNum);
+
 
 
 	

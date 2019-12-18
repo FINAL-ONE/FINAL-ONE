@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.awesome.board.model.vo.PageInfo;
 import com.kh.awesome.order.model.vo.Order;
+import com.kh.awesome.order.model.vo.OrderSearch;
 
 @Repository("oDao")
 public class OrderDao {
@@ -21,7 +22,7 @@ public class OrderDao {
 
 			int offset = (pi.getCurrentPage()-1) * pi.getBoardLimit();
 			RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
-			
+
 			return (ArrayList)sqlSession.selectList("orderMapper.selectOrder",mId, rowBounds);
 		}
 
@@ -56,11 +57,25 @@ public class OrderDao {
 		}
 
 
-		public int getOrderListCount() {
+		public int getOrderListCount(int mId) {
 			// TODO Auto-generated method stub
-			return sqlSession.selectOne("orderMapper.getOrderListCount" );
+			return sqlSession.selectOne("orderMapper.getOrderListCount", mId);
 		}
 
+		
+		
+		public int getOrderSearchCount(OrderSearch os) {
+			return sqlSession.selectOne("orderMapper.getOrderSearchCount",os );
+		}
+		
+
+		public ArrayList<Order> datePicker(OrderSearch os, PageInfo pi) {
+			
+			int offset = (pi.getCurrentPage()-1) * pi.getBoardLimit();
+			RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+			System.out.println("searchDao : " + os);
+			return (ArrayList)sqlSession.selectList("orderMapper.getOrderSearch", os, rowBounds);
+		}
 
 
 

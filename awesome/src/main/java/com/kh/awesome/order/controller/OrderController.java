@@ -2,6 +2,7 @@ package com.kh.awesome.order.controller;
 
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.sql.Date;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +22,7 @@ import com.kh.awesome.board.model.vo.PageInfo;
 import com.kh.awesome.common.Pagination;
 import com.kh.awesome.member.model.vo.Member;
 import com.kh.awesome.order.model.vo.Order;
+import com.kh.awesome.order.model.vo.OrderSearch;
 import com.kh.awesome.order.service.OrderService;
 
 @Controller
@@ -31,24 +33,27 @@ public class OrderController {
 
 	@RequestMapping("orderview.do")
 	public ModelAndView boardList(ModelAndView mv, @RequestParam(value = "page", required = false) Integer page,
-			HttpServletRequest request) {
-		
+			HttpServletRequest request, HttpSession session) {
 		int currentPage = 1;
 		if(page != null) {
 			currentPage = page;
 		}
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		int mId = loginUser.getMid();
+		System.out.println("order:"  +mId);
 		
-		int listCount = oService.getOrderListCount();
+		int listCount = oService.getOrderListCount(mId);
 		
 		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
-		HttpSession session = request.getSession(true);
+		session = request.getSession(true);
 
-		Member loginUser = (Member) session.getAttribute("loginUser");
-		int mId = loginUser.getMid();
+		
 
 		ArrayList<Order> list = oService.selectList(mId,pi);
-
-		if (list != null && list.size() > 0) {
+		System.out.println(mId);
+		System.out.println(pi);
+		System.out.println(list);
+		if (list != null && list.isEmpty()) {
 			mv.addObject("list", list);
 			mv.addObject("pi", pi);
 			mv.setViewName("order/orderListView");
@@ -134,8 +139,7 @@ public class OrderController {
 	}
 	
 	@RequestMapping("gichan.do")
-
-	public void gichan(HttpServletResponse response,String orderNum) throws JsonIOException, IOException {
+	public void gichan(HttpServletResponse response, String orderNum) throws JsonIOException, IOException {
 		//System.out.println(orderNum);
 		ArrayList<Order> order = oService.orderDetail(orderNum);
 		
@@ -146,6 +150,86 @@ public class OrderController {
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		gson.toJson(order, response.getWriter());
 
+	}
+	
+	@RequestMapping("orderSearch.do")
+	public ModelAndView boardList(ModelAndView mv, String date1, String date2, OrderSearch os,HttpSession session,HttpServletRequest request, @RequestParam(value = "page", required = false) Integer page) {
+		
+		Member loginUser = (Member) session.getAttribute("loginUser");
+		int mid = loginUser.getMid();
+		
+		
+		Date d1 = Date.valueOf(date1); Date d2 = Date.valueOf(date2);
+
+		
+		os.setDate1(d1);
+		os.setDate2(d2);
+		os.setMid(mid);
+		
+		int currentPage = 1;
+		if(page != null) {
+			currentPage = page;
+		}
+		
+		int listCount = oService.getOrderSearchCount(os);
+		
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
+		session = request.getSession(true);
+		/*
+		 * System.out.println("들어오니?"); System.out.println(os);
+		 */
+		
+		ArrayList<Order> list = oService.datePicker(os,pi); 
+		
+		System.out.println("searchController : " + list);
+		
+		System.out.println("파이"+pi);
+		if(list != null && list.size()>0) {
+			mv.addObject("os", os);
+			mv.addObject("list", list);
+			mv.addObject("pi", pi);
+			mv.setViewName("order/orderSearchView");
+		}
+		System.out.println("searchController2 : " + list);
+		return mv;
+	}
+	
+	@RequestMapping("termSearch.do")
+	public ModelAndView searchList(ModelAndView mv, OrderSearch os,HttpSession session,HttpServletRequest request, @RequestParam(value = "page", required = false) Integer page) {
+		
+		Member loginUser = (Member) session.getAttribute("loginUser");
+		int mid = loginUser.getMid();
+		
+
+
+		os.setMid(mid);
+		
+		int currentPage = 1;
+		if(page != null) {
+			currentPage = page;
+		}
+		
+		int listCount = oService.getOrderSearchCount(os);
+		
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
+		session = request.getSession(true);
+		/*
+		 * System.out.println("들어오니?"); System.out.println(os);
+		 */
+		
+		ArrayList<Order> list = oService.datePicker(os,pi); 
+		
+		System.out.println("searchController : " + list);
+		
+		System.out.println("파이"+pi);
+		if(list != null && list.size()>0) {
+			mv.addObject("os", os);
+			mv.addObject("list", list);
+			mv.addObject("pi", pi);
+			mv.setViewName("order/orderSearchView");
+		}
+		System.out.println("searchController2 : " + list);
+		return mv;
 	}
 
 }

@@ -209,7 +209,6 @@ public class MemberController {
 		
 		@RequestMapping("memberLookup.do")
 		public ModelAndView boardList(ModelAndView mv, @RequestParam(value="page", required=false) Integer page) {
-			
 			// 마이바티스 때 했던 PageInfo의 Pagination을 그대로 쓰자.
 			
 			// 페이지의 정보 없으면 디폴트 1로
@@ -257,8 +256,9 @@ public class MemberController {
 			
 		}
 		
-		
+
 		// 회원조회시 포인트 수정
+
 		@RequestMapping("pointUpdate.do")	
 		public String updatePointMember(Member m, Model model, int mId, int point) {
 			
