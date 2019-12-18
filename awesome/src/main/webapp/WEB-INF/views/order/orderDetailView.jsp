@@ -89,7 +89,7 @@ font-family:  'Do Hyeon', sans-serif;
 height:0px;
 }
 
-#cancel a {
+#cancel {
 	-webkit-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
 	-moz-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
 	-ms-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
@@ -102,30 +102,87 @@ height:0px;
 	padding: 10px 20px;
 }
 
-#back a {
+#back  {
 	-webkit-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
 	-moz-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
 	-ms-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
 	-o-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
 	transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
 	display: block;
-	max-width: 200px;
+	max-width: 180px;
+	height : 20px;
 	text-decoration: none;
 	border-radius: 4px;
 	padding: 10px 20px;
 }
+#view  {
+	-webkit-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+	-moz-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+	-ms-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+	-o-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+	transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+	max-width: 65px;
+	text-decoration: none;
+	border-radius: 4px;
+	padding: 5px 10px;
+	margin-left: 8px;
+}
+#view2  {
+	-webkit-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+	-moz-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+	-ms-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+	-o-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+	transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+	max-width: 65px;
+	text-decoration: none;
+	border-radius: 4px;
+	padding: 5px 10px;
+	margin-left: 8px;
+}
 
-
-a.button {
+#view.button {
 	color: gray;
 	box-shadow: gray 0 0px 0px 2px inset;
 }
 
-a.button:hover {
+#view.button:hover {
 	color: rgba(255, 255, 255, 0.85);
 	box-shadow: #fa4a4a 0 80px 0px 2px inset;
 }
 
+#view2.button {
+	color: gray;
+	box-shadow: gray 0 0px 0px 2px inset;
+}
+
+#view2.button:hover {
+	color: rgba(255, 255, 255, 0.85);
+	box-shadow: #fa4a4a 0 80px 0px 2px inset;
+}
+
+#back {
+	color: gray;
+	box-shadow: gray 0 0px 0px 2px inset;
+}
+
+#back:hover{
+	color: rgba(255, 255, 255, 0.85);
+	box-shadow: #fa4a4a 0 80px 0px 2px inset;
+}
+
+#cancel {
+	color: gray;
+	box-shadow: gray 0 0px 0px 2px inset;
+}
+
+#cancel:hover{
+	color: rgba(255, 255, 255, 0.85);
+	box-shadow: #fa4a4a 0 80px 0px 2px inset;
+}
+#font{
+	font-size:50px;
+	font-weight: bolder;
+}
 </style>
 <body>
 
@@ -142,17 +199,17 @@ a.button:hover {
 		<table id="box">
 		<thead>
 		 	<tr>
-			<td><img src="resources/images/order.png" style="height:30%; width:33%;"><br>
+			<td><img src="resources/images/order3.png" style="height:15%; width:40%; "><br>
 			배송전
 			</td>
-			<td><img src="resources/images/delivery2.png" style="height:39%; width:41%; "><br>
+			<td><img src="resources/images/delivery3.png" style="height:15%; width:40%; "><br>
 			배송중
 			</td>
-			<td><img src="resources/images/complete.png" style="height:30%; width:33%;"><br>
+			<td><img src="resources/images/complete3.png" style="height:15%; width:40%; "><br>
 			배송완료
 			</td>
 			<td>
-			<img src="resources/images/cancel.png" style="height:30%; width:33%;"><br>
+			<img src="resources/images/cancel3.png" style="height:15%; width:40%; "><br>
 			주문취소
 			</td>
 			</tr> 
@@ -163,9 +220,12 @@ a.button:hover {
 		</table>
 	
 	</div>
-			<h1>주문상세조회</h1>
-		
-		<h2>주문 번호 : ${orderNum }</h2>
+	<br><br>
+	<div id="font">
+	
+		주문상세조회
+		</div>
+		<h2 style="font-size: 30px">주문 번호 : ${orderNum }</h2>  
 		<br>
 		<h4>주문정보</h4>
 
@@ -202,8 +262,8 @@ a.button:hover {
 				</c:forEach>
 				<c:if test="${status eq '배송전' }">
 		<!-- <button onclick="cancel()">주문쥐소하기</button> -->
-		<div align="right" id="cancel">
-  			<a onclick="cancel()" class="button">주문취소하기</a>
+		<div align="right">
+  			<a onclick="cancel()" class="button"  id="cancel">주문취소하기</a>
 		</div>
 		</c:if>
 		<br><br>
@@ -273,8 +333,8 @@ a.button:hover {
 	
 		</table>
 		<br>
-		<div align="right" id="back">
-  			<a onclick="location.href='orderview.do'" class="button" id="backto">주문조회 페이지로 이동</a>
+		<div align="right">
+  			<a onclick="location.href='orderView.do'" class="button" id="back">주문조회 페이지로 이동</a>
 		</div>
 		<!-- <button onclick="location.href='orderview.do'" id="backto">주문조회 페이지로 이동</button> -->
 		<br>
@@ -298,12 +358,14 @@ a.button:hover {
 					$tableBody.html("");
 
 					for ( var i in data) {
-
+    					var filePath = data[i].filePath;
 						var $tr = $("<tr>");
-						var $image = $("<td>").text(data[i].oId);
-						var $gName = $("<td>").text(
-								decodeURIComponent(data[i].gName).replace(
-										/\+/g, " "));
+						var $image = $("<td>");
+						var $br = $("<br>");
+						var $path=$("<img src='resources/auploadFiles/"+filePath  + "'  style='height:200px; width:150px;'>")
+						var $gInfo = $("<td>");
+						var $gTitle = decodeURIComponent(data[i].goodsTitle).replace(/\+/g, " ");
+						var $gName = decodeURIComponent(data[i].gName).replace(/\+/g, " ");
 						var $orderCount = $("<td>").text(data[i].orderCount);
 						var $orderPrice = $("<td>").text(data[i].gPrice*data[i].orderCount);
 						if (data[i].orderStatus == 'B') {
@@ -319,8 +381,12 @@ a.button:hover {
 							var $orderStatus = $("<td>").text("주문취소");
 						}
 
+						$image.append($path);
 						$tr.append($image);
-						$tr.append($gName);
+						$gInfo.append("<"+$gTitle+">");
+						$gInfo.append($br);
+						$gInfo.append($gName);
+						$tr.append($gInfo);
 						$tr.append($orderCount);
 						$tr.append($orderPrice);
 						$tr.append($orderStatus);
@@ -350,11 +416,11 @@ a.button:hover {
 					
 						case "배송중":
 							var $show = $("<td id='st'>").text($status);
-							var $button = $("<button>").text("배송조회").attr("onclick","delivery()");	
+							var $button = $("<a id='view' class='button'>").text("배송조회").attr("onclick","delivery()");	
 
 						case "배송완료":
 							var $show = $("<td id='st'>").text($status);
-							var $button = $("<button>").text("배송조회").attr("onclick","delivery()");	
+							var $button = $("<a id='view2' class='button'>").text("배송조회").attr("onclick","delivery()");	
 						
 						case "배송전":
 							var $show = $("<td id='st'>").text($status);
@@ -365,6 +431,7 @@ a.button:hover {
 
 					}
 				
+
 					$show.append($button);
 					$tr2.append($title);
 					$tr2.append($show);

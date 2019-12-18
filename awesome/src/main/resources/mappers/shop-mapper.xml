@@ -32,14 +32,14 @@
 	</resultMap>
 
 	
-	
+<!-- 	
 	<resultMap type="Cart" id ="CartResultSet">
 		<result property="cartNum" column="CARTNUM"/>
 		<result property="mId" column="MID"/>
 		<result property ="gId" column ="GID"/>
 		<result property ="count" column ="COUNT"/>
 		
-	</resultMap>
+	</resultMap>  -->
 	
 	
 	
@@ -103,7 +103,6 @@
 		WHERE SRA.MID=#{mId}
 		ORDER BY RID DESC
 	</select>
-	
 	
 	
 </mapper>

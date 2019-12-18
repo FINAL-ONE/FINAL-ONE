@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%> 
          <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -118,7 +119,7 @@
     border-left: 6px solid transparent;
     border-bottom: 8px solid #fa4a4a;
     top: -41px;
-    left: 123px;
+    left: -55px;
 }
 
  .myPageNav:after {
@@ -199,16 +200,16 @@
       <div class =logoImg><img src="${contextPath}/resources/images/logo.png" style="height: 89px; vertical-align: middle" onclick= "location.href='home.do'"></div>
        <div class= "menu normalMenu" onclick="location.href='bmicalc.do'">BMI 계산기</div>
       <c:url var="shopGoodsListView" value="shopGoodsListView.do">
-		<c:param name="mid" value="${sessionScope.loginUser.mid }"/>
-		</c:url>
+      <c:param name="mid" value="${sessionScope.loginUser.mid }"/>
+      </c:url>
       <div class= "menu normalMenu"><a href="${shopGoodsListView}" style="text-decoration: none; color : black;">SHOP</a></div>
-		<%-- <a href="${shopGoodsListView}"><div>SHOP</div></a> --%>
-							
-   	  <c:if test="${sessionScope.loginUser.userId ne 'admin'}">
-   	  	<div class= "menu myPageMenu">마이페이지</div> 
+      <%-- <a href="${shopGoodsListView}"><div>SHOP</div></a> --%>
+                     
+        <c:if test="${sessionScope.loginUser.userId ne 'admin'}">
+           <div class= "menu myPageMenu">마이페이지</div> 
       </c:if>
       <c:if test="${sessionScope.loginUser.userId eq 'admin' }">
-      	<div class= "menu myPageMenu" onclick ="location.href='adminMain.do'">관리자페이지</div> 
+         <div class= "menu myPageMenu" onclick ="location.href='adminMain.do'">관리자페이지</div> 
       </c:if>
    </div>
 </div> 

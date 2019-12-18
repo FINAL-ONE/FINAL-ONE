@@ -10,7 +10,6 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <title>Insert title here</title>
 <c:set var="contextPath" value="${pageContext.servletContext.contextPath }" scope="application"/>
- 
 </head>
 <body>
 

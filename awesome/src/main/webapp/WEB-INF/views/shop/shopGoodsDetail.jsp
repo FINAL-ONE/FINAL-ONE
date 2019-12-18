@@ -6,6 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="shortcut icon" href="${contextPath}/resources/images/favicon.ico" type="image/x-icon">
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -16,15 +17,9 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 
-
-
-
-
-
-
 <style>
 body{
-	background : white;
+   background : white;
 }
 .detailArea{
 	/* border : 1px solid red; */
@@ -33,11 +28,11 @@ body{
 	margin-left : 450px;
 }
 .goods-Area{
-	width : 800px;
-	height : 530px;
-	/* background : yellow; */
-	display : inline-block;
- 	/* margin-left: 100px; */
+   width : 800px;
+   height : 530px;
+   /* background : yellow; */
+   display : inline-block;
+    /* margin-left: 100px; */
     margin-right:auto;
     margin-top:20px;
     cursor : pointer;
@@ -46,31 +41,31 @@ body{
 }
 .goods-img{
     cursor : pointer;
-  	/* border : 1px solid blue; */
-	position: relative;
+     /* border : 1px solid blue; */
+   position: relative;
     display : inline-block;
     margin-top : 20px;
     
 }
 .goods-info{
- 	position: absolute;
-	display: inline-block;
-/* 	border : 1px solid blue; */
-	width : 250px;
-	height : 500px;
-	margin-top : 20px;
+    position: absolute;
+   display: inline-block;
+/*    border : 1px solid blue; */
+   width : 250px;
+   height : 500px;
+   margin-top : 20px;
 }
 .sell-info{
-	width : 500px;
-	border : 1px solid black;
+   width : 500px;
+   border : 1px solid black;
 }
 
 .number{
-	position: relative;
+   position: relative;
 }
 .UpDown{
-	position: absolute;
-	display : inline-block;
+   position: absolute;
+   display : inline-block;
 }
 
 .Quantity{
@@ -80,14 +75,14 @@ body{
 }
 
 #increaseQuantity{
-	text-decoration: none;
+   text-decoration: none;
 }
 #decreaseQuantity{
-	text-decoration: none;
+   text-decoration: none;
 }
 #tablinkDiv{
-	margin-left : 1px;
-	padding-left : 1px;
+   margin-left : 1px;
+   padding-left : 1px;
 }
 .tablink {
   background-color: #555;
@@ -137,9 +132,9 @@ body{
   cursor : pointer;
 }
 #afterWriteBtn{
-	float: right;
-	margin-bottom: 20px;
-	
+   float: right;
+   margin-bottom: 20px;
+   
 }
 
 /* 맨위로 버튼  */
@@ -174,17 +169,17 @@ body{
 /* 로그인 창 css */
 
 .loginInput{
-		height: 45px;
-	    line-height: 45px;
-	    background: #fff;
-	    color: black;
-	    border: 1px solid #ccc;
-	    font-size: 14px;
-	    padding: 0 12px;
-	    vertical-align: middle;
-	    width: 325px;
-	
-	}
+      height: 45px;
+       line-height: 45px;
+       background: #fff;
+       color: black;
+       border: 1px solid #ccc;
+       font-size: 14px;
+       padding: 0 12px;
+       vertical-align: middle;
+       width: 325px;
+   
+   }
 
 .loginBtn {
     margin: 10px 0px 15px;
@@ -213,7 +208,7 @@ body{
 
 
 #loginmodal {
-		display: none; /* Hidden by default */
+      display: none; /* Hidden by default */
         position: fixed; /* Stay in place */
         z-index: 1; /* Sit on top */
         left: 0;
@@ -227,27 +222,27 @@ body{
 }
 
 #loginmodal .login_modal_content {
-  		background-color: #fefefe;
+        background-color: #fefefe;
         margin: 15% auto; /* 15% from the top and centered */
         padding: 20px;
         border: 1px solid #888;
         width: 30%; /* Could be more or less, depending on screen size */ 
 }
 .login_modal_content{
-		text-align:center; 
-		width: 500px;
-		height: 500px;
-		margin-top: 100px;
-		margin-left: auto;
-		margin-right: auto;
+      text-align:center; 
+      width: 500px;
+      height: 500px;
+      margin-top: 100px;
+      margin-left: auto;
+      margin-right: auto;
 }
 .close{
-	display : inline-block;
-	float : right;
-	color: #aaaaaa;
-  	font-size: 28px;
-  	font-weight: bold;
-}		
+   display : inline-block;
+   float : right;
+   color: #aaaaaa;
+     font-size: 28px;
+     font-weight: bold;
+}      
 .close:hover,
 .close:focus {
   color: #000;
@@ -574,9 +569,9 @@ body{
 <body>
 
 
-	<jsp:include page ="../common/menubar.jsp"/>
-	<!-- <div id="container" style="overflow: auto; height: 800px;" >container -->
-	<div id="container"><!-- container -->
+   <jsp:include page ="../common/menubar.jsp"/>
+   <!-- <div id="container" style="overflow: auto; height: 800px;" >container -->
+   <div id="container"><!-- container -->
     
 		<div class = "detailArea"  align="center">
 			<c:forEach var="a" items="${list}">

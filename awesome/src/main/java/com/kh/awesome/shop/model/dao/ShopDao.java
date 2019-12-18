@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.awesome.admin.model.vo.Admin;
-import com.kh.awesome.shop.model.vo.Cart;
 import com.kh.awesome.shop.model.vo.SellReply;
 
 @Repository("ShopDao")
@@ -32,10 +31,11 @@ public class ShopDao {
 	}
 	
 	// 카트에 상품 추가
-	public int CartInsert(Cart c) {
-
-		return sqlSession.insert("shopMapper.CartInsert", c);
-	}
+	/*
+	 * public int CartInsert(Cart2 c) {
+	 * 
+	 * return sqlSession.insert("shopMapper.CartInsert", c); }
+	 */
 	
 	// 상품별 후기 조회
 	public ArrayList<SellReply> stargIdSelect(int gId) {

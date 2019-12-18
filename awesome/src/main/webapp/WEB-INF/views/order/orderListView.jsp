@@ -90,6 +90,7 @@ height:0px;
 	height: 30px;
 	width: 100px;
 	padding-top: 6px;
+	cursor: pointer;
 }
 
 input::placeholder {
@@ -98,6 +99,7 @@ input::placeholder {
   text-align: center;
   margin-bottom: 
 }
+
 #search {
 	-webkit-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
 	-moz-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
@@ -122,6 +124,7 @@ input::placeholder {
 #search.button:hover {
 	color: rgba(255, 255, 255, 0.85);
 	box-shadow: #fa4a4a 0 80px 0px 2px inset;
+	cursor: pointer;
 }
 .term{
 	-webkit-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
@@ -145,6 +148,7 @@ input::placeholder {
 .term:hover {
 	color: rgba(255, 255, 255, 0.85);
 	box-shadow: #fa4a4a 0 80px 0px 2px inset;
+	cursor: pointer;
 }
 </style>
 <body>
@@ -154,24 +158,24 @@ input::placeholder {
 		<div>
 		<h1>주문/배송 조회</h1>
 		<div align="right">
-		<a id=week onclick="searchWeek()" class="term">1주일</a>&nbsp;<a id=oneMon onclick="search()" class="term">1개월</a>&nbsp;<a id=twoMon onclick="search()" class="term">3개월</a>&nbsp;<a id=oneMonth onclick="search()" class="term">6개월</a>&nbsp;<input class="date" type="text" id="date1" placeholder="시작날짜">&nbsp;<input class="date" type="text" id="date2" placeholder="마지막날짜" size="25px">&nbsp;<a id=search onclick="search2()" class="button">검색</a>
+		<a id=week onclick="searchWeek()" class="term">1주일</a>&nbsp;<a id=oneMon onclick="searchAmon()" class="term">1개월</a>&nbsp;<a id=threeMon onclick="searchTmon()" class="term">3개월</a>&nbsp;<a id=sixMon onclick="searchSmon()" class="term">6개월</a>&nbsp;<input class="date" type="text" id="date1" placeholder="시작날짜" readonly>&nbsp;<input class="date" type="text" id="date2" placeholder="마지막날짜" size="25px" readonly>&nbsp;<a id=search onclick="search2()" class="button">검색</a>
 		</div>
 	<br>
 	<div class="countBox">
 		<table id="tb">
 		<thead>
 		 	<tr>
-			<td><img src="resources/images/order.png" style="height:30%; width:33%;"><br>
+			<td width="220px"><img src="resources/images/order3.png" style="height:15%; width:40%; "><br>
 			배송전
 			</td>
-			<td><img src="resources/images/delivery2.png" style="height:39%; width:41%; "><br>
+			<td width="220px"><img src="resources/images/delivery3.png" style="height:15%; width:40%; "><br>
 			배송중
 			</td>
-			<td><img src="resources/images/complete.png" style="height:30%; width:33%;"><br>
+			<td width="220px"><img src="resources/images/complete3.png" style="height:15%; width:40%; "><br>
 			배송완료
 			</td>
-			<td>
-			<img src="resources/images/cancel.png" style="height:30%; width:33%;"><br>
+			<td width="220px">
+			<img src="resources/images/cancel3.png" style="height:15%; width:40%; "><br>
 			주문취소
 			</td>
 			</tr> 
@@ -186,9 +190,9 @@ input::placeholder {
 	
 			<table align="center" cellspacing="0" width="880px" id="orderTable">
 				<tr id="th">
-					<td style="width: 150px">주문일자<br>[주문번호]</td>
-					<td style="width: 400px" align="center">이미지</td>
-					<td style="width: 400px" align="center">상품정보</td>
+					<td style="width: 130px">주문일자<br>[주문번호]</td>
+					<td style="width: 200px" align="center">이미지</td>
+					<td style="width: 300px" align="center">상품정보</td>
 					<td style="width: 100px">수량</td>
 					<td style="width: 100px">주문금액</td>
 					<td style="width: 150px">진행상태</td>
@@ -222,8 +226,8 @@ input::placeholder {
 					
 					</c:if>
 					<c:set var="orderNum" value="${o.orderNum }" scope="application"/>
-						<td>이미지추가</td>
-						<td>${o.gName}</td>
+						<td><img src="resources/auploadFiles/${o.filePath }" style="height:200px; width:150px;"></td>
+						<td><${o.goodsTitle}><br>${o.gName}</td>
 						<td>${o.orderCount }</td>
 						<td>${o.gPrice * o.orderCount }</td>
 						<c:if test = "${o.orderStatus eq 'B'}">
@@ -252,7 +256,7 @@ input::placeholder {
 			 <br>
       <div class="pagingArea" align="center">
          <!-- 맨 처음으로(<<) -->
-         <button onclick="location.href='orderview.do?page=1'"> << </button>
+         <button onclick="location.href='orderView.do?page=1'"> << </button>
          
          <!-- 이전 페이지로(<) -->
         <c:if test="${pi.currentPage <= 1 }">
@@ -260,7 +264,7 @@ input::placeholder {
         </c:if>
          <c:if test="${pi.currentPage > 1 }">
          
-            <button onclick="location.href='orderview.do?page=${pi.currentPage -1}'"> < </button>
+            <button onclick="location.href='orderView.do?page=${pi.currentPage -1}'"> < </button>
         </c:if>
          
          <!-- 10개의 페이지 목록 -->
@@ -269,7 +273,7 @@ input::placeholder {
                <button style="background:#ec434a;color:white" disabled >${p}</button>
            </c:if>
             <c:if test="${pi.currentPage != p }">
-               <button onclick="location.href='orderview.do?page=${p}'">${p}</button>
+               <button onclick="location.href='orderView.do?page=${p}'">${p}</button>
             </c:if>
        </c:forEach>
 	 				
@@ -277,11 +281,11 @@ input::placeholder {
             <button disabled> > </button>
           </c:if>
           <c:if test="${pi.currentPage < pi.maxPage }">
-            <button onclick="location.href='orderview.do?page=${pi.currentPage + 1}'"> > </button>
+            <button onclick="location.href='orderView.do?page=${pi.currentPage + 1}'"> > </button>
           </c:if>
          
          <!-- 맨 끝으로(>>) -->
-         <button onclick="location.href='orderview.do?page=${pi.maxPage}'"> >> </button>
+         <button onclick="location.href='orderView.do?page=${pi.maxPage}'"> >> </button>
             </div>
 			
 			<div>
@@ -335,7 +339,8 @@ input::placeholder {
 	    	changeMonth: true, 
 	         changeYear: true,
 	         nextText: '다음 달',
-	         prevText: '이전 달'
+	         prevText: '이전 달',
+	         maxDate: 0
 	    	
 	   		 	});
 			});
@@ -346,7 +351,8 @@ input::placeholder {
 		    	changeMonth: true, 
 		         changeYear: true,
 		         nextText: '다음 달',
-		         prevText: '이전 달'
+		         prevText: '이전 달',
+		         maxDate: 0
 		    });
 		});
 		
@@ -354,13 +360,27 @@ input::placeholder {
 			
 			var date1 = $("#date1").datepicker({dateFormat : "yy/mm/dd"}).val();
 			var date2 = $("#date2").datepicker({dateFormat : "yy/mm/dd"}).val();
-			
-
 				
-			location.href="orderSearch.do?date1="+date1+"&date2="+date2;
-		
-		
+			console.log(date1);
 			
+	 		if(date1==null || date1<=0){
+	 			if( date2==null || date2<=0){
+	 				alert("날짜를 입력하세요");
+	 			}else{
+	 				alert("시작날짜를 입력하세요");
+	 			}
+	 		}else if(date2==null || date2<=0){
+	 			alert("마지막날짜를 입력하세요");
+	 		}else{
+	 			if(date1>date2){
+	 				alert("닐짜를 다시 입력해주세요");
+	 			}else {
+	 			
+	 				location.href="orderSearch.do?date1="+date1+"&date2="+date2;
+	 		}
+	 		
+			
+		}
 		}
 		
 		 function searchWeek(){
@@ -387,19 +407,14 @@ input::placeholder {
 				var to = yy+"/"+mm+"/"+dd;
 				var date2 = to;
 				
-				var weekAgo = new Date(sysdate);
-				
-				console.log("week : " + weekAgo);
-				console.log("date2 : " + date2);
+				var Ago = new Date(sysdate);
 				
 				
+				Ago.setDate(Ago.getDate() - 7);
 				
-				
-				weekAgo.setDate(weekAgo.getDate() - 7);
-				
-				dd = weekAgo.getDate();
-				mm = weekAgo.getMonth()+1; //January is 0!
-				yy = weekAgo.getFullYear(); 
+				dd = Ago.getDate();
+				mm = Ago.getMonth()+1; //January is 0!
+				yy = Ago.getFullYear(); 
 				
 				/* if(yy>100){
 					yy=yy-100;
@@ -415,21 +430,164 @@ input::placeholder {
 				
 				var from = ""+yy+"/"+mm+"/"+dd;
 				var date1 = from;
-				
-				
-				console.log("date1 : " + date1);
 
 			 location.href="termSearch.do?date3="+date1+"&date4="+date2;  
 				
 			}
 			
+		 function searchAmon(){
+				var sysdate = new Date();
+				var dd = sysdate.getDate();
+				var mm = sysdate.getMonth()+1; //January is 0!
+				var yy = sysdate.getFullYear();
+		
+	 
+			/* 	if(yy>100){
+					yy=yy-100;
+				}
+ */
+				 if(dd<10) {
+				    dd='0'+dd;
+				} 
+
+				if(mm<10) {
+				    mm='0'+mm;
+				}  
+				
+				var to = yy+"/"+mm+"/"+dd;
+				var date2 = to;
+				
+				var Ago = new Date(sysdate);
+		
+				Ago.setMonth(Ago.getMonth() - 1);
+				
+				dd = Ago.getDate();
+				mm = Ago.getMonth()+1; //January is 0!
+				yy = Ago.getFullYear(); 
+				
+				/* if(yy>100){
+					yy=yy-100;
+				} */
+				 if(dd<10) {
+					    dd='0'+dd
+					} 
+
+					if(mm<10) {
+					    mm='0'+mm
+					}  
+					
+				
+				var from = ""+yy+"/"+mm+"/"+dd;
+				var date1 = from;
+
+
+			 location.href="termSearch.do?date3="+date1+"&date4="+date2; 
+		 }
+		 
+		 function searchTmon(){
+			 var sysdate = new Date();
+				var dd = sysdate.getDate();
+				var mm = sysdate.getMonth()+1; //January is 0!
+				var yy = sysdate.getFullYear();
+		
+	 
+			/* 	if(yy>100){
+					yy=yy-100;
+				}
+*/
+				 if(dd<10) {
+				    dd='0'+dd;
+				} 
+
+				if(mm<10) {
+				    mm='0'+mm;
+				}  
+				
+				var to = yy+"/"+mm+"/"+dd;
+				var date2 = to;
+				
+				var Ago = new Date(sysdate);
+		
+				Ago.setMonth(Ago.getMonth() - 3);
+				
+				dd = Ago.getDate();
+				mm = Ago.getMonth()+1; //January is 0!
+				yy = Ago.getFullYear(); 
+				
+				/* if(yy>100){
+					yy=yy-100;
+				} */
+				 if(dd<10) {
+					    dd='0'+dd
+					} 
+
+					if(mm<10) {
+					    mm='0'+mm
+					}  
+					
+				
+				var from = ""+yy+"/"+mm+"/"+dd;
+				var date1 = from;
+
+
+			 location.href="termSearch.do?date3="+date1+"&date4="+date2; 
+		 }
+		 
+		 function searchSmon(){
+			 var sysdate = new Date();
+				var dd = sysdate.getDate();
+				var mm = sysdate.getMonth()+1; //January is 0!
+				var yy = sysdate.getFullYear();
+		
+	 
+			/* 	if(yy>100){
+					yy=yy-100;
+				}
+*/
+				 if(dd<10) {
+				    dd='0'+dd;
+				} 
+
+				if(mm<10) {
+				    mm='0'+mm;
+				}  
+				
+				var to = yy+"/"+mm+"/"+dd;
+				var date2 = to;
+				
+				var Ago = new Date(sysdate);
+		
+				Ago.setMonth(Ago.getMonth() - 6);
+				
+				dd = Ago.getDate();
+				mm = Ago.getMonth()+1; //January is 0!
+				yy = Ago.getFullYear(); 
+				
+				/* if(yy>100){
+					yy=yy-100;
+				} */
+				 if(dd<10) {
+					    dd='0'+dd
+					} 
+
+					if(mm<10) {
+					    mm='0'+mm
+					}  
+					
+				
+				var from = ""+yy+"/"+mm+"/"+dd;
+				var date1 = from;
+
+
+			 location.href="termSearch.do?date3="+date1+"&date4="+date2; 
+			 
+		 }
 			</script> 
 			
 
 
 		 
-		</script> 
-		
+
 
 
 	
@@ -439,4 +597,4 @@ input::placeholder {
 	<jsp:include page ="../common/footer.jsp"/>
 </footer>
 
-</html>
+</html>	
