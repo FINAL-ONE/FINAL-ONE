@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"  import="java.util.*, java.text.*"%>
 <%@ page import = "com.kh.awesome.board.model.vo.Board"%>
+<%@ page import = "com.kh.awesome.member.model.vo.Member"%>
 <%@ page import = "com.kh.awesome.board.model.vo.Attachment"%> 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -29,7 +30,8 @@
 	  String originName3= flist.get(2).getOriginName();
 	  String originName4= flist.get(3).getOriginName();
 	  String originName5= flist.get(4).getOriginName();
-
+	
+	  Member loginUser = (Member)session.getAttribute("loginUser"); 
 	  
 
 %>
@@ -38,13 +40,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="shortcut icon" href="${contextPath}/resources/images/favicon.ico" type="image/x-icon">
 <meta charset="UTF-8">
 	<title>Awesome 자유게시판</title>
 	<!-- include libraries(jQuery, bootstrap) -->
 <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
+  <link href="${contextPath}/resources/fontawesome-free/css/all.css" rel="stylesheet">
 
 <!-- include summernote css/js-->
 <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
@@ -235,6 +237,7 @@
 		height: 80px;
 		text-align: center;
 		padding-top: 30px;
+		margin-left: 7px;
 	}
 	
 
@@ -263,6 +266,7 @@
 		background-color: white;
 		border: 1px solid black;
 		outline: none;
+		margin-top: 5px;
 	}
 	
 	#checkLabel{
@@ -293,46 +297,93 @@
 
 
 
+
 .previewBoard{
-	border: 1px solid black; 
 	height: 200px; 
 	wdith: 100%;
-	
+	border: none;	
+	margin-top: 11px;
 }
 
 .previewBoard2{
 	  width:880px;
-  	  border: 1px solid pink; 
+  	  border: none; 
       margin-left:auto;
       margin-right:auto;
       height: 100%;
-      padding-left: 40px;
+      padding-left: 18px;
       
 }
 
 .advertisement{
-	border: 1px solid blue; 
+	border: 1px solid #dbdbdb; 
 	height: 200px;
-	width: 590px;  
+	width: 625px;  
 	display: inline-block;
-	margin-right: 10px;
+	margin-right: 5px;
+	position:relative;
+	background-image:url("resources/images/advertise4.jpeg");
+}
+
+
+.advertisement:hover{
+	cursor:pointer;
 }
 
 .noticeList{
-	border: 1px solid red; 
 	height: 200px;
-	width: 234px; 
+	width: 247px; 
 	display: inline-block;
+	position: absolute;
+	border: 1px solid #dbdbdb;
+}
+
+
+
+.noticeListDiv{
+	margin-bottom: 5px;
+	width: 200px;
+    text-overflow:ellipsis;
+	white-space:nowrap; 
+	overflow: hidden;
+	color: #787878;
+	font-size: 13px;
+	margin-bottom: 10px;
+}
+
+.noticeListDiv:hover{
+	cursor:pointer;
+
+}
+
+
+.fa-bell:before {
+    content: "\f0f3";
+    color:#787878;
+}
+
+
+.fa-plus-square:before {
+    content: "\f0fe";
+    position: relative;
+    left: 120px;
+    top: 1px;
+    color: lightgray;
+    font-size: 20px;
+}
+
+
+.fa-plus-square:hover{
+ 	cursor:pointer;
 }
 
 .centerDiv{
-	  width:880px;
-  	  border: 1px solid pink; 
-      margin-left:auto;
-      margin-right:auto;
-      height: auto;
-      padding-left: 40px;
-      
+    width: 910px;
+    /* border: 1px solid pink; */
+    margin-left: auto;
+    margin-right: auto;
+    height: auto;
+    padding-left: 33px;
 
 }
 
@@ -346,23 +397,54 @@
     background: #fff;
 }
 
+ #attachTable{
+      border: 1px solid #dbdbdb;
+	    width: 840px;
+	    position: relative;
+	    left: 20px;
+   }   
+
+
 </style>
 
 <body>
-
 <jsp:include page="../common/menubar.jsp"/>	
+
+
+	<input type="hidden" value="${loginUser.manager}">
+	 	<input type="hidden" value="${loginUser.userNickname} ">
+
 <div id="container" style="overflow: auto; height: auto;"><!-- container -->
    
    
 <div class= "previewBoard" >
 	<div class= "previewBoard2"> 
-		<div class= "advertisement">광고 <%=category%> </div>
-		<div class= "noticeList">  공지사항(미리보기) </div> 
+		<div class= "advertisement"></div>
+		<div class= "noticeList">
+		
+			<c:if test= "${category != 1}">
+			 	<div style="font-size: 15px; font-weight: bold; margin-left: 15px; margin-top: 15px;">공지사항&nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-plus-square" onclick="goNoticeList();"></i></div>
+			 	<div style="height: 140px; margin-top: 15px; padding-left: 18px;">
+				<c:forEach var="n" items="${noticeList}">	
+		    				<div class="noticeListDiv" onclick ="goBoardDetailView(${n.bId});"><i class="fas fa-bell"></i>&nbsp;${n.bTitle} </div>
+				</c:forEach>
+				</div>
+			</c:if>
+			<c:if test= "${category eq 1}">
+			 	<div style="font-size: 15px; font-weight: bold; margin-left: 15px; margin-top: 15px; ">인기 게시글<i class="far fa-plus-square" style="left:120px;" onclick="goAllList();" ></i></div>
+			 	<div style="height: 140px; margin-top: 15px; padding-left: 18px;">
+				<c:forEach var="b" items="${bestList}">	
+		    				<div class="noticeListDiv" onclick ="goBoardDetailView2(${b.bId} , ${b.category});"><i class="fas fa-bell"></i>&nbsp;${b.bTitle} </div>
+				</c:forEach>
+				</div>
+			</c:if>
+		
+		</div> 
 	</div> 
 </div >
 
 <div class = "centerDiv">
-	<h2 style="font-size: 26px; font-weight: bold;">글쓰기</h2> 
+	<h2 style="font-size: 26px; font-weight: bold;padding-left:20px;">글쓰기</h2> 
 		<form id= insertForm action = "boardUpdate.do" method="post" encType="multipart/form-data">
 			<input type= "hidden" name="page" value = "${currentPage}" >
 			<input type= "hidden" name="bId" value = "${board.bId}" >
@@ -374,12 +456,16 @@
 					<td class="tableTd"> &nbsp;&nbsp;
 						
 
-						<select class="categorySelect" name = "category" style="height: 35px;"> 
-							<option id =  "category2" value = 2>자유게시판 </option>
-							<option id =  "category3" value = 3>팁&노하우</option>
-							<option id =  "category4" value = 4>비포&애프터 </option>
-							<option id =  "category5" value = 5>자극사진</option>
-						</select>
+					  <select class="categorySelect" name = "category" style="height: 35px;"> 
+                  
+                <% if (loginUser.getManager().equals("Y")){%>
+                  	 <option id= "category1" value = "1"> 공지사항 </option>
+                  <%}%>
+                     <option id =  "category2"   value = "2">자유게시판 </option>
+                     <option id =  "category3"  value = "3">팁&노하우</option>
+                     <option id =  "category4"  value = "4">비포&애프터 </option>
+                     <option id =  "category5"  value = "5">자극사진</option>
+                  </select>
 					</td>
 				</tr>
 				<tr>
@@ -387,21 +473,24 @@
 							
 					<td class ="tableTd"><input type="text" name= "bTitle" class="inputTd" value = "<%=b.getbTitle()%>" >
 					
-					<label for="superCheck" id=checkLabel><span style="font-size: 14px;">공지사항</span></label>
+			  <% if (loginUser.getUserId().equals("admin")){%>
+	
+					<label for="superCheck" id=checkLabel><span style="font-size: 14px;">필독</span></label>
 
-					<%if(b.getbLevel() < 4){ %>
-						<input id = superCheck type="checkbox" name="blevel" value="4" onclick="checkBox();">
-					<%} else{%>
-						<input id = superCheck type="checkbox" name="blevel" value="4" onclick="checkBox();" checked>
-					<%} %>
-			
+					    	 
+						<%if(b.getbLevel() < 4){ %>
+							<input id = superCheck type="checkbox" name="blevel" value="4" onclick="checkBox();">
+						<%} else{%>
+							<input id = superCheck type="checkbox" name="blevel" value="4" onclick="checkBox();" checked>
+						<%} %>
+					 <%}%>
 					
 					<input id = noCheck type= "hidden" name="bLevel" value="1">
 					</td> 
 				</tr>
 				<tr>
 					<td class= "titleTd tableTd"><b>작성자</b></td>
-					<td  class ="tableTd"><span style="padding-left: 17px; font-size: 16px;"><%=b.getUserId()%></span></td>
+					<td  class ="tableTd"><span style="padding-left: 17px; font-size: 16px;"><%=b.getUserNickname()%></span></td>
 				</tr>
 				<tr>
 					<td class= "titleTd tableTd"><b>작성일</b></td>
@@ -411,68 +500,72 @@
 			<div id="textareaDiv">
 				<textArea id= summernote rows=30 col=100 name = "bContent" placeholder="내용을 입력해주세요"> <%=b.getbContent() %></textArea>
 			</div>
-			<table id = "attachTable">
-				<tr>
-					<td rowspan=9 class= "titleTd" style= "border-right: 1px solid #dbdbdb">
-						<b>첨부파일</b>
-					</td>
-					<td  style= "border:none; height:30px; color:gray; padding:12px;padding-left:15px">
-						<select id= attachCount onchange="changeSelect();" style="color:black" disabled>
-							   <option name= aCount value=1>1</option>
-			                   <option name= aCount value=2>2</option>
-			                   <option name= aCount value=3>3</option>
-			                   <option name= aCount value=4>4</option>
-			                   <option name= aCount value=5 SELECTED >5</option>
-							 
-						</select>
-						&nbsp;<span style="font-size: 15px">파일 갯수를 지정해주세요</span>
-						<button type="button" id= "resetBtn" class="attachBtn" onclick="selectReset();"><b>리셋</b></button>
-					</td>
-				</tr> 
-				 <tr class= attachTr>
-		            <td class= attachTd>
-		               <input id = "attachInput1" type="text" placeholder="첨부파일을 등록하세요" readonly value ="<%=originName1%>" >&nbsp;
-		               <button type="button" id= "attachBtn1" class="attachBtn" onclick="fileInputClick1();"><b>찾아보기</b></button>&nbsp;
-		               <button type="button" id= "delAttachBtn1" class="delAttachBtn" onclick="delAttach1();"><b>삭제</b></button>
-		            </td>
-		         </tr>
-		          <tr class= attachTr>
-		            <td class= attachTd>
-		               <input id = "attachInput2" type="text" placeholder="첨부파일을 등록하세요" readonly value ="<%=originName2%>" >&nbsp;
-		               <button type="button" id= "attachBtn2" class="attachBtn" onclick="fileInputClick2();"><b>찾아보기</b></button>&nbsp;
-		               <button type="button" id= "delAttachBtn2" class="delAttachBtn" onclick="delAttach2();"><b>삭제</b></button>
-		            </td>
-		         </tr>
-		          <tr class= attachTr>
-		            <td class= attachTd>
-		               <input id = "attachInput3" type="text" placeholder="첨부파일을 등록하세요" readonly value ="<%=originName3%>" >&nbsp;
-		               <button type="button" id= "attachBtn3" class="attachBtn" onclick="fileInputClick3();"><b>찾아보기</b></button>&nbsp;
-		               <button type="button" id= "delAttachBtn3" class="delAttachBtn" onclick="delAttach3();"><b>삭제</b></button>
-		            </td>
-		         </tr>
-		         <tr class= attachTr>
-		            <td class= attachTd>
-		               <input id = "attachInput4" type="text" placeholder="첨부파일을 등록하세요" readonly value ="<%=originName4%>" >&nbsp;
-		               <button type="button" id= "attachBtn4" class="attachBtn" onclick="fileInputClick4();"><b>찾아보기</b></button>&nbsp;
-		               <button type="button" id= "delAttachBtn4" class="delAttachBtn" onclick="delAttach4();"><b>삭제</b></button>
-		            </td>
-		         </tr>
-		         <tr class= attachTr>
-		            <td class= attachTd>
-		               <input id = "attachInput5" type="text" placeholder="첨부파일을 등록하세요" readonly value ="<%=originName5%>" >&nbsp;
-		               <button type="button" id= "attachBtn5" class="attachBtn" onclick="fileInputClick5();"><b>찾아보기</b></button>&nbsp;
-		               <button type="button" id= "delAttachBtn5" class="delAttachBtn" onclick="delAttach5();"><b>삭제</b></button>
-		            </td>
-		         </tr>
-			</table>
-		
+			
+			
+			
+			  <% if (loginUser.getManager().equals("Y")){%>
+				<table id = "attachTable">
+					<tr>
+						<td rowspan=9 class= "titleTd" style= "border-right: 1px solid #dbdbdb">
+							<b>첨부파일</b>
+						</td>
+						<td  style= "border:none; height:30px; color:gray; padding:12px;padding-left:15px">
+							<select id= attachCount onchange="changeSelect();" style="color:black" disabled>
+								   <option name= aCount value=1>1</option>
+				                   <option name= aCount value=2>2</option>
+				                   <option name= aCount value=3>3</option>
+				                   <option name= aCount value=4>4</option>
+				                   <option name= aCount value=5 SELECTED >5</option>
+								 
+							</select>
+							&nbsp;<span style="font-size: 15px">파일 갯수를 지정해주세요</span>
+							<button type="button" id= "resetBtn" class="attachBtn" onclick="selectReset();"><b>리셋</b></button>
+						</td>
+					</tr> 
+					 <tr class= attachTr>
+			            <td class= attachTd>
+			               <input id = "attachInput1" type="text" placeholder="첨부파일을 등록하세요" readonly value ="<%=originName1%>" >&nbsp;
+			               <button type="button" id= "attachBtn1" class="attachBtn" onclick="fileInputClick1();"><b>찾아보기</b></button>&nbsp;
+			               <button type="button" id= "delAttachBtn1" class="delAttachBtn" onclick="delAttach1();"><b>삭제</b></button>
+			            </td>
+			         </tr>
+			          <tr class= attachTr>
+			            <td class= attachTd>
+			               <input id = "attachInput2" type="text" placeholder="첨부파일을 등록하세요" readonly value ="<%=originName2%>" >&nbsp;
+			               <button type="button" id= "attachBtn2" class="attachBtn" onclick="fileInputClick2();"><b>찾아보기</b></button>&nbsp;
+			               <button type="button" id= "delAttachBtn2" class="delAttachBtn" onclick="delAttach2();"><b>삭제</b></button>
+			            </td>
+			         </tr>
+			          <tr class= attachTr>
+			            <td class= attachTd>
+			               <input id = "attachInput3" type="text" placeholder="첨부파일을 등록하세요" readonly value ="<%=originName3%>" >&nbsp;
+			               <button type="button" id= "attachBtn3" class="attachBtn" onclick="fileInputClick3();"><b>찾아보기</b></button>&nbsp;
+			               <button type="button" id= "delAttachBtn3" class="delAttachBtn" onclick="delAttach3();"><b>삭제</b></button>
+			            </td>
+			         </tr>
+			         <tr class= attachTr>
+			            <td class= attachTd>
+			               <input id = "attachInput4" type="text" placeholder="첨부파일을 등록하세요" readonly value ="<%=originName4%>" >&nbsp;
+			               <button type="button" id= "attachBtn4" class="attachBtn" onclick="fileInputClick4();"><b>찾아보기</b></button>&nbsp;
+			               <button type="button" id= "delAttachBtn4" class="delAttachBtn" onclick="delAttach4();"><b>삭제</b></button>
+			            </td>
+			         </tr>
+			         <tr class= attachTr>
+			            <td class= attachTd>
+			               <input id = "attachInput5" type="text" placeholder="첨부파일을 등록하세요" readonly value ="<%=originName5%>" >&nbsp;
+			               <button type="button" id= "attachBtn5" class="attachBtn" onclick="fileInputClick5();"><b>찾아보기</b></button>&nbsp;
+			               <button type="button" id= "delAttachBtn5" class="delAttachBtn" onclick="delAttach5();"><b>삭제</b></button>
+			            </td>
+			         </tr>
+				</table>
+				     <%}%>
 			<br><br>
 			<div class= btnDiv>
 					<button type='button'id=listBtn onclick="goBoardListView();"><b>취소</b></button>&nbsp;&nbsp;
 					<button id=insertBtn type="button" onclick="insertSubmit();"><b>확인</b></button>
 			</div>
 		
-			<div style="display:block">
+			<div style="display:none">
 				<input type="file" id="fileInput1" name = "file1" onchange="loadAttachName(this,1);">
 				<input type="file" id="fileInput2" name = "file2" onchange="loadAttachName(this,2);">
 				<input type="file" id="fileInput3" name = "file3" onchange="loadAttachName(this,3);">
@@ -480,7 +573,7 @@
 				<input type="file" id="fileInput5" name = "file5" onchange="loadAttachName(this,5);">
 			</div> 
 			
-			<div style="display:block">
+			<div style="display:none">
 			   <br>
 			   <input type = "text" id="delFid1" name = "delFid1" value = "0" ><br>
 			   <input type = "text" id="delFid2" name = "delFid2" value = "0"><br>
@@ -490,7 +583,7 @@
 			</div>
 			
 			</form>
-			<div style="display:block">
+			<div style="display:none">
 					<br>
 				   <input type = "text" id="originFid1" name = "originFid1" value =<%=flist.get(0).getfId()%> ><br>
 				   <input type = "text" id="originFid2" name = "originFid2" value =<%=flist.get(1).getfId()%> ><br>
@@ -512,7 +605,52 @@
 
 <script>
 
-	function checkBox(){
+//광고 및 미리보기 
+function goBoardDetailView(bId){
+	location.href='fBoardDetailView.do?page=1&category=1&bId='+bId;
+	
+}
+function goBoardDetailView2(bId, category){
+	location.href='fBoardDetailView.do?page=1&category='+ category+ '&bId='+bId;
+	
+}
+
+
+function goNoticeList(){
+	location.href='boardListView.do?category=1'
+}
+
+
+function goAllList(){
+	location.href='boardListView.do?category=10'
+}
+
+//광고 및 미리보기 
+
+
+$(function(){
+	   var category =  <%=category%>;  
+
+	   if( category == "2" ){
+	      $("#category2").prop("selected", true);
+	   }else if(   category == "3"   ) {
+		   $("#category3").prop("selected", true); 
+	   }else if ( category == "4"  ){
+		   $("#category4").prop("selected", true); 
+	   } else if ( category == "5") {
+		   $("#category5").prop("selected", true);
+	   }else if ( category == "1") {
+		   $("#category1").prop("selected", true);
+	   }
+	});
+
+
+
+
+
+
+
+function checkBox(){
 		if(document.getElementById("superCheck").checked == true){
 			document.getElementById("noCheck").disabled = true;
 		}else{
@@ -583,15 +721,17 @@
 $(function(){
 	var category = <%=category%>;   
 
-	if( category == "2" ){
-		$("#category2").prop("selected", true);
-	}else if(   category == '3'   ) {
-		alert(3); 
-	}else if ( category == '4'  ){
-		alert(4); 
-	} else if ( category == '5') {
-		alert(5); 
-	}
+	  if( category == "2" ){
+	      $("#category2").prop("selected", true);
+	   }else if(   category == "3"   ) {
+		   $("#category3").prop("selected", true); 
+	   }else if ( category == "4"  ){
+		   $("#category4").prop("selected", true); 
+	   } else if ( category == "5") {
+		   $("#category5").prop("selected", true);
+	   }else if ( category == "1") {
+		   $("#category1").prop("selected", true);
+	   }
 
 });
 

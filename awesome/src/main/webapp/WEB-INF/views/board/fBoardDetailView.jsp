@@ -20,7 +20,6 @@
 	<!DOCTYPE html>
 	<html>
 	<head>
-	<link rel="shortcut icon" href="${contextPath}/resources/images/favicon.ico" type="image/x-icon">
 	<meta charset="UTF-8">
 		<title>Awesome 자유게시판</title>
 		<!-- include libraries(jQuery, bootstrap) -->
@@ -188,13 +187,15 @@
 	   }
 	   
 	 .balloon {
-	     position: absolute;
+        position: relative;
 	    background: white;
 	    width: 250px;
 	    margin: 0 auto 10px;
 	    border: 1px solid gray;
-	    right: 544px;
-	    top: 630px;
+	    /* right: 544px; */
+	    /* top: 630px; */
+	    left: 260px;
+	    top: 40px;
 	    font-size: 14px;
 	    padding: 10px;
 	    text-align: left;
@@ -615,42 +616,94 @@
 	
 	
 	.previewBoard{
-		border: 1px solid black; 
-		height: 200px; 
-		wdith: 100%;
-		
-	}
-	
-	.previewBoard2{
-		  width:880px;
-	  	  border: 1px solid pink; 
-	      margin-left:auto;
-	      margin-right:auto;
-	      height: 100%;
-	      padding-left: 40px;
-	      
-	}
-	
-	.advertisement{
-		border: 1px solid blue; 
-		height: 200px;
-		width: 590px;  
-		display: inline-block;
-		margin-right: 10px;
-	}
-	
-	.noticeList{
-		border: 1px solid red; 
-		height: 200px;
-		width: 234px; 
-		display: inline-block;
-	}
+	height: 200px; 
+	wdith: 100%;
+	border: none;	
+	margin-top: 11px;
+}
+
+.previewBoard2{
+	  width:880px;
+  	  border: none; 
+      margin-left:auto;
+      margin-right:auto;
+      height: 100%;
+      padding-left: 18px;
+      
+}
+
+.advertisement{
+	border: 1px solid #dbdbdb; 
+	height: 200px;
+	width: 625px;  
+	display: inline-block;
+	margin-right: 5px;
+	position:relative;
+	background-image:url("resources/images/advertise4.jpeg");
+}
+
+
+.advertisement:hover{
+	cursor:pointer;
+}
+
+.noticeList{
+	height: 200px;
+	width: 247px; 
+	display: inline-block;
+	position: absolute;
+	border: 1px solid #dbdbdb;
+}
+
+
+
+.noticeListDiv{
+	margin-bottom: 5px;
+	width: 200px;
+    text-overflow:ellipsis;
+	white-space:nowrap; 
+	overflow: hidden;
+	color: #787878;
+	font-size: 13px;
+	margin-bottom: 10px;
+}
+
+.noticeListDiv:hover{
+	cursor:pointer;
+
+}
+
+
+.fa-bell:before {
+    content: "\f0f3";
+    color:#787878;
+}
+
+
+.fa-plus-square:before {
+    content: "\f0fe";
+    position: relative;
+    left: 120px;
+    top: 1px;
+    color: lightgray;
+    font-size: 20px;
+}
+
+
+.fa-plus-square:hover{
+ 	cursor:pointer;
+}
+
+
+
+
+/**/
 	
 	.centerDiv{
 	
 		  width:880px;
-			border:none;
-	 /*  	  border: 1px solid pink;  */
+		  border:none;
+	 /*  border: 1px solid pink;  */
 	      margin-left:auto;
 	      margin-right:auto;
 	      height: auto;
@@ -895,26 +948,82 @@
 	</style>
 	
 	<body>
+	<input id="loginUserMid" value="${loginUser.mid}" type="text"> 
+	<input id="loginUserAdmin" value="${loginUser.manager}" type="text" >
+	<input id="loginUserNickname" value="${loginUser.userNickname }" type="text">
 	
 	<jsp:include page="../common/menubar.jsp"/>	
 	<div id="container" style="overflow: auto; height: auto;"><!-- container -->
 	   
 	   
-	<div class= "previewBoard" >
-		<div class= "previewBoard2"> 
-			<div class= "advertisement"> 디테일 뷰 잘 들어오니?   </div>
-			<div class= "noticeList">  공지사항(미리보기) </div> 
+
+<!-- 광고 및 미리보기  -->
+<div class= "previewBoard" >
+	<div class= "previewBoard2"> 
+		<div class= "advertisement"></div>
+		<div class= "noticeList">
+		
+			<c:if test= "${board.category != 1}">
+			 	<div style="font-size: 15px; font-weight: bold; margin-left: 15px; margin-top: 15px;">공지사항&nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-plus-square" onclick="goNoticeList();"></i></div>
+			 	<div style="height: 140px; margin-top: 15px; padding-left: 18px;">
+				<c:forEach var="n" items="${noticeList}">	
+		    				<div class="noticeListDiv" onclick ="goBoardDetailView(${n.bId});"><i class="fas fa-bell"></i>&nbsp;${n.bTitle} </div>
+				</c:forEach>
+				</div>
+			</c:if>
+			<c:if test= "${board.category eq 1}">
+			 	<div style="font-size: 15px; font-weight: bold; margin-left: 15px; margin-top: 15px; ">인기 게시글<i class="far fa-plus-square" style="left:120px;" onclick="goAllList();" ></i></div>
+			 	<div style="height: 140px; margin-top: 15px; padding-left: 18px;">
+				<c:forEach var="b" items="${bestList}">	
+		    				<div class="noticeListDiv" onclick ="goBoardDetailView2(${b.bId} , ${b.category});"><i class="fas fa-bell"></i>&nbsp;${b.bTitle} </div>
+				</c:forEach>
+				</div>
+			</c:if>
+		
 		</div> 
-	</div >
+	</div> 
+</div >
+<!-- 광고 및 미리보기  -->
 	
 	<div class = "centerDiv">
-		<h2 style="font-size: 26px; font-weight: bold;margin-top: 40px;">자유게시판</h2> 
+		
+		
+		<c:if test = "${board.category eq 1 }">
+		<h2 style="font-size: 26px; font-weight:bold">공지사항</h2> 
+		</c:if>
+	
+		<c:if test = "${board.category eq 2 }">
+		<h2 style="font-size: 26px; font-weight:bold"> 자유게시판 </h2> 
+		</c:if>
+		
+	
+		<c:if test = "${board.category eq 3 }">
+		<h2 style="font-size: 26px; font-weight:bold"> 팁&노하우 </h2> 
+		</c:if>
+		
+		<c:if test = "${board.category eq 4 }">
+		<h2 style="font-size: 26px; font-weight:bold"> 비포&애프터 </h2> 
+		</c:if>
+	
+		<c:if test = "${board.category eq 5 }">
+		<h2 style="font-size: 26px; font-weight:bold"> 자극사진 </h2> 
+		</c:if>
+		
+		<c:if test="${board.category eq 10 }">
+		<h2 style="font-size: 26px; font-weight:bold"> 전체 </h2> 
+		</c:if>
+		
+		 
 		<hr style="border: 1px solid black; margin-bottom: 5px;" >
 			<table align="center" width="840px" >
 				<tr style="padding:none;">
 					<td style="font-size: 25px;padding:0px; padding-bottom: 10px;height:60px;border-bottom: 1px; font-weight: 100px; font-family:none">
 						${board.bTitle} 
-						<div style="font-size: 13px; position:relative; float:right; height:40px; padding-top: 20px; padding-right: 10px;"><span class="bModify" style="color: #8d8d8d;">수정</span>&nbsp;|&nbsp;<span class="bDelete" style="color: #8d8d8d;">삭제</span> </div>			
+						
+						<c:if test= "${ loginUser.manager == 'Y' || loginUser.mid == board.mId}">
+							<div style="font-size: 13px; position:relative; float:right; height:40px; padding-top: 20px; padding-right: 10px;"><span class="bModify" style="color: #8d8d8d;">수정</span>&nbsp;|&nbsp;<span class="bDelete" style="color: #8d8d8d;">삭제</span> </div>			
+						</c:if>
+					
 					</td>
 				</tr>
 			
@@ -989,7 +1098,7 @@
 						 	display1 = "inline-block"; 
 						 	dataValue = "1";
 						 %>
-					</c:if>
+				</c:if>
 				</c:forEach>
 				 <div id = "heart" data-value= "<%=dataValue%>">
 					<span id="heart0" style="font-size: 30px; color: #ff2626; display:<%=display0%>"><i class="far fa-heart"></i></span> 
@@ -999,8 +1108,8 @@
 			
 				<br><br><br>
 				<div style="margin-left:auto; width:210px"> 
-					<button id = insertBtn onclick= "logcation.href='.bo" > <i class="fas fa-pencil-alt">&nbsp;</i>글쓰기 </button>&nbsp;
-					<button id = listBtn onclick="location.href='.bo'" style="display:inline-block"><i class="fas fa-list"></i> &nbsp;목록</button>
+					<button id = insertBtn onclick="location.href='fBoardInsertForm.do?category=${board.category}'"> <i class="fas fa-pencil-alt">&nbsp;</i>글쓰기 </button>&nbsp;
+					<button id = listBtn onclick="location.href='fBoardListView.do?page=${currentPage}'" style="display:inline-block"><i class="fas fa-list"></i> &nbsp;목록</button>
 				</div>
 				<br><br>
 				<div class="replyArea" >
@@ -1012,7 +1121,7 @@
 							<div style="position:relative; float: left; display:inline-block;width: 580px; height: 100px;" ><textArea id= "rContent"rows="4" cols="10" id="replyContent" placeholder="댓글을 입력해주세요" style="font-weight:normal;"></textArea></div>
 							<div style=" position:relative; float: right;display:inline-block;width: 103px; height: 100px;" > <button id="addReplyBtn" type="button"  style="position:relative; top: 12px; width: 80px; height: 80px; border-radius: 6px;" >입력</button></div>
 							
-						<span style="color:darkgray; position:relative; left:468px; top: -5px;">글자 수 &nbsp;<span id="counter">0</span>&nbsp;/&nbsp;100&nbsp; </span> 
+						<span style="color:darkgray; position:relative; left:468px; top: -5px;">글자 수 &nbsp;<span id="counter">0</span>&nbsp;/&nbsp;150&nbsp; </span> 
 						
 						</div>
 					 </div>
@@ -1029,62 +1138,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<td>
-							<div> 
-								<div class= "replyWriterDiv"><span class = replyWriterSpan >admin</span><span class= replyDate>2015.07.13 18:09</span> <span class="replyGood"><i class="far fa-thumbs-up"></i> 2018 </span></div>
-								<div class = contentDiv>
-								 댓글 디자인을 해볼까? 
-								</div>
-								<div class="answerDiv"><span class= "answerBtn">답글</span><span class= "replyDelete">삭제</span><span class= "replyModify">수정</span></div>
-							</div>
-						</td>
-					</tr>
-					<tr> 
-						<td class= 'answerInsert' style='background: #f9f9f9;' > 
-							<div style='padding-left:50px;'>
-								<div class= 'replyWriterDiv'><span class = 'replyWriterSpan' >admin</span><span class= 'replyDate'>2015.07.13 18:09</span></div>
-								<div style="width:635px;height:65px; margin-bottom:10px;">
-									<textarea style='width: 500px; height: 60px;'></textarea><button type='button' class='answerBtn2'> 입력</button>
-								</div>
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<td style='background: #f9f9f9;' >
-							<div style='padding-left:50px;'>
-								<div class= 'replyWriterDiv'><span class = 'replyWriterSpan' >admin</span><span class= 'replyDate'>2015.07.13 18:09</span><span class= 'replyDate'>삭제</span></div>
-								<div style='width:635px; margin-bottom:10px;'>
-								아무렇게나해 이자식아 아무렇게나해 이자식아 아무렇게나해 이자식아 아무렇게나해 이자식아 아무렇게나해 이자식아 아무렇게나해 이자식아 아무렇게나해 이자식아 아무렇게나해 이자식아 아무렇게나해 이자식아 아무렇게나해 이자식아 아무렇게나해 이자식아
-								</div>
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<td style="background: #f9f9f9;">
-							<div style="padding-left:50px;">
-								<div class= "replyWriterDiv"><span class = replyWriterSpan >admin</span><span class= replyDate>2015.07.13 18:09</span><span  class= replyDate>삭제</span></div>
-								<div style="width:635px; margin-bottom:10px;">
-									메롱 메롱 메롱 
-								</div>
-							</div>
-						</td>
-					</tr>
 					
-					
-					
-					
-					<tr>
-						<td>
-							<div> 
-								<div class= "replyWriterDiv"><span class = replyWriterSpan >admin</span><span class= replyDate>2015.07.13 18:09</span> <span class="replyGood"><i class="far fa-thumbs-up"></i> 2018 </span></div>
-								<div class = contentDiv>
-								fsdfsadfsdaffdsfsdafsdffsdfsfsfsdf sf fsdf sfs fafdsf fsdf sdffsdfaf
-								</div>
-								<div class="answerDiv"><span class= "answerBtn">답글</span><span class= "replyDelete">삭제</span><span class= "replyModify">수정</span></div>
-							</div>
-						</td>
-					</tr>
 				</tbody>
 			</table>
 			<br><br>  
@@ -1100,13 +1154,14 @@
 				<form id= "formTag" action="fBoardDetailView.do" method="post">
 		    		<input id= "bId" type= hidden value="" name = bId >
 		    		<input id= "page" type= hidden value = "${currentPage}" name= page> 
-	 			 </form>
+		    		<input id="category" type="hidden" value = "${board.category}" name =category>
+	 			 </form> 
 	 			 
 				<%if(nextBoard != null) {%>
 					<tr class="previewTr" style="border-bottom: 1px solid #e9e9e9;"> 
 						<input type = "hidden" name= "bId" value="${nextBoard.bId}"/> 
-						<td>&nbsp;&nbsp;다음글&nbsp;&nbsp;<i class="fas fa-caret-up"></i></td>
-						<td>${nextBoard.bTitle }</td> 
+						<td style="width: 90px;" >&nbsp;&nbsp;다음글&nbsp;&nbsp;<i class="fas fa-caret-up"></i></td>
+						<td  style="width: 568px;" >${nextBoard.bTitle }</td> 
 						<td style="color:#9e9e9e;">${nextBoard.createDate} &nbsp;&nbsp;|&nbsp;&nbsp; 조회수: ${nextBoard.bCount} </td>
 					</tr>
 				<%}%>
@@ -1146,10 +1201,10 @@
 		    	
 			    	<div id= modifyWriter style="margin-top:10px; padding-top:20px; padding-left:33px; font-weight:bold; background:#f9f9f9;"> </div>
 			    	<div style=" background:#f9f9f9; padding-top:10px; padding-left:33px;"> 
-				    	<textarea id= "modifyContent"  style="width:540px; height:60px; "value = ""> </textarea>
+				    	<textarea id= "modifyContent"  style="width:80%; height:60px; "value = ""> </textarea>
 				    	<input id="modifyRid"   type="hidden" value="" name = "rId">
-				    	<input id="modifyMid"  type="hidden" value="${loginUser.mid}" name ="mId">
-				    	<button class="myBtn success answerBtn2" type="button" onclick= "replyModify2(${currentPage});">수정</button>&nbsp;
+				    	<input id="modifyPage"   type="hidden" value="" name = "page">
+				    	<button class="myBtn success answerBtn2" type="button" onclick= "replyModify2();">수정</button>&nbsp;
 			    	</div>
 			  </div>
 	 	 </div>
@@ -1176,6 +1231,28 @@
 	
 	
 <script>
+
+
+//광고 및 미리보기 
+function goBoardDetailView(bId){
+	location.href='fBoardDetailView.do?page=1&category=1&bId='+bId;
+	
+}
+function goBoardDetailView2(bId, category){
+	location.href='fBoardDetailView.do?page=1&category='+ category+ '&bId='+bId;
+	
+}
+
+
+function goNoticeList(){
+	location.href='boardListView.do?category=1'
+}
+
+
+function goAllList(){
+	location.href='boardListView.do?category=10'
+}
+//광고 및 미리보기 
 	
 	$(function(){
 		
@@ -1237,7 +1314,7 @@
 		
 		$(".bDelete").click(function(){
 			if (confirm("이 게시 글을 삭제 하시겠습니까?") == true){    //확인
-				location.href = 'deleteBoard.do?bId=' + ${board.bId};
+				location.href = 'deleteBoard.do?bId=${board.bId}&category=${board.category}';
 			}else{   //취소
 		
 			    return;
@@ -1279,7 +1356,7 @@
 	
 			$("#counter").text(inputLength);
 			
-			var remain = 100- inputLength; 
+			var remain = 150- inputLength; 
 			
 			if(remain >= 0){
 				$("#counter").css("color", "darkgray");
@@ -1304,7 +1381,7 @@
 
 	     function getReplyList(page){// 댓글 리스트를 불러오는 함수
 			var bId = ${board.bId};
-	
+			
 			
 			$.ajax({
 				url:"rList.do",
@@ -1318,6 +1395,9 @@
 					$tableBody = $("#rtb tbody");
 				 	$tableBody.html(""); 
 					var html = "";
+					var loginUserMid = $("#loginUserMid").val(); 
+					var loginUserAdmin =  $("#loginUserAdmin").val();
+					var loginUserNickname=  $("#loginUserNickname").val();
 				
 					if(data.pi.currentPage == 1){
 						if(data.bestReplyList.length>0){
@@ -1344,16 +1424,29 @@
 								
 								html += "<input id= 'rContent" + data.bestReplyList[i].rId + "' type='hidden' value = '"+ data.bestReplyList[i].rContent+"'>"; 
 								
-								html += "<div class='answerDiv'><span class= 'answerBtn' onclick='addAnswer("+data.bestReplyList[i].rId+");'>답글</span><span class= 'replyDelete' onclick='replyDelete("+data.bestReplyList[i].rId +","+ data.pi.currentPage +");'>삭제</span><span class= 'replyModify' onclick='replyModify("+data.bestReplyList[i].rId+")'>수정</span></div></div></td></tr>";					
+								html += "<div class='answerDiv'><span class= 'answerBtn' onclick='addAnswer("+data.bestReplyList[i].rId+");'>답글</span>"; 
+								
+								if((loginUserMid == data.bestReplyList[i].mId) || (loginUserAdmin == 'Y')){ 
+								html += "<span class= 'replyDelete' onclick='replyDelete("+data.bestReplyList[i].rId +","+ data.pi.currentPage +");'>삭제</span><span class= 'replyModify' onclick='replyModify("+data.bestReplyList[i].rId+","+ data.pi.currentPage +")'>수정</span>"; 
+								} 
+							
+								
+								html += "</div></div></td></tr>";					
 											
 								html += "<tr style='display:none' class = 'answerTr"+ data.bestReplyList[i].rId +"'><td class= 'answerInsert' style='background: #f9f9f9;'><div style='padding-left:50px;'>";
-								html += "<div class= 'replyWriterDiv'><span class = 'replyWriterSpan' >admin</span></div>";
+								html += "<div class= 'replyWriterDiv'><span class = 'replyWriterSpan' >"+loginUserNickname+ "</span></div>";
 								html +=	"<div style='width:635px;height:65px; margin-bottom:10px;'>";
-								html +=	"<textarea class = 'content"+ data.bestReplyList[i].rId +"' style='width: 500px; height: 60px;'></textarea><button type='button' class='answerBtn2' onclick='addAnswer2("+data.bestReplyList[i].rId+");'> 입력</button></div></div></td></tr>";
+								html +=	"<textarea class = 'content"+ data.bestReplyList[i].rId +"' style='width: 500px; height: 60px;'></textarea><button type='button' class='answerBtn2' onclick='addAnswer2("+data.bestReplyList[i].rId+"," + data.pi.currentPage + ");'> 입력</button></div></div></td></tr>";
 								
 								for( var k in data.bestReplyList[i].aList){
 									html +=	"<tr><td style='background: #f9f9f9;' ><div style='padding-left:50px;'>";
-									html += "<div class= 'replyWriterDiv'><span class = 'replyWriterSpan' >"+ data.bestReplyList[i].aList[k].userNickname+ "</span><span class= 'replyDate'>"+data.bestReplyList[i].aList[k].createDate+ "</span><span class= 'replyDate answerDelete' onclick='answerDelete("+data.bestReplyList[i].aList[k].aId +","+ data.pi.currentPage+ ");'>삭제</span></div>";
+									html += "<div class= 'replyWriterDiv'><span class = 'replyWriterSpan' >"+ data.bestReplyList[i].aList[k].userNickname+ "</span><span class= 'replyDate'>"+data.bestReplyList[i].aList[k].createDate+ "</span>"; 
+									
+									if((loginUserMid == data.bestReplyList[i].aList[k].mId) || (loginUserAdmin == 'Y')){ 
+									html += "<span class= 'replyDate answerDelete' onclick='answerDelete("+data.bestReplyList[i].aList[k].aId +","+ data.pi.currentPage+ ");'>삭제</span>";
+									} 
+									
+									html += "</div>";
 									html += "<div style='width:635px; margin-bottom:10px;'>"+ data.bestReplyList[i].aList[k].aContent;
 									html += "</div></div></td></tr>";
 								} 
@@ -1399,16 +1492,28 @@
 								
 								
 								html += "<input id= 'rContent" + data.rList[i].rId + "' type='hidden' value = '"+ data.rList[i].rContent+"'>"; 
-								html += "<div class='answerDiv'><span class= 'answerBtn' onclick='addAnswer("+data.rList[i].rId+");'>답글</span><span class= 'replyDelete' onclick='replyDelete("+data.rList[i].rId +","+ data.pi.currentPage +");'>삭제</span><span class= 'replyModify'  onclick='replyModify(" +data.rList[i].rId+");'>수정</span></div></div></td></tr>";					
+								html += "<div class='answerDiv'><span class= 'answerBtn' onclick='addAnswer("+data.rList[i].rId+");'>답글</span>"; 
+								
+								if((loginUserMid == data.rList[i].mId) || (loginUserAdmin == 'Y')){ 
+								html += "<span class= 'replyDelete' onclick='replyDelete("+data.rList[i].rId +","+ data.pi.currentPage +");'>삭제</span><span class= 'replyModify'  onclick='replyModify(" +data.rList[i].rId+","+ data.pi.currentPage +");'>수정</span>"; 
+								}
+								
+								html += "</div></div></td></tr>";					
 								
 								html += "<tr style='display:none' class = 'answerTr"+ data.rList[i].rId +"'><td class= 'answerInsert' style='background: #f9f9f9;'><div style='padding-left:50px;'>";
-								html += "<div class= 'replyWriterDiv'><span class = 'replyWriterSpan' >admin</span></div>";
+								html += "<div class= 'replyWriterDiv'><span class = 'replyWriterSpan' >"+loginUserNickname+"</span></div>";
 								html +=	"<div style='width:635px;height:65px; margin-bottom:10px;'>";
-								html +=	"<textarea class = 'content"+ data.rList[i].rId +"' style='width: 500px; height: 60px;'></textarea><button type='button' class='answerBtn2' onclick='addAnswer2("+data.rList[i].rId+");'> 입력</button></div></div></td></tr>";
+								html +=	"<textarea class = 'content"+ data.rList[i].rId +"' style='width: 500px; height: 60px;'></textarea><button type='button' class='answerBtn2' onclick='addAnswer2("+data.rList[i].rId+"," + data.pi.currentPage + ");'> 입력</button></div></div></td></tr>";
 								
 								for( var k in data.rList[i].aList){
 									html +=	"<tr><td style='background: #f9f9f9;' ><div style='padding-left:50px;'>";
-									html += "<div class= 'replyWriterDiv'><span class = 'replyWriterSpan' >"+ data.rList[i].aList[k].userNickname+ "</span><span class= 'replyDate'>"+data.rList[i].aList[k].createDate+ "</span><span class= 'replyDate answerDelete' onclick='answerDelete("+data.rList[i].aList[k].aId +","+ data.pi.currentPage+ ");'>삭제</span></div>";
+									html += "<div class= 'replyWriterDiv'><span class = 'replyWriterSpan' >"+ data.rList[i].aList[k].userNickname+ "</span><span class= 'replyDate'>"+data.rList[i].aList[k].createDate+ "</span>"; 
+									
+									if((loginUserMid == data.rList[i].aList[k].mId) || (loginUserAdmin == 'Y')){ 
+									html += "<span class= 'replyDate answerDelete' onclick='answerDelete("+data.rList[i].aList[k].aId +","+ data.pi.currentPage+ ");'>삭제</span>";
+									}
+									
+									html += "</div>";
 									html += "<div style='width:635px; margin-bottom:10px;'>"+ data.rList[i].aList[k].aContent;
 									html += "</div></div></td></tr>";
 									
@@ -1486,6 +1591,13 @@
 			$("#addReplyBtn").on("click", function(){
 				var rContent=$("#rContent").val();
 				var bId =${board.bId};
+
+				if (rContent.length > 150){
+					alert(" 150 글자 미만의 댓글만 작성할 수 있습니다. ")
+					return; 
+				}
+				
+				
 				$.ajax({
 					url:"addReply.do",
 					data:{rContent:rContent, bId:bId},
@@ -1515,9 +1627,12 @@
 	
 	
 	function replyDelete(rId, currentPage){
-		console.log(rId);
-		console.log(currentPage);
 		
+		  if(confirm("댓글을 삭제하시겠습니까? ")) {
+            $(this).parent().click();
+        } else {
+            return false;
+        }
 		
 		$.ajax({
 			url:"deleteReply.do",
@@ -1539,6 +1654,14 @@
 	
 	
 	function answerDelete(aId, currentPage){
+		
+
+	if(confirm("답글을 삭제하시겠습니까? ")) {
+          $(this).parent().click();
+      } else {
+          return false;
+      }
+		
 		console.log(aId);
 		console.log(currentPage);
 	 	
@@ -1590,7 +1713,6 @@
 	
 	function addAnswer(rId){
 	
-		alert(rId);
 		var answerTr = $(".answerTr"+rId);
 		 if($(answerTr).css("display")== "none"){
 			 $(answerTr).css({"display":"block"})   
@@ -1622,34 +1744,39 @@
 	
 		
 	
-	function replyModify(rId){
+	function replyModify(rId, page){
 		content = $("#rContent" + rId).val()
 		
 		$("#modifyWriter").html('${loginUser.userNickname}');
 		$("#modifyContent").val(content);
 		$("#modifyRid").val(rId); 
+		$("#modifyPage").val(page);
 		
 		$("#myBtn").click();
 	}
 	
 	
-	function replyModify2(currentPage){
+	function replyModify2(){
 		
+		var rContent = $("#modifyContent").val();
+		var rId= $("#modifyRid").val(); 
+		var page= $("#modifyPage").val();
 		
-		rContent = $("#modifyContent").val();
-		rId= $("#modifyRid").val(); 
-		mId= $("#modifyMid").val(); 
-	
+		if (rContent.length > 150){
+			alert(" 150 글자 미만의 댓글만 작성할 수 있습니다. ")
+			return; 
+		}
+		
 	
 		
 		$.ajax({
 			url:"modifyReply.do",
-			data:{rId:rId, rContent:rContent, mId:mId},
+			data:{rId:rId, rContent:rContent},
 			type: "post",
 			success:function(data){
 				if(data=="success"){
-					getReplyList(currentPage); 
 					alert("댓글이 수정되었습니다");
+					getReplyList(page); 
 				}
 			},
 			error:function(request, status, errorData){
@@ -1670,27 +1797,6 @@
 	
 	
 	
-/* 	
-	<div id="myModal" class="modal">
-	  <!-- Modal content -->
-	  <div class="modal-content">
-	    <span class="close">&times;</span>
-			
-
-  	 	<form action="modifyReply.do" method="post">
-  	 			<span><b> 댓글 수정 </b></span><br>
-			    	<b id= modifyWriter> </b>
-			    	<textarea id= "modifyContent" value = ""> </textarea>
-			    	<input id="modifyRid"   type="hidden" value="" name = "rId">
-			    	<input id="modifyMid"  type="hidden" value="${loginUser.mid}" name ="mId">
-			    	<button class="myBtn success" type="button" onclick= "modifyReply2">댓글 수정</button>&nbsp;
-	    	</form>
-	  </div>
-</div>
-	
-	
-	
-	 */
 	
 	
 	
@@ -1715,6 +1821,9 @@
 					$tableBody = $("#rtb tbody");
 				 	$tableBody.html(""); 
 					var html = "";
+					var loginUserMid = $("#loginUserMid").val(); 
+					var loginUserAdmin =  $("#loginUserAdmin").val();		
+					var loginUserNickname=  $("#loginUserNickname").val();
 				
 					if(data.pi.currentPage == 1){
 						if(data.bestReplyList.length>0){
@@ -1737,18 +1846,33 @@
 								}
 								html += "<div class = contentDiv><span class= 'best'>BEST</span>"+ data.bestReplyList[i].rContent+"</div>";
 								
-								html += "<div class='answerDiv'><span class= 'answerBtn' onclick='addAnswer("+data.bestReplyList[i].rId+");'>답글</span><span class= 'replyDelete' onclick='replyDelete("+data.bestReplyList[i].rId +","+ data.pi.currentPage +");'>삭제</span><span class= 'replyModify'  onclick='replyModify(" +data.bestReplyList[i].rId+");'>수정</span></div></div></td></tr>";					
-											
+								
+								
 								html += "<input id= 'rContent" + data.bestReplyList[i].rId + "' type='hidden' value = '"+ data.bestReplyList[i].rContent+"'>"; 
 								
+								html += "<div class='answerDiv'><span class= 'answerBtn' onclick='addAnswer("+data.bestReplyList[i].rId+");'>답글</span>"; 
+								
+								if((loginUserMid == data.bestReplyList[i].mId) || (loginUserAdmin == 'Y')){ 
+								html += "<span class= 'replyDelete' onclick='replyDelete("+data.bestReplyList[i].rId +","+ data.pi.currentPage +");'>삭제</span><span class= 'replyModify' onclick='replyModify("+data.bestReplyList[i].rId+","+ data.pi.currentPage +")'>수정</span>"; 
+								} 
+							
+								
+								html += "</div></div></td></tr>";					
+											
 								html += "<tr style='display:none' class = 'answerTr"+ data.bestReplyList[i].rId +"'><td class= 'answerInsert' style='background: #f9f9f9;'><div style='padding-left:50px;'>";
-								html += "<div class= 'replyWriterDiv'><span class = 'replyWriterSpan' >admin</span></div>";
+								html += "<div class= 'replyWriterDiv'><span class = 'replyWriterSpan' >"+loginUserNickname+"</span></div>";
 								html +=	"<div style='width:635px;height:65px; margin-bottom:10px;'>";
-								html +=	"<textarea class = 'content"+ data.bestReplyList[i].rId +"' style='width: 500px; height: 60px;'></textarea><button type='button' class='answerBtn2' onclick='addAnswer2("+data.bestReplyList[i].rId+");'> 입력</button></div></div></td></tr>";
+								html +=	"<textarea class = 'content"+ data.bestReplyList[i].rId +"' style='width: 500px; height: 60px;'></textarea><button type='button' class='answerBtn2' onclick='addAnswer2("+data.bestReplyList[i].rId+"," + data.pi.currentPage + ");'> 입력</button></div></div></td></tr>";
 								
 								for( var k in data.bestReplyList[i].aList){
 									html +=	"<tr><td style='background: #f9f9f9;' ><div style='padding-left:50px;'>";
-									html += "<div class= 'replyWriterDiv'><span class = 'replyWriterSpan' >"+ data.bestReplyList[i].aList[k].userNickname+ "</span><span class= 'replyDate'>"+data.bestReplyList[i].aList[k].createDate+ "</span><span class= 'replyDate answerDelete' onclick='answerDelete("+data.bestReplyList[i].aList[k].aId +","+ data.pi.currentPage+ ");'>삭제</span></div>";
+									html += "<div class= 'replyWriterDiv'><span class = 'replyWriterSpan' >"+ data.bestReplyList[i].aList[k].userNickname+ "</span><span class= 'replyDate'>"+data.bestReplyList[i].aList[k].createDate+ "</span>"; 
+									
+									if((loginUserMid == data.bestReplyList[i].aList[k].mId) || (loginUserAdmin == 'Y')){ 
+									html += "<span class= 'replyDate answerDelete' onclick='answerDelete("+data.bestReplyList[i].aList[k].aId +","+ data.pi.currentPage+ ");'>삭제</span>";
+									} 
+									
+									html += "</div>";
 									html += "<div style='width:635px; margin-bottom:10px;'>"+ data.bestReplyList[i].aList[k].aContent;
 									html += "</div></div></td></tr>";
 								} 
@@ -1791,17 +1915,31 @@
 									html += "<span class='replyGood' onclick='replyGood("+data.rList[i].rId +","+ data.pi.currentPage +");'><i class='far fa-thumbs-up'></i>"+ data.rList[i].rGood +"</span></div>";
 								}
 								html += "<div class = contentDiv>"+ data.rList[i].rContent+"</div>";
-								html += "<input id= 'rContent" + data.rList[i].rId + "' type='hidden' value = '"+ data.rList[i].rContent+"'>";
-								html += "<div class='answerDiv'><span class= 'answerBtn' onclick='addAnswer("+data.rList[i].rId+");'>답글</span><span class= 'replyDelete' onclick='replyDelete("+data.rList[i].rId +","+ data.pi.currentPage +");'>삭제</span><span class= 'replyModify'  onclick='replyModify(" +data.rList[i].rId+");'>수정</span></div></div></td></tr>";					
-											
+								
+								
+								html += "<input id= 'rContent" + data.rList[i].rId + "' type='hidden' value = '"+ data.rList[i].rContent+"'>"; 
+								html += "<div class='answerDiv'><span class= 'answerBtn' onclick='addAnswer("+data.rList[i].rId+");'>답글</span>"; 
+								
+								if((loginUserMid == data.rList[i].mId) || (loginUserAdmin == 'Y')){ 
+								html += "<span class= 'replyDelete' onclick='replyDelete("+data.rList[i].rId +","+ data.pi.currentPage +");'>삭제</span><span class= 'replyModify'  onclick='replyModify(" +data.rList[i].rId+","+ data.pi.currentPage +");'>수정</span>"; 
+								}
+								
+								html += "</div></div></td></tr>";					
+								
 								html += "<tr style='display:none' class = 'answerTr"+ data.rList[i].rId +"'><td class= 'answerInsert' style='background: #f9f9f9;'><div style='padding-left:50px;'>";
-								html += "<div class= 'replyWriterDiv'><span class = 'replyWriterSpan' >admin</span></div>";
+								html += "<div class= 'replyWriterDiv'><span class = 'replyWriterSpan' >"+loginUserNickname+"</span></div>";
 								html +=	"<div style='width:635px;height:65px; margin-bottom:10px;'>";
-								html +=	"<textarea class = 'content"+ data.rList[i].rId +"' style='width: 500px; height: 60px;'></textarea><button type='button' class='answerBtn2' onclick='addAnswer2("+data.rList[i].rId+");'> 입력</button></div></div></td></tr>";
+								html +=	"<textarea class = 'content"+ data.rList[i].rId +"' style='width: 500px; height: 60px;'></textarea><button type='button' class='answerBtn2' onclick='addAnswer2("+data.rList[i].rId+"," + data.pi.currentPage + ");'> 입력</button></div></div></td></tr>";
 								
 								for( var k in data.rList[i].aList){
 									html +=	"<tr><td style='background: #f9f9f9;' ><div style='padding-left:50px;'>";
-									html += "<div class= 'replyWriterDiv'><span class = 'replyWriterSpan' >"+ data.rList[i].aList[k].userNickname+ "</span><span class= 'replyDate'>"+data.rList[i].aList[k].createDate+ "</span><span class= 'replyDate answerDelete' onclick='answerDelete("+data.rList[i].aList[k].aId +","+ data.pi.currentPage+ ");'>삭제</span></div>";
+									html += "<div class= 'replyWriterDiv'><span class = 'replyWriterSpan' >"+ data.rList[i].aList[k].userNickname+ "</span><span class= 'replyDate'>"+data.rList[i].aList[k].createDate+ "</span>"; 
+									
+									if((loginUserMid == data.rList[i].aList[k].mId) || (loginUserAdmin == 'Y')){ 
+									html += "<span class= 'replyDate answerDelete' onclick='answerDelete("+data.rList[i].aList[k].aId +","+ data.pi.currentPage+ ");'>삭제</span>";
+									}
+									
+									html += "</div>";
 									html += "<div style='width:635px; margin-bottom:10px;'>"+ data.rList[i].aList[k].aContent;
 									html += "</div></div></td></tr>";
 									
@@ -1855,7 +1993,7 @@
 					}else{	// 댓글이 없으면
 					
 					}
-					
+				
 				},
 				error:function(request, status, errorData){
 					alert("error code: " + request.status + "\n"
