@@ -5,34 +5,41 @@
 		<setting name="jdbcTypeForNull" value= "NULL"/>
 	</settings>
 
-	<!-- 클래스들을 미리 만들어 놔야 별칭 지정 한것에서 에러 발생 하지 않는다. -->	
-	<typeAliases>
-			<typeAlias type="com.kh.awesome.member.model.vo.Member" alias="Member"/>
-			<typeAlias type="com.kh.awesome.board.model.vo.Board" alias="Board"/>
-			<typeAlias type="com.kh.awesome.board.model.vo.Reply" alias="Reply"/>
-			<typeAlias type="com.kh.awesome.board.model.vo.Attachment" alias="Attachment"/>
-			<typeAlias type="com.kh.awesome.board.model.vo.BGood" alias="BGood"/>
-			<typeAlias type="com.kh.awesome.admin.model.vo.Admin" alias="Admin"/>
-			<typeAlias type="com.kh.awesome.shop.model.vo.SellReply" alias="SellReply"/>
-			<typeAlias type="com.kh.awesome.admin.model.vo.Goods" alias="Goods"/>
-			<typeAlias type="com.kh.awesome.order.model.vo.Order" alias="Order"/>
-			<typeAlias type="com.kh.awesome.admin.model.vo.Category" 	alias="Category"/>
-			<typeAlias type="com.kh.awesome.cart.model.vo.Cart" 	alias="Cart"/>
-			<typeAlias type="com.kh.awesome.cart.model.vo.CartList" 	alias="CartList"/>
-			<typeAlias type="com.kh.awesome.cart.model.vo.Buyer" 	alias="Buyer"/>
-	</typeAliases>
+   <!-- 클래스들을 미리 만들어 놔야 별칭 지정 한것에서 에러 발생 하지 않는다. -->   
+  <typeAliases>
+         <typeAlias type="com.kh.awesome.member.model.vo.Member" alias="Member"/>
+         
+         <typeAlias type="com.kh.awesome.board.model.vo.Board" alias="Board"/>
+         <typeAlias type="com.kh.awesome.board.model.vo.Reply" alias="Reply"/>
+         <typeAlias type="com.kh.awesome.board.model.vo.Answer" alias="Answer"/>
+         <typeAlias type="com.kh.awesome.board.model.vo.Attachment" alias="Attachment"/>
+         <typeAlias type="com.kh.awesome.board.model.vo.BGood" alias="BGood"/>
+         <typeAlias type="com.kh.awesome.board.model.vo.RGood" alias="RGood"/>
+         
+         <typeAlias type="com.kh.awesome.shop.model.vo.SellReply" alias="SellReply"/>
+         
+         <typeAlias type="com.kh.awesome.order.model.vo.OrderSearch" alias="OrderSearch"/>
+         <typeAlias type="com.kh.awesome.order.model.vo.Order" alias="Order"/>
+         
+         <typeAlias type="com.kh.awesome.admin.model.vo.Goods" alias="Goods"/>
+         <typeAlias type="com.kh.awesome.admin.model.vo.Admin" alias="Admin"/>
+         <typeAlias type="com.kh.awesome.admin.model.vo.Category" alias="Category"/>
 
- 	<!-- sql문들을 지닌 mapper.xml들을 등록 -->
-	<mappers>
-		<mapper resource = "mappers/member-mapper.xml"/>
-<!-- 		<mapper resource = "mappers/notice-mapper.xml"/> -->
-		<mapper resource = "mappers/board-mapper.xml"/>
-		<mapper resource="mappers/admin-mapper.xml"/>
-		<mapper resource="mappers/shop-mapper.xml"/>
-		<mapper resource="mappers/order-mapper.xml"/>
-		<mapper resource="mappers/cart-mapper.xml"/>
-	</mappers>
-	
-	<!-- 우선 member-mapper.xml만 만들고 로그인 부터 하자 -->
+		<typeAlias type="com.kh.awesome.cart.model.vo.CartList"   alias="CartList"/>
+		<typeAlias type="com.kh.awesome.cart.model.vo.Cart"   alias="Cart"/>
+  		<typeAlias type="com.kh.awesome.cart.model.vo.Buyer"   alias="Buyer"/>
+   </typeAliases>
+
+    <!-- sql문들을 지닌 mapper.xml들을 등록 -->
+   <mappers>
+      <mapper resource = "mappers/member-mapper.xml"/>
+      <mapper resource = "mappers/board-mapper.xml"/>
+      <mapper resource="mappers/admin-mapper.xml"/>
+      <mapper resource="mappers/order-mapper.xml"/>
+      <mapper resource="mappers/shop-mapper.xml"/>
+      <mapper resource="mappers/cart-mapper.xml"/>
+   </mappers>
+   
+   <!-- 우선 member-mapper.xml만 만들고 로그인 부터 하자 -->
 
 </configuration>

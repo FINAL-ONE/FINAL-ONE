@@ -32,5 +32,10 @@ public class CartServiceImpl implements CartService{
 		return cDao.buyer(mId);
 	}
 
+	@Override
+	public int CartInsert(Cart c) {
+		return cDao.CartInsert(c);
+	}
+
 
 }

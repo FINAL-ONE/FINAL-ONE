@@ -33,5 +33,9 @@ public class CartDao {
 		return (ArrayList)sqlSession.selectOne("cartMapper.buyerinfo", mId);
 	}
 
+	public int CartInsert(Cart c) {
+		return sqlSession.insert("cartMapper.CartInsert", c);
+	}
+
 
 }

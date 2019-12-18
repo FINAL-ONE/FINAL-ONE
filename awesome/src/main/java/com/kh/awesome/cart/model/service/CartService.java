@@ -29,6 +29,8 @@ public interface CartService {
 
 
 	public ArrayList<Buyer> buyer(int mId);
+
+	public int CartInsert(Cart c);
 	
 	
 	

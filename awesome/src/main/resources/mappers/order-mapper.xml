@@ -29,13 +29,14 @@
 	</resultMap>
 
 	<select id="selectOrder" resultMap="orderResultSet">
-        SELECT OID, O.GID GID,GOODS_NAME, GOODS_PRICE, MID, O.ORDER_NUM ORDER_NUM, ORDER_COUNT, ORDER_DATE, ORDER_STATUS, ROWCOUNT 
+        SELECT OID, O.GID GID,GOODS_NAME, GOODS_PRICE, O.MID MID, O.ORDER_NUM ORDER_NUM, ORDER_COUNT, ORDER_DATE, ORDER_STATUS, ROWCOUNT, GOODS_TITLE, GOODS_FILE_PATH
 		FROM ORDER_LIST O 
 		JOIN (SELECT ORDER_NUM, COUNT(*) ROWCOUNT
 		     FROM ORDER_LIST
 		     GROUP BY ORDER_NUM) R ON (O.ORDER_NUM = R.ORDER_NUM)
 		JOIN GOODS G ON (O.GID=G.GID)
-		WHERE MID= #{mId}
+        JOIN SELL_GOODS S ON (S.GID = G.GID)
+		WHERE O.MID= #{mId}
 		ORDER BY O.ORDER_NUM DESC
 	</select>
 	
@@ -65,11 +66,52 @@
 		WHERE M.MID = O.MID AND G.GID=O.GID AND P.ORDER_NUM=O.ORDER_NUM AND O.ORDER_NUM=#{orderNum}
 	</select>
 	<update id="orderCancel" parameterType="Order">
-		UPDATE ORDER_LIST
+		UPDATE ORD	<select id="getOrderListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM ORDER_LIST
+		WHERE MID=#{mId}
+	</select>
+	<select id="getOrderSearch" resultMap="orderResultSet">
+		SELECT OID, O.GID GID,GOODS_NAME, GOODS_PRICE, O.MID MID, O.ORDER_NUM ORDER_NUM, ORDER_COUNT, ORDER_DATE, ORDER_STATUS, ROWCOUNT,GOODS_TITLE, GOODS_FILE_PATH
+		FROM ORDER_LIST O 
+		JOIN (SELECT ORDER_NUM, COUNT(*) ROWCOUNT
+		     FROM ORDER_LIST
+		     GROUP BY ORDER_NUM) R ON (O.ORDER_NUM = R.ORDER_NUM)
+		JOIN GOODS G ON (O.GID=G.GID)
+        JOIN SELL_GOODS S ON (S.GID = G.GID)
+		WHERE O.MID= #{mid} AND ORDER_DATE BETWEEN #{date1} AND  #{date2}
+		ORDER BY O.ORDER_NUM DESC
+	</select>
+		<select id="getOrderSearchCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM ORDER_LIST
+		WHERE MID= #{mid} AND ORDER_DATE BETWEEN #{date1} AND #{date2}
+	</select>
+_LIST
 		SET ORDER_STATUS='X'
 		WHERE OID=#{number}
 	</update>
-
+	<select id="getOrderListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM ORDER_LIST
+		WHERE MID=#{mId}
+	</select>
+	<select id="getOrderSearch" resultMap="orderResultSet">
+		SELECT OID, O.GID GID,GOODS_NAME, GOODS_PRICE, O.MID MID, O.ORDER_NUM ORDER_NUM, ORDER_COUNT, ORDER_DATE, ORDER_STATUS, ROWCOUNT,GOODS_TITLE, GOODS_FILE_PATH
+		FROM ORDER_LIST O 
+		JOIN (SELECT ORDER_NUM, COUNT(*) ROWCOUNT
+		     FROM ORDER_LIST
+		     GROUP BY ORDER_NUM) R ON (O.ORDER_NUM = R.ORDER_NUM)
+		JOIN GOODS G ON (O.GID=G.GID)
+        JOIN SELL_GOODS S ON (S.GID = G.GID)
+		WHERE O.MID= #{mid} AND ORDER_DATE BETWEEN #{date1} AND  #{date2}
+		ORDER BY O.ORDER_NUM DESC
+	</select>
+		<select id="getOrderSearchCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM ORDER_LIST
+		WHERE MID= #{mid} AND ORDER_DATE BETWEEN #{date1} AND #{date2}
+	</select>
 
   <!--========================================= INSERT  =========================================-->	
 	
