@@ -20,6 +20,7 @@
 	<!DOCTYPE html>
 	<html>
 	<head>
+	<link rel="shortcut icon" href="${contextPath}/resources/images/favicon.ico" type="image/x-icon">
 	<meta charset="UTF-8">
 		<title>Awesome 자유게시판</title>
 		<!-- include libraries(jQuery, bootstrap) -->

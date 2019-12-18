@@ -104,4 +104,6 @@ public class Pagination {
 		// selectBoardListServlet으로 다시 ㄱㄱ씽~!!
 	}
 	
+
+	
 }

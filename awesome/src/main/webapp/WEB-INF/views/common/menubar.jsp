@@ -1,9 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%> 
          <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="shortcut icon" href="${contextPath}/resources/images/favicon.ico" type="image/x-icon">
 <meta charset="UTF-8">
   <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:400,700,800&display=swap&subset=korean" rel="stylesheet">
 <title>Insert title here</title>
@@ -225,7 +227,7 @@
 <div class="menubar2 myPageMenubar myPageMenu" style="display:none;">
    <div class= "myPageNav">
       <span class= menu2 style="left: 637px;" onclick= "location.href='myinfo.do'">내정보보기</span>
-      <!-- <span class= menu2 style="left: 652px;" onclick= "location.href=#">장바구니</span> -->
+	  <span class= menu2 style="left: 652px;" onclick= "location.href='cartList.do'">장바구니</span>
       <span class= menu2 style="left: 667px;" onclick= "location.href='orderView.do'" >주문조회</span>
       <span class= menu2 style="left: 682px;">다이어트 일지</span>
    </div>

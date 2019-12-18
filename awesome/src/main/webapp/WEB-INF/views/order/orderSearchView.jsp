@@ -11,6 +11,8 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>  
 <script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
 <title>Insert title here</title>
+<link rel="shortcut icon" href="${contextPath}/resources/images/favicon.ico" type="image/x-icon">
+
 </head>
 <style>
 .pagingArea button {
@@ -249,7 +251,7 @@ input::placeholder {
 
 			</table>
 			<br><br><div align="right">
-					<a id=back onclick="location.href='orderview.do'">목록으로 돌아가기</a>
+					<a id=back onclick="location.href='orderView.do'">목록으로 돌아가기</a>
 					</div>
 					<!-- 페이징처리 하쟈-->
 			 <br><br>

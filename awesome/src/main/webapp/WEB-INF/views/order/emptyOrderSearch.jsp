@@ -8,6 +8,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="shortcut icon" href="${contextPath}/resources/images/favicon.ico" type="image/x-icon">
 <meta charset="UTF-8">
 <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>  
@@ -189,7 +190,7 @@ input::placeholder {
 		<h2>주문할 데이터가 없습니다.</h2>
 
 			<br>
-			<a id=back onclick="location.href='orderview.do'">목록으로 돌아가기</a>
+			<a id=back onclick="location.href='orderView.do'">목록으로 돌아가기</a>
 			<br><br><br>
 		</div>
 		</div>

@@ -18,7 +18,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
-import com.kh.awesome.board.model.vo.Answer;
 import com.kh.awesome.board.model.vo.PageInfo;
 import com.kh.awesome.common.Pagination;
 import com.kh.awesome.member.model.vo.Member;
@@ -31,6 +30,7 @@ public class OrderController {
 
 	@Autowired
 	OrderService oService;
+	
 	@RequestMapping("orderView.do")
 	public ModelAndView abc(ModelAndView mv, @RequestParam(value = "page", required = false) Integer page,
 			HttpServletRequest request, HttpSession session) {
@@ -46,6 +46,8 @@ public class OrderController {
 		int listCount = oService.getOrderListCount(mId);
 		
 		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
+		
+		
 		session = request.getSession(true);
 		
 		ArrayList<Order> list = oService.selectList(mId,pi); 
@@ -54,7 +56,7 @@ public class OrderController {
 		System.out.println(pi);
 		System.out.println(list);
 		
-		 if(list != null && !list.isEmpty()) {
+		 if(list != null && list.size()>0) {
 			mv.addObject("list", list);
 			mv.addObject("pi", pi);
 		 } 
@@ -194,7 +196,7 @@ public class OrderController {
 		}else {
 			mv.setViewName("order/emptyOrderSearch");
 		}
-		System.out.println("searchController2 : " + list);
+		//System.out.println("searchController2 : " + list);
 		return mv;
 	}
 	
@@ -232,8 +234,13 @@ public class OrderController {
 			mv.addObject("list", list);
 			mv.addObject("pi", pi);
 			mv.setViewName("order/orderSearchView");
+		}else {
+			
+			mv.setViewName("order/emptyOrderSearch");
+		
 		}
-		System.out.println("searchController2 : " + list);
+		//System.out.println("searchController2 : " + list);
+		
 		return mv;
 	}
 

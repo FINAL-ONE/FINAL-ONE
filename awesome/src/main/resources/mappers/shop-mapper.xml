@@ -21,7 +21,7 @@
 
 	
 	
-	<resultMap type="Cart" id ="CartResultSet">
+	<!-- <resultMap type="Cart2" id ="CartResultSet">
 		<result property="mId" column="MID"/>
 		
 		<result property ="gId" column ="GID"/>
@@ -30,7 +30,7 @@
 		<result property ="goodsPrice" column ="GOODS_PRICE"/>
 		<result property ="count" column ="COUNT"/>
 		
-	</resultMap>
+	</resultMap> -->
 	
 	
 	
@@ -54,12 +54,12 @@
 		AND STATUS='Y'
 	</select>
 
-	<insert id="CartInsert" parameterType="Cart">
+	<!-- <insert id="CartInsert" parameterType="Cart2">
 		INSERT INTO CART
 		VALUES(#{mId}, #{gId}, #{cateCd}, #{goodsTitle}, #{goodsPrice}, #{count}
 		)
 	</insert>
 
-
+ -->
 	
 </mapper>

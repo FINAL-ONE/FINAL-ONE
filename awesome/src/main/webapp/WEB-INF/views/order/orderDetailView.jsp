@@ -6,6 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="shortcut icon" href="${contextPath}/resources/images/favicon.ico" type="image/x-icon">
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -333,7 +334,7 @@ height:0px;
 		</table>
 		<br>
 		<div align="right">
-  			<a onclick="location.href='orderview.do'" class="button" id="back">주문조회 페이지로 이동</a>
+  			<a onclick="location.href='orderView.do'" class="button" id="back">주문조회 페이지로 이동</a>
 		</div>
 		<!-- <button onclick="location.href='orderview.do'" id="backto">주문조회 페이지로 이동</button> -->
 		<br>

@@ -8,11 +8,13 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="shortcut icon" href="${contextPath}/resources/images/favicon.ico" type="image/x-icon">
 <meta charset="UTF-8">
 <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>  
 <script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
 <title>Insert title here</title>
+
 </head>
 <style>
 .pagingArea button {
@@ -254,7 +256,7 @@ input::placeholder {
 			 <br>
       <div class="pagingArea" align="center">
          <!-- 맨 처음으로(<<) -->
-         <button onclick="location.href='orderview.do?page=1'"> << </button>
+         <button onclick="location.href='orderView.do?page=1'"> << </button>
          
          <!-- 이전 페이지로(<) -->
         <c:if test="${pi.currentPage <= 1 }">
@@ -262,7 +264,7 @@ input::placeholder {
         </c:if>
          <c:if test="${pi.currentPage > 1 }">
          
-            <button onclick="location.href='orderview.do?page=${pi.currentPage -1}'"> < </button>
+            <button onclick="location.href='orderView.do?page=${pi.currentPage -1}'"> < </button>
         </c:if>
          
          <!-- 10개의 페이지 목록 -->
@@ -271,7 +273,7 @@ input::placeholder {
                <button style="background:#ec434a;color:white" disabled >${p}</button>
            </c:if>
             <c:if test="${pi.currentPage != p }">
-               <button onclick="location.href='orderview.do?page=${p}'">${p}</button>
+               <button onclick="location.href='orderView.do?page=${p}'">${p}</button>
             </c:if>
        </c:forEach>
 	 				
@@ -279,11 +281,11 @@ input::placeholder {
             <button disabled> > </button>
           </c:if>
           <c:if test="${pi.currentPage < pi.maxPage }">
-            <button onclick="location.href='orderview.do?page=${pi.currentPage + 1}'"> > </button>
+            <button onclick="location.href='orderView.do?page=${pi.currentPage + 1}'"> > </button>
           </c:if>
          
          <!-- 맨 끝으로(>>) -->
-         <button onclick="location.href='orderview.do?page=${pi.maxPage}'"> >> </button>
+         <button onclick="location.href='orderView.do?page=${pi.maxPage}'"> >> </button>
             </div>
 			
 			<div>
