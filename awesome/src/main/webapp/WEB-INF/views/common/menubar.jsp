@@ -9,6 +9,7 @@
 <meta charset="UTF-8">
   <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:400,700,800&display=swap&subset=korean" rel="stylesheet">
 <title>Insert title here</title>
+
 <style>
    .menubar1{
       /*border:1px solid black;   */
@@ -118,7 +119,7 @@
     border-left: 6px solid transparent;
     border-bottom: 8px solid #fa4a4a;
     top: -41px;
-    left: 123px;
+    left: -55px;
 }
 
  .myPageNav:after {
@@ -158,6 +159,15 @@
 <body>
 
 
+<c:if test = "${!empty sessionScope.loginUser}">
+	<input id="loginUserMid"  type="hidden" value = "${loginUser.mid}"/> 
+</c:if>
+<c:if test = "${empty sessionScope.loginUser}">
+	<input id="loginUserMid"  type="hidden" value = "0"/> 
+</c:if>
+
+
+
 <c:set var="contextPath" value="${pageContext.servletContext.contextPath }" scope="application"/>
 <div style= "height: 25px; width: 100%; background: #EEEEEE; margin-bottom:10px;">
    <c:if test="${empty sessionScope.loginUser }">
@@ -185,7 +195,7 @@
 <div class= menubar1>
    <div class= nav>    
       <div class= "menu normalMenu">소개</div>
-      <div class= "menu normalMenu">공지사항</div>
+      <div class= "menu normalMenu" onclick= "goNboardList();">공지사항</div> 
       <div class= "menu communityMenu">커뮤니티</div>
       <div class =logoImg><img src="${contextPath}/resources/images/logo.png" style="height: 89px; vertical-align: middle" onclick= "location.href='home.do'"></div>
        <div class= "menu normalMenu" onclick="location.href='bmicalc.do'">BMI 계산기</div>
@@ -204,22 +214,17 @@
    </div>
 </div> 
 
-
-
-
-<!-- <div class="menubar2" style="display:block;">
-   
-</div>
- -->
-
 <div class="menubar2 normalMenubar">
    
 </div>   
  
 <div class="menubar2 communityMenubar communityMenu" style="display:none;">
    <div class= "conmmunityNav">
-      <span class= menu2 style="left: 285px;" onclick= "location.href='fBoardListView.do'">자유게시판</span>
-      <span class= menu2 style="left: 315px;">Before & After </span>
+   	  <span class= menu2 style="left: 215px;" onclick= "goBoardList(10);">전체</span>
+      <span class= menu2 style="left: 245px;" onclick= "goBoardList(2);">자유게시판</span>
+      <span class= menu2 style="left: 275px;" onclick= "goBoardList(3);">팁&노하우</span>
+      <span class= menu2 style="left: 305px;" onclick= "goBoardList(4);">비포&애프터</span>
+      <span class= menu2 style="left: 335px;" onclick= "goBoardList(5);">자극 사진</span>
    </div>
 </div>   
    
@@ -250,6 +255,31 @@
 </body>
 
 <script>
+
+function goBoardList(category){
+	
+	if($("#loginUserMid").val() >0){
+		location.href='boardListView.do?category='+category
+			
+	}else{
+		alert("로그인을 해야지만 이용하실 수 있습니다.")
+		location.href='loginView.do'	
+	}
+	
+	
+}
+
+function goNboardList(){
+	if($("#loginUserMid").val() >0){
+		location.href='boardListView.do?category=1'
+	}else{
+		alert("로그인을 해야지만 이용하실 수 있습니다.")
+		location.href='loginView.do'	
+	}
+}
+
+
+
 
 function goOrderView(){
 	alert("fsdf");

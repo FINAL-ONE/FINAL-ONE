@@ -24,13 +24,13 @@ public class BoardServiceImpl implements BoardService {
 	BoardDao bDao;
 	
 	@Override
-	public int getFboardListCount() {
-		return bDao.getFboardListCount();
+	public int getBoardListCount(int category) {
+		return bDao.getBoardListCount(category);
 	}
 
 	@Override
-	public ArrayList<Board> selectFList(PageInfo pi) {
-		return bDao. selectFList(pi);
+	public ArrayList<Board> selectList(PageInfo pi, int category) {
+		return bDao. selectList(pi, category);
 	}
 
 	@Override
@@ -44,8 +44,8 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public Board selectBoard(int bId) {
-		return bDao.selectBoard(bId);
+	public Board selectBoard(Board b) {
+		return bDao.selectBoard(b);
 	}
 
 	@Override
@@ -119,8 +119,8 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public Board selectBoardAsRnum(int rNum) {
-		return bDao.selectBoardAsRnum(rNum); 
+	public Board selectBoardAsRnum(Board b) {
+		return bDao.selectBoardAsRnum(b); 
 	}
 
 	@Override
@@ -186,6 +186,16 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public int modifyReply(Reply r) {
 		return bDao.modifyReply(r);
+	}
+
+	@Override
+	public ArrayList<Board> selectBestList() {
+		return bDao.selectBestList();
+	}
+
+	@Override
+	public ArrayList<Board> selectNoticeList() {
+		return bDao.selectNoticeList();
 	}
 
 
