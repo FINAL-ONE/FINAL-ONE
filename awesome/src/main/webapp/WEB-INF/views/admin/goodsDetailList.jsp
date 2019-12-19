@@ -53,23 +53,8 @@
 	<div class = "outer">
 		<form action="goodsUpdate.do" method="post" enctype="Multipart/form-data" id="goodsUpdateForm">
 			<table class="type02" align="center"><!--  style="border-spacing:60px" -->	
-			
-			<!-- <input type="hidden" name="lidDuplicateCheck" id="lidDuplicateCheck" value="0">
-			<input type="hidden" name="midDuplicateCheck" id="midDuplicateCheck" value="0">
-			<input type="hidden" name="sidDuplicateCheck" id="sidDuplicateCheck" value="0"> -->
-			
-					<!-- <th>카테고리 코드  <span style = "color:red; font-size : 1.5em;">*</span> </th> -->
-					<%-- <td><input id="selectlclCd" type="hidden" width="100%" name ="lclCd" value="${lclCd}"/></td> --%>
-					<!-- <th>대 코드  <span style = "color:red; font-size : 1.5em;">*</span> </th> -->
-					<%-- <td><input id="selectmclCd" type="hidden"  width="100%" name ="mclCd" value="${mclCd}"/></td> --%>
-					<!-- <th>중 코드  <span style = "color:red; font-size : 1.5em;">*</span> </th> --> 
-					<%-- <td><input id="selectsclCd" type="hidden"  width="100%" name ="sclCd" value="${sclCd}"/></td> --%>
-					<!-- <th>소 코드  <span style = "color:red; font-size : 1.5em;">*</span> </th> -->
-					<td><input id="selectcateCd" type="hidden"  width="100%" name ="cateCd" value="${cateCd}" /></td>
-				<tr>
-					<td><input id="gId" width="100%" type="hidden" name ="gId" value="${goods.gId}"/></td><!-- type="hidden"  -->
-				</tr>
-				
+				<td><input id="selectcateCd" type="hidden"  width="100%" name ="cateCd" value="${cateCd}" /></td>
+				<td><input id="gId" width="100%" type="hidden" name ="gId" value="${goods.gId}"/></td><!-- type="hidden"  -->
 				<tr>
 		            <th>카테고리<span style = "color:red; font-size : 1.5em;">*</span> </th>
 		            <td>	    
@@ -270,17 +255,9 @@
 									}		
 
  									for(var i=0; i<data.list.length; i++){
-										//sizeCd = data.list[i].cateCd;
-										//sizeNm = data.list[i].cateNm;
-										//$("#cateCd").val(sizeCd);
-										//$("#goodsName").val(sizeNm);
 										sizeLCd = data.list[i].lclCd;
 										sizeMCd = data.list[i].mclCd;
 										sizeSCd = data.list[i].sclCd;
-										
-										$("#selectlclCd").val(sizeLCd);
-										$("#selectmclCd").val(sizeMCd);
-										$("#selectsclCd").val(sizeSCd);
 									}	 
 									
 								},
@@ -355,18 +332,9 @@
 								$("#nclCd").append("<option value='" + data.list[i].cateCd + "' + cost_value='"+data.list[i].cateNm+"'>" + data.list[i].cateNm +'</option>');
 							}		
  							for(var i=0; i<1; i++){
-								//sizeCd = data.list[i].cateCd;
-								//sizeNm = data.list[i].cateNm;
-								//$("#cateCd").val(sizeCd);
-								//$("#goodsName").val(sizeNm);
 								sizeLCd = data.list[i].lclCd;
 								sizeMCd = data.list[i].mclCd;
 								sizeSCd = data.list[i].sclCd;
-								
-								$("#selectlclCd").val(sizeLCd);
-								$("#selectmclCd").val(sizeMCd);
-								$("#selectsclCd").val(sizeSCd);
-								
 							} 
 						},
 						error:function(request, status, errorData){
@@ -414,17 +382,9 @@
 						$("#nclCd").append("<option value='" + data.list[i].cateCd + "' + cost_value='"+data.list[i].cateNm+"'>" + data.list[i].cateNm +'</option>');
 					}			
  					for(var i=0; i<1; i++){
-					//	sizeCd = data.list[i].cateCd;
-					//	sizeNm = data.list[i].cateNm;
-					//	$("#cateCd").val(sizeCd);
-					//	$("#goodsName").val(sizeNm);
 						sizeLCd = data.list[i].lclCd;
 						sizeMCd = data.list[i].mclCd;
 						sizeSCd = data.list[i].sclCd;
-						
-						$("#selectlclCd").val(sizeLCd);
-						$("#selectmclCd").val(sizeMCd);
-						$("#selectsclCd").val(sizeSCd);
 					} 
 
 				},

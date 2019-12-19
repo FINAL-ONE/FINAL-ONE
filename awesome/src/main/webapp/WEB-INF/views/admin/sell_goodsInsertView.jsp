@@ -26,6 +26,21 @@
 	span.ok{color:green;}
 	span.error{color:red;}
 
+	.ScrollButton {
+	  position: fixed;   /* 버튼의 위치 고정 */
+	  right: 10px;       /* x 위치 입력 */
+	  cursor: pointer;   /* 호버링 했을 때 커서 모양 변경 */
+	  z-index: 10;       /* 다른 태그에 가려지지 않게 우선순위 변경 */
+	  display: none;     /* 스크롤 위치에 상관없이 보이게 하려면 생략 */
+	}
+	/* 두 태그에 각각 y 위치 입력 */
+	#TopButton {
+	  bottom: 108px;        
+	}
+	#BottomButton {
+	  bottom: 75px;
+	}
+
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
@@ -50,14 +65,47 @@
 	<br><br>
 	<form action="sellgoodsInsert.do" method="post" enctype="Multipart/form-data" id="sellgoodsInsertForm">
 		<table class="type02" align="center">	
+		
+		
+		<input id="mId" type="hidden" width="100%" name ="mId" readonly value="${sessionScope.loginUser.mid }"/>
+		
+		
 			<tr>
 				<td><input id="cateCd" type="hidden" width="100%" name ="cateCd" readonly /></td>
 				<td><input id="gId" type="hidden" width="100%" name ="gId" readonly /></td>
 			<tr>
 				<th>상품 제목  <span style = "color:red; font-size : 1.5em;">*</span> </th>
-				<td><input id="goodsTitle" type="text" name ="goodsTitle" style="height:20px;"></td>
+				<td><input id="goodsTitle" type="text" name ="goodsTitle" style="height:20px; width:100%;"></td>
 			</tr>
 			<tr>
+	            <th> 상품 선택  <span style = "color:red; font-size : 1.5em;">*</span> </th>
+	            <td>
+					<input type="text" id="goodsName" name="goodsName" placeholder="선택하세요." list="myinter"  style="margin-bottom: 15px"/>   
+					<datalist id="myinter" name="myinter">
+						<select id="selectBox" name="selectBox">
+							<c:forEach var="g" items="${glist}">
+								<option value="${g.goodsName}">${g.goodsName}</option>
+							</c:forEach>
+						</select>
+					</datalist>
+					<label style="margin-left: 100px">상품 가격</label>  <span style = "color:red; font-size : 1.5em;">*</span>
+					<input id="goodsPrice" type="text" name ="goodsPrice" style="height:20px;" numberOnly>
+					<label style="margin-left: 100px">상품 수량 </label> <span style = "color:red; font-size : 1.5em;">*</span>
+					<input id="count" type="text" name ="count" style="height:20px;" numberOnly>
+				</td>
+			</tr>
+			<tr>
+				<th></th>
+				<td>
+					<!-- <span class="guide ok">이 상품명은 사용 가능합니다.</span> -->
+					<span class="guide error">이 상품은 사용할수 없습니다.</span>
+					<input type="hidden" name="idDuplicateCheck" id="idDuplicateCheck" value="0">
+				</td>
+			</tr>
+
+			
+			
+<%-- 			<tr>
 	            <th> 상품 선택  <span style = "color:red; font-size : 1.5em;">*</span> </th>
 	            <td>
 					<input type="text" id="goodsName" name="goodsName" placeholder="선택하세요." list="myinter" />   
@@ -68,6 +116,7 @@
 							</c:forEach>
 						</select>
 					</datalist>
+					
 				</td>
 			</tr>
 			<tr>
@@ -85,7 +134,9 @@
 			<tr>
 				<th>상품 수량  <span style = "color:red; font-size : 1.5em;">*</span> </th>
 				<td><input id="count" type="text" name ="count" style="height:20px;" numberOnly></td>
-			</tr>
+			</tr> --%>
+			
+			
 			<tr>
 				<th>상품 내용 <span style = "color:red; font-size : 1.5em;">*</span></th>
 					<td><textarea id ="summernote" name="goodsContent" rows="10" cols ="81" size ="resize:none" required></textarea>
@@ -100,7 +151,7 @@
 					</div>
 				</td>
 			</tr>
-			<tr>
+			<tr style="height:150px;">
 				<th>내용사진 </th>
 				<td> 
 					<div id="contentImgArea1"> 
@@ -113,6 +164,7 @@
 					<input type="file" id ="thumbnailImg1" multiple="multiple" name="titlethumbnailImg" onchange="LoadImg(this,1)">
 					<input type="file" id ="thumbnailImg2" multiple="multiple" name="subthumbnailImg" onchange="LoadImg(this,2)">
 				</div>
+				
 			<tr>
 				<td colspan="2" align="center">
 					<!-- <input type="submit" value="등록하기"> &nbsp; -->
@@ -326,6 +378,32 @@
 	}	
 
 //end 등록버튼 클릭시----------------------------------------------------------------------------------------------------		
+	</script>
+
+
+	<a id="TopButton" class="ScrollButton"><img src="resources/images/top.PNG"></a>
+	<a id="BottomButton" class="ScrollButton"><img src="resources/images/boottom.PNG"></a>
+	<a id="footer"></a>
+	<!-- 위로 아래로 버튼 클릭시 이동 -->		
+	<script>
+	$(function() {
+	    $(window).scroll(function() {
+	        if ($(this).scrollTop() > 600) {
+	            $('.ScrollButton').fadeIn();
+	        } else {
+	            $('.ScrollButton').fadeOut();
+	        }
+	    });
+	        
+	    $("#TopButton").click(function() {
+	        $('html').animate({scrollTop : 0}, 600);
+	    });
+	 
+	    $("#BottomButton").click(function() {
+	        $('html').animate({scrollTop : ($('#footer').offset().top)}, 600);
+	    });
+	});
+
 	</script>
 
 </body>

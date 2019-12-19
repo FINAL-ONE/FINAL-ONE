@@ -291,7 +291,7 @@ System.out.println("result : " + result);
 			*/ 
 			
 			ArrayList<Admin> sellList =  aService.sell_goodsDetailView(sellNum);
-				
+System.out.println("sellList : " + sellList);
 			JSONArray jarr = new JSONArray();
 			
 			for(Admin cate :sellList) {
@@ -419,9 +419,21 @@ System.out.println("result : " + result);
 			if(glist != null) {
 				mv.addObject("glist",glist);
 				
+				//신규 등록시 필요
+				mv.addObject("cateCd", aService.categoryCDselect());
+				
+				//공통
 				mv.addObject("gClist", aService.goodsCategoryList()); // 동복 - 상품 수정 카테고리 조회 (카테고리)
+				
+				//조회용
 				mv.addObject("gLlist", aService.goodsLCategoryList(lclCd)); // 동복 - 상품 수정 카테고리 조회 (대)
 				mv.addObject("gMlist", aService.goodsMCategoryList(c)); // 동복 - 상품 수정 카테고리 조회 (중)
+				
+				// 수정용
+				mv.addObject("dLlist", aService.detailLCategoryList()); // 동복 - 상품 수정 카테고리 조회 (대)
+				mv.addObject("dMlist", aService.detailCategoryList()); // 동복 - 상품 수정 카테고리 조회 (중)
+				
+				
 				
 				mv.setViewName("admin/goodsListView");
 			}else {
@@ -509,13 +521,14 @@ System.out.println("result : " + result);
 			
 			mv.addObject("goods", aService.goodsUpdateList(gId));	// 동복 - 클릭한 상품 조회
 			
-			mv.addObject("glist", aService.goodsUpCategorylist(gId)); 	// 동복 - 클릭한 상품의 카테고리 조회(개별)
+			//mv.addObject("glist", aService.goodsUpCategorylist(gId)); 	// 동복 - 클릭한 상품의 카테고리 조회(개별)
 			
 			mv.addObject("gClist", aService.goodsUpdateClist(gId)); // 동복 - 클릭한 상품의  카테고리 조회 (전체)
 			mv.addObject("gLlist", aService.goodsUpdateLlist(gId)); // 동복 - 클릭한 상품의  (대)카테고리 조회(전체)
 			mv.addObject("gMlist", aService.goodsUpdateMlist(gId)); // 동복 - 클릭한 상품의  (중)카테고리 조회(전체)
 			
-			mv.setViewName("admin/goodsDetailList"); 
+			//mv.setViewName("admin/goodsDetailList");
+			mv.setViewName("admin/goodsListView");
 			
 			return mv;
 		}
@@ -853,9 +866,8 @@ System.out.println("result : " + result);
 		// 동복 - 상품관리 화면에서 조건 검색
 		@RequestMapping("checkTextSelectGoods.do")
 		public void checkTextSelectGoods(HttpServletResponse response,  String lclCd, String mclCd, String sclCd, String goodsStatus, String soldout, String goodsName, Goods g ) throws JsonIOException, IOException {
-//		public void checkTextSelectGoods(HttpServletResponse response,  String goodsName, String goodsStatus, Goods g ) throws JsonIOException, IOException {
 			response.setContentType("application/json;charset=utf-8");
-	//System.out.println("lclCd : " + lclCd);
+System.out.println("화면에서 넘긴 값 : "+"lclCd : " + lclCd + "mclCd : " + mclCd + "sclCd : " + sclCd + "goodsStatus : " + goodsStatus + "soldout : " + soldout + "goodsName : " + goodsName);
 			
 			String whereNum = "";
 			
@@ -876,20 +888,7 @@ System.out.println("result : " + result);
 			g.setSoldout(soldout);
 
 			g.setWhereNum(whereNum);
-			
-			//g.setGoodsName(goodsName);
-			//g.setGoodsStatus(goodsStatus);
-			/*
-			if(goodsStatus.length() > 0){
-				whereNum = "2";
-			}else if(goodsName.length() > 0){
-				whereNum = "4";
-			}
-			*/
-			// sql 검색 조건 넘기기
-			
-			
-			
+
 	System.out.println("g 값 : " + g);
 			
 			ArrayList<Goods> glist = aService.checkTextSelectGoods(g);
@@ -897,49 +896,61 @@ System.out.println("result : " + result);
 			//Gson gson = new GsonBuilder().create();
 			Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 			
-			gson.toJson(glist, response.getWriter());
-			
-			
-	/* 
-			
-	System.out.println("결과값 : " + gLlist);
-	//System.out.println("view로 넘어가기 전: " + gLlist.size());
-			JSONArray jarr = new JSONArray();
-			
-			for(Goods cate :gLlist) {
-				// 1_1. JSON배열에 담기 위해 user 객체를 JSON객체에 담기
-				JSONObject jUser = new JSONObject();	// JSONObject 는 MAP 과 동일하다.!?
-				// .put() : JSONObject MAP 형식이라 put 사용
-
-				jUser.put("gId", 			cate.getgId());
-				jUser.put("cateCd", 		cate.getCateCd());
-				jUser.put("cateNm", 		cate.getCateNm());
-				jUser.put("goodsName", 		cate.getGoodsName());
-				jUser.put("goodsPrice", 	cate.getGoodsPrice());
-				jUser.put("goodsStatus", 	cate.getGoodsStatus());
-				jUser.put("soldout", 		cate.getSoldout());
-				jUser.put("registerDate",	cate.getRegisterDate());
-				jUser.put("modifyDate", 	cate.getModifyDate());
-				jUser.put("lclCd", 			cate.getLclCd());
-				jUser.put("mclCd", 			cate.getMclCd());
-				jUser.put("sclCd", 			cate.getSclCd());
-				
-				// 1_2. user 정보를 담은 JSON객체를 JSON배열에 넣기
-				jarr.add(jUser);
-				
-			}
-			
-			JSONObject sendJson = new JSONObject();	// 이 작업은 위에 for문 돌려서 나온 jarr 리스트값을
-			sendJson.put("list", jarr);
-			PrintWriter out = response.getWriter();
-	System.out.println("sendJson : " + sendJson);
-			out.print(sendJson);
-			out.flush();
-			out.close();
-			
-	*/		
+			gson.toJson(glist, response.getWriter());	
 			
 		}	
+		
+		
+		
+		
+	/*	카테고리 관리 만드는중이였음
+	 * 	- 결제 페이지를 만들어야겠음!!!!!
+	 * 	
+	 * */
+		
+		@RequestMapping("categoryView.do")
+		public ModelAndView CategoryView(ModelAndView mv, Category c) {
+			
+			String lclCd = "1";
+			String mclCd = "101";
+			c.setLclCd(lclCd);
+			c.setMclCd(mclCd);
+			
+			ArrayList<Goods> glist = aService.goodsList();
+	System.out.println("전체 상품 리스트 : " + glist);
+
+			if(glist != null) {
+				mv.addObject("glist",glist);
+				
+				mv.addObject("gClist", aService.goodsCategoryList()); // 동복 - 상품 수정 카테고리 조회 (카테고리)
+				mv.addObject("gLlist", aService.goodsLCategoryList(lclCd)); // 동복 - 상품 수정 카테고리 조회 (대)
+				mv.addObject("gMlist", aService.goodsMCategoryList(c)); // 동복 - 상품 수정 카테고리 조회 (중)
+System.out.println("mv : " + mv);
+				mv.setViewName("admin/categoryView");
+				
+			}else {
+				throw new AdminException("상품 목록 보기 실패!!");
+			}
+			return mv;
+		}
+		
+		
+			
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		
 		

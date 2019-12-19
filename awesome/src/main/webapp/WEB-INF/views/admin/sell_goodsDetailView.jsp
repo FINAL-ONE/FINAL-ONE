@@ -82,15 +82,20 @@
 			<tr>
 	            <th> 상품 선택  <span style = "color:red; font-size : 1.5em;">*</span> </th>
 	            <td>
-					<input type="text" id="goodsName" name="goodsName" placeholder="선택하세요." list="myinter" value="${n.goodsName}"/>   
-					<datalist id="myinter" name="myinter">
+					<input type="text" id="goodsName" name="goodsName" placeholder="선택하세요." list="myinter" value="${n.goodsName}"  style="margin-bottom: 15px"/>   
+					<datalist id="myinter" name="myinter" >
 						<select id="selectBox" name="selectBox">
 							<c:forEach var="g" items="${glist}">
-								<option value="${g.goodsName}">${g.goodsName}</option>
+								<option value="${g.goodsName}" style="width:10%;">${g.goodsName}</option>
 							</c:forEach>
 						</select>
 					</datalist>
+					<label style="margin-left: 100px">상품 가격</label>  <span style = "color:red; font-size : 1.5em;">*</span>
+					<input id="goodsPrice" type="text" name ="goodsPrice" style="height:20px;" numberOnly value="${n.goodsPrice}">
+					<label style="margin-left: 100px">상품 수량</label>  <span style = "color:red; font-size : 1.5em;">*</span>
+					<input id="count" type="text" name ="count" style="height:20px;" numberOnly value="${n.count}">
 				</td>
+				
 			</tr>
 			<tr>
 				<th></th>
@@ -99,15 +104,6 @@
 					<span class="guide error">이 상품은 사용할수 없습니다.</span>
 					<input type="hidden" name="idDuplicateCheck" id="idDuplicateCheck" value="0">
 				</td>
-			</tr>
-			<tr>
-				<th>상품 가격  <span style = "color:red; font-size : 1.5em;">*</span> </th>
-				<td><input id="goodsPrice" type="text" name ="goodsPrice" style="height:20px;" numberOnly value="${n.goodsPrice}"></td>
-			</tr>
-			<tr>
-				<th>상품 수량  <span style = "color:red; font-size : 1.5em;">*</span> </th>
-				<td><input id="count" type="text" name ="count" style="height:20px;" numberOnly value="${n.count}"></td>
-			</tr>
 			<tr>
 				<th>상품 내용 <span style = "color:red; font-size : 1.5em;">*</span></th>
 					<td><textarea id ="summernote" name="goodsContent" rows="10" cols ="81" size ="resize:none" required>${n.goodsContent}</textarea>

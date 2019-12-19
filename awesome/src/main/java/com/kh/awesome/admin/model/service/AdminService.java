@@ -71,4 +71,9 @@ public interface AdminService {
 		// 동복 - 상품관리 화면에서 조건 검색
 		public ArrayList<Goods> checkTextSelectGoods(Goods g);
 		
+		// 동복 - 상품 수정 (대)카테고리 조회
+		public ArrayList<Category> detailLCategoryList();
+		// 동복 - 상품 수정 (중)카테고리 조회
+		public ArrayList<Category> detailCategoryList();
+		
 	}

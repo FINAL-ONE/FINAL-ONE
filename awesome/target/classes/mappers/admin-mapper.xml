@@ -10,6 +10,7 @@
 		<result property="cateCd" 			column="CATE_CD"/>
 		<result property ="goodsTitle" 		column ="GOODS_TITLE"/>
 		<result property="goodsPrice" 		column="GOODS_PRICE"/>
+		<result property="goodsName" 		column="GOODS_NAME"/> 
 		<result property="count" 			column="COUNT"/>
 		<result property ="goodsContent" 	column ="GOODS_CONTENT"/>
 		<result property ="filePath" 		column="GOODS_FILE_PATH"/>
@@ -459,26 +460,21 @@
 
 	<if test='whereNum == "2"'> <!-- 상태 들어오면 2 -->
 	 WHERE GOODS_STATUS = #{goodsStatus}
-  	  <choose>
-	    <when test="soldout != ''">
+	    <if test="soldout != ''">
 	      AND SOLDOUT = #{soldout}
-	    </when>
-	    <when test="lclCd != ''">
+	    </if>
+	    <if test="lclCd != ''">
 	      AND C.LCL_CD = #{lclCd}
-	    </when>
-	    <when test="mclCd != ''">
+	    </if>
+	    <if test="mclCd != ''">
 	      AND C.MCL_CD = #{mclCd}
-	    </when>
-	    <when test="sclCd != ''">
+	    </if>
+	    <if test="sclCd != ''">
 	      AND C.SCL_CD = #{sclCd}
-	    </when>
-	    <when test="goodsName != ''">
+	    </if>
+	    <if test="goodsName != ''">
 	      AND G.GOODS_NAME LIKE '%'||#{goodsName}||'%'
-	    </when>
-	    <otherwise>
-	      AND ORDER BY 1
-	    </otherwise>
-	  </choose>
+	    </if>
 	</if>
 
 	<if test='whereNum == "3"'> <!-- 매진 구분 들어오면 3 -->
@@ -527,7 +523,18 @@
 	
 	
 	
-	
+	<!-- 동복 - 카테고리 조회 -->
+	<select id="detailLCategoryList" resultMap="CategoryResultSet">
+	 SELECT *
+	  FROM CATEGORY 
+	 WHERE CATE_LVL = '2'
+	</select>	
+	<!-- 동복 - 카테고리 조회 -->
+	<select id="detailCategoryList" resultMap="CategoryResultSet">
+	 SELECT *
+	  FROM CATEGORY 
+	 WHERE CATE_LVL = '3'
+	</select>	
 	
 	
 	

@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.awesome.admin.model.vo.Category;
 import com.kh.awesome.board.model.vo.PageInfo;
 import com.kh.awesome.order.model.vo.Order;
 
@@ -64,8 +65,19 @@ public class OrderDao {
 
 
 
-
-
-
-
+		//---------------------------- INSERT ----------------------------	
+		// 동복 - 결제 진행 ( TABLE INSERT && UPDATE )
+		public int insertPaymentList(Order o) {
+			return sqlSession.insert("orderMapper.insertPaymentList", o);
+		}
+		public int insertPayment(Order o) {
+			return sqlSession.insert("orderMapper.insertPayment", o);
+		}
+		public int insertPaymentDinfo(Order o) {
+			return sqlSession.insert("orderMapper.insertPaymentDinfo", o);
+		}
+		public int updateMemberPoint(Order o) {
+			return sqlSession.update("orderMapper.updateMemberPoint", o);
+		}
+		
 }

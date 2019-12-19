@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.awesome.admin.model.vo.Category;
 import com.kh.awesome.board.model.vo.PageInfo;
 import com.kh.awesome.order.model.dao.OrderDao;
 import com.kh.awesome.order.model.vo.Order;
@@ -87,9 +88,24 @@ public class OrderServiceImpl implements OrderService{
 
 
 
-
-
-
-
+	//---------------------------- INSERT ----------------------------	
+	// 동복 - 결제 진행 ( TABLE INSERT && UPDATE )
+	@Override
+	public int insertPaymentList(Order o) {
+		return oDao.insertPaymentList(o);
+	}
+	@Override
+	public int insertPayment(Order o) {
+		return oDao.insertPayment(o);
+	}
+	@Override
+	public int insertPaymentDinfo(Order o) {
+		return oDao.insertPaymentDinfo(o);
+	}
+	@Override
+	public int updateMemberPoint(Order o) {
+		return oDao.updateMemberPoint(o);
+	}
+	
 
 }

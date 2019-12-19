@@ -13,50 +13,66 @@
 <link href="js/Modal.js-master/build/css/modal.css" rel="stylesheet">
 
 <style>
-.outer{
-	width : 100%;
-	height : 100%;
-}
-.goodsTable {
-  border-collapse: collapse;
-  border-spacing: 0;
-  width: 90%;
-  border: 1px solid #ddd;
-  /* text-align :center; */
-}
-th, td {
+	.outer{
+		width : 100%;
+		height : 100%;
+	}
+	.goodsTable {
+	  border-collapse: collapse;
+	  border-spacing: 0;
+	  width: 90%;
+	  border: 1px solid #ddd;
+	  /* text-align :center; */
+	}
+	th, td {
+	
+	  /* text-align: left; */
+	  padding: 13px;
+	  
+	}
+	
+	tr:nth-child(even) {
+	  background-color: #f2f2f2;
+	}
+	
+	/* 모달 css */
+	  *, *:before, *:after {
+	    box-sizing: border-box; }
+	    body { font-family: 'Roboto'; }
+	    .modal_container {text-align: center; }
+	    
+	.tablestatus{
+		min-width: 100px;
+	}
+	
+	.tableLeft{
+		float: left;
+	} 
+	
+	#checkboxTestTbl{
+		/* margin: 0px; */
+		margin-right: 0px;
+	
+	}
+	#checkboxTestTbl2{
+		/* margin: 0px; */ 
+	}
 
-  /* text-align: left; */
-  padding: 13px;
-  
-}
-
-tr:nth-child(even) {
-  background-color: #f2f2f2;
-}
-
-/* 모달 css */
-  *, *:before, *:after {
-    box-sizing: border-box; }
-    body { font-family: 'Roboto'; }
-    .modal_container {text-align: center; }
-    
-.tablestatus{
-	min-width: 100px;
-}
-
-.tableLeft{
-	float: left;
-} 
-
-#checkboxTestTbl{
-	/* margin: 0px; */
-	margin-right: 0px;
-
-}
-#checkboxTestTbl2{
-	/* margin: 0px; */ 
-}
+	.ScrollButton {
+	  position: fixed;   /* 버튼의 위치 고정 */
+	  right: 10px;       /* x 위치 입력 */
+	  cursor: pointer;   /* 호버링 했을 때 커서 모양 변경 */
+	  z-index: 10;       /* 다른 태그에 가려지지 않게 우선순위 변경 */
+	  display: none;     /* 스크롤 위치에 상관없이 보이게 하려면 생략 */
+	}
+	/* 두 태그에 각각 y 위치 입력 */
+	#TopButton {
+	  bottom: 108px;        
+	}
+	#BottomButton {
+	  bottom: 75px;
+	}
+	
 </style>
 
 </head>
@@ -64,7 +80,7 @@ tr:nth-child(even) {
 	<jsp:include page="../common/menubar.jsp"/>   
 	<%-- <jsp:include page ="../admin/adminMenu.jsp"/> --%>
  	<div class = "outer">
-		<div id="container" style= "height: auto; overflow: auto;"><!-- container -->
+		<div id="container" style= "overflow: auto;"><!-- container -->
 
 			<c:if test="${!empty loginUser }">
 		   		<div align ="center">
@@ -74,7 +90,7 @@ tr:nth-child(even) {
 			<br>
 		<form id = "goodsInsertForm" action="aStatusUpdate.do" method="post">
 			<div class="tableLeft" style= "width: auto;">
-				<table id ="checkboxTestTbl" class = "goodsTable" align="center" border="1" >
+				<table id ="checkboxTestTbl" class = "goodsTable" align="center" border="1" style="margin-left: 0%; margin-right: 0%">
 						<tr bgcolor ="#99ccff" >
 							<th><input type="checkbox" name="user_CheckBox"></th>
 							<th>상품번호</th>
@@ -315,6 +331,32 @@ tr:nth-child(even) {
 	}); 
 
 </script>
+		
+	<a id="TopButton" class="ScrollButton"><img src="resources/images/top.PNG"></a>
+	<a id="BottomButton" class="ScrollButton"><img src="resources/images/boottom.PNG"></a>
+	<a id="footer"></a>
+	<!-- 위로 아래로 버튼 클릭시 이동 -->		
+	<script>
+	$(function() {
+	    $(window).scroll(function() {
+	        if ($(this).scrollTop() > 600) {
+	            $('.ScrollButton').fadeIn();
+	        } else {
+	            $('.ScrollButton').fadeOut();
+	        }
+	    });
+	        
+	    $("#TopButton").click(function() {
+	        $('html').animate({scrollTop : 0}, 600);
+	    });
+	 
+	    $("#BottomButton").click(function() {
+	        $('html').animate({scrollTop : ($('#footer').offset().top)}, 600);
+	    });
+	});
+
+	</script>
+		
 		
 </body>
 <footer>

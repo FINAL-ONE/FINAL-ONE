@@ -174,5 +174,18 @@ public class AdminServiceImpl implements AdminService{
 		public ArrayList<Goods> checkTextSelectGoods(Goods g) {
 			return aDao.checkTextSelectGoods(g);
 		}
+		
+		
+		// 동복 - 상품 수정 (대)카테고리 조회
+		@Override
+		public ArrayList<Category> detailLCategoryList() {
+			return aDao.detailLCategoryList();
+		}
+		
+		// 동복 - 상품 수정 (중)카테고리 조회
+		@Override
+		public ArrayList<Category> detailCategoryList() {
+			return aDao.detailCategoryList();
+		}		
 
 	}

@@ -143,4 +143,14 @@ public class AdminDao {
 			return (ArrayList)sqlSession.selectList("adminMapper.checkTextSelectGoods",g);
 		}
 
+		
+		// 동복 - 상품 수정 (대)카테고리 조회
+		public ArrayList<Category> detailLCategoryList() {
+			return (ArrayList)sqlSession.selectList("adminMapper.detailLCategoryList");
+		}
+		// 동복 - 상품 수정 (중)카테고리 조회
+		public ArrayList<Category> detailCategoryList() {
+			return (ArrayList)sqlSession.selectList("adminMapper.detailCategoryList");
+		}
+
 	}
