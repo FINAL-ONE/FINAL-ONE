@@ -2,9 +2,9 @@ package com.kh.awesome.order.service;
 
 import java.util.ArrayList;
 
-import com.kh.awesome.admin.model.vo.Category;
 import com.kh.awesome.board.model.vo.PageInfo;
 import com.kh.awesome.order.model.vo.Order;
+import com.kh.awesome.order.model.vo.OrderSearch;
 
 public interface OrderService {
 
@@ -30,20 +30,18 @@ public interface OrderService {
 	int orderCancel(int number);
 
 
-	int getOrderListCount();
+	int getOrderListCount(int mId);
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+	ArrayList<Order> datePicker(OrderSearch os, PageInfo pi);
+
+
+	int getOrderSearchCount(OrderSearch os);
+
+
+
+
+
 	//---------------------------- INSERT ----------------------------	
 	// 동복 - 결제 진행 ( TABLE INSERT && UPDATE )
 	int insertPaymentList(Order o);
@@ -53,8 +51,5 @@ public interface OrderService {
 	int insertPaymentDinfo(Order o);
 	
 	int updateMemberPoint(Order o);
-
-
-
 
 }

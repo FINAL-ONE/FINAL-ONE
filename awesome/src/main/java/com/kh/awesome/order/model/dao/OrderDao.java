@@ -8,9 +8,9 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.kh.awesome.admin.model.vo.Category;
 import com.kh.awesome.board.model.vo.PageInfo;
 import com.kh.awesome.order.model.vo.Order;
+import com.kh.awesome.order.model.vo.OrderSearch;
 
 @Repository("oDao")
 public class OrderDao {
@@ -57,11 +57,17 @@ public class OrderDao {
 		}
 
 
-		public int getOrderListCount() {
+		public int getOrderListCount(int mId) {
 			// TODO Auto-generated method stub
-			return sqlSession.selectOne("orderMapper.getOrderListCount" );
+			return sqlSession.selectOne("orderMapper.getOrderListCount", mId);
 		}
 
+		
+		
+		public int getOrderSearchCount(OrderSearch os) {
+			return sqlSession.selectOne("orderMapper.getOrderSearchCount",os );
+		}
+		
 
 
 

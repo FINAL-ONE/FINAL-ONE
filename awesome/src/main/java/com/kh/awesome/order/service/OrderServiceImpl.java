@@ -6,10 +6,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.kh.awesome.admin.model.vo.Category;
 import com.kh.awesome.board.model.vo.PageInfo;
 import com.kh.awesome.order.model.dao.OrderDao;
 import com.kh.awesome.order.model.vo.Order;
+import com.kh.awesome.order.model.vo.OrderSearch;
 
 @Service("oService")
 public class OrderServiceImpl implements OrderService{
@@ -70,9 +70,23 @@ public class OrderServiceImpl implements OrderService{
 
 
 	@Override
-	public int getOrderListCount() {
+	public int getOrderListCount(int mId) {
 		
-		return oDao.getOrderListCount();
+		return oDao.getOrderListCount(mId);
+	}
+
+
+
+	@Override
+	public ArrayList<Order> datePicker(OrderSearch os,PageInfo pi) {
+		return oDao.datePicker(os,pi);
+	}
+
+
+
+	@Override
+	public int getOrderSearchCount(OrderSearch os) {
+		return oDao.getOrderSearchCount(os);
 	}
 
 

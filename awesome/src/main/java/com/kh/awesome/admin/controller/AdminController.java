@@ -28,8 +28,11 @@ import com.kh.awesome.admin.model.service.AdminService;
 import com.kh.awesome.admin.model.vo.Admin;
 import com.kh.awesome.admin.model.vo.Category;
 import com.kh.awesome.admin.model.vo.Goods;
+import com.kh.awesome.admin.model.vo.PageInfo;
+import com.kh.awesome.common.Pagination;
 import com.kh.awesome.member.model.exception.MemberException;
 import com.kh.awesome.member.model.vo.Member;
+import com.kh.awesome.shop.model.serivce.ShopService;
 import com.kh.awesome.shop.model.vo.SellReply;
 
 
@@ -51,7 +54,7 @@ public class AdminController {
 	public ModelAndView sell_goodsList(ModelAndView mv) {
 		
 		ArrayList<Admin> list = aService.selectList();
-System.out.println("상품 판매 list : " + list );
+		System.out.println(list);
 		
 		if(list != null) {
 			mv.addObject("list", list);
@@ -87,7 +90,7 @@ System.out.println("상품 판매 list : " + list );
 	
 	// 상품등록 페이지에서 상품버튼 클릭시 -- 준배
 	@RequestMapping("sellgoodsInsert.do")
-	public String sell_goodsInsert(Goods g, Admin a, HttpServletRequest request,				
+	public String sell_goodsInsert(Admin a, Goods g, HttpServletRequest request,		
 								@RequestParam(name="titlethumbnailImg", required=false) MultipartFile file1,
 								@RequestParam(name="subthumbnailImg", required=false) MultipartFile file2) {
 		// pom.xml 가서 일단 multipart 인코딩 타입으로 파일을 넘겨줄 때 필요한 라이브러리부터 다운 받자.
@@ -105,12 +108,11 @@ System.out.println("상품 판매 list : " + list );
 		// 원본 파일의 이름을 저장할 ArrayList를 생성하자
 		//ArrayList<String> originFiles = new ArrayList<String>();
 		// <String> 제네릭 하는이유는 나중에 꺼낼때 다운캐스팅 안하려고
-System.out.println("file1 : " + file1);
-System.out.println("file2 : " + file2);
-System.out.println("Admin data : " + a);
-System.out.println("Goods data : " + g);
+//System.out.println("file1 : " + file1);
+//System.out.println("file2 : " + file2);
+//System.out.println("Admin data : " + a);
+//System.out.println("Goods data : " + g);
 		
-
 		if(!file1.getOriginalFilename().contentEquals("") && !file2.getOriginalFilename().contentEquals("")) {
 			String savePath1 = saveFile(file1, request);
 			String savePath2 = saveFile(file2, request);
@@ -186,15 +188,36 @@ System.out.println("Goods data : " + g);
 		return filePath;
 	}
 	
-	
 	// 상품메인 페이지에서 상품 클릭시 디테일페이지 보여줄 리스트 불러오기 --준배 (동복 list 추가)
 	@RequestMapping("adetail.do")
-	public ModelAndView shopgoodsDetail(ModelAndView mv, int sellNum) {
+	public ModelAndView shopgoodsDetail(ModelAndView mv, int sellNum, 
+					@RequestParam(value="page", required=false) Integer page) {
+		
+		int rCurrentPage = 1;
+		if(page != null) {
+			rCurrentPage = page;
+		}
+		
+		
+		int rListCount = aService.getReplylistCount(sellNum);
+		
+		
+		System.out.println("리플리스트 카운트:" + rListCount );
+		
+		
+		PageInfo pi = Pagination.getPageInfo3(rCurrentPage, rListCount );
 		
 		ArrayList<Admin> list = aService.selectshopgoods(sellNum);
+		ArrayList<Admin> replylist = aService.selectreply(sellNum, pi);
+		
+		System.out.println("상품디테일 list : "+ list);
+		System.out.println("pi :" + pi);
+		
 		
 		if(list != null) {
 			mv.addObject("list", list)
+			.addObject("replylist", replylist)
+			.addObject("pi", pi)
 			.setViewName("shop/shopGoodsDetail");
 		
 		} else {
@@ -206,24 +229,23 @@ System.out.println("Goods data : " + g);
 	// 상품메인 페이지에서 상품 클릭시 디테일페이지 보여줄 리스트 불러오기 --준배
 	
 	
-	// 상품 디테일 페이지에서 후기작성 버튼 클릭시 후기 리스트 불러오기 -- 준배
+	// 상품 디테일 페이지에서 후기작성 버튼 클릭시 후기 작성하기로 -- 준배
 	@RequestMapping("afterWrite.do") 
-	public ModelAndView goodsWriterView(ModelAndView mv, int sellNum) {
+	 public ModelAndView goodsWriterView(ModelAndView mv, int sellNum) {
 	 
-		 ArrayList<Admin> list = aService.selectshopgoods(sellNum);
-		/* ArrayList<SellReply> list = aService.selectReply(rId); */
+		ArrayList<Admin> list = aService.selectshopgoods(sellNum);
+
 	 
 	 if(list != null) {
-			 mv.addObject("list", list)
-			 .setViewName("shop/sell_afterWriteView");
+		 	mv.addObject("list", list)
+		 	.setViewName("shop/sell_afterWriteView");
 		 } else { 
 			 throw new AdminException("후기 불러오기실패!"); }
 	 
 	 return mv;
 	 
 	 }
-
-	// 상품 디테일 페이지에서 후기작성 버튼 클릭시 후기 리스트 불러오기 -- 준배
+	// 상품 디테일 페이지에서 후기작성 버튼 클릭시 후기 작성하기로 -- 준배
 	
 	 
 	// 상품조회 페이지에서 상품 품절 처리 -- 준배(동복 : 판매상품 품절 처리시 상품과 판매가 1:1 이라 상품 상태도 N으로 변경)
@@ -262,16 +284,27 @@ System.out.println("result : " + result);
 	}
 	// 상품조회 페이지에서 상품 품절 처리 -- 준배
 	
+		// 소개페이지 이동
+		
+		@RequestMapping("info.do")
+		public String infoPageView() {
+			
+			return "common/infoPage";	
+		}
+				
+			
 	
 	
 	
 	
-	
-	// 동복 부분 --------------------------------------------------------------
 		
 		
-			
-			
+	
+		// 동복 부분 --------------------------------------------------------------
+		
+		
+		
+		
 		// 동복 - 판매 상품 조회 수정 페이지 조회
 		@RequestMapping("sell_goodsDetailView.do")
 		public ModelAndView sell_goodsDetailView(ModelAndView mv, HttpServletResponse response, int sellNum ) throws IOException {

@@ -2,6 +2,7 @@ package com.kh.awesome.admin.model.dao;
 
 import java.util.ArrayList;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.awesome.admin.model.vo.Admin;
 import com.kh.awesome.admin.model.vo.Category;
 import com.kh.awesome.admin.model.vo.Goods;
+import com.kh.awesome.admin.model.vo.PageInfo;
 
 @Repository("aDao")
 public class AdminDao {
@@ -36,6 +38,19 @@ public class AdminDao {
 		return sqlSession.update("adminMapper.updateAdminStatus", a);
 	}
 
+	// 리플 조회
+	public ArrayList<Admin> selectreply(int sellNum,  PageInfo pi) {
+		int offset = (pi.getCurrentPage()-1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("adminMapper.selectreply", sellNum, rowBounds);
+	}
+	
+	// 해당 글의 리플 갯수 조회
+	public int getReplylistCount(int sellNum) {
+
+		return sqlSession.selectOne("adminMapper.getReplylistCount", sellNum);
+	}
 	
 	//---------------------------- INSERT ----------------------------	
 		// 동복- 상품 등록

@@ -9,6 +9,7 @@ import com.kh.awesome.admin.model.dao.AdminDao;
 import com.kh.awesome.admin.model.vo.Admin;
 import com.kh.awesome.admin.model.vo.Category;
 import com.kh.awesome.admin.model.vo.Goods;
+import com.kh.awesome.admin.model.vo.PageInfo;
 
 @Service("aService")
 public class AdminServiceImpl implements AdminService{
@@ -43,7 +44,19 @@ public class AdminServiceImpl implements AdminService{
 	}
 	
 	
+	// 리플 조회
+	@Override
+	public ArrayList<Admin> selectreply(int sellNum, PageInfo pi) {
+		return aDao.selectreply(sellNum, pi);
+	}
 	
+	// 해당 글의 리플 갯수 조회
+	@Override
+	public int getReplylistCount(int sellNum) {
+		return aDao.getReplylistCount(sellNum);
+	}
+
+
 	//---------------------------- INSERT ----------------------------
 		// 동복- 상품 등록
 		@Override

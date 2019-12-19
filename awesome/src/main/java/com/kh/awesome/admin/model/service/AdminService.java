@@ -12,10 +12,20 @@ public interface AdminService {
 
 	public int insertSell_goods(Admin a);
 	
+	// 상품조회
 	public ArrayList<Admin> selectshopgoods(int sellNum);
 
 	public int updateAdminStatus(Admin a);
 	
+	// 리플 조회
+	public ArrayList<Admin> selectreply(int sellNum, PageInfo pi);	
+	
+	// 해당 글의 리플 갯수 조회
+	public int getReplylistCount(int sellNum);
+	
+	
+	
+
 	//---------------------------- INSERT ----------------------------	
 		// 동복- 상품 등록
 		int insertCategory(Category c);

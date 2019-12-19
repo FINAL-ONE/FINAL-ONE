@@ -2,23 +2,30 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="adminMapper">
 
-	<resultMap type="Admin" id="sell_goodsResultSet">
-	    <id property="sellNum" column ="SELL_NUM"/>
-		
-		<result property ="gId" 			column ="GID"/>
-		<result property ="mId" 			column ="MID"/>
-		<result property="cateCd" 			column="CATE_CD"/>
-		<result property ="goodsTitle" 		column ="GOODS_TITLE"/>
-		<result property="goodsPrice" 		column="GOODS_PRICE"/>
-		<result property="goodsName" 		column="GOODS_NAME"/> 
-		<result property="count" 			column="COUNT"/>
-		<result property ="goodsContent" 	column ="GOODS_CONTENT"/>
-		<result property ="filePath" 		column="GOODS_FILE_PATH"/>
-		<result property ="contentFilePath" column="GOODS_CONTENT_FILE_PATH"/>
-		<result property ="sellDate" 		column="SELL_DATE"/>
-		<result property ="modifyDate" 		column="MODIFY_DATE"/>
-		<result property ="status" 			column="STATUS"/>
-	</resultMap>
+   <resultMap type="Admin" id="sell_goodsResultSet">
+       <id property="sellNum" column ="SELL_NUM"/>
+      
+      <result property ="gId"          column ="GID"/>
+      <result property ="mId"          column ="MID"/>
+      <result property="cateCd"          column="CATE_CD"/>
+      <result property ="goodsTitle"       column ="GOODS_TITLE"/>
+      <result property="goodsPrice"       column="GOODS_PRICE"/>
+      <result property="goodsName" 		column="GOODS_NAME"/> 
+      <result property="count"          column="COUNT"/>
+      <result property ="goodsContent"    column ="GOODS_CONTENT"/>
+      <result property ="filePath"       column="GOODS_FILE_PATH"/>
+      <result property ="contentFilePath" column="GOODS_CONTENT_FILE_PATH"/>
+      <result property ="sellDate"       column="SELL_DATE"/>
+      <result property ="modifyDate"       column="MODIFY_DATE"/>
+      <result property ="status"          column="STATUS"/>
+      
+      <result property ="userId" column="USER_ID"/>
+      <result property ="rId" column="RID"/>
+      <result property ="rContent" column="RCONTENT"/>
+      <result property ="sellStart" column="SELL_START"/>
+      <result property ="ref_filePath" column="REP_FILE_PATH"/>
+      <result property ="createDate" column="CREATE_DATE"/>
+   </resultMap>
 
 	<resultMap id="goodsResultSet" type="Goods">
 	  	<id property="gId" 				column="GID"/>
@@ -55,42 +62,71 @@
 
 	</resultMap>
 
-
-	<insert id ="insertSellgoods" parameterType="Admin">
-		INSERT INTO SELL_GOODS 
-		VALUES(SELL_NUM.NEXTVAL, #{gId}, #{mId}, #{cateCd}, #{goodsTitle}, #{goodsContent}, #{filePath}, #{contentFilePath}, SYSDATE, SYSDATE, DEFAULT
-		)
-	</insert>
+	<!-- 상품등록  -->
+   <insert id ="insertSellgoods" parameterType="Admin">
+      INSERT INTO SELL_GOODS 
+      VALUES(SELL_NUM.NEXTVAL, #{gId}, #{mId}, #{cateCd}, #{goodsTitle}, #{goodsContent}, #{filePath}, #{contentFilePath}, SYSDATE, SYSDATE, DEFAULT
+      )
+   </insert>
 	
-	<select id ="selectshopgoods" resultMap="sell_goodsResultSet">
-		SELECT *
+	<!-- shop상품조회 -->
+   <select id ="selectshopgoods" resultMap="sell_goodsResultSet">
+	    SELECT *
 		FROM SELL_GOODSSELECTVIEW
 		WHERE SELL_NUM=#{sellNum}
 		AND STATUS='Y'
-	</select>
-	
-	
-	<update id = "updateAdminStatus" parameterType ="Admin">
-		UPDATE SELL_GOODS
-		<if test='status == "Y"'>
-    		SET STATUS='N'
-		</if>
-		<if test='status == "N"'>
-    		SET STATUS='Y'
-		</if>		
-		WHERE SELL_NUM=#{sellNum}
-	</update>
-	
-	
-<!--========================================= INSERT  =========================================-->	
-	
-	<!-- 동복 - 상품 등록 -->
-	<insert id ="insertgoods" parameterType="Goods">
-		INSERT INTO GOODS VALUES(
-			SEQ_GID.NEXTVAL, #{cateCd}, #{goodsName}, #{goodsPrice}, #{count}, #{goodsStatus}, #{soldout}, SYSDATE, NULL 
-		)
-	</insert>
-	
+   </select>
+
+	<!-- 리플조회 -->
+    <select id ="selectreply" resultMap="sell_goodsResultSet">
+	    SELECT *
+		FROM SELL_REPLY SR
+		JOIN SELL_GOODSSELECTVIEW SGV ON (SGV.SELL_NUM = SR.SELL_NUM)
+		JOIN MEMBER M ON(M.MID = SR.MID)
+		WHERE SR.SELL_NUM=#{sellNum}
+		ORDER BY RID DESC 
+    </select>
+   
+   
+   <update id = "updateAdminStatus" parameterType ="Admin">
+      UPDATE SELL_GOODS
+      <if test='status == "Y"'>
+          SET STATUS='N'
+      </if>
+      <if test='status == "N"'>
+          SET STATUS='Y'
+      </if>      
+      WHERE SELL_NUM=#{sellNum}
+   </update>
+   
+   <!-- 해당글의 리플갯수  -->
+    <select id="getReplylistCount" parameterType="_int" resultType="_int"> 	
+  	 SELECT COUNT(*)
+  	 FROM SELL_REPLY_AFTERVIEW
+  	 WHERE STATUS='Y'
+  	 AND SELL_NUM=#{sellNum}
+  	
+  </select>
+   
+   
+   <select id="selectReplyList" resultMap="sell_goodsResultSet" parameterType="_int">
+	SELECT *
+	FROM SELL_REPLY_AFTERVIEW
+	WHERE SELL_NUM=#{sellNum}
+	AND STATUS = 'Y'
+	ORDER BY RID ASC
+  </select>
+  
+  
+<!--========================================= INSERT  =========================================-->   
+   
+   <!-- 동복 - 상품 등록 -->
+   <insert id ="insertgoods" parameterType="Goods">
+      INSERT INTO GOODS VALUES(
+         SEQ_GID.NEXTVAL, #{cateCd}, #{goodsName}, #{goodsPrice}, #{count}, #{goodsStatus}, #{soldout}, SYSDATE, NULL 
+      )
+   </insert>
+   
 
 	
 	<!-- 동복 - 카테고리 등록 -->
