@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.server.adapter.HttpWebHandlerAdapter;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.awesome.admin.model.vo.Admin;
+import com.kh.awesome.cart.model.exception.CartException;
 import com.kh.awesome.cart.model.service.CartService;
 import com.kh.awesome.cart.model.vo.Cart;
 import com.kh.awesome.cart.model.vo.CartList;
@@ -75,44 +77,33 @@ public class CartController {
 		return result;		
 	}
 	
-	@RequestMapping("payment.do")
-		public ModelAndView payment(String name, String address, String phone, int point, ModelAndView mv, HttpServletResponse response) {
-	      
-	      
-		System.out.println(name+","+ address+","+ phone+","+point);
-	  
-	  return mv;
-	
-	}
-	
-	
-	
-	/**
-	 *	장바구니 목록
-	 * @param session
-	 * @param mv
-	 * @return
-	 */
-	
-	@RequestMapping("cartList2.do")
-	public ModelAndView list(Cart c, HttpSession session, ModelAndView mv, HttpServletResponse response) {
-		
-		response.setContentType("application/json;charset=utf-8");
-		
-		// 로그인 한 사람의 정보를 뽑아내기 위해서 session 사용
-		Member loginUser = (Member)session.getAttribute("loginUser");
-		
-		// 현재 로그인 한 유저로 mid 값 set
-		c.setMid(loginUser.getMid()); 
-		
-		
-		
-		
-		
-		return mv;
-		
-	}
 
+	// 카트에 상품 추가
+		@RequestMapping("goCart.do")
+		public String goodsgoCartView(HttpServletRequest request, Cart c, Admin a) {
+			
+			/* ArrayList<Cart> list = ShopService.selectList(); */
+			System.out.println("Cart : " + c);
+			System.out.println("Admin : " + a);
+			
+			int result = cService.CartInsert(c);
+			System.out.println(result);
+			
+			
+			if(result > 0 ) {
+				return "redirect:moveCart.do";
+			} else {
+				throw new CartException("장바구니 이동 실패!!");
+			}	
+		}
+		
+		// 카트 뷰로 이동
+		@RequestMapping("moveCart.do")
+		public String moveCart() {
+			
+			return "cart/cartList";	
+		}							
+		
 }
 
 

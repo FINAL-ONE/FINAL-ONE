@@ -6,6 +6,8 @@
     String today = formatter.format(new java.util.Date());
     
      String category = request.getParameter("category"); 
+     
+     int category2 = Integer.parseInt(category); 
 %>
 
 
@@ -18,7 +20,7 @@
 <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
-
+  <link href="${contextPath}/resources/fontawesome-free/css/all.css" rel="stylesheet">
 <!-- include summernote css/js-->
 <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
 <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
@@ -69,7 +71,7 @@
     #listArea{
        width: 840px;
        border-spacing:0px;
-         border-top:2px solid black;
+       border-top:2px solid black;
     }
     
     .tableTd{
@@ -128,7 +130,9 @@
 
    #attachTable{
       border: 1px solid #dbdbdb;
-      width: 840px;
+	    width: 840px;
+	    position: relative;
+	    left: 20px;
    }   
    
    .attachTd input{
@@ -190,6 +194,7 @@
       height: 80px;
       text-align: center;
       padding-top: 30px;
+      margin-left: 7px;
    }
    
 
@@ -218,6 +223,7 @@
       background-color: white;
       border: 1px solid black;
       outline: none;
+          margin-top: 5px;
    }
    
    #checkLabel{
@@ -247,47 +253,95 @@
    
 
 
-
 .previewBoard{
-   border: 1px solid black; 
-   height: 200px; 
-   wdith: 100%;
-   
+	height: 200px; 
+	wdith: 100%;
+	border: none;	
+	margin-top: 11px;
 }
 
 .previewBoard2{
-     width:880px;
-       border: 1px solid pink; 
+	  width:880px;
+  	  border: none; 
       margin-left:auto;
       margin-right:auto;
       height: 100%;
-      padding-left: 40px;
+      padding-left: 18px;
       
 }
 
 .advertisement{
-   border: 1px solid blue; 
-   height: 200px;
-   width: 590px;  
-   display: inline-block;
-   margin-right: 10px;
+	border: 1px solid #dbdbdb; 
+	height: 200px;
+	width: 625px;  
+	display: inline-block;
+	margin-right: 5px;
+	position:relative;
+	background-image:url("resources/images/advertise4.jpeg");
+}
+
+
+.advertisement:hover{
+	cursor:pointer;
 }
 
 .noticeList{
-   border: 1px solid red; 
-   height: 200px;
-   width: 234px; 
-   display: inline-block;
+	height: 200px;
+	width: 247px; 
+	display: inline-block;
+	position: absolute;
+	border: 1px solid #dbdbdb;
 }
 
+
+
+.noticeListDiv{
+	margin-bottom: 5px;
+	width: 200px;
+    text-overflow:ellipsis;
+	white-space:nowrap; 
+	overflow: hidden;
+	color: #787878;
+	font-size: 13px;
+	margin-bottom: 10px;
+}
+
+.noticeListDiv:hover{
+	cursor:pointer;
+
+}
+
+
+.fa-bell:before {
+    content: "\f0f3";
+    color:#787878;
+}
+
+
+.fa-plus-square:before {
+    content: "\f0fe";
+    position: relative;
+    left: 120px;
+    top: 1px;
+    color: lightgray;
+    font-size: 20px;
+}
+
+
+.fa-plus-square:hover{
+ 	cursor:pointer;
+}
+
+
+
+
 .centerDiv{
-     width:880px;
-       border: 1px solid pink; 
-      margin-left:auto;
-      margin-right:auto;
-      height: auto;
-      padding-left: 40px;
-      
+    width: 910px;
+    /* border: 1px solid pink; */
+    margin-left: auto;
+    margin-right: auto;
+    height: auto;
+    padding-left: 33px;
 
 }
 
@@ -305,19 +359,42 @@
 
 <body>
 
+
+	<input type="hidden" value="${sessionScope.loginUser.manager}">
+
 <jsp:include page="../common/menubar.jsp"/>   
 <div id="container" style="overflow: auto; height: auto;"><!-- container -->
    
    
+<!-- 광고 및 미리보기  -->
 <div class= "previewBoard" >
-   <div class= "previewBoard2"> 
-      <div class= "advertisement">광고 <%=category%> </div>
-      <div class= "noticeList">  공지사항(미리보기) </div> 
-   </div> 
+	<div class= "previewBoard2"> 
+		<div class= "advertisement"></div>
+		<div class= "noticeList">
+		
+			<c:if test= "${category != 1}">
+			 	<div style="font-size: 15px; font-weight: bold; margin-left: 15px; margin-top: 15px;">공지사항&nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-plus-square" onclick="goNoticeList();"></i></div>
+			 	<div style="height: 140px; margin-top: 15px; padding-left: 18px;">
+				<c:forEach var="n" items="${noticeList}">	
+		    				<div class="noticeListDiv" onclick ="goBoardDetailView(${n.bId});"><i class="fas fa-bell"></i>&nbsp;${n.bTitle} </div>
+				</c:forEach>
+				</div>
+			</c:if>
+			<c:if test= "${category eq 1}">
+			 	<div style="font-size: 15px; font-weight: bold; margin-left: 15px; margin-top: 15px; ">인기 게시글<i class="far fa-plus-square" style="left:120px;" onclick="goAllList();" ></i></div>
+			 	<div style="height: 140px; margin-top: 15px; padding-left: 18px;">
+				<c:forEach var="b" items="${bestList}">	
+		    				<div class="noticeListDiv" onclick ="goBoardDetailView2(${b.bId} , ${b.category});"><i class="fas fa-bell"></i>&nbsp;${b.bTitle} </div>
+				</c:forEach>
+				</div>
+			</c:if>
+		
+		</div> 
+	</div> 
 </div >
-
+<!-- 광고 및 미리보기  -->
 <div class = "centerDiv">
-   <h2 style="font-size: 26px; font-weight: bold;">글쓰기</h2> 
+   <h2 style="font-size: 26px; font-weight: bold; padding-left:20px;">글쓰기</h2> 
       <form id= insertForm action = "fBoardInsert.do" method="post" encType="multipart/form-data">
          <br>
          <table align="center" id="listArea">
@@ -325,24 +402,32 @@
                <td class="titleTd tableTd"><b>카테고리</b></td>
                <td class="tableTd"> &nbsp;&nbsp;
                   <select class="categorySelect" name = "category" style="height: 35px;"> 
-                     <option id =  "category2" value = 2>자유게시판 </option>
-                     <option id =  "category3" value = 3>팁&노하우</option>
-                     <option id =  "category4" value = 4>비포&애프터 </option>
-                     <option id =  "category5" value = 5>자극사진</option>
+                  
+                  	<c:if test="${sessionScope.loginUser.manager eq 'Y'}">
+                  	 <option id= "category1" value = "1"> 공지사항 </option>
+                  	 </c:if>  
+                     <option id =  "category2"   value = "2">자유게시판 </option>
+                     <option id =  "category3"  value = "3">팁&노하우</option>
+                     <option id =  "category4"  value = "4">비포&애프터 </option>
+                     <option id =  "category5"  value = "5">자극사진</option>
                   </select>
                </td>
             </tr>
             <tr>
                <td class= "titleTd tableTd"><b>제목</b></td>
                <td class ="tableTd"><input type="text" name= "bTitle" class="inputTd" >
-               <label for="superCheck" id=checkLabel><span style="font-size: 14px;">공지사항</span></label>
-               <input id = superCheck type="checkbox" name="bLevel" value="4" onclick="checkBox();">
-               <input id = noCheck type= "hidden" name="bLevel" value="1">
+               	
+               	<c:if test="${sessionScope.loginUser.userId eq 'admin'}">
+	               <label for="superCheck" id=checkLabel><span style="font-size: 14px;">필독</span></label>
+	               <input id = superCheck type="checkbox" name="bLevel" value="4" onclick="checkBox();">
+    			</c:if>  
+	               <input id = noCheck type= "hidden" name="bLevel" value="1">
+               
                </td> 
             </tr>
             <tr>
                <td class= "titleTd tableTd"><b>작성자</b></td>
-               <td  class ="tableTd"><span style="padding-left: 17px; font-size: 16px;">${loginUser.userId }</span></td>
+               <td  class ="tableTd"><span style="padding-left: 17px; font-size: 16px;">${loginUser.userNickname }</span></td>
             </tr>
             <tr>
                <td class= "titleTd tableTd"><b>작성일</b></td>
@@ -352,6 +437,9 @@
          <div id="textareaDiv">
             <textArea id= summernote rows=30 col=100 name = "bContent" placeholder="내용을 입력해주세요"></textArea>
          </div>
+         
+        <c:if test="${sessionScope.loginUser.manager eq 'Y'}">
+         
          <table id = "attachTable">
             <tr>
                <td rowspan=9 class= "titleTd" style= "border-right: 1px solid #dbdbdb">
@@ -375,12 +463,14 @@
                   <input id = "attachInput1" type="text" placeholder="첨부파일을 등록하세요" readonly>&nbsp;
                   <button type="button" id= "attachBtn1" class="attachBtn" onclick="fileInputClick1();"><b>찾아보기</b></button>
             </tr>
-               
          </table>
-      
+         
+      	</c:if>
+      	
+      	
          <br><br>
          <div class= btnDiv>
-               <button type='button'id=listBtn onclick="goBoardListView();"><b>취소</b></button>&nbsp;&nbsp;
+               <button type='button'id=listBtn onclick="goBoardListView(<%=category2%>);"><b>취소</b></button>&nbsp;&nbsp;
                <button id=insertBtn type="button" onclick="insertSubmit();"><b>확인</b></button>
          </div>
       
@@ -398,7 +488,7 @@
 
 
 
-
+		<br><br>
    </div>
 </div>
 </body>
@@ -411,6 +501,30 @@
 
 
 <script>
+
+//광고 및 미리보기 
+function goBoardDetailView(bId){
+	location.href='fBoardDetailView.do?page=1&category=1&bId='+bId;
+	
+}
+function goBoardDetailView2(bId, category){
+	location.href='fBoardDetailView.do?page=1&category='+ category+ '&bId='+bId;
+	
+}
+
+
+function goNoticeList(){
+	location.href='boardListView.do?category=1'
+}
+
+
+function goAllList(){
+	location.href='boardListView.do?category=10'
+}
+
+//광고 및 미리보기 
+
+
 
    function checkBox(){
       if(document.getElementById("superCheck").checked == true){
@@ -488,14 +602,15 @@ $(function(){
 
    if( category == "2" ){
       $("#category2").prop("selected", true);
-   }else if(   category == '3'   ) {
-      alert(3); 
-   }else if ( category == '4'  ){
-      alert(4); 
-   } else if ( category == '5') {
-      alert(5); 
+   }else if(   category == "3"   ) {
+	   $("#category3").prop("selected", true); 
+   }else if ( category == "4"  ){
+	   $("#category4").prop("selected", true); 
+   } else if ( category == "5") {
+	   $("#category5").prop("selected", true);
+   }else if ( category == "1") {
+	   $("#category1").prop("selected", true);
    }
-
 });
 
 
@@ -508,8 +623,8 @@ function loadAttachName(attach,num){
    }
 }
 
-function goBoardListView(){
-   location.href="fBoardListView.do"   
+function goBoardListView(category){
+	location.href="boardListView.do?category="+category;
 }
 
 

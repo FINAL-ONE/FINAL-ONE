@@ -30,4 +30,27 @@ public class ShopDao {
 		return (ArrayList)sqlSession.selectList("shopMapper.selectReply", sellNum);
 	}
 	
+	// 카트에 상품 추가
+	/*
+	 * public int CartInsert(Cart2 c) {
+	 * 
+	 * return sqlSession.insert("shopMapper.CartInsert", c); }
+	 */
+	
+	// 상품별 후기 조회
+	public ArrayList<SellReply> stargIdSelect(int gId) {
+		return (ArrayList)sqlSession.selectList("shopMapper.gIdViewList", gId);
+	}
+	
+	// 상품별 후기 평균
+	public ArrayList<SellReply> sAvgListSelect(int gId) {
+		return (ArrayList)sqlSession.selectList("shopMapper.starAvgCount", gId);
+	}
+
+	public ArrayList<SellReply> myafterSelectList(int mid) {
+		return (ArrayList)sqlSession.selectList("shopMapper.myafterSelectList", mid);
+	}
+
+
+	
 }

@@ -3,11 +3,14 @@ package com.kh.awesome.order.model.dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.awesome.board.model.vo.PageInfo;
 import com.kh.awesome.order.model.vo.Order;
+import com.kh.awesome.order.model.vo.OrderSearch;
 
 @Repository("oDao")
 public class OrderDao {
@@ -15,9 +18,12 @@ public class OrderDao {
 	SqlSessionTemplate sqlSession;
 
 
-		public ArrayList<Order> selectList(int mId) {
+		public ArrayList<Order> selectList(int mId, PageInfo pi) {
 
-			return (ArrayList)sqlSession.selectList("orderMapper.selectOrder",mId);
+			int offset = (pi.getCurrentPage()-1) * pi.getBoardLimit();
+			RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+			
+			return (ArrayList)sqlSession.selectList("orderMapper.selectOrder",mId, rowBounds);
 		}
 
 
@@ -50,6 +56,26 @@ public class OrderDao {
 			return sqlSession.update("orderMapper.orderCancel", number);
 		}
 
+
+		public int getOrderListCount(int mId) {
+			// TODO Auto-generated method stub
+			return sqlSession.selectOne("orderMapper.getOrderListCount", mId);
+		}
+
+		
+		
+		public int getOrderSearchCount(OrderSearch os) {
+			return sqlSession.selectOne("orderMapper.getOrderSearchCount",os );
+		}
+		
+
+		public ArrayList<Order> datePicker(OrderSearch os, PageInfo pi) {
+			
+			int offset = (pi.getCurrentPage()-1) * pi.getBoardLimit();
+			RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+			System.out.println("searchDao : " + os);
+			return (ArrayList)sqlSession.selectList("orderMapper.getOrderSearch", os, rowBounds);
+		}
 
 
 

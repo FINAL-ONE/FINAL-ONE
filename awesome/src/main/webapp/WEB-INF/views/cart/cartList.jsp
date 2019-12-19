@@ -28,7 +28,7 @@
 		nav#nav {}
 		section#container { }
 			section#content { float:right; width:1000px; }
-			section#container::after { content:""; display:block; clear:both; }	
+			section#container::after { content:""; display:block; clear:both; }
 		
 		/* ---------- */
 		
@@ -432,7 +432,7 @@
             <tbody>
             <tr>
                <th>포인트 사용</th>
-               <td><input class="order_txt order_dimmed" placeholder="사용할 포인트를 입력하세요" style="width:130px" type="tel" name="dcp" id="dcp" maxlength="10" data-dcp="0" data-usedcp="0" value="">원<span class="ml8 fc666">(사용가능 포인트 : <strong class="order_fcT1 fctah" id="mycpp" data-mycpp="0"><span>${cartList[0].point }</span></strong>원)</span></em><a id="cupbtn" alt="적용"><span class="order_btn_apply"></span></a><!--20160427 적립금 안내 문구 추가-->
+               <td><input class="order_txt order_dimmed" placeholder="사용할 포인트를 입력하세요" style="width:130px" type="tel" name="dcp" id="dcp" maxlength="10" data-dcp="0" data-usedcp="0" value="0">원<span class="ml8 fc666">(사용가능 포인트 : <strong class="order_fcT1 fctah" id="mycpp" data-mycpp="0"><span>${cartList[0].point }</span></strong>원)</span></em><a id="cupbtn" alt="적용"><span class="order_btn_apply"></span></a><!--20160427 적립금 안내 문구 추가-->
                <!-- <span class="fctah ml10 fc666" style="vertical-align:top;position: relative;top:12px">※ 적립금은 최소 2,000원 이상부터 사용가능합니다.</span> -->   
                </td>
             </tr>
@@ -497,15 +497,30 @@
       document.getElementById("address").value = "";
       document.getElementById("phone").value = "";
    }
+  
    
-   function paymentNow(){
+   
+   
+   
+
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+    function paymentNow(){
       //사용할 포인트가 적립포인트보다 크다면
       if($("#dcp").val()>${cartList[0].point}){
             alert("포인트가 모자랍니다.");
       	return; 
       
       } 
-    	  
+      else{  
     	  var IMP = window.IMP; // 생략가능
 	        IMP.init('imp15219507'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
 	        var msg;
@@ -535,7 +550,8 @@
 	            pay_method : 'card',
 	            merchant_uid : 'merchant_' + new Date().getTime(),
 	            name : '결제 TEST',
-	            amount : orderPrice,
+	            //amount : orderPrice,
+	            amount : '100',
 	            buyer_email : $("#sdEmail").val(),
 	            buyer_name : $("#sdname").val(),
 	            buyer_tel : $("#sdPphone").val(),
@@ -560,7 +576,8 @@
 						success:function(data){
 							
 							alert("성공");
-							/* 필요한 구문 작성  */
+							// 필요한 구문 작성 
+							location.href="orderView.do";
 		
 						},
 						error:function(request, status, errorData){
@@ -576,9 +593,11 @@
 	                //실패시 이동할 페이지
 	                location.href="cartList.do";
 	                alert(msg);
+	                console.log(msg);
 	           	  } 
 	        });    
-	};
+	}
+   }
     
    
    

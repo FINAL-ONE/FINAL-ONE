@@ -18,28 +18,6 @@
 	</resultMap>
 	
 	
-  <!-- 카트 리스트 -->
-   <select id="cartList" resultMap="cartListResultSet">
-      SELECT C.CARTNUM, C.GID, G.GOODS_NAME, G.GOODS_PRICE, M.MID, C.COUNT, SG.GOODS_FILE_PATH, G.SOLDOUT, M.USER_NAME, M.PHONE, M.ADDRESS, M.POINT
-      FROM GOODS G, SELL_GOODS SG, CART C, MEMBER M
-      WHERE G.GID = SG.GID
-      AND G.GID = C.GID
-      AND M.MID = #{mId}
-   </select>
-	
-	<!-- 카트 삭제 -->
-	<delete id="deleteCart">
-		DELETE CART
-		WHERE CARTNUM = #{cartNum}
-		AND MID=#{mid}
-	</delete>
-	
-	
-	
-	
-	
-	
-	
    <!-- 저장될 VO -->
    <resultMap type="CartList" id="cartListResultSet">
       <id property ="cartNum" column="CARTNUM"/>
@@ -57,62 +35,7 @@
       <result property="point" column="POINT"/>
    </resultMap>
    
-   <resultMap type="Buyer" id="buyerResultSet">
-      <id property ="mId" column="MID"/>
-      
-      <result property="userName" column="USERNAME"/>
-      <result property="phone" column="PHONE"/>
-      <result property="address" column="GOODS_PRICE"/>
-      <result property="point" column="POINT"/>
-      <result property="goodsPrice" column="GOODSPRICE"/>
-
-   </resultMap>
-   
-   <!-- 카트 리스트 -->
-   <select id="cartList" resultMap="cartListResultSet">
-   	  SELECT C.GID, G.GOODS_NAME, G.GOODS_PRICE, M.MID, C.COUNT, SG.GOODS_FILE_PATH, G.SOLDOUT, M.USER_NAME, M.PHONE, M.ADDRESS, M.POINT
-      FROM GOODS G, SELL_GOODS SG, CART C, MEMBER M
-      WHERE G.GID = SG.GID
-      AND G.GID = C.GID
-      AND M.MID = #{mId}
-   </select>
-   
-   <!-- 카트 삭제 -->
-   <delete id="deleteCart">
-      DELETE CART
-      WHERE CARTNUM = #{cartNum}
-      AND MID=#{mId}
-   </delete>
-   
-   <select id="buyerinfo" resultMap="buyerResultSet">
-      SELECT USER_NAME, PHONE
-      FROM MEMBER
-      WHERE MID=#{mId}   
-   </select>
-   
-   <!-- 배송지 기본 정보 받아오기 -->
-<!--    <select id="standardInfo" resultMap="PaymentResultSet">
-      SELECT USER_NAME, ADDRESS, PHONE
-      FROM MEMBER
-      WHERE MID=${mid}
-   </select> -->
-   
-   <!-- 포인트 쓰기 -->
-   
-   <insert id="CartInsert" parameterType="Cart">
-		INSERT INTO CART
-		VALUES(TBL_CART_SEQ.NEXTVAL, #{mId}, #{gId}, #{count}
-		)
-	</insert>
-   
-   
-   
-   
-
-
-
-	
-  <!-- 카트 리스트 -->
+	<!-- 카트 리스트 -->
    <select id="cartList" resultMap="cartListResultSet">
       SELECT C.CARTNUM, C.GID, G.GOODS_NAME, G.GOODS_PRICE, M.MID, C.COUNT, SG.GOODS_FILE_PATH, G.SOLDOUT, M.USER_NAME, M.PHONE, M.ADDRESS, M.POINT
       FROM GOODS G, SELL_GOODS SG, CART C, MEMBER M
@@ -127,7 +50,14 @@
 		WHERE CARTNUM = #{cartNum}
 		AND MID=#{mid}
 	</delete>
-	
+   
+   <!-- 포인트 쓰기 -->
+   
+   <insert id="CartInsert" parameterType="Cart">
+		INSERT INTO CART
+		VALUES(TBL_CART_SEQ.NEXTVAL, #{mId}, #{gId}, #{count}
+		)
+	</insert>
 
 
 </mapper>

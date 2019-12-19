@@ -6,6 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="shortcut icon" href="${contextPath}/resources/images/favicon.ico" type="image/x-icon">
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -63,17 +64,18 @@
 				<td>${a.goodsTitle}</td>
 			</tr>
 			
-			<tr>
+<!-- 			<tr>
 				<th>후기 갯수</th>
 				<td> ?? </td>
-			</tr>
-			
+			</tr> -->
+							
 			<tr>
 				<td colspan="2" align="center">
 					<c:forEach var="a" items="${list}">
 						<c:url var="adetail" value="adetail.do">
 							<c:param name="sellNum" value="${a.sellNum }"/>
 						</c:url>
+						<br>
 						<a href="${adetail}"><button> 제품 상세보기 </button></a>
 					</c:forEach>	
 				</td>
@@ -85,7 +87,9 @@
 		<table class="afterTable" align="center">	
 			<c:forEach var="a" items="${list}">
 				<input type="hidden" name ="sellNum" value="${a.sellNum}">
-				<c:out value = "${a.sellNum }"/>
+				<input type="hidden" name="gId" value="${a.gId }">
+				<input type="hidden" name="mId" value="${sessionScope.loginUser.mid }">
+				<%-- <c:out value = "${a.sellNum }"/> --%>
 			</c:forEach>
 			<tr>
 				<th> 작성자 </th>
@@ -95,7 +99,7 @@
 				<th> 내용 </th>
 				<td><textArea id= "summernote" name= "rContent" rows="30" col="100" placeholder="내용을 입력해주세요"></textArea>
 				</td>
-<!-- 				<td><textarea rows="10"></textarea></td> -->
+	<!-- 		<td><textarea rows="10"></textarea></td> -->
 			</tr>
 			<tr>
 				<th>첨부파일</th>
@@ -151,7 +155,7 @@
 			      $('#radioButton').click(function () {
 			        // getter
 			        var radioVal = $('input[name="star"]:checked').val();
-			        alert(radioVal);
+			        	alert(radioVal);
 			      });
 			    });
   		</script>

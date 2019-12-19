@@ -2,10 +2,12 @@ package com.kh.awesome.board.model.service;
 
 import java.util.ArrayList;
 
+import com.kh.awesome.board.model.vo.Answer;
 import com.kh.awesome.board.model.vo.Attachment;
 import com.kh.awesome.board.model.vo.BGood;
 import com.kh.awesome.board.model.vo.Board;
 import com.kh.awesome.board.model.vo.PageInfo;
+import com.kh.awesome.board.model.vo.RGood;
 import com.kh.awesome.board.model.vo.Reply;
 import com.kh.awesome.board.model.vo.Search;
 
@@ -13,12 +15,12 @@ public interface BoardService {
 	/*
 	 * 1_1. 자유 게시판 전체 수 조회
 	 */
-	public int getFboardListCount();
+	public int getBoardListCount(int category);
 	
 	/*
 	 * 1_2. 게시판 전체 조회
 	 */
-	public ArrayList<Board> selectFList(PageInfo pi);
+	public ArrayList<Board> selectList(PageInfo pi, int category);
 	
 	/*
 	 * 2. 게시판 등록
@@ -33,7 +35,7 @@ public interface BoardService {
 	/*
 	 * 3_2. 게시판 상세 조회
 	 */
-	public Board selectBoard(int bId);
+	public Board selectBoard(Board b);
 	
 	/*
 	 * 4. 게시판 수정
@@ -73,8 +75,34 @@ public interface BoardService {
 
 	public int updateAttachment(Attachment attachment);
 
-	public Board selectBoardAsRnum(int rNum);
+	public Board selectBoardAsRnum(Board b);
 
-	public ArrayList<Reply> selectReplyList(int bId);
+	public ArrayList<Reply> selectReplyList(int bId, PageInfo pi);
+
+	public int insertReply(Reply r);
+
+	public int getReplylistCount(int bId);
+
+	public int deleteReply(int rId);
+
+	public int selectReplyGoodMemory(RGood g);
+
+	public int addReplyGoodCount(RGood g);
+
+	public int subReplyGoodCount(RGood g);
+
+	public int insertAnswer(Answer a);
+
+	public ArrayList<Answer> selectAList(int rId);
+
+	public int deleteAnswer(int aId);
+
+	public ArrayList<Reply> selectBestReplyList(int bId);
+
+	public int modifyReply(Reply r);
+
+	public ArrayList<Board> selectBestList();
+
+	public ArrayList<Board> selectNoticeList();
 	
 }

@@ -6,10 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.awesome.board.model.dao.BoardDao;
+import com.kh.awesome.board.model.vo.Answer;
 import com.kh.awesome.board.model.vo.Attachment;
 import com.kh.awesome.board.model.vo.BGood;
 import com.kh.awesome.board.model.vo.Board;
 import com.kh.awesome.board.model.vo.PageInfo;
+import com.kh.awesome.board.model.vo.RGood;
 import com.kh.awesome.board.model.vo.Reply;
 import com.kh.awesome.board.model.vo.Search;
 
@@ -22,13 +24,13 @@ public class BoardServiceImpl implements BoardService {
 	BoardDao bDao;
 	
 	@Override
-	public int getFboardListCount() {
-		return bDao.getFboardListCount();
+	public int getBoardListCount(int category) {
+		return bDao.getBoardListCount(category);
 	}
 
 	@Override
-	public ArrayList<Board> selectFList(PageInfo pi) {
-		return bDao. selectFList(pi);
+	public ArrayList<Board> selectList(PageInfo pi, int category) {
+		return bDao. selectList(pi, category);
 	}
 
 	@Override
@@ -42,8 +44,8 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public Board selectBoard(int bId) {
-		return bDao.selectBoard(bId);
+	public Board selectBoard(Board b) {
+		return bDao.selectBoard(b);
 	}
 
 	@Override
@@ -117,14 +119,83 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public Board selectBoardAsRnum(int rNum) {
-		return bDao.selectBoardAsRnum(rNum); 
+	public Board selectBoardAsRnum(Board b) {
+		return bDao.selectBoardAsRnum(b); 
 	}
 
 	@Override
-	public ArrayList<Reply> selectReplyList(int bId) {
+	public ArrayList<Reply> selectReplyList(int bId, PageInfo pi) {
 		//
-		return bDao.selectReplyList(bId);
+		return bDao.selectReplyList(bId, pi);
+	}
+
+	@Override
+	public int insertReply(Reply r) {
+		return bDao.insertReply(r);
+	}
+
+	@Override
+	public int getReplylistCount(int bId) {
+		
+		return bDao.getReplylistCount(bId);
+	}
+
+	@Override
+	public int deleteReply(int rId) {
+		// TODO Auto-generated method stub
+		return bDao.deleteReply(rId);
+	}
+
+	@Override
+	public int selectReplyGoodMemory(RGood g) {
+		// TODO Auto-generated method stub
+		return bDao.selectReplyGoodMemory(g);
+	}
+
+	@Override
+	public int addReplyGoodCount(RGood g) {
+		return bDao.addReplyGoodCount(g); 
+	}
+
+	@Override
+	public int subReplyGoodCount(RGood g) {
+		return bDao.subReplyGoodCount(g); 
+	}
+
+	@Override
+	public int insertAnswer(Answer a) {
+		return bDao.insertAnswer(a);
+	}
+
+	@Override
+	public ArrayList<Answer> selectAList(int rId) {
+		return bDao.selectAList(rId);
+	}
+
+	@Override
+	public int deleteAnswer(int aId) {
+		// TODO Auto-generated method stub
+		return bDao.deleteAnswer(aId);
+	}
+
+	@Override
+	public ArrayList<Reply> selectBestReplyList(int bId) {
+		return bDao.selectBestReplyList(bId);
+	}
+
+	@Override
+	public int modifyReply(Reply r) {
+		return bDao.modifyReply(r);
+	}
+
+	@Override
+	public ArrayList<Board> selectBestList() {
+		return bDao.selectBestList();
+	}
+
+	@Override
+	public ArrayList<Board> selectNoticeList() {
+		return bDao.selectNoticeList();
 	}
 
 

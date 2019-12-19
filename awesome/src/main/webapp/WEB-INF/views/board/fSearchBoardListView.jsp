@@ -1,11 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+      <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <link href="${contextPath}/resources/fontawesome-free/css/all.css" rel="stylesheet">
 	<title>Awesome 자유게시판</title>
 </head>
 
@@ -43,16 +45,17 @@
 	cursor:pointer;
 }
 
+
 .previewBoard{
-	border: 1px solid black; 
 	height: 200px; 
 	wdith: 100%;
-	
+	border: none;	
+	margin-top: 11px;
 }
 
 .previewBoard2{
 	  width:880px;
-  	  border: 1px solid pink; 
+  	  border: none; 
       margin-left:auto;
       margin-right:auto;
       height: 100%;
@@ -61,23 +64,68 @@
 }
 
 .advertisement{
-	border: 1px solid blue; 
+	border: 1px solid #dbdbdb; 
 	height: 200px;
-	width: 620px;  
+	width: 625px;  
 	display: inline-block;
-	margin-right: 10px;
+	margin-right: 5px;
+	position:relative;
+	background-image:url("resources/images/advertise4.jpeg");
+}
+
+
+.advertisement:hover{
+	cursor:pointer;
 }
 
 .noticeList{
-	border: 1px solid red; 
 	height: 200px;
-	width: 240px; 
+	width: 247px; 
 	display: inline-block;
+	position: absolute;
+	border: 1px solid #dbdbdb;
+}
+
+
+
+.noticeListDiv{
+	margin-bottom: 5px;
+	width: 200px;
+    text-overflow:ellipsis;
+	white-space:nowrap; 
+	overflow: hidden;
+	color: #787878;
+	font-size: 13px;
+	margin-bottom: 10px;
+} 
+
+.noticeListDiv:hover{
+	cursor:pointer;
+
+}
+
+.fa-bell:before {
+    content: "\f0f3";
+    color:#787878;
+}
+
+
+.fa-plus-square:before {
+    content: "\f0fe";
+    position: relative;
+    left: 120px;
+    top: 1px;
+    color: lightgray;
+    font-size: 20px;
+}
+
+
+.fa-plus-square:hover{
+ 	cursor:pointer;
 }
 
 .centerDiv{
 	  width:880px;
-  	  border: 1px solid pink; 
       margin-left:auto;
       margin-right:auto;
       height: auto;
@@ -128,6 +176,21 @@
 }
 
 
+.fa-paperclip:before {
+    content: "\f0c6";
+    color: gray;
+    margin-left: 5px;
+}
+
+.fa-image:before {
+    content: "\f03e";
+    color: gray;
+    font-size: 18px;
+    position: relative;
+    bottom: -2px;
+}
+
+
 
 .searchResult{
      border-radius: 8px;
@@ -143,6 +206,16 @@
     margin-bottom: 10px;
 }
 
+.new {
+	font-size: 10px;
+	font-weight: bold;
+	background: #ffca0b;
+	border-radius: 4px;
+	padding: 2px;
+	margin-left:7px;
+}
+
+
 </style>
 
 <body>
@@ -151,16 +224,65 @@
 <div id="container" style="overflow: auto; height: auto;" ><!-- container -->
 
 
+
+  
+<!-- 광고 및 미리보기  -->
 <div class= "previewBoard" >
 	<div class= "previewBoard2"> 
-		<div class= "advertisement">광고</div>
-		<div class= "noticeList">공지사항(미리보기) </div> 
+		<div class= "advertisement"></div>
+		<div class= "noticeList">
+		
+			<c:if test= "${category != 1}">
+			 	<div style="font-size: 15px; font-weight: bold; margin-left: 15px; margin-top: 15px;">공지사항&nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-plus-square" onclick="goNoticeList();"></i></div>
+			 	<div style="height: 140px; margin-top: 15px; padding-left: 18px;">
+				<c:forEach var="n" items="${requestScope.noticeList}">	
+		    				<div class="noticeListDiv" onclick ="goBoardDetailView(${n.bId});"><i class="fas fa-bell"></i>&nbsp;${n.bTitle} </div>
+				</c:forEach>
+				</div>
+			</c:if>
+			<c:if test= "${category eq 1}">
+			 	<div style="font-size: 15px; font-weight: bold; margin-left: 15px; margin-top: 15px; ">인기 게시글<i class="far fa-plus-square" style="left:120px;" onclick="goAllList();" ></i></div>
+			 	<div style="height: 140px; margin-top: 15px; padding-left: 18px;">
+				<c:forEach var="b" items="${requestScope.bestList}">	
+		    				<div class="noticeListDiv" onclick ="goBoardDetailView2(${b.bId} , ${b.category});"><i class="fas fa-bell"></i>&nbsp;${b.bTitle} </div>
+				</c:forEach>
+				</div>
+			</c:if>
+		
+		</div> 
 	</div> 
 </div >
+<!-- 광고 및 미리보기  -->
 
 
 <div class = "centerDiv"> 
-	<h2 style="font-size: 26px;"> 자유게시판 </h2> 
+
+		<c:if test = "${category eq 1 }">
+		<h2 style="font-size: 26px;">공지사항</h2> 
+		</c:if>
+	
+		<c:if test = "${category eq 2 }">
+		<h2 style="font-size: 26px;"> 자유게시판 </h2> 
+		</c:if>
+	
+		<c:if test = "${category eq 3 }">
+		<h2 style="font-size: 26px;"> 팁&노하우 </h2> 
+		</c:if>
+		
+		<c:if test = "${category eq 4 }">
+		<h2 style="font-size: 26px;"> 비포&애프터 </h2> 
+		</c:if>
+	
+		<c:if test = "${category eq 5 }">
+			<h2 style="font-size: 26px;"> 자극사진 </h2> 
+		</c:if>
+		
+		<c:if test="${category eq 10 }">
+			<h2 style="font-size: 26px;"> 전체 </h2> 
+		</c:if>
+	
+
+
 	<div class= "searchResult"> 
 	
 		<div style="margin-bottom:13px; margin-top: 7px; text-align:center"> 
@@ -184,14 +306,14 @@
 	
 		<div >
 			<div style="margin-left:auto; margin-right:auto; width: 573px;" >
-				<form id ="searchForm" action = "searchFboardList.do" method="post">
-			<select  name = "type" style= "height:42px; width: 130px; font-size: 16px; padding-left: 8px"> 
+				<form id ="searchForm" action = "searchBoardList.do" method="post">
+					<select  name = "type" style= "height:42px; width: 130px; font-size: 16px; padding-left: 8px"> 
 						<option value="all" > 전체</option>
 					 	<option value="bTitle" >제목</option>
 				        <option value= "bWriter" >작성자</option>
 				        <option value="bContent" >내용</option>
 					</select>
-			
+					<input type="hidden" name="category" value="${category}">
 					<input style= "font-size: 18px; position: relative; top: -1.5px; width: 350px; height:35px; margin:0px; padding-left:10px" name ="searchWord"> 
 				
 			
@@ -211,12 +333,80 @@
 				<td>공감</td> 
 				<td style= "width: 130px; border-right: none;">작성일</td> 
 			</tr>
-		<c:forEach var="b" items="${flist}">
-			<tr align="center" class = "normalTr"> 
 			
-				<td><input type="hidden" value = "${b.bId}"> [자유게시판]</td>
-				<td align="left" style=" padding-left: 10px;" > ${b.bTitle }&nbsp;<span style="color:#e11c24;font-weight:bold;margin-left:8px;">${b.reply}</span></td>
-				<td> ${b.userId}</td>
+			
+			
+		<c:forEach var="b" items="${flist}">
+			<c:if test = "${b.bLevel == 4}">
+				<tr align="center" class = "superTr"> 
+					<td style="color:#e11c24;"><input type="hidden" value = "${b.bId}"> [필독]</td>
+			</c:if>
+			<c:if test = "${b.bLevel != 4}">
+				<tr align="center" class = "normalTr"> 
+				
+				<c:if test = "${b.category eq 1 }">
+				<td><input type="hidden" value = "${b.bId}"> [공지사항]</td>
+			</c:if>
+	
+			<c:if test = "${b.category eq 2 }">
+				<td><input type="hidden" value = "${b.bId}"> [자유게시판]</td>		
+			</c:if>
+			
+			<c:if test = "${b.category eq 3 }">
+				<td><input type="hidden" value = "${b.bId}"> [팁&노하우]</td>		
+			</c:if>
+			
+			<c:if test = "${b.category eq 4 }">
+				<td><input type="hidden" value = "${b.bId}"> [비포&애프터]</td>		
+			</c:if>
+			
+			<c:if test = "${b.category eq 5 }">
+				<td><input type="hidden" value = "${b.bId}"> [자극사진]</td>		
+			</c:if>
+				
+			</c:if>
+			
+			
+				<td id="bTitle${b.bId}" align="left" style=" padding-left: 10px;" > ${b.bTitle}&nbsp;
+			     <script> 
+				     function checkImgTag(str){ 
+				    	 var content = str;
+				    	 
+				     	if(content.match(/<img/)){
+				     		return true   
+				     	}else{
+				     		return false 
+				     	}
+				     }
+				     if(checkImgTag('${b.bContent}') == true){
+				    	 $("#bTitle"+${b.bId}).html( "${b.bTitle}&nbsp;<i class='fas fa-image'></i>" );
+				     }
+				     
+					</script> 
+				<c:if test = "${b.bType == 4}">
+						<span><i class="fas fa-paperclip"></i></span>					
+			   	</c:if>
+				 	<span style="color:#e11c24;font-weight:bold;margin-left:8px;">${b.reply}</span>
+				 	
+							
+			 	<jsp:useBean id="today" class="java.util.Date" /> 
+	 			<fmt:formatDate var= "today2" value="${today}" pattern="yyyy-MM-dd" />
+				<fmt:parseDate var="bDate" value="${b.createDate}" pattern="yyyy-MM-dd" />
+				<fmt:formatDate var= "bDate2" value="${bDate}" pattern="yyyy-MM-dd" />
+	
+
+				<c:if test="${today2 <= bDate2}">
+						<span class="new"> NEW </span>
+				</c:if>
+				 	
+				 	
+				 	
+				
+				
+				</td>
+				
+				
+				<td> ${b.userNickname}</td>
 				<td>${b.bCount }</td>
 				<c:if test="${b.bGood > 0 }">
 				<td ><span style="color:#e11c24;font-weight:bold;">${b.bGood}</span></td>
@@ -236,26 +426,26 @@
    <!-- 페이징 처리 시작 -->
    <br>
       <div class="pagingArea" align="center">
-      <button type= "button" style="border:none; background: none; height: 30px; color:white;padding-bottom:14px; position:relative; float:left;">글쓰기</button>
+      <button type= "button" style=" visibility:hidden; border:none; background: none; height: 30px; color:white;padding-bottom:14px; position:relative; float:left;">글쓰기</button>
          <!-- 맨 처음으로(<<) -->
-       	<c:url var="blistNextNumber" value="searchFboardList.do">
+       	<c:url var="blistNextNumber" value="searchBoardList.do">
 					<c:param name="page" value="1"/>
 					<c:param name="type" value= "${sc.type}" />
 					<c:param name="searchWord" value= "${sc.searchWord}" />
 				</c:url>
-               <button onclick="location.href='${blistNextNumber}'"><<</button>
+               <button onclick="location.href='${blistNextNumber}&category=${category}'"><< </button>
          
          <!-- 이전 페이지로(<) -->
         <c:if test="${pi.currentPage <= 1 }">
             <button disabled> < </button>
         </c:if>
          <c:if test="${pi.currentPage > 1 }">
-        	 <c:url var="blistBack" value="searchFboardList.do">
+        	 <c:url var="blistBack" value="searchBoardList.do">
 				<c:param name="page" value="${pi.currentPage -1}"/>
 				<c:param name="type" value= "${sc.type}" />
 				<c:param name="searchWord" value= "${sc.searchWord}" />
 			</c:url>
-            <button onclick="location.href='${blistBack}'"> < </button>
+            <button onclick="location.href='${blistBack}&category=${category}'"> < </button>
         </c:if>
          
          <!-- 10개의 페이지 목록 -->
@@ -264,12 +454,12 @@
                <button style="background:#ec434a;color:white" disabled >${p}</button>
            </c:if>
             <c:if test="${pi.currentPage != p }">
-            	<c:url var="blistNextNumber" value="searchFboardList.do">
+            	<c:url var="blistNextNumber" value="searchBoardList.do">
 					<c:param name="page" value="${p}"/>
 					<c:param name="type" value= "${sc.type}" />
 					<c:param name="searchWord" value= "${sc.searchWord}" />
 				</c:url>
-               <button onclick="location.href='${blistNextNumber}'">${p}</button>
+               <button onclick="location.href='${blistNextNumber}&category=${category}'">${p}</button>
             </c:if>
        </c:forEach>
 	 				
@@ -277,30 +467,30 @@
             <button disabled> > </button>
           </c:if>
           <c:if test="${pi.currentPage < pi.maxPage }">
-          		<c:url var="blistNext" value="searchFboardList.do">
+          		<c:url var="blistNext" value="searchBoardList.do">
 					<c:param name="page" value="${pi.currentPage + 1}"/>
 					<c:param name="type" value= "${sc.type}" />
 					<c:param name="searchWord" value= "${sc.searchWord}" />
 				</c:url>
-               <button onclick="location.href='${blistNext}'">></button>
+               <button onclick="location.href='${blistNext}&category=${category}'">></button>
           </c:if>
          
          <!-- 맨 끝으로(>>) -->
-         <c:url var="blistEnd" value="searchFboardList.do">
+         <c:url var="blistEnd" value="searchBoardList.do">
 			<c:param name="page" value="${pi.maxPage}"/>
 			<c:param name="type" value= "${sc.type}" />
 			<c:param name="searchWord" value= "${sc.searchWord}" />
 		</c:url>
 			
 			<c:if test = "${pi.listCount == 0}">
-					<button onclick="location.href='${blistEnd}'"disabled>>></button>
+					<button onclick="location.href='${blistEnd}&category=${category}'"disabled>>></button>
 			</c:if>
            <c:if test = "${pi.listCount != 0}">
-					<button onclick="location.href='${blistEnd}'">>></button>
+					<button onclick="location.href='${blistEnd}&category=${category}'">>></button>
 			</c:if>
          
       
-      	<button style="border:none; background: #585858; height: 30px; color:white;padding-bottom:14px; position:relative; float:right;" onclick = "location.href='fBoardInsertForm.do'">글쓰기</button>
+      	<button style="border:none; background: #585858; height: 30px; color:white;padding-bottom:14px; position:relative; float:right;" onclick = "location.href='fBoardInsertForm.do?category=${category}'">글쓰기</button>
       </div>
 			
 	<br>		
@@ -319,6 +509,29 @@
 
 
 <script>
+
+//광고 및 미리보기 
+function goBoardDetailView(bId){
+	location.href='fBoardDetailView.do?page=1&category=1&bId='+bId;
+	
+}
+function goBoardDetailView2(bId, category){
+	location.href='fBoardDetailView.do?page=1&category='+ category+ '&bId='+bId;
+	
+}
+
+
+function goNoticeList(){
+	location.href='boardListView.do?category=1'
+}
+
+
+function goAllList(){
+	location.href='boardListView.do?category=10'
+}
+
+//광고 및 미리보기 
+
 
 $(function(){
     $(".normalTr td").mouseenter(function(){
@@ -341,18 +554,7 @@ function searchList(){
 
 
 
-/*  $(function(){
-    $(".normalTr td").mouseenter(function(){
-    	
-   	   $(this).parent().children().css({"cursor":"pointer").click(function(){ 
-           var bid = $(this).parent().children().eq(0).text(); // 게시글의  글번호 
-           $("#bid").val(bid);            
-           $("#formTag").submit(); 
-       });
-    }).mouseout(function(){
-    	$(this).parent().css({"background":"white"});
-    });
- });  */
+
 </script>
 
 

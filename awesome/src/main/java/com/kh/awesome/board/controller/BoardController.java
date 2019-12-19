@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -23,10 +26,12 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
 import com.kh.awesome.board.model.exception.BoardException;
 import com.kh.awesome.board.model.service.BoardService;
+import com.kh.awesome.board.model.vo.Answer;
 import com.kh.awesome.board.model.vo.Attachment;
 import com.kh.awesome.board.model.vo.BGood;
 import com.kh.awesome.board.model.vo.Board;
 import com.kh.awesome.board.model.vo.PageInfo;
+import com.kh.awesome.board.model.vo.RGood;
 import com.kh.awesome.board.model.vo.Reply;
 import com.kh.awesome.board.model.vo.Search;
 import com.kh.awesome.common.Pagination;
@@ -40,29 +45,35 @@ public class BoardController {
 	@Autowired
 	BoardService bService;
 	
-	@RequestMapping("fBoardListView.do")
+	@RequestMapping("boardListView.do")
 	public ModelAndView boardList(ModelAndView mv,
-									@RequestParam(value="page", required=false) Integer page) {
+									@RequestParam(value="page", required=false) Integer page, int category) {
 		// 마이바티스 때 했던 PageInfo와 Pagination을 그대로 쓰자.
 		
 		int currentPage = 1;
 		if(page != null) {
 			currentPage = page;
 		}
+		int listCount = bService.getBoardListCount(category);
 		
-		int listCount = bService.getFboardListCount();
-		
-
 		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
 		
-		ArrayList<Board> flist = bService.selectFList(pi);
+		ArrayList<Board> noticeList = bService.selectNoticeList();
+		ArrayList<Board> bestList= bService.selectBestList(); 
+		
+		
+		ArrayList<Board> flist = bService.selectList(pi, category);
 		// ArrayList<Board> flist = bService.selectList(pi);
 		
 		
 		
-		if(flist != null && flist.size() > 0) {	// 게시글이 있다면
+		
+		if(flist != null ) {	// 게시글이 있다면
 			mv.addObject("flist", flist);
+			mv.addObject("bestList", bestList);
+			mv.addObject("noticeList", noticeList);
 			mv.addObject("pi", pi);
+			mv.addObject("category", category);
 			mv.setViewName("board/fBoardListView");
 		}else {
 			throw new BoardException("게시글 전체 조회 실패!!");
@@ -71,22 +82,41 @@ public class BoardController {
 		
 	}
 	
+
+	
+	
+	
+	
+	
 	
 	@RequestMapping("fBoardDetailView.do")
-	public ModelAndView boardDetail(ModelAndView mv, int bId,
-									@RequestParam("page") Integer page) {
+	public ModelAndView boardDetail(ModelAndView mv, 
+									@RequestParam("page") Integer page, Board b, HttpSession session) {
 			int currentPage = 1;
 			if(page != null) {
 				currentPage = page;
 			}
 			
+			int bId = b.getbId();
+			
+			System.out.println("fBoardDetailView.do: " + b );
+			
+			
+			Member loginUser = (Member) session.getAttribute("loginUser");
+			System.out.println("디테일가기전 로그인 유저:  " + loginUser);
+			
+			
 			bService.addReadCount(bId);
-			Board board = bService.selectBoard(bId);
+				System.out.println("fBoardDetailView.do: " + b);
+			Board board = bService.selectBoard(b);
 			int nowRnum = board.getrNum(); 
 			System.out.println("nowRnum: " + nowRnum);
 		
-		  Board prevBoard = bService.selectBoardAsRnum(nowRnum-1); 
-		  Board nextBoard = bService.selectBoardAsRnum(nowRnum+1);
+		  b.setrNum(nowRnum-1);
+		  Board prevBoard = bService.selectBoardAsRnum(b);
+		  
+		  b.setrNum(nowRnum+1);
+		  Board nextBoard = bService.selectBoardAsRnum(b);
 		  System.out.println("prevBoard: " + prevBoard );
 		  System.out.println("nextBoard: " + nextBoard );
 			
@@ -95,9 +125,16 @@ public class BoardController {
 			ArrayList<BGood> bGoodList =bService.selectBGood(bId);
 			System.out.println("bGoodList: "+  bGoodList);
 			
+			ArrayList<Board> noticeList = bService.selectNoticeList();
+			ArrayList<Board> bestList= bService.selectBestList(); 
+			
+			
+			
 			if(board != null) {
 				// 메소드 체이닝 방식
 				mv.addObject("board", board)
+				.addObject("noticeList",  noticeList)
+				.addObject("bestList", bestList)
 				.addObject("currentPage", currentPage)
 				.addObject("prevBoard", prevBoard)
 				.addObject("nextBoard", nextBoard)
@@ -113,11 +150,11 @@ public class BoardController {
 	
 	
 	
-	@RequestMapping("searchFboardList.do")
+	@RequestMapping("searchBoardList.do")
 	public ModelAndView searchFboardList(ModelAndView mv,
 					@RequestParam(value="page", required=false) Integer page,
 					@RequestParam(value="type", required=false)	String type, 
-					@RequestParam(value="searchWord", required=false) String searchWord) {
+					@RequestParam(value="searchWord", required=false) String searchWord, int category) {
 		
 		int currentPage = 1;
 		if(page != null) {
@@ -132,29 +169,42 @@ public class BoardController {
 			searchWord ="";
 		}
 		
-		Search sc = new Search(type, searchWord); 
+		Search sc = new Search(type, searchWord, category); 
 				
 		int listCount = bService.getSearchFboardListCount(sc);
 		
 		System.out.println("boarController, getSearchFboardListCount: " + listCount );
 		
 		
+		ArrayList<Board> noticeList = bService.selectNoticeList();
+		ArrayList<Board> bestList= bService.selectBestList(); 
+		System.out.println("searchBoardList.do :" +  noticeList);
+		
+		
 		if(listCount == 0 ) {
 			PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
+			mv.addObject("noticeList", noticeList);
+			mv.addObject("bestList", bestList);
 			mv.addObject("pi", pi);
 			mv.addObject("sc", sc);
+			mv.addObject("category", category);
 			mv.setViewName("board/fSearchBoardListView");
 			return mv;
 		}else {
 			PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
-			ArrayList<Board> flist = bService.selectSeacrchFList(pi, sc);
-			// ArrayList<Board> flist = bService.selectList(pi);
 			
-			/* System.out.println("BoardController, flist" + flist.get(0)); */
+			ArrayList<Board> flist = bService.selectSeacrchFList(pi, sc);
+
+				System.out.println("써치 리스트: " + flist);
+			
+			
 			if(flist != null && flist.size() > 0) {	// 게시글이 있다면
 				mv.addObject("flist", flist);
 				mv.addObject("pi", pi);
 				mv.addObject("sc", sc);
+				mv.addObject("category", category);
+				mv.addObject("noticeList", noticeList);
+				mv.addObject("bestList", bestList);
 				mv.setViewName("board/fSearchBoardListView");
 			}else {
 				throw new BoardException("게시글 전체 조회 실패!!");
@@ -176,7 +226,12 @@ public class BoardController {
 	@RequestMapping("fBoardInsertForm.do")
 	public String boardInsertView(String category, HttpServletRequest request) {
 		System.out.println("BoardController, fboardInsertForm.do:" +  category);
-		request.setAttribute(category, "category");
+		
+		ArrayList<Board> noticeList = bService.selectNoticeList();
+		ArrayList<Board> bestList= bService.selectBestList(); 
+		request.setAttribute("noticeList", noticeList);
+		request.setAttribute("bestList", noticeList);
+		request.setAttribute("category", category);
 		return "board/fBoardInsertForm";	// boardInsertForm.jsp만들러 ㄱㄱ씽
 	}
 	
@@ -190,7 +245,6 @@ public class BoardController {
 							@RequestParam(value="file5", required=false)MultipartFile file5) {
 		// NoticeController 가서 ninsert.do메소드랑 saveFiel메소드까지 싹 복사해 와서 수정하자.
 		
-	
 			ArrayList<MultipartFile> fileList = new ArrayList<MultipartFile>(); 
 		
 			fileList.add(file1);
@@ -199,7 +253,7 @@ public class BoardController {
 			fileList.add(file4);
 			fileList.add(file5);
 			
-		
+	
 		HttpSession session = request.getSession(); 
 		Member loginUser = (Member) session.getAttribute("loginUser"); 
 		
@@ -208,20 +262,28 @@ public class BoardController {
 		b.setbType("1");
 		
 		int blevel = Integer.parseInt(bLevel);
-		b.setbLevel(blevel);
-		
-	
-		
-		
+		b.setbLevel(blevel); 
 
 		int count = 0; 
+		
+		int attachCount = 0; 
+		for(MultipartFile file : fileList) {
+			if(!file.getOriginalFilename().contentEquals("")) {
+				attachCount ++; 
+			}
+		}
+
+		if(attachCount > 0) {
+			b.setbType("4");
+		}
+		
+		
 		
 		int result = bService.insertBoard(b);
 		
 		
 		for(MultipartFile file : fileList) {
 				if(!file.getOriginalFilename().contentEquals("")) {
-					b.setbType("4");
 					count++;
 					String renameFileName = saveFile(file, request,count);
 					if(renameFileName != null) {	// 파일이 잘 저장된 경우
@@ -239,11 +301,10 @@ public class BoardController {
 				}
 		}
 		
-		System.out.println("controller, fboarInser.do: " + b);
 	
 
 		if(result > 0) {
-			return "redirect:fBoardListView.do";
+			return "redirect:boardListView.do?category="+b.getCategory();
 		}else {
 			throw new BoardException("게시글 등록 실패!");
 		}
@@ -299,15 +360,23 @@ public class BoardController {
 			fileList.add(file4);
 			fileList.add(file5);
 			
-			
-		HttpSession session = request.getSession(); 
-	
 		b.setbType("1");
+		
+		int attachCount = 0; 
+		for(MultipartFile file : fileList) {
+			if(!file.getOriginalFilename().contentEquals("")) {
+				attachCount ++; 
+			}
+		}
+
+		if(attachCount > 0) {
+			b.setbType("4");
+		}
+		
 		
 		int count = 0; 
 		for(MultipartFile file : fileList) {
 				if(!(file.getOriginalFilename().contentEquals(""))) {
-					b.setbType("4");
 					count++;
 					String renameFileName = saveFile(file, request,count);
 					if(renameFileName != null) {	// 파일이 잘 저장된 경우
@@ -345,22 +414,13 @@ public class BoardController {
 		// 결과 값 반환 
 		
 		if(result > 0) {
-			return "redirect:fBoardListView.do?page=" + page;
+			return "redirect:boardListView.do?page=" + page +"&category=" + b.getCategory();
 		}else {
 			throw new BoardException("게시글 등록 실패!");
 		}
 	
 	
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	public String saveFile(MultipartFile file, HttpServletRequest request, int count) {
@@ -429,7 +489,7 @@ public class BoardController {
 	}
 	
 	@RequestMapping("deleteBoard.do")
-	public String deleteBoard(int bId, HttpServletRequest request) {
+	public String deleteBoard(int bId, int category,  HttpServletRequest request) {
 		ArrayList<Attachment> attachments = bService.selectAttachments(bId);
 		
 		System.out.println(bId);
@@ -444,7 +504,7 @@ public class BoardController {
 		
 		
 		if(result >0) {
-			return "redirect:fBoardListView.do";
+			return "redirect:boardListView.do?category=" +category;
 		}else{
 			throw new BoardException("게시물 삭제 실패!");
 		}
@@ -461,13 +521,17 @@ public class BoardController {
 	}
 	
 	@RequestMapping("fBoardUpdateView.do")
-	public ModelAndView updateBoardView(ModelAndView mv, int bId,
+	public ModelAndView updateBoardView(ModelAndView mv, Board b,
 			@RequestParam("page") Integer page) {
 		
-		Board board = bService.selectBoard(bId);
-		ArrayList<Attachment> flist = bService.selectAttachments(bId);
+		Board board = bService.selectBoard(b);
+		ArrayList<Attachment> flist = bService.selectAttachments(b.getbId());
+		ArrayList<Board> noticeList = bService.selectNoticeList();
+		ArrayList<Board> bestList= bService.selectBestList(); 
 		
 		mv.addObject("board", board)
+		.addObject("noticeList", noticeList)
+		.addObject("bestList", bestList)
 		.addObject("currentPage", page)
 		.addObject("flist", flist)
 		.setViewName("board/fBoardUpdateView");	// boardDetailView.jsp 만들러 ㄱㄱ씽
@@ -476,17 +540,29 @@ public class BoardController {
 	}
 	
 	
-		
-	
-	
-	
 	// 댓글 관련 부분
 		// 댓글 리스트 불러오기
-
+		
+		/*
 		@RequestMapping("rList.do")
-		public void getReplyList(HttpServletResponse response, int bId) throws JsonIOException, IOException {
+		public void getReplyList(HttpServletResponse response, int bId, HttpSession session,
+								@RequestParam(value="page", required=false) Integer page) throws JsonIOException, IOException {
 			System.out.println("리플 들어왔니? ");
-			ArrayList<Reply> rList = bService.selectReplyList(bId);
+			
+			int rCurrentPage = 1;
+			if(page != null) {
+				rCurrentPage = page;
+			}
+			
+			int rListCount = bService.getReplylistCount(bId);
+			System.out.println("리플리스트 카운트:" + rListCount );
+			
+			PageInfo pi = Pagination.getPageInfo(rCurrentPage, rListCount );
+			
+			session.setAttribute("rListCount", rListCount);
+
+			
+			ArrayList<Reply> rList = bService.selectReplyList(bId, pi);
 			
 			response.setContentType("application/json;charset=utf-8");
 			for(Reply r : rList) {
@@ -498,17 +574,128 @@ public class BoardController {
 			Gson gson = new GsonBuilder().setDateFormat("yyyy.MM.dd").create();
 			gson.toJson(rList, response.getWriter());
 		}
-	
+	*/
 		
-		/*
+		@RequestMapping("rList.do")
+		public ModelAndView  getReplyList(ModelAndView mv, RGood g, HttpSession session, HttpServletResponse response, int bId, 
+											@RequestParam(value="page", required=false) Integer page){
+			
+
+			int rCurrentPage = 1;
+			if(page != null) {
+				rCurrentPage = page;
+			}
+			
+			
+			int rListCount = bService.getReplylistCount(bId);
+			
+			
+			System.out.println("리플리스트 카운트:" + rListCount );
+			
+			
+			
+			PageInfo pi = Pagination.getPageInfo(rCurrentPage, rListCount );
+			
+			ArrayList<Reply> rList = bService.selectReplyList(bId, pi);
+			ArrayList<Reply> bestReplyList = bService.selectBestReplyList(bId); 
+			System.out.println("베스트 리플: "  + bestReplyList);	
+			
+			
+			System.out.println(rList);
+			
+			Member loginUser= (Member) session.getAttribute("loginUser");
+			int mId= loginUser.getMid(); 
+			g.setmId(mId);
+			int result = 0; 
+			
+			
+			
+			ArrayList goodClickList = new ArrayList(); 
+			
+			
+			
+			for(Reply reply: rList) {
+				g.setrId(reply.getrId());
+				result = bService.selectReplyGoodMemory(g);
+				if (result > 0) {
+					goodClickList.add(reply.getrId());
+				}else {
+					goodClickList.add(30000);
+				}
+				
+			}
+		
+			for(Reply reply:rList) {
+				
+				int rId = reply.getrId();
+				
+				ArrayList<Answer> aList = bService.selectAList(rId); 
+				
+				response.setContentType("application/json;charset=utf-8") ;
+				for(Answer a  : aList) {
+					a.setUserNickname(a.getUserNickname());
+					a.setaContent(a.getaContent());
+				}
+				
+				if(aList != null && (!aList.isEmpty())) {
+					reply.setaList(aList);
+				}
+			}
+			
+			
+			for(Reply bestReply: bestReplyList) {
+				
+				for(Reply reply:rList) {
+					if( bestReply.getrId() == reply.getrId()) {
+						bestReply.setaList(reply.getaList());
+					}
+				}
+			}
+			
+			
+			
+			
+			
+			response.setContentType("application/json;charset=utf-8");
+			for(Reply r : rList) {
+				r.setUserNickname(r.getUserNickname());
+				r.setrContent(r.getrContent());
+			}
+			
+			// Sample 클래스 만들고 시작
+			// JsonView 라이브러리 받고 빈설정, Sample도 빈 설정 해주자(Servlet-context.xml)
+			
+			Map map = new HashMap();
+			map.put("pi", pi);
+			map.put("rList", rList);
+			map.put("rListCount", rListCount);
+			map.put("goodClickList", goodClickList);
+			map.put("bestReplyList",bestReplyList);
+			// addAllObjects 메소드를 이용하여 map 객체에 저장된 모든 속성(key, value)를 모델에 저장함
+			// addObject로 하게 되면 안된다!
+			mv.addAllObjects(map);
+			
+			// 뷰 지정 : JsonView를 빈으로 등록하고 JsonView id를 뷰 이름으로 지정
+			// (viewName과 실제 view단을 연결해주기 위해서)
+			mv.setViewName("jsonView");
+			
+			return mv;
+		}
+		
+		
+		
+		
+		
+		
+	
 		@RequestMapping("addReply.do")
 		@ResponseBody
 		public String addReply(Reply r, HttpSession session, HttpServletResponse response) {
 			response.setContentType("application/json;charset=utf-8");
 			
 			Member loginUser = (Member)session.getAttribute("loginUser");
-			String rWriter = loginUser.getId();
-			r.setrWriter(rWriter);
+			int mId = loginUser.getMid();
+			r.setmId(mId);
 			
 			int result = bService.insertReply(r);
 			
@@ -518,10 +705,116 @@ public class BoardController {
 				throw new BoardException("댓글 등록 실패!");
 			}
 		}
-	*/
 	
+		@RequestMapping("addAnswer.do")
+		@ResponseBody
+		public String addAnswer(Answer a, HttpSession session, HttpServletResponse response) {
+			response.setContentType("application/json;charset=utf-8");
+			
+			Member loginUser = (Member)session.getAttribute("loginUser");
+			int mId = loginUser.getMid();
+			a.setmId(mId);
+			
+			int result = bService.insertAnswer(a);
+			
+			if(result > 0) {
+				return "success";
+			}else {
+				throw new BoardException("댓글 등록 실패!");
+			}
+		}
+		
+		
+		
+		@RequestMapping("addReplyGood.do")
+		@ResponseBody
+		public String addReply(RGood g, int rId, HttpSession session, HttpServletResponse response) {
+			response.setContentType("application/json;charset=utf-8");
+			
+			Member loginUser = (Member)session.getAttribute("loginUser");
+			int mId = loginUser.getMid();
+			g.setmId(mId);
+			g.setrId(rId);
+			
+			int result1 = bService.selectReplyGoodMemory(g);
+			
+			
+			
+			System.out.println("리플좋아요 셀렉트 결과: " + result1 );
+			
+			int result = 0; 
+			if(result1 < 1 ) {
+				 result = bService.addReplyGoodCount(g);
 	
+				 if(result > 0) {
+						return "AddSuccess";
+					}else {
+						throw new BoardException("조아요 추가 실패!");
+					}
+			
+			}else {
+				result= bService.subReplyGoodCount(g);
+			
+				 if(result > 0) {
+						return "SubSuccess";
+					}else {
+						throw new BoardException("조아요 삭제 실패!");
+					}
+			}
+		}
+		
+		
 	
+		@RequestMapping("deleteReply.do")
+		@ResponseBody
+		public String deleteReply(int rId) {
+			
+			int result = bService.deleteReply(rId);
+			
+			if(result > 0) {
+				return "success";
+			}else {
+				throw new BoardException("댓글 등록 실패!");
+			}
+		}
+		
+		
+		@RequestMapping("modifyReply.do")
+		@ResponseBody
+		public String modifyReply(Reply r) {
+			
+			System.out.println("들어왔냐?");
+			System.out.println(r);
+			
+		
+		 int result = bService.modifyReply(r);
+		 
+		 if(result > 0) { 
+			 return "success"; 
+		 
+		 }else { 
+			 throw new BoardException("댓글 수정 실패!"); }
+		
+		}
+		
+		
+		
+		
+		
+		
+	
+		@RequestMapping("deleteAnswer.do")
+		@ResponseBody
+		public String deleteAnswer(int aId) {
+			
+			int result = bService.deleteAnswer(aId);
+			
+			if(result > 0) {
+				return "success";
+			}else {
+				throw new BoardException("댓글 등록 실패!");
+			}
+		}
 	
 	
 	
