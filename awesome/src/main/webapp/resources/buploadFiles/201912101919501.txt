@@ -1,0 +1,29 @@
+<<mybatis 라이브러리 추가 및 xml 생성 방법>>
+
+
+0. mybatis 싸이트: https://mybatis.org/mybatis-3/ko/getting-started.html
+
+1. maven repository 에서  MyBatis 3.4.6 다운 후 이클립스 라이브러리 추가 
+
+2. 이클립스 - Window- Preferences- xml catalog-  User Specified Entries  클릭 - Add 
+
+
+3.  mybatis 싸이트 참고하여 ADD XML Catalog 를 완성 후  OK 클릭 
+ 
+ 1)  Config 
+    Location: http://mybatis.org/dtd/mybatis-3-config.dtd
+    key: -//mybatis.org//DTD Config 3.0//EN
+        
+
+ 2) Mapper
+    Location: http://mybatis.org/dtd/mybatis-3-mapper.dtd
+    key: -//mybatis.org//DTD Mapper 3.0//EN   
+       
+
+4. project 폴더 바로 밑에 resources 폴더 생성 
+
+
+<<Configuration용 XML 생성>>  
+1. xml 파일 생성 -> next 누른 후 DTD file 선택 ->  xml catalog entry 에서 config 선택     -> next 후 finish  
+
+2. 생성한 xml 파일 - design- configuration -  add Child - enviroments 클릭

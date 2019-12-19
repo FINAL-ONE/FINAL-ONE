@@ -2,6 +2,8 @@ package com.kh.awesome.member.model.service;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletResponse;
+
 import com.kh.awesome.member.model.vo.Member;
 import com.kh.awesome.member.model.vo.PageInfo;
 
@@ -22,4 +24,14 @@ public interface MemberService {
 	ArrayList<Member> selectTopList();
 	//회원포인트 수정
 	int updatePointMember(Member m);
+	
+	int checkIdDup(String id);
+	
+	String find_id(HttpServletResponse response, String email) throws Exception;
+
+	void find_pw(HttpServletResponse response, Member member) throws Exception;
+
+	void send_mail(Member member, String div) throws Exception;
+
+	int checkNickNameDup(String nickName);
 }

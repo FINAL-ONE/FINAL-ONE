@@ -6,6 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="shortcut icon" href="${contextPath}/resources/images/favicon.ico" type="image/x-icon">
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
@@ -40,8 +41,48 @@
 	#BottomButton {
 	  bottom: 75px;
 	}
-
+	/*포인트 수정 버튼 css  */
+	.myBtn{
+		width :80px;
+		height : 30px;
+		font-size : 13px;
+		border-radius: 4px;
+		background-color: #4CAF50;
+		border: none;
+		color: #FFFFFF;
+		text-align: center;
+		padding: 6px;
+		transition: all 0.5s;
+		cursor: pointer;
+		margin: 3px;
+	}
+	
+	.myBtn span {
+	  cursor: pointer;
+	  display: inline-block;
+	  position: relative;
+	  transition: 0.5s;
+	}
+	
+	.myBtn span:after {
+	  content: '\00bb';
+	  position: absolute;
+	  opacity: 0;
+	  top: 0;
+	  right: -20px;
+	  transition: 0.5s;
+	}
+	
+	.myBtn:hover span {
+	  padding-right: 25px;
+	}
+	
+	.myBtn:hover span:after {
+	  opacity: 1;
+	  right: 0;
+	}
 </style>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
@@ -124,7 +165,7 @@
 				<td>
 					<!-- <span class="guide ok">이 상품명은 사용 가능합니다.</span> -->
 					<span class="guide error">이 상품은 사용할수 없습니다.</span>
-					<input type="hidden" name="idDuplicateCheck" id="idDuplicateCheck" value="0">
+					<input type="hidden" name="id	DuplicateCheck" id="idDuplicateCheck" value="0">
 				</td>
 			</tr>
 			<tr>
@@ -168,8 +209,10 @@
 			<tr>
 				<td colspan="2" align="center">
 					<!-- <input type="submit" value="등록하기"> &nbsp; -->
-					<input type="button" onclick="validate()" value="등록하기"> &nbsp;
-					<input type="reset" value="등록취소">
+					<!-- <input type="button" onclick="validate()" value="등록하기"> &nbsp;
+					<input type="reset" value="등록취소"> -->
+					<button id="myBtn" class="myBtn success" type="button" onclick="validate();"><span>등록</span></button>
+					<button id="myBtn" class="myBtn success" type="button" onclick="closeModal();"><span>취소</span></button>
 				</td> 
 			</tr>
 		</table>
@@ -377,6 +420,12 @@
 		} 
 	}	
 
+	// 등록취소
+	function closeModal(){
+		location.href="sell_goodsList.do";
+	}
+	
+	
 //end 등록버튼 클릭시----------------------------------------------------------------------------------------------------		
 	</script>
 

@@ -59,10 +59,11 @@ public class OrderController {
 		 if(list != null && list.size()>0) {
 			mv.addObject("list", list);
 			mv.addObject("pi", pi);
+		 } 
 			mv.setViewName("order/orderListView");
-		}
 		return mv;
 	}
+	
 
 	@RequestMapping("orderCount.do")
 	public void orderCount(HttpServletRequest request, HttpServletResponse response)
@@ -157,7 +158,7 @@ public class OrderController {
 		gson.toJson(order, response.getWriter());
 
 	}
-
+	
 	@RequestMapping("orderSearch.do")
 	public ModelAndView boardList(ModelAndView mv, String date1, String date2, OrderSearch os,HttpSession session,HttpServletRequest request, @RequestParam(value = "page", required = false) Integer page) {
 		
@@ -198,6 +199,7 @@ public class OrderController {
 		//System.out.println("searchController2 : " + list);
 		return mv;
 	}
+
 	
 	@RequestMapping("termSearch.do")
 	public ModelAndView searchList(ModelAndView mv,String date3, String date4, OrderSearch os,HttpSession session,HttpServletRequest request, @RequestParam(value = "page", required = false) Integer page) {
@@ -242,99 +244,6 @@ public class OrderController {
 		
 		return mv;
 	}
-	
-	@RequestMapping("orderSearch.do")
-	public ModelAndView boardList(ModelAndView mv, String date1, String date2, OrderSearch os,HttpSession session,HttpServletRequest request, @RequestParam(value = "page", required = false) Integer page) {
-		
-		Member loginUser = (Member) session.getAttribute("loginUser");
-		int mid = loginUser.getMid();
-		
-		
-		os.setDate1(date1);
-		os.setDate2(date2);
-		os.setMid(mid);
-		
-		int currentPage = 1;
-		if(page != null) {
-			currentPage = page;
-		}
-		
-		int listCount = oService.getOrderSearchCount(os);
-		
-		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
-		session = request.getSession(true);
-		/*
-		 * System.out.println("들어오니?"); System.out.println(os);
-		 */
-		
-		ArrayList<Order> list = oService.datePicker(os,pi); 
-		
-		System.out.println("searchController : " + list);
-		
-		System.out.println("파이"+pi);
-		if(list != null && list.size()>0) {
-			mv.addObject("os", os);
-			mv.addObject("list", list);
-			mv.addObject("pi", pi);
-			mv.setViewName("order/orderSearchView");
-		}else {
-			mv.setViewName("order/emptyOrderSearch");
-		}
-		//System.out.println("searchController2 : " + list);
-		return mv;
-	}
-	
-	@RequestMapping("termSearch.do")
-	public ModelAndView searchList(ModelAndView mv,String date3, String date4, OrderSearch os,HttpSession session,HttpServletRequest request, @RequestParam(value = "page", required = false) Integer page) {
-		
-		Member loginUser = (Member) session.getAttribute("loginUser");
-		int mid = loginUser.getMid();
-		
-
-		os.setDate1(date3);
-		os.setDate2(date4);
-		os.setMid(mid);
-		
-		int currentPage = 1;
-		if(page != null) {
-			currentPage = page;
-		}
-		
-		int listCount = oService.getOrderSearchCount(os);
-		
-		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
-		session = request.getSession(true);
-		/*
-		 * System.out.println("들어오니?"); System.out.println(os);
-		 */
-		
-		ArrayList<Order> list = oService.datePicker(os,pi); 
-		
-		System.out.println("searchController : " + list);
-		
-		System.out.println("파이"+pi);
-		if(list != null && list.size()>0) {
-			mv.addObject("os", os);
-			mv.addObject("list", list);
-			mv.addObject("pi", pi);
-			mv.setViewName("order/orderSearchView");
-		}else {
-			
-			mv.setViewName("order/emptyOrderSearch");
-		
-		}
-		//System.out.println("searchController2 : " + list);
-		
-		return mv;
-	}
-
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	

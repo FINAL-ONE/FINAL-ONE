@@ -22,12 +22,18 @@ public class BoardDao {
 	@Autowired
 	SqlSessionTemplate sqlSession;
 
-	public int getFboardListCount() {
+	public int getBoardListCount(int category) {
 		
-		return sqlSession.selectOne("boardMapper.getFboardListCount");
+	
+		if (category == 10 ) {
+			return sqlSession.selectOne("boardMapper.getBoardAllListCount", category);
+		}else {
+			return sqlSession.selectOne("boardMapper.getBoardListCount", category);
+		}
+		
 	}
 
-	public ArrayList<Board> selectFList(PageInfo pi) {
+	public ArrayList<Board> selectList(PageInfo pi, int category) {
 		
 		//pageInfo가 넘어왔을때 rowBounds 설정 방법 
 		// 현재 페이지 전까지의 모든 게시글. 
@@ -35,7 +41,13 @@ public class BoardDao {
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		
 		
-		return (ArrayList)sqlSession.selectList("boardMapper.selectFList", null, rowBounds);
+		
+		if (category == 10 ) {
+			return  (ArrayList)sqlSession.selectList("boardMapper.selectAllList", null, rowBounds); 
+		}else {
+			return (ArrayList)sqlSession.selectList("boardMapper.selectList", category, rowBounds);
+		}
+		
 	}
 
 	public int insertBoard(Board b) {
@@ -46,8 +58,15 @@ public class BoardDao {
 		return sqlSession.update("boardMapper.updateCount", bId);
 	}
 
-	public Board selectBoard(int bId) {
-		return sqlSession.selectOne("boardMapper.selectBoardOne", bId);
+	public Board selectBoard(Board b) {
+		
+		if(b.getCategory() == 0) {
+			return sqlSession.selectOne("boardMapper.selectBoardOne", b.getbId());
+		}else {
+			return sqlSession.selectOne("boardMapper.selectBoardOne2", b);
+		}
+		
+	
 	}
 
 	public int updateBoard(Board b) {
@@ -62,14 +81,27 @@ public class BoardDao {
 	public int getSearchFboardListCount(Search sc) {
 		System.out.println("dao, type: " + sc.getType());
 		System.out.println( "dao, searchWord: " + sc.getSearchWord());
-		return sqlSession.selectOne("boardMapper.getSearchFboardListCount", sc);
+		
+		if (sc.getCategory() == 10 ) {
+			return sqlSession.selectOne("boardMapper.getSearchFboardAllListCount", sc);
+		}else {
+			return sqlSession.selectOne("boardMapper.getSearchFboardListCount", sc);
+		}
+		
+		
 	}
 
 	public ArrayList<Board> selectSeacrchFList(PageInfo pi, Search sc) {
 		int offset = (pi.getCurrentPage()-1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		
-		return (ArrayList)sqlSession.selectList("boardMapper.selectSeacrchFList", sc, rowBounds);
+		
+		if (sc.getCategory() == 10 ) {
+			return (ArrayList)sqlSession.selectList("boardMapper.selectSeacrchAllList", sc, rowBounds);
+		}else {
+			return (ArrayList)sqlSession.selectList("boardMapper.selectSeacrchFList", sc, rowBounds);
+		}
+		
 	}
 
 	public int insertAttachment(Attachment attachment) {
@@ -108,8 +140,8 @@ public class BoardDao {
 		return  sqlSession.insert("boardMapper.updateAttachment", attachment);
 	}
 
-	public Board selectBoardAsRnum(int rNum) {
-		return sqlSession.selectOne("boardMapper.selectBoardAsRnum", rNum);
+	public Board selectBoardAsRnum(Board b) {
+		return sqlSession.selectOne("boardMapper.selectBoardAsRnum", b);
 	}
 
 	public ArrayList<Reply> selectReplyList(int bId, PageInfo pi) {
@@ -158,5 +190,20 @@ public class BoardDao {
 	public int deleteAnswer(int aId) {
 		return sqlSession.delete("boardMapper.deleteAnswer",aId);
 	}
-	
+
+	public ArrayList<Reply> selectBestReplyList(int bId) {
+		return (ArrayList)sqlSession.selectList("boardMapper.selectBestReplyList", bId);
+	}
+
+	public int modifyReply(Reply r) {
+		return sqlSession.update("boardMapper.modifyReply", r);
+	}
+
+	public ArrayList<Board> selectBestList() {
+		return (ArrayList)sqlSession.selectList("boardMapper.selectBestList");
+	}
+
+	public ArrayList<Board> selectNoticeList() {
+		return (ArrayList)sqlSession.selectList("boardMapper.selectNoticeList");
+	}
 }

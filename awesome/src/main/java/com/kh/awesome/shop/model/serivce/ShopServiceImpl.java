@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.kh.awesome.admin.model.vo.Admin;
 import com.kh.awesome.shop.model.dao.ShopDao;
-import com.kh.awesome.shop.model.vo.Cart;
 import com.kh.awesome.shop.model.vo.SellReply;
 
 
@@ -42,10 +41,31 @@ public class ShopServiceImpl implements ShopService {
 	}
 
 	// 카트에 상품 추가
-	@Override
-	public int CartInsert(Cart c) {
+	/*
+	 * @Override public int CartInsert(Cart2 c) {
+	 * 
+	 * return ShopDao.CartInsert(c); }
+	 */
 
-		return ShopDao.CartInsert(c);
+	// 상품별 후기 조회
+	@Override
+	public ArrayList<SellReply> stargIdSelect(int gId) {
+		return ShopDao.stargIdSelect(gId);
 	}
+
+	
+	// 상품별 후기 평균
+	@Override
+	public ArrayList<SellReply> sAvgListSelect(int gId) {
+		return ShopDao.sAvgListSelect(gId);
+	}
+
+	// 내 후기조회
+	@Override
+	public ArrayList<SellReply> myafterSelectList(int mid) {
+		return ShopDao.myafterSelectList(mid);
+	}
+
+
 
 }

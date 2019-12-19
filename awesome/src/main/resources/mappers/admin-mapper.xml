@@ -27,40 +27,40 @@
       <result property ="createDate" column="CREATE_DATE"/>
    </resultMap>
 
-	<resultMap id="goodsResultSet" type="Goods">
-	  	<id property="gId" 				column="GID"/>
-	  	<result property="cateCd" 		column="CATE_CD"/>
-	  	<result property="goodsName" 	column="GOODS_NAME"/> 
-	  	<result property="goodsPrice" 	column="GOODS_PRICE"/>
-	  	<result property="count" 		column="COUNT"/>
-	  	<result property="goodsStatus" 	column="GOODS_STATUS"/>
-	  	<result property="soldout" 		column="SOLDOUT"/>
-	  	<result property="registerDate" column="REGISTER_DATE"/>
-	  	<result property="modifyDate" 	column="MODIFY_DATE"/>
-	  	
-	  	<result property="cateNm" 		column="CATE_NM"/>
-	  	<result property="lclCd" 		column="LCL_CD"/>
-	  	<result property="mclCd" 		column="MCL_CD"/>
-	  	<result property="sclCd" 		column="SCL_CD"/>
-	</resultMap>
+   <resultMap id="goodsResultSet" type="Goods">
+        <id property="gId"             column="GID"/>
+        <result property="cateCd"       column="CATE_CD"/>
+        <result property="goodsName"    column="GOODS_NAME"/> 
+        <result property="goodsPrice"    column="GOODS_PRICE"/>
+        <result property="count"       column="COUNT"/>
+        <result property="goodsStatus"    column="GOODS_STATUS"/>
+        <result property="soldout"       column="SOLDOUT"/>
+        <result property="registerDate" column="REGISTER_DATE"/>
+        <result property="modifyDate"    column="MODIFY_DATE"/>
+        
+        <result property="cateNm"       column="CATE_NM"/>
+        <result property="lclCd"       column="LCL_CD"/>
+        <result property="mclCd"       column="MCL_CD"/>
+        <result property="sclCd"       column="SCL_CD"/>
+   </resultMap>
 
 
-	<resultMap id="CategoryResultSet" type="Category">
-	  	<id property="cateCd" 		column="CATE_CD"/>
-	  	<result property="cateNm" 	column="CATE_NM"/>
-	  	<result property="lclCd" 	column="LCL_CD"/>
-	  	<result property="mclCd" 	column="MCL_CD"/>
-	  	<result property="sclCd" 	column="SCL_CD"/>
-	  	<result property="cateLvl" 	column="CATE_LVL"/>
-	  	<result property="useYn" 	column="USE_YN"/>
-	  	<result property="regDtm" 	column="REG_DTM"/>
-	  	<result property="modDtm" 	column="MOD_DTM"/>
+   <resultMap id="CategoryResultSet" type="Category">
+        <id property="cateCd"       column="CATE_CD"/>
+        <result property="cateNm"    column="CATE_NM"/>
+        <result property="lclCd"    column="LCL_CD"/>
+        <result property="mclCd"    column="MCL_CD"/>
+        <result property="sclCd"    column="SCL_CD"/>
+        <result property="cateLvl"    column="CATE_LVL"/>
+        <result property="useYn"    column="USE_YN"/>
+        <result property="regDtm"    column="REG_DTM"/>
+        <result property="modDtm"    column="MOD_DTM"/>
 
-	  	<result property="lcateNm" 	column="L_CATE_NM"/>
-	  	<result property="mcateNm" 	column="M_CATE_NM"/>
-	  	<result property="scateNm" 	column="S_CATE_NM"/>
+        <result property="lcateNm"    column="L_CATE_NM"/>
+        <result property="mcateNm"    column="M_CATE_NM"/>
+        <result property="scateNm"    column="S_CATE_NM"/>
 
-	</resultMap>
+   </resultMap>
 
 	<!-- 상품등록  -->
    <insert id ="insertSellgoods" parameterType="Admin">
@@ -86,19 +86,7 @@
 		WHERE SR.SELL_NUM=#{sellNum}
 		ORDER BY RID DESC 
     </select>
-   
-   
-   <update id = "updateAdminStatus" parameterType ="Admin">
-      UPDATE SELL_GOODS
-      <if test='status == "Y"'>
-          SET STATUS='N'
-      </if>
-      <if test='status == "N"'>
-          SET STATUS='Y'
-      </if>      
-      WHERE SELL_NUM=#{sellNum}
-   </update>
-   
+
    <!-- 해당글의 리플갯수  -->
     <select id="getReplylistCount" parameterType="_int" resultType="_int"> 	
   	 SELECT COUNT(*)
@@ -116,17 +104,16 @@
 	AND STATUS = 'Y'
 	ORDER BY RID ASC
   </select>
-  
-  
-<!--========================================= INSERT  =========================================-->   
-   
-   <!-- 동복 - 상품 등록 -->
-   <insert id ="insertgoods" parameterType="Goods">
-      INSERT INTO GOODS VALUES(
-         SEQ_GID.NEXTVAL, #{cateCd}, #{goodsName}, #{goodsPrice}, #{count}, #{goodsStatus}, #{soldout}, SYSDATE, NULL 
-      )
-   </insert>
-   
+
+<!--========================================= INSERT  =========================================-->	
+	
+	<!-- 동복 - 상품 등록 -->
+	<insert id ="insertgoods" parameterType="Goods">
+		INSERT INTO GOODS VALUES(
+			SEQ_GID.NEXTVAL, #{cateCd}, #{goodsName}, #{goodsPrice}, #{count}, #{goodsStatus}, #{soldout}, SYSDATE, NULL 
+		)
+	</insert>
+	
 
 	
 	<!-- 동복 - 카테고리 등록 -->
@@ -137,6 +124,18 @@
 	</insert>	
 
 <!--========================================= UPDATE  =========================================-->
+  	<!-- 동복 - 상품판매 품절유무 수정-->
+  	<update id = "updateAdminStatus" parameterType ="Admin">
+		UPDATE SELL_GOODS
+		<if test='status == "Y"'>
+    		SET STATUS='N'
+		</if>
+		<if test='status == "N"'>
+    		SET STATUS='Y'
+		</if>		
+		WHERE SELL_NUM=#{sellNum}
+	</update>
+  
   
   	<!-- 동복 - 상품 수정-->
   	<update id="Updategoods" parameterType="Goods">

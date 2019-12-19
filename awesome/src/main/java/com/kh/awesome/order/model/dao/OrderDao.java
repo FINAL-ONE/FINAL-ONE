@@ -62,6 +62,15 @@ public class OrderDao {
 			return sqlSession.selectOne("orderMapper.getOrderListCount", mId);
 		}
 
+
+		public ArrayList<Order> datePicker(OrderSearch os, PageInfo pi) {
+			
+			int offset = (pi.getCurrentPage()-1) * pi.getBoardLimit();
+			RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+			System.out.println("searchDao : " + os);
+			return (ArrayList)sqlSession.selectList("orderMapper.getOrderSearch", os, rowBounds);
+		}
+
 		
 		
 		public int getOrderSearchCount(OrderSearch os) {
@@ -85,5 +94,5 @@ public class OrderDao {
 		public int updateMemberPoint(Order o) {
 			return sqlSession.update("orderMapper.updateMemberPoint", o);
 		}
-		
+
 }

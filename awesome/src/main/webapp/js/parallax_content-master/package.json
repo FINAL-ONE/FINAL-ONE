@@ -1,0 +1,33 @@
+{
+  "name": "parallax_content",
+  "version": "1.0.7",
+  "description": "parallax content",
+  "main": "build/parallax_content.js",
+  "dependencies": {
+    "gsap": "^1.20.2",
+    "jquery": ">=1.7"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.0",
+    "webpack": "^3.6.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "parallax",
+    "gsap",
+    "tweenlite",
+    "greensock",
+    "jquery",
+    "parallax scroll"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lemehovskiy/parallax_content"
+  },
+  "author": "lemehovskiy",
+  "license": "ISC"
+}

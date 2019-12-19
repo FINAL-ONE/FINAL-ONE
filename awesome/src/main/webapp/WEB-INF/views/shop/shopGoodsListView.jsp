@@ -5,14 +5,20 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="shortcut icon" href="${contextPath}/resources/images/favicon.ico" type="image/x-icon">
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
+<!-- 3D-slider css -->
+<link href="https://www.cssscript.com/wp-includes/css/sticky.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="js/3d-slider-master/style.css">
+    
+    
 <!-- Star Rating -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<style>
 
+<style>
 
 .outer{
 	width : 1300px;
@@ -81,6 +87,49 @@
 	height : 50px;
 }
 
+  
+  /* 사진 롤링 */
+  iSlider-effect {
+  height: 340px;
+  width: 260px;
+  overflow: hidden;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px solid #000000;
+}
+
+.iSlider-effect ul {
+  list-style: none;
+  /*margin: 0;*/
+  margin-top: -5px;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+}
+.iSlider-effect li {
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-pack: center;
+  -webkit-box-align: center;
+  list-style: none;
+}
+.iSlider-effect li  img{
+  max-width: 100%;
+  max-height: 100%;
+}
+
+
+.fa-star{
+	color : dark-gray;
+}
+.checked {
+  	color: orange;
+}
 
 </style>
 </head>
@@ -101,20 +150,40 @@
 					</ul>
 				</div>
 			</div>
-			<div class = "mini-banner">
-				<img src="resources/images/minibanner_1.png" width="350" height="200px">
+			<div class = "minu-bannerArea">
+				<div class = "mini-banner">
+					<img src="resources/images/minibanner_1.png" width="350" height="200px">
+				</div>
+				<div class = "mini-banner">
+					<img src="resources/images/minibanner_2.png" width="350" height="200px">
+				</div>
+				<div class = "mini-banner">
+					<img src="resources/images/minibanner_3.png" width="350" height="200px">
+				</div>
 			</div>
-			<div class = "mini-banner">
-				<img src="resources/images/minibanner_2.png" width="350" height="200px">
-			</div>
-			<div class = "mini-banner">
-				<img src="resources/images/minibanner_3.png" width="350" height="200px">
-			</div>
+			
+			  <h1 align="center" style ="margin-top: 40px;">추천상품</h1>
+			    <div class="container">
+			        <div class="button" onclick="shiftLeft()" ><img src="https://image.ibb.co/mRsEb7/left_arrow.png" alt=""></div>
+			        <div class="cards-wrapper">
+			            <ul class="cards__container">
+			                <li class="box" style="background-color:red"><img src="resources/images/3d-bannder1.png"></li>
+			                <li class="box"><img src="resources/images/3d-bannder2.png"></li>
+			                <li class="box"><img src="resources/images/3d-bannder3.png"></li>
+			                <li class="box"><img src="resources/images/3d-bannder4.png"></li>
+			                <li class="box"><img src="resources/images/3d-bannder5.png"></li>
+			                <li class="box box--hide"><img src="resources/images/3d-bannder6.png"></li>
+			                <li class="box box--hide"><img src="resources/images/3d-bannder7.png"></li>
+			            </ul>
+			        </div>
+			        <div class="button" onclick="shiftRight()"><img src="https://image.ibb.co/dfPSw7/right_arrow.png" alt=""></div>
+			    </div>
+
 			<c:forEach var="a" items="${list}">
 				<div class = "goods-list">
 						<c:url var="adetail" value="adetail.do">
 							<c:param name="sellNum" value="${a.sellNum }"/>
-							<c:param name="mid" value="${sessionScope.loginUser.mid }"/>
+							<c:param name="userId" value="${a.userId }"/>
 						</c:url>
 						<a href="${adetail}" style="text-decoration:none">
 							<div class="goods-img" style ="margin-bottom: 10px;">
@@ -132,7 +201,7 @@
 				</div>
 			</c:forEach>
 			
-			
+			</div>		
 			
 		</div>
 		
@@ -170,12 +239,38 @@
 	</script>
 	
 	
+	<!-- 3d image box Rotator -->
+    <script src='js/3d-slider-master/app.js'></script>
+	<script>
+		try {
+		  fetch(new Request("https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js", { method: 'HEAD', mode: 'no-cors' })).then(function(response) {
+		    return true;
+		  }).catch(function(e) {
+		    var carbonScript = document.createElement("script");
+		    carbonScript.src = "//cdn.carbonads.com/carbon.js?serve=CE7DC2JW&placement=wwwcssscriptcom";
+		    carbonScript.id = "_carbonads_js";
+		    document.getElementById("carbon-block").appendChild(carbonScript);
+		  });
+		} catch (error) {
+		  console.log(error);
+		}
+	</script>
 	
 	
+	<script>
+		  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+		
+		  ga('create', 'UA-46156385-1', 'cssscript.com');
+		  ga('send', 'pageview');
 	
+	</script>
+
+
+
 	
-	
-	</div>
 </body>
 
 <footer>

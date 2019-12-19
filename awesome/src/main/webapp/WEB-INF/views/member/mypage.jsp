@@ -7,40 +7,127 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
+<script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
 <style>
    .centerText table{
       margin: auto;
    }
    
+table.type07 {
+    border-collapse: collapse;
+    text-align: left;
+    line-height: 1.5;
+    border: 1px solid #ccc;
+    margin: auto;
+}
+table.type07 thead {
+    border-right: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+    background: #CA8687;
+}
+table.type07 thead th {
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    color: #fff;
+}
+table.type07 tbody th {
+    width: 150px;
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    border-bottom: 1px solid #ccc;
+    background: #fcf1f4;
+}
+table.type07 td {
+    width: 350px;
+    padding: 10px;
+    vertical-align: top;
+    border-bottom: 1px solid #ccc;
+}
+
+#crystalBtn {
+    margin: 10px 0px 15px;
+    border: 1px solid #CA8687;
+    background: #CA8687;
+    border-radius: 3px;
+    color: #fff;
+    text-align: center;
+    font-size: 17px;
+    font-weight: 500;
+    width: 180px;
+    height: 50px;
+    cursor: pointer;
+}
+
+#byebyeBtn {
+    background: #A9A9A9;
+    border: 1px solid #A9A9A9;
+    text-align: center;
+    font-size: 17px;
+    border-radius: 3px;
+     color: #fff; 
+    font-weight: 500;
+    width: 180px;
+    height: 50px;
+    cursor: pointer;
+}
+    #crystalBtn:hover{
+    border: 1px solid #383838;
+    background: #fff;
+    color: #383838;
+    }
+    
+    #byebyeBtn:hover{
+    border: 1px solid #383838;
+    background: #fff;
+    color:#383838;
+    }
+    
+    #userId, #userName{
+    background-color: #F5F5F5;
+    }
+    
 </style>
 
 </head>
 <body>
 	
 	<jsp:include page ="../common/menubar.jsp"/>
-	<div id="container" style="overflow: auto; height: 800px;" ><!-- container -->
 	
+	<br><br><br><div><h1 align="center"><img src="${contextPath}/resources/images/modification.png" style="height: 50px; vertical-align: top">&nbsp;회원 정보수정</h1></div><br>
 	
-	<h1 align="center">${loginUser.userName }님의 정보 보기</h1>
-   
    <div class="centerText">
       <form action="mupdate.do" method="post" id="myinfoupdateForm">
-         <table width="500" cellspacing="5">
+         <table class="type07" width="600 cellspacing="5">
+         <thead>
             <tr>
-               <td width="150">* 아이디</td>
-               <td width="450">
-                  <input type="text" name="userId" id="userId" value="${loginUser.userId}" readonly>
+	<th colspan=2 scope="cols"><h2 align="center">${loginUser.userName }님의 정보 보기</h2></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+               <th scope="row">* 아이디</th>
+               <td>
+                  <input type="text" name="userId" id="userId" value="${loginUser.userId}" readonly >
                </td>
             </tr>
+           
             <tr>
-               <td>* 이름</td>
-               <td><input type="text" name="userName" value="${loginUser.userName }" readonly></td>
+                <th scope="row">* 이름</th>
+               <td><input type="text" name="userName" id="userName" value="${loginUser.userName }" readonly></td>
             </tr>
-      
             <tr>
-               <td>성별</td>
+					<th scope="row">* 비밀번호</th>
+					<td><input type="password" name="userPwd" id = "userPwd" value="${loginUser.userPwd}"></td>
+				</tr>
+            
+            <tr>
+				<th scope="row">* 닉네임</th>
+					<td><input type="text" name="userNickname" value="${loginUser.userNickname}"></td>
+				</tr>
+            <tr>
+               <th scope="row">성별</th>
                <c:if test="${loginUser.gender eq '남' }">
 	               <td>
 	                  <input type="radio" name="gender" value="남" checked>남
@@ -56,15 +143,15 @@
                
             </tr>
             <tr>
-               <td>생년월일</td>
+               <th scope="row">생년월일</th>
                <td><input type="text" name="birthday" value="${loginUser.birthday}"></td>
             </tr>
             <tr>
-               <td>전화번호</td>
+               <th scope="row">전화번호</th>
                <td><input type="tel" name="phone" value="${loginUser.phone }"></td>
             </tr>
             <tr>
-               <td>이메일</td>
+               <th scope="row">이메일</th>
                <td><input type="email" name="email" value="${loginUser.email }"></td>            
             </tr>
         
@@ -72,7 +159,7 @@
             <c:forTokens var = "addr" items="${loginUser.address }" delims="," varStatus="status">
 	            <c:if test="${status.index eq 0 }">	<!-- index값을 뽑으려면 status.index로 뽑아야한다. addr.index불가능 -->
 		            <tr>
-		               <td>우편번호</td>
+		               <th scope="row">우편번호</th>
 		               <td>
 		                  <input type="text" name="post" class="postcodify_postcode5" value="${addr }" size="6">
 		                  <button type="button" id="postcodify_search_button">검색</button>
@@ -81,13 +168,13 @@
 	            </c:if>
 	            <c:if test="${status.index eq 1 }">
 		            <tr>
-		               <td>도로명 주소</td>
+		               <th scope="row">도로명 주소</th>
 		               <td><input type="text" name="address1" class="postcodify_address" value="${addr }"></td>
 		            </tr>
 	            </c:if>
 	             <c:if test="${status.index eq 2 }">
 		            <tr>
-		               <td>상세주소</td>
+		               <th scope="row">상세주소</th>
 		               <td><input type="text" name="address2" class="postcodify_extra_info" value="${addr }"></td>
 		            </tr>
 	            </c:if>
@@ -103,29 +190,34 @@
                });
             </script>
             
-  			<tr>
-               <td colspan="2" align="center">
-                  <input type="submit" value="수정하기">
+            </tbody>
+         </table>
+         <br><br>
+            <div colspan="2" align="center">
+                  <input type="submit" id = "crystalBtn" value="수정하기">
  		<!-- mupdate.do 매핑 주소 메소드 만들러 MemberController ㄱㄱ  -->
                   &nbsp; 
 				  <c:url var ="mdelete" value ="mdelete.do">
 				  	<c:param name="userId" value="${loginUser.userId}"/>
 				  </c:url>
-				  <a href="${mdelete }"> 탈퇴하기</a>
-               </td>
-            </tr>
-         </table>
+				  <button type = "button" onclick="aaa()" id ="byebyeBtn" > 탈퇴하기 </button>
+               </div>
+         
       </form>
       <br><br>
       <a href="home.do">시작 페이지로 이동</a>
       <!-- 작성 후 minsert.do 요청을 처리하는 부분 작성하러 MemberController로 가자. -->
    </div>
-
-</div>
+<script>
+	function aaa(){
+		if(confirm('정말 탈퇴 하시겠습니까?')){
+			$("#myinfoupdateForm").attr("action", "mdelete.do");
+			$("#myinfoupdateForm").submit();
+		}else{
+			$("#userId").focus();
+		}
+	}
+</script>
+	
 </body>
-
-<footer>
-   <jsp:include page ="../common/footer.jsp"/>
-</footer>
-
 </html>

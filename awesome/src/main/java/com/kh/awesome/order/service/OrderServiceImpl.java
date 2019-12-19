@@ -91,17 +91,6 @@ public class OrderServiceImpl implements OrderService{
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 	//---------------------------- INSERT ----------------------------	
 	// 동복 - 결제 진행 ( TABLE INSERT && UPDATE )
 	@Override
@@ -120,6 +109,6 @@ public class OrderServiceImpl implements OrderService{
 	public int updateMemberPoint(Order o) {
 		return oDao.updateMemberPoint(o);
 	}
-	
+
 
 }

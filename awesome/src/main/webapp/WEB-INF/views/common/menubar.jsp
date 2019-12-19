@@ -1,12 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%> 
          <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="shortcut icon" href="${contextPath}/resources/images/favicon.ico" type="image/x-icon">
 <meta charset="UTF-8">
   <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:400,700,800&display=swap&subset=korean" rel="stylesheet">
 <title>Insert title here</title>
+
 <style>
    .menubar1{
       /*border:1px solid black;   */
@@ -76,7 +79,7 @@
       color: #fa4a4a;
       cursor: pointer;
    }
-	
+   
    
 
    body{ 
@@ -104,7 +107,7 @@
    }
    
    .loginMenu:hover{
-    	cursor: pointer;
+       cursor: pointer;
    }
 
 
@@ -116,7 +119,7 @@
     border-left: 6px solid transparent;
     border-bottom: 8px solid #fa4a4a;
     top: -41px;
-    left: 123px;
+    left: -55px;
 }
 
  .myPageNav:after {
@@ -127,7 +130,7 @@
     border-left: 6px solid transparent;
     border-bottom: 8px solid #fa4a4a;
     top: -41px;
-    left: 550px;	/* 상위 메뉴바 마우스오버시 화살표 위치   */
+    left: 550px;   /* 상위 메뉴바 마우스오버시 화살표 위치   */
 }
 
 
@@ -143,7 +146,7 @@
 }   */
 
 #loginuserInfo{
-	  font-size: 11px; 
+     font-size: 11px; 
       line-height:2.2; 
       position: absolute; 
       right: 0px;
@@ -156,68 +159,72 @@
 <body>
 
 
+<c:if test = "${!empty sessionScope.loginUser}">
+	<input id="loginUserMid"  type="hidden" value = "${loginUser.mid}"/> 
+</c:if>
+<c:if test = "${empty sessionScope.loginUser}">
+	<input id="loginUserMid"  type="hidden" value = "0"/> 
+</c:if>
+
+
+
 <c:set var="contextPath" value="${pageContext.servletContext.contextPath }" scope="application"/>
 <div style= "height: 25px; width: 100%; background: #EEEEEE; margin-bottom:10px;">
-	<c:if test="${empty sessionScope.loginUser }">
-	    <span class= "loginMenu" style="right: 65px;" onclick= "location.href='loginView.do'">로그인 &nbsp;|</span>
-	    <span class= "loginMenu" style="right: 15px;" onclick= "location.href='enrollView.do'">&nbsp;회원가입</span>
+   <c:if test="${empty sessionScope.loginUser }">
+       <span class= "loginMenu" style="right: 65px;" onclick= "location.href='loginView.do'">로그인 &nbsp;|</span>
+       <span class= "loginMenu" style="right: 15px;" onclick= "location.href='enrollView.do'">&nbsp;회원가입</span>
    <!-- <span style="font-size: 11px; line-height:2; position: fixed; right: 0px;"> <b>관리자</b>님 환영합니다. &nbsp;&nbsp;&nbsp;</span> -->
-	</c:if>
+   </c:if>
 
-	<c:if test="${!empty sessionScope.loginUser }">
-			<!-- 로그인했을떄 -->
-			<!-- 여기 이 부분은 DB로부터 객체 받아오는거 확인하고 나서 작성하자!!  -->
-			<span id ="loginuserInfo">
-				<c:out value = "${loginUser.userName }님 환영 합니다."/>
-				<!-- 정보 수정용 페이지로 갈 때 쓸 변수와 로그아웃용 경로 변수 지정 -->
-				<c:url var ="myinfo" value="myinfo.do"/>
-				<c:url var ="logout" value="logout.do"/>
-						<!-- // 쿼리 스트링 방식으로 보내면 GET방식이라 POST- > GET으로  -->
-				<span onclick ="location.href='${myinfo }'">정보수정  &nbsp;|</span>
-				<span onclick ="location.href='${logout }'">&nbsp;로그아웃</span>
-			</span>
-			<!-- 이 부분 작성 후 다시 MemberController가서 로그아웃 작성하자 !! -->
-	</c:if>
+   <c:if test="${!empty sessionScope.loginUser }">
+         <!-- 로그인했을떄 -->
+         <!-- 여기 이 부분은 DB로부터 객체 받아오는거 확인하고 나서 작성하자!!  -->
+         <span id ="loginuserInfo">
+            <c:out value = "${loginUser.userName }님 환영 합니다."/>
+            <!-- 정보 수정용 페이지로 갈 때 쓸 변수와 로그아웃용 경로 변수 지정 -->
+            <c:url var ="myinfo" value="myinfo.do"/>
+            <c:url var ="logout" value="logout.do"/>
+                  <!-- // 쿼리 스트링 방식으로 보내면 GET방식이라 POST- > GET으로  -->
+            <span onclick ="location.href='${myinfo }'">정보수정  &nbsp;|</span>
+            <span onclick ="location.href='${logout }'">&nbsp;로그아웃</span>
+         </span>
+         <!-- 이 부분 작성 후 다시 MemberController가서 로그아웃 작성하자 !! -->
+   </c:if>
 </div>
 
 <div class= menubar1>
    <div class= nav> 	
-      <div class= "menu normalMenu">소개</div>
-      <div class= "menu normalMenu">공지사항</div>
+      <div class= "menu normalMenu" onclick ="location.href='info.do'">소개</div>
+      <div class= "menu normalMenu" onclick= "goNboardList();">공지사항</div> 
       <div class= "menu communityMenu">커뮤니티</div>
       <div class =logoImg><img src="${contextPath}/resources/images/logo.png" style="height: 89px; vertical-align: middle" onclick= "location.href='home.do'"></div>
        <div class= "menu normalMenu" onclick="location.href='bmicalc.do'">BMI 계산기</div>
       <c:url var="shopGoodsListView" value="shopGoodsListView.do">
-		<c:param name="mid" value="${sessionScope.loginUser.mid }"/>
-		</c:url>
+      <c:param name="mid" value="${sessionScope.loginUser.mid }"/>
+      </c:url>
       <div class= "menu normalMenu"><a href="${shopGoodsListView}" style="text-decoration: none; color : black;">SHOP</a></div>
-		<%-- <a href="${shopGoodsListView}"><div>SHOP</div></a> --%>
-							
-   	  <c:if test="${sessionScope.loginUser.userId ne 'admin'}">
-   	  	<div class= "menu myPageMenu">마이페이지</div> 
+      <%-- <a href="${shopGoodsListView}"><div>SHOP</div></a> --%>
+                     
+        <c:if test="${sessionScope.loginUser.userId ne 'admin'}">
+           <div class= "menu myPageMenu">마이페이지</div> 
       </c:if>
       <c:if test="${sessionScope.loginUser.userId eq 'admin' }">
-      	<div class= "menu myPageMenu" onclick ="location.href='adminMain.do'">관리자페이지</div> 
+         <div class= "menu myPageMenu" onclick ="location.href='adminMain.do'">관리자페이지</div> 
       </c:if>
    </div>
 </div> 
 
-
-
-
-<!-- <div class="menubar2" style="display:block;">
-   
-</div>
- -->
-
 <div class="menubar2 normalMenubar">
-	
+   
 </div>   
  
 <div class="menubar2 communityMenubar communityMenu" style="display:none;">
    <div class= "conmmunityNav">
-      <span class= menu2 style="left: 285px;" onclick= "location.href='fBoardListView.do'">자유게시판</span>
-      <span class= menu2 style="left: 315px;">Before & After </span>
+   	  <span class= menu2 style="left: 215px;" onclick= "goBoardList(10);">전체</span>
+      <span class= menu2 style="left: 245px;" onclick= "goBoardList(2);">자유게시판</span>
+      <span class= menu2 style="left: 275px;" onclick= "goBoardList(3);">팁&노하우</span>
+      <span class= menu2 style="left: 305px;" onclick= "goBoardList(4);">비포&애프터</span>
+      <span class= menu2 style="left: 335px;" onclick= "goBoardList(5);">자극 사진</span>
    </div>
 </div>   
    
@@ -225,30 +232,66 @@
 <div class="menubar2 myPageMenubar myPageMenu" style="display:none;">
    <div class= "myPageNav">
       <span class= menu2 style="left: 637px;" onclick= "location.href='myinfo.do'">내정보보기</span>
-      <!-- <span class= menu2 style="left: 652px;" onclick= "location.href=#">장바구니</span> -->
-      <span class= menu2 style="left: 667px;" onclick= "location.href='orderview.do'">주문조회</span>
+	  <span class= menu2 style="left: 652px;" onclick= "location.href='cartList.do'">장바구니</span>
+      <span class= menu2 style="left: 667px;" onclick= "location.href='orderView.do'" >주문조회</span>
       <span class= menu2 style="left: 682px;">다이어트 일지</span>
+      <!-- <span class= menu2 style="left: 702px;" onclick= "location.href='afterdelete.do'">내가 쓴 후기</span> -->
+	    <c:url var="myafterUpdate" value="afterdelete.do">
+			<c:param name="mid" value="${sessionScope.loginUser.mid }"/>
+			</c:url>
+	      <span class= "menu2" style="left: 702px;"><a href="${myafterUpdate}" style="text-decoration: none; color : white;">내가 쓴 후기</a></span>
    </div>
 </div>   
 </c:if>
 <c:if test="${sessionScope.loginUser.userId eq 'admin' }">
 <div class="menubar2 myPageMenubar myPageMenu" style="display:none;">
    <div class= "myPageNav">
-	  <span class= menu2 style="left: 577px;" onclick= "location.href='categoryView.do'">카테고리 관리</span>
-   	  <span class= menu2 style="left: 612px;" onclick= "location.href='paymentView.do'">결제Test</span>
+	  <span class= menu2 style="left: 612px;" onclick= "location.href='categoryView.do'">카테고리 관리</span>
       <span class= menu2 style="left: 647px;" onclick= "location.href='goodsWriterView.do'">상품판매</span>
       <span class= menu2 style="left: 682px;" onclick= "location.href='sell_goodsList.do'">판매상품조회</span>
       <span class= menu2 style="left: 717px;" onclick= "location.href='goodsList.do'">상품관리</span>
       <span class= menu2 style="left: 752px;" onclick= "location.href='memberLookup.do'">회원조회</span>
-      <span class= menu2 style="left: 745px;" onclick= "location.href='sellafterlistView.do'">상품후기 조회</span>
-
-   </div>
+      <span class= menu2 style="left: 745px;" onclick= "location.href='sellafterlistViewAdmin.do'">상품후기 조회</span>
+      
+   </div>	
 </div>   
 </c:if>
 
 </body>
 
 <script>
+
+function goBoardList(category){
+	
+	if($("#loginUserMid").val() >0){
+		location.href='boardListView.do?category='+category
+			
+	}else{
+		alert("로그인을 해야지만 이용하실 수 있습니다.")
+		location.href='loginView.do'	
+	}
+	
+	
+}
+
+function goNboardList(){
+	if($("#loginUserMid").val() >0){
+		location.href='boardListView.do?category=1'
+	}else{
+		alert("로그인을 해야지만 이용하실 수 있습니다.")
+		location.href='loginView.do'	
+	}
+}
+
+
+
+
+function goOrderView(){
+	alert("fsdf");
+	;
+	
+}
+
 
 
 $(function(){
