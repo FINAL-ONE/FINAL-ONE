@@ -43,9 +43,49 @@
 	  bottom: 75px;
 	}
 
-
+	/*포인트 수정 버튼 css  */
+	.myBtn{
+		width :80px;
+		height : 30px;
+		font-size : 13px;
+		border-radius: 4px;
+		background-color: #4CAF50;
+		border: none;
+		color: #FFFFFF;
+		text-align: center;
+		padding: 6px;
+		transition: all 0.5s;
+		cursor: pointer;
+		margin: 3px;
+	}
+	
+	.myBtn span {
+	  cursor: pointer;
+	  display: inline-block;
+	  position: relative;
+	  transition: 0.5s;
+	}
+	
+	.myBtn span:after {
+	  content: '\00bb';
+	  position: absolute;
+	  opacity: 0;
+	  top: 0;
+	  right: -20px;
+	  transition: 0.5s;
+	}
+	
+	.myBtn:hover span {
+	  padding-right: 25px;
+	}
+	
+	.myBtn:hover span:after {
+	  opacity: 1;
+	  right: 0;
+	}
 
 </style>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
@@ -83,15 +123,20 @@
 			<tr>
 	            <th> 상품 선택  <span style = "color:red; font-size : 1.5em;">*</span> </th>
 	            <td>
-					<input type="text" id="goodsName" name="goodsName" placeholder="선택하세요." list="myinter" value="${n.goodsName}"/>   
-					<datalist id="myinter" name="myinter">
+					<input type="text" id="goodsName" name="goodsName" placeholder="선택하세요." list="myinter" value="${n.goodsName}"  style="margin-bottom: 15px"/>   
+					<datalist id="myinter" name="myinter" >
 						<select id="selectBox" name="selectBox">
 							<c:forEach var="g" items="${glist}">
-								<option value="${g.goodsName}">${g.goodsName}</option>
+								<option value="${g.goodsName}" style="width:10%;">${g.goodsName}</option>
 							</c:forEach>
 						</select>
 					</datalist>
+					<label style="margin-left: 100px">상품 가격</label>  <span style = "color:red; font-size : 1.5em;">*</span>
+					<input id="goodsPrice" type="text" name ="goodsPrice" style="height:20px;" numberOnly value="${n.goodsPrice}">
+					<label style="margin-left: 100px">상품 수량</label>  <span style = "color:red; font-size : 1.5em;">*</span>
+					<input id="count" type="text" name ="count" style="height:20px;" numberOnly value="${n.count}">
 				</td>
+				
 			</tr>
 			<tr>
 				<th></th>
@@ -100,15 +145,6 @@
 					<span class="guide error">이 상품은 사용할수 없습니다.</span>
 					<input type="hidden" name="idDuplicateCheck" id="idDuplicateCheck" value="0">
 				</td>
-			</tr>
-			<tr>
-				<th>상품 가격  <span style = "color:red; font-size : 1.5em;">*</span> </th>
-				<td><input id="goodsPrice" type="text" name ="goodsPrice" style="height:20px;" numberOnly value="${n.goodsPrice}"></td>
-			</tr>
-			<tr>
-				<th>상품 수량  <span style = "color:red; font-size : 1.5em;">*</span> </th>
-				<td><input id="count" type="text" name ="count" style="height:20px;" numberOnly value="${n.count}"></td>
-			</tr>
 			<tr>
 				<th>상품 내용 <span style = "color:red; font-size : 1.5em;">*</span></th>
 					<td><textarea id ="summernote" name="goodsContent" rows="10" cols ="81" size ="resize:none" required>${n.goodsContent}</textarea>
@@ -139,8 +175,10 @@
 			<tr>
 				<td colspan="2" align="center">
 					<!-- <input type="submit" value="등록하기"> &nbsp; -->
-					<input type="button" onclick="validate()" value="수정하기"> &nbsp;
-					<input type="reset" value="수정취소">
+					<!-- <input type="button" onclick="validate()" value="수정하기"> &nbsp;
+					<input type="reset" value="수정취소"> -->
+					<button id="myBtn" class="myBtn success" type="button" onclick="validate();"><span>수정</span></button>
+					<button id="myBtn" class="myBtn success" type="button" onclick="closeModal();"><span>취소</span></button>
 				</td> 
 			</tr>
 			</c:forEach>
@@ -372,7 +410,15 @@
 	    });
 	});
 
+	
+	// 수정취소
+	function closeModal(){
+		location.href="sell_goodsList.do";
+	}
+	
 	</script>
+
+
 
 </body>
 

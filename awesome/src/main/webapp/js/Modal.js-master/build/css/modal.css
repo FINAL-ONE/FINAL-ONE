@@ -16,7 +16,8 @@
   z-index: 99999;
   -webkit-transform: translateZ(0);
   transform: translateZ(0);
-  will-change: opacity; }
+  will-change: opacity; 
+ }
   .modal .modal-box {
     margin: 50px auto;
     color: #494C4C;

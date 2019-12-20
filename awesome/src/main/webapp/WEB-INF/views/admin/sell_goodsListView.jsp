@@ -13,22 +13,39 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <link href="js/Modal.js-master/build/css/modal.css" rel="stylesheet">
 
+<!-- switch버튼 css -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="js/switch-master/css/style.css">
+
+
+
 <style>
+
+
+
 .outer{
-	width : 100%;
-	height : 100%;
+   width : 100%;
+   height : 100%;
 }
-.goodsTable {
+#checkboxTestTbl{
   border-collapse: collapse;
   border-spacing: 0;
-  width: 90%;
+  width: 1300px;
   border: 1px solid #ddd;
-  /* text-align :center; */
+  text-align :center;
+  margin-left : 50px;
 }
-th, td {
+#checkboxTestTbl2{
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100px;
+  border: 1px solid #ddd;
+  text-align :center;
+}
 
-  /* text-align: left; */
-  padding: 13px;
+th, td {
+  text-align: center;
+  padding: 16px;
   
 }
 
@@ -43,280 +60,350 @@ tr:nth-child(even) {
     .modal_container {text-align: center; }
     
 .tablestatus{
-	min-width: 100px;
+   min-width: 100px;
+}
+#tableLeft1{
+   float : left;
+   margin-left : 165px;
+}
+#tableLeft2{
+   float : left;
 }
 
-.tableLeft{
-	float: left;
-} 
 
-#checkboxTestTbl{
-	/* margin: 0px; */
-	margin-right: 0px;
-
+/*상품 등록하기  버튼 css  */
+.myBtn{
+   width :145px;
+   height : 40px;
+   font-size : 15px;
+   border-radius: 4px;
+   background-color: #4CAF50;
+   border: none;
+   color: #FFFFFF;
+   text-align: center;
+   padding: 6px;
+   transition: all 0.5s;
+   cursor: pointer;
+   margin: 3px;
 }
-#checkboxTestTbl2{
-	/* margin: 0px; */ 
+
+.myBtn span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.myBtn span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.myBtn:hover span {
+  padding-right: 25px;
+}
+
+.myBtn:hover span:after {
+  opacity: 1;
+  right: 0;
 }
 </style>
 
 </head>
 <body>
-	<jsp:include page="../common/menubar.jsp"/>   
-	<%-- <jsp:include page ="../admin/adminMenu.jsp"/> --%>
- 	<div class = "outer">
-		<div id="container" style= "height: auto; overflow: auto;"><!-- container -->
+   <jsp:include page="../common/menubar.jsp"/>   
 
-			<c:if test="${!empty loginUser }">
-		   		<div align ="center">
-		   			<button onclick="location.href='goodsWriterView.do'">상품 등록하기</button>
-		   		</div>
-			</c:if>
-			<br>
-		<form id = "goodsInsertForm" action="aStatusUpdate.do" method="post">
-			<div class="tableLeft" style= "width: auto;">
-				<table id ="checkboxTestTbl" class = "goodsTable" align="center" border="1" >
-						<tr bgcolor ="#99ccff" >
-							<th><input type="checkbox" name="user_CheckBox"></th>
-							<th>상품번호</th>
-							<th>이미지</th>
-							<th>상품명</th>
-							<th>가격</th>
-							<th>수량</th>
-							<th>상품설명</th>
-							<th>등록날짜</th>
-							<th>수정날짜</th>
-							<th>상태</th>
-							<!-- <th>품절</th> -->
-						</tr>
-						
-						<c:forEach var="a" items="${list}">
-							<tr>
-							<input id=gId  			type = "hidden" name="gId" 			value = "${a.gId}">
-							<input id=sellNum  		type = "hidden" name="sellNum" 		value = "${a.sellNum}">
-							<input id=goodsTitle  	type = "hidden" name="goodsTitle" 	value = "${a.goodsTitle}">
-							<input id=goodsPrice  	type = "hidden" name="goodsPrice" 	value = "${a.goodsPrice}">
-							<input id=count  		type = "hidden" name="count" 		value = "${a.count}">
-							<input id=goodsContent  type = "hidden" name="goodsContent" value = "${a.goodsContent}">
-							<input id=sellDate  	type = "hidden" name="sellDate" 	value = "${a.sellDate}">
-							<input id=modifyDate  	type = "hidden" name="modifyDate" 	value = "${a.modifyDate}">
-							<input id=status  		type = "hidden" name="statusUpdate" value = "${a.status}">
-							
-								<td width ="5%"><input type="checkbox" name="user_CheckBox"></td>
-								<td class="tableList" align="center" width ="10%">${a.sellNum}</td>
-								<td class="tableList" width ="10%">
-									<img src="resources/auploadFiles/${a.filePath}" name="filePath" width ="100px">
-								</td>
-								<td class="tableList" width ="15%">${a.goodsTitle}</td>
-								<td class="tableList" align="center" width ="8%">${a.goodsPrice}</td>
-								<td class="tableList" align="center" width ="8%">${a.count}</td>
-								<td class="tableList" width ="15%">${a.goodsContent}</td>
-								<td class="tableList" align="center" width ="10%">${a.sellDate}</td>
-								<td class="tableList" align="center" width ="10%">${a.modifyDate}</td>
-								<td class="tableList" align="center" width ="10%">${a.status}</td> 
-								<!-- <td class="tablestatus">상태변경</td> -->						
-							</tr>
-						</c:forEach>
-					</table> 
-				</div>
-				<div class="tableLeft" style= "width: auto;">
-					<table id ="checkboxTestTbl2" class = "goodsTable" align="center" border="1" cellspacing="0" style="clear:right;">
-						<tr bgcolor ="#99ccff" >
-							<th>품절</th>
-						</tr>
-						<c:forEach var="a" items="${list}">
-							<tr>
-								<input id=gId  			type = "hidden" name="gId" 			value = "${a.gId}">
-								<input id=sellNum2  	type = "hidden" name="sellNum2" 	 value = "${a.sellNum}">
-								<input id=status2  		type = "hidden" name="statusUpdate2" value = "${a.status}">
-								<td class="tablestatus">상태변경</td>
-							</tr>
-						</c:forEach>
-					</table> 
-				</div>
-			</form>
-			
-		<!-- 체크박스 전체선택 -->	
-		  <script>
-		        $(document).ready(function(){
-		            var tbl = $("#checkboxTestTbl");
-		            
-		            // 테이블 헤더에 있는 checkbox 클릭시
-		            $(":checkbox:first", tbl).click(function(){
-		                // 클릭한 체크박스가 체크상태인지 체크해제상태인지 판단
-		                if( $(this).is(":checked") ){
-		                    $(":checkbox", tbl).attr("checked", "checked");
-		                }
-		                else{
-		                    $(":checkbox", tbl).removeAttr("checked");
-		                }
-		 
-		                // 모든 체크박스에 change 이벤트 발생시키기               
-		                $(":checkbox", tbl).trigger("change");
-		            });
-		             
-		            // 헤더에 있는 체크박스외 다른 체크박스 클릭시
-		            $(":checkbox:not(:first)", tbl).click(function(){
-		                var allCnt = $(":checkbox:not(:first)", tbl).length;
-		                var checkedCnt = $(":checkbox:not(:first)", tbl).filter(":checked").length;
-		                 
-		                // 전체 체크박스 갯수와 현재 체크된 체크박스 갯수를 비교해서 헤더에 있는 체크박스 체크할지 말지 판단
-		                if( allCnt==checkedCnt ){
-		                    $(":checkbox:first", tbl).attr("checked", "checked");
-		                }
-		                else{
-		                    $(":checkbox:first", tbl).removeAttr("checked");
-		                }
-		            }).change(function(){
-		                if( $(this).is(":checked") ){
-		                    // 체크박스의 부모 > 부모 니까 tr 이 되고 tr 에 selected 라는 class 를 추가한다.
-		                    $(this).parent().parent().addClass("selected");
-		                }
-		                else{
-		                    $(this).parent().parent().removeClass("selected");
-		                }
-		            });
-		        });
-		        
-		        
-			    // 품절버튼 클릭시
-        	/* 	function soldout () {
-	        		if(confirm('품절처리하시겠습니까?')){
-	        			$("#goodsInsertForm").submit();
-	        			alert("품절되었습니다.");
-	        		} else {
-	        			alert("취소되었습니다.");
-	        		}
-		        }  */
-			    	
-			    	</script>
-		    
-				<div class="modal_container">
-				  <div class="css-script-ads">
-				    	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-					<!-- CSSScript Demo Page -->
-					<ins class="adsbygoogle"
-					     style="display:inline-block;width:728px;height:90px"
-					     data-ad-client="ca-pub-2783044520727903"
-					     data-ad-slot="3025259193"></ins>
-						<script>
-							(adsbygoogle = window.adsbygoogle || []).push({});
-						</script>
-					</div>
-				</div>
-				<script src="js/Modal.js-master/modal.js"></script>
-				
-		<script>
-			function soldout(){
-				Modal.confirm({
-					title: '상태 변경 여부',
-					message: '상태 변경 처리하시겠습니까?',
-					onConfirm: function() {
-						$("#goodsInsertForm").submit();
-					    //alert('완료되었습니다');
-			  		},
-					  	onCancel: function() {
-					    //alert('취소되었습니다.');
-			  		},
-				});
-				return;
-			}
-		</script>
-				  
-		<!-- 모달창 script -->
-		<script>
-			  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-			  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-			  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-			  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-			
-			  ga('create', 'UA-46156385-1', 'cssscript.com');
-			  ga('send', 'pageview');
-		
-		</script>
+    <div class = "outer">
+      <div id="container" style= "height: auto; overflow: auto;"><!-- container -->
 
-			<p align="center">
-				<c:url var ="adminMain" value="adminMain.do"/>
-				<a href="${adminMain}">관리자페이지 이동</a>&nbsp;
-				<c:url var ="sell_goodsList" value="sell_goodsList.do"/>
-				<a href="${sell_goodsList}">목록전체보기</a>
-			</p>
-	
-		</div>
-	</div> 
-	
-	
-	<script type="text/javascript">
-		$(function(){
-			$("#checkboxTestTbl td").mouseenter(function(){
-			//$(".tableList").mouseenter(function(){
-				/* $(this).parent().css({"background":"#fa4a4a","cursor":"pointer"}); */
-				$(this).parent().css({"background":"#FFF7D5","cursor":"pointer"});
-				//$(".tableList").css({"background":"#FFF7D5","cursor":"pointer"});
-				
-			}).mouseout(function(){ 
-				//$(".tableList").css({"background":"white"});
-				$(this).parent().css({"background":"white"});
-			}).click(function(){	
-				var gId = $(this).parent().children("#gId").val();
-				var sellNum = $(this).parent().children("#sellNum").val();
-				//var goodsTitle = $(this).parent().children("#goodsTitle").val();
-				//var goodsPrice = $(this).parent().children("#goodsPrice").val();
-				//var count = $(this).parent().children("#count").val();
-				//var goodsContent = $(this).parent().children("#goodsContent").val();
-				//var status = $(this).parent().children("#status").val();
+         <c:if test="${!empty loginUser }">
+               <div style="margin-left : 1471px; margin-top : 20px;">
+                  <button class="myBtn success" onclick="location.href='goodsWriterView.do'"><span>상품 등록</span></button>
+               </div>
+         </c:if>
+      <form id = "goodsInsertForm" action="aStatusUpdate.do" method="post">
+          <div id="tableLeft1" style= "width: auto;">
+            <table align="center" id ="checkboxTestTbl" class = "goodsTable" border="1" cellspacing="1">
+                  <tr bgcolor ="#fa4a4a" style = "color : white">
+                     <th><input type="checkbox" name="user_CheckBox"></th>
+                     <th>상품번호</th>
+                     <th>이미지</th>
+                     <th>상품명</th>
+                     <th>가격</th>
+                     <th>수량</th>
+                     <th>상품설명</th>
+                     <th>등록날짜</th>
+                     <th>수정날짜</th>
+                     <th>상태</th>
+                     <!-- <th width = "200px">품절</th> -->
+                  </tr>
+                  
+                  <c:forEach var="a" items="${list}">
+                     <tr>
+                     <input id=gId           type = "hidden" name="gId"          value = "${a.gId}">
+                     <input id=sellNum        type = "hidden" name="sellNum"       value = "${a.sellNum}">
+                     <input id=goodsTitle     type = "hidden" name="goodsTitle"    value = "${a.goodsTitle}">
+                     <input id=goodsPrice     type = "hidden" name="goodsPrice"    value = "${a.goodsPrice}">
+                     <input id=count        type = "hidden" name="count"       value = "${a.count}">
+                     <input id=goodsContent  type = "hidden" name="goodsContent" value = "${a.goodsContent}">
+                     <input id=sellDate     type = "hidden" name="sellDate"    value = "${a.sellDate}">
+                     <input id=modifyDate     type = "hidden" name="modifyDate"    value = "${a.modifyDate}">
+                     <input id=status        type = "hidden" name="statusUpdate" value = "${a.status}">
+                     
+                        <td width ="5%"><input type="checkbox" name="user_CheckBox"></td>
+                        <td class="tableList" align="center" width ="10%">${a.sellNum}</td>
+                        <td class="tableList" width ="10%">
+                           <img src="resources/auploadFiles/${a.filePath}" name="filePath" width ="100px">
+                        </td>
+                        <td class="tableList" width ="15%">${a.goodsTitle}</td>
+                        <td class="tableList" align="center" width ="8%">${a.goodsPrice}</td>
+                        <td class="tableList" align="center" width ="8%">${a.count}</td>
+                        <td class="tableList" width ="15%">${a.goodsContent}</td>
+                        <td class="tableList" align="center" width ="10%">${a.sellDate}</td>
+                        <td class="tableList" align="center" width ="10%">${a.modifyDate}</td>
+                        <td class="tableList" align="center" width ="10%">${a.status}</td> 
+                        <!-- <td class="tablestatus">상태변경</td> -->                  
+                     </tr>
+                  </c:forEach>
+               </table> 
+             </div> 
+             <div id="tableLeft2" style= "width: auto;">
+               <table id ="checkboxTestTbl2" class = "goodsTable" align="center" border="1" cellspacing="1" style="clear:right;">
+                  <tr bgcolor ="#fa4a4a" style = "color : white">
+                     <th>품절</th>
+                  </tr>
+                  <c:forEach var="a" items="${list}">
+                     <tr>
+                        <input id=gId           type = "hidden" name="gId"          value = "${a.gId}">
+                        <input id=sellNum2     type = "hidden" name="sellNum2"     value = "${a.sellNum}">
+                        <input id=status2        type = "hidden" name="statusUpdate2" value = "${a.status}">
+                        <!-- <td class="tablestatus">상태변경</td> -->
+                        <td>
+                        <c:if test="${a.status eq 'Y'}">
+                                <label class="switch">
+                                  <input id = "statusCheck"type="checkbox" checked>
+                                  <span></span>
+                                </label>
+                                </c:if>
+                                <c:if test="${a.status eq 'N'}">
+                                <label class="switch">
+                                  <input id = "statusCheck" type="checkbox">
+                                  <span></span>
+                                </label>
+                                </c:if>
+                        </td>
+                     </tr>
+                  </c:forEach>
+               </table> 
+            </div> 
+         </form>
+         
+   
+         </div>
+         <p align="center">
+            <c:url var ="adminMain" value="adminMain.do"/>
+            <a href="${adminMain}" style="text-decoration: none;">관리자페이지 이동</a>&nbsp;
+            <c:url var ="sell_goodsList" value="sell_goodsList.do"/>
+            <a href="${sell_goodsList}" style="text-decoration: none;">목록전체보기</a>
+         </p>
+   </div> 
+   
 
-				location.href="sell_goodsDetailView.do?sellNum="+sellNum;
-			});
-			
+      <!-- 체크박스 전체선택 -->   
+        <script>
+              $(document).ready(function(){
+                  var tbl = $("#checkboxTestTbl");
+                  
+                  // 테이블 헤더에 있는 checkbox 클릭시
+                  $(":checkbox:first", tbl).click(function(){
+                      // 클릭한 체크박스가 체크상태인지 체크해제상태인지 판단
+                      if( $(this).is(":checked") ){
+                          $(":checkbox", tbl).attr("checked", "checked");
+                      }
+                      else{
+                          $(":checkbox", tbl).removeAttr("checked");
+                      }
+       
+                      // 모든 체크박스에 change 이벤트 발생시키기               
+                      $(":checkbox", tbl).trigger("change");
+                  });
+                   
+                  // 헤더에 있는 체크박스외 다른 체크박스 클릭시
+                  $(":checkbox:not(:first)", tbl).click(function(){
+                      var allCnt = $(":checkbox:not(:first)", tbl).length;
+                      var checkedCnt = $(":checkbox:not(:first)", tbl).filter(":checked").length;
+                       
+                      // 전체 체크박스 갯수와 현재 체크된 체크박스 갯수를 비교해서 헤더에 있는 체크박스 체크할지 말지 판단
+                      if( allCnt==checkedCnt ){
+                          $(":checkbox:first", tbl).attr("checked", "checked");
+                      }
+                      else{
+                          $(":checkbox:first", tbl).removeAttr("checked");
+                      }
+                  }).change(function(){
+                      if( $(this).is(":checked") ){
+                          // 체크박스의 부모 > 부모 니까 tr 이 되고 tr 에 selected 라는 class 를 추가한다.
+                          $(this).parent().parent().addClass("selected");
+                      }
+                      else{
+                          $(this).parent().parent().removeClass("selected");
+                      }
+                  });
+              });
+              
+              
+             // 품절버튼 클릭시
+           /*    function soldout () {
+                 if(confirm('품절처리하시겠습니까?')){
+                    $("#goodsInsertForm").submit();
+                    alert("품절되었습니다.");
+                 } else {
+                    alert("취소되었습니다.");
+                 }
+              }  */
+                
+                </script>
+          
+            <div class="modal_container">
+              <div class="css-script-ads">
+                   <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+               <!-- CSSScript Demo Page -->
+               <ins class="adsbygoogle"
+                    style="display:inline-block;width:728px;height:90px"
+                    data-ad-client="ca-pub-2783044520727903"
+                    data-ad-slot="3025259193"></ins>
+                  <script>
+                     (adsbygoogle = window.adsbygoogle || []).push({});
+                  </script>
+               </div>
+            </div>
+            <script src="js/Modal.js-master/modal.js"></script>
+            
+      <script>
+         function soldout(){
+            Modal.confirm({
+               title: '상태 변경 여부',
+               message: '상태 변경 처리하시겠습니까?',
+               onConfirm: function() {
+                  $("#goodsInsertForm").submit();
+                   //alert('완료되었습니다');
+                 },
+                    onCancel: function() {
+                   //alert('취소되었습니다.');
+                 },
+            });
+            return;
+         }
+      </script>
+              
+      <!-- 모달창 script -->
+      <script>
+           (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+           (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+           m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+           })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+         
+           ga('create', 'UA-46156385-1', 'cssscript.com');
+           ga('send', 'pageview');
+      
+      </script>
+
+
+   
+   <script type="text/javascript">
+      $(function(){
+         $("#checkboxTestTbl td").mouseenter(function(){
+         //$(".tableList").mouseenter(function(){
+            /* $(this).parent().css({"background":"#fa4a4a","cursor":"pointer"}); */
+            $(this).parent().css({"background":"#FFF7D5","cursor":"pointer"});
+            //$(".tableList").css({"background":"#FFF7D5","cursor":"pointer"});
+            
+         }).mouseout(function(){ 
+            //$(".tableList").css({"background":"white"});
+            $(this).parent().css({"background":"white"});
+         }).click(function(){   
+            var gId = $(this).parent().children("#gId").val();
+            var sellNum = $(this).parent().children("#sellNum").val();
+            //var goodsTitle = $(this).parent().children("#goodsTitle").val();
+            //var goodsPrice = $(this).parent().children("#goodsPrice").val();
+            //var count = $(this).parent().children("#count").val();
+            //var goodsContent = $(this).parent().children("#goodsContent").val();
+            //var status = $(this).parent().children("#status").val();
+
+            location.href="sell_goodsDetailView.do?sellNum="+sellNum;
+         });
+         
 //--------------------------------------------------------------------------------------------------
 
-			$("#checkboxTestTbl2 td").mouseenter(function(){
-				$(this).parent().css({"background":"#fa4a4a","cursor":"pointer"});
-			}).mouseout(function(){ ;
-				$(this).parent().css({"background":"white"});
-			}).click(function(){	
-				//soldout();
-				var sellNum = $(this).parent().children("#sellNum2").val();
-				var status = $(this).parent().children("#status2").val();
-				var gId = $(this).parent().children("#gId").val();
+/*          $("#checkboxTestTbl2 td").mouseenter(function(){
+            $(this).parent().css({"background":"#FFF7D5","cursor":"pointer"});
+         }).mouseout(function(){
+            $(this).parent().css({"background":"white"});
+         }).click(function(){ */
+		$("#checkboxTestTbl2 td").mouseenter(function(){
+		   // $(this).parent().css({"background":"#FFF7D5","cursor":"pointer"});
+		 }).mouseout(function(){
+		   // $(this).parent().css({"background":"white"});
+		 }).click(function(){
+            //soldout();
+            var sellNum = $(this).parent().children("#sellNum2").val();
+            var status = $(this).parent().children("#status2").val();
+            var gId = $(this).parent().children("#gId").val();
 
 //alert("sellNum : " + sellNum + " / " + "status : " + status);
-				
- 				Modal.confirm({
-					title: '상태 변경 여부',
-					message: '상태 변경 처리하시겠습니까?',
-					onConfirm: function() {
-						//$("#goodsInsertForm").submit();
-						location.href="aStatusUpdate.do?sellNum="+sellNum+"&status="+status+"&gId="+gId;
-						
-					    //alert('완료되었습니다');
-			  		},
-					  	onCancel: function() {
-					    //alert('취소되었습니다.');
-			  		},
-				}); 
-				
-				return;
-				
-			});				
-			
-			
-		}); 
+            
+             Modal.confirm({
+               title: '상태 변경 여부',
+               message: '상태 변경 처리하시겠습니까?',
+               onConfirm: function() {
+                  //$("#goodsInsertForm").submit();
+                  location.href="aStatusUpdate.do?sellNum="+sellNum+"&status="+status+"&gId="+gId;
+                  
+                   //alert('완료되었습니다');
+                 },
+                    onCancel: function() {
+                   //alert('취소되었습니다.');
+                 },
+            }); 
+            
+            return;
+            
+         });            
+         
+         
+      }); 
    </script>
-		
-		
+      
+      
 <script>
-	jQuery(document).ready(function() { 
-	
-	    var tableHeight = jQuery("#checkboxTestTbl td").height(); 
-	
-	    //alert(tableHeight); 
-	    $("#checkboxTestTbl2 td").height(tableHeight);
-	}); 
+   jQuery(document).ready(function() { 
+   
+       var tableHeight = jQuery("#checkboxTestTbl td").height(); 
+   
+       //alert(tableHeight); 
+       $("#checkboxTestTbl2 td").height(tableHeight);
+   }); 
 
 </script>
-		
+      
+      
+      
+      <!-- switch script -->
+      <script>
+           (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+           (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+           m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+           })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+         
+           ga('create', 'UA-46156385-1', 'cssscript.com');
+           ga('send', 'pageview');
+      </script>
+      
+      
 </body>
 <footer>
    <jsp:include page ="../common/footer.jsp"/>

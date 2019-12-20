@@ -18,12 +18,20 @@ public class Admin {
 	private Date modifyDate;
 	private String status;
 	
+	private String userId;
+	private int rId;
+	private String rContent;
+	private int sellStart;
+	private String ref_filePath;
+	private Date createDate;
+	
 	public Admin() {
 	}
 
 	public Admin(int sellNum, int gId, int mId, String cateCd, String goodsName, String goodsTitle, int goodsPrice,
 			int count, String goodsContent, String filePath, String contentFilePath, Date sellDate, Date modifyDate,
-			String status) {
+			String status, String userId, int rId, String rContent, int sellStart, String ref_filePath,
+			Date createDate) {
 		this.sellNum = sellNum;
 		this.gId = gId;
 		this.mId = mId;
@@ -38,6 +46,12 @@ public class Admin {
 		this.sellDate = sellDate;
 		this.modifyDate = modifyDate;
 		this.status = status;
+		this.userId = userId;
+		this.rId = rId;
+		this.rContent = rContent;
+		this.sellStart = sellStart;
+		this.ref_filePath = ref_filePath;
+		this.createDate = createDate;
 	}
 
 	public int getSellNum() {
@@ -152,15 +166,65 @@ public class Admin {
 		this.status = status;
 	}
 
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+	public int getrId() {
+		return rId;
+	}
+
+	public void setrId(int rId) {
+		this.rId = rId;
+	}
+
+	public String getrContent() {
+		return rContent;
+	}
+
+	public void setrContent(String rContent) {
+		this.rContent = rContent;
+	}
+
+	public int getSellStart() {
+		return sellStart;
+	}
+
+	public void setSellStart(int sellStart) {
+		this.sellStart = sellStart;
+	}
+
+	public String getRef_filePath() {
+		return ref_filePath;
+	}
+
+	public void setRef_filePath(String ref_filePath) {
+		this.ref_filePath = ref_filePath;
+	}
+
+	public Date getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
+
 	@Override
 	public String toString() {
 		return "Admin [sellNum=" + sellNum + ", gId=" + gId + ", mId=" + mId + ", cateCd=" + cateCd + ", goodsName="
 				+ goodsName + ", goodsTitle=" + goodsTitle + ", goodsPrice=" + goodsPrice + ", count=" + count
 				+ ", goodsContent=" + goodsContent + ", filePath=" + filePath + ", contentFilePath=" + contentFilePath
-				+ ", sellDate=" + sellDate + ", modifyDate=" + modifyDate + ", status=" + status + "]";
+				+ ", sellDate=" + sellDate + ", modifyDate=" + modifyDate + ", status=" + status + ", userId=" + userId
+				+ ", rId=" + rId + ", rContent=" + rContent + ", sellStart=" + sellStart + ", ref_filePath="
+				+ ref_filePath + ", createDate=" + createDate + "]";
 	}
 
-
+	
 
 
 }

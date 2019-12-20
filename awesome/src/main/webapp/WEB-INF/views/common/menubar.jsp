@@ -193,8 +193,8 @@
 </div>
 
 <div class= menubar1>
-   <div class= nav>    
-      <div class= "menu normalMenu">소개</div>
+   <div class= nav> 	
+      <div class= "menu normalMenu" onclick ="location.href='info.do'">소개</div>
       <div class= "menu normalMenu" onclick= "goNboardList();">공지사항</div> 
       <div class= "menu communityMenu">커뮤니티</div>
       <div class =logoImg><img src="${contextPath}/resources/images/logo.png" style="height: 89px; vertical-align: middle" onclick= "location.href='home.do'"></div>
@@ -235,20 +235,25 @@
 	  <span class= menu2 style="left: 652px;" onclick= "location.href='cartList.do'">장바구니</span>
       <span class= menu2 style="left: 667px;" onclick= "location.href='orderView.do'" >주문조회</span>
       <span class= menu2 style="left: 682px;">다이어트 일지</span>
+      <!-- <span class= menu2 style="left: 702px;" onclick= "location.href='afterdelete.do'">내가 쓴 후기</span> -->
+	    <c:url var="myafterUpdate" value="afterdelete.do">
+			<c:param name="mid" value="${sessionScope.loginUser.mid }"/>
+			</c:url>
+	      <span class= "menu2" style="left: 702px;"><a href="${myafterUpdate}" style="text-decoration: none; color : white;">내가 쓴 후기</a></span>
    </div>
 </div>   
 </c:if>
 <c:if test="${sessionScope.loginUser.userId eq 'admin' }">
 <div class="menubar2 myPageMenubar myPageMenu" style="display:none;">
    <div class= "myPageNav">
-
+	  <span class= menu2 style="left: 612px;" onclick= "location.href='categoryView.do'">카테고리 관리</span>
       <span class= menu2 style="left: 647px;" onclick= "location.href='goodsWriterView.do'">상품판매</span>
       <span class= menu2 style="left: 682px;" onclick= "location.href='sell_goodsList.do'">판매상품조회</span>
       <span class= menu2 style="left: 717px;" onclick= "location.href='goodsList.do'">상품관리</span>
       <span class= menu2 style="left: 752px;" onclick= "location.href='memberLookup.do'">회원조회</span>
-      <span class= menu2 style="left: 745px;" onclick= "location.href='sellafterlistView.do'">상품후기 조회</span>
-
-   </div>
+      <span class= menu2 style="left: 745px;" onclick= "location.href='sellafterlistViewAdmin.do'">상품후기 조회</span>
+      
+   </div>	
 </div>   
 </c:if>
 
