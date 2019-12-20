@@ -21,17 +21,23 @@ public class Order {
 	private int orderPrice;
 	private String goodsTitle;
 	private String filePath;
-	
+
 	private Date date1;
 	private Date date2;
-	
+
+	/* 동복 : 결제 INSERT문을 위해 생성 */
+	private String dName;
+	private String dAddress;
+	private String dPhone;
+
 	public Order() {
 		super();
 	}
 
 	public Order(int oId, int gId, String gName, int gPrice, String gImage, int mId, String userName, String phone,
 			String address, String orderNum, int orderCount, Date orderDate, String orderStatus, int rowCount,
-			int usedPoint, int orderPrice, String goodsTitle, String filePath, Date date1, Date date2) {
+			int usedPoint, int orderPrice, String goodsTitle, String filePath, Date date1, Date date2, String dName,
+			String dAddress, String dPhone) {
 		super();
 		this.oId = oId;
 		this.gId = gId;
@@ -53,6 +59,9 @@ public class Order {
 		this.filePath = filePath;
 		this.date1 = date1;
 		this.date2 = date2;
+		this.dName = dName;
+		this.dAddress = dAddress;
+		this.dPhone = dPhone;
 	}
 
 	public int getoId() {
@@ -215,6 +224,30 @@ public class Order {
 		this.date2 = date2;
 	}
 
+	public String getdName() {
+		return dName;
+	}
+
+	public void setdName(String dName) {
+		this.dName = dName;
+	}
+
+	public String getdAddress() {
+		return dAddress;
+	}
+
+	public void setdAddress(String dAddress) {
+		this.dAddress = dAddress;
+	}
+
+	public String getdPhone() {
+		return dPhone;
+	}
+
+	public void setdPhone(String dPhone) {
+		this.dPhone = dPhone;
+	}
+
 	@Override
 	public String toString() {
 		return "Order [oId=" + oId + ", gId=" + gId + ", gName=" + gName + ", gPrice=" + gPrice + ", gImage=" + gImage
@@ -222,9 +255,8 @@ public class Order {
 				+ ", orderNum=" + orderNum + ", orderCount=" + orderCount + ", orderDate=" + orderDate
 				+ ", orderStatus=" + orderStatus + ", rowCount=" + rowCount + ", usedPoint=" + usedPoint
 				+ ", orderPrice=" + orderPrice + ", goodsTitle=" + goodsTitle + ", filePath=" + filePath + ", date1="
-				+ date1 + ", date2=" + date2 + "]";
+				+ date1 + ", date2=" + date2 + ", dName=" + dName + ", dAddress=" + dAddress + ", dPhone=" + dPhone
+				+ "]";
 	}
 
-	
-	
 }

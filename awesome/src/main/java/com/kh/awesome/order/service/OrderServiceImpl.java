@@ -91,23 +91,24 @@ public class OrderServiceImpl implements OrderService{
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	//---------------------------- INSERT ----------------------------	
+	// 동복 - 결제 진행 ( TABLE INSERT && UPDATE )
+	@Override
+	public int insertPaymentList(Order o) {
+		return oDao.insertPaymentList(o);
+	}
+	@Override
+	public int insertPayment(Order o) {
+		return oDao.insertPayment(o);
+	}
+	@Override
+	public int insertPaymentDinfo(Order o) {
+		return oDao.insertPaymentDinfo(o);
+	}
+	@Override
+	public int updateMemberPoint(Order o) {
+		return oDao.updateMemberPoint(o);
+	}
 
 
 }

@@ -62,12 +62,6 @@ public class OrderDao {
 			return sqlSession.selectOne("orderMapper.getOrderListCount", mId);
 		}
 
-		
-		
-		public int getOrderSearchCount(OrderSearch os) {
-			return sqlSession.selectOne("orderMapper.getOrderSearchCount",os );
-		}
-		
 
 		public ArrayList<Order> datePicker(OrderSearch os, PageInfo pi) {
 			
@@ -77,10 +71,28 @@ public class OrderDao {
 			return (ArrayList)sqlSession.selectList("orderMapper.getOrderSearch", os, rowBounds);
 		}
 
+		
+		
+		public int getOrderSearchCount(OrderSearch os) {
+			return sqlSession.selectOne("orderMapper.getOrderSearchCount",os );
+		}
+		
 
 
 
-
-
+		//---------------------------- INSERT ----------------------------	
+		// 동복 - 결제 진행 ( TABLE INSERT && UPDATE )
+		public int insertPaymentList(Order o) {
+			return sqlSession.insert("orderMapper.insertPaymentList", o);
+		}
+		public int insertPayment(Order o) {
+			return sqlSession.insert("orderMapper.insertPayment", o);
+		}
+		public int insertPaymentDinfo(Order o) {
+			return sqlSession.insert("orderMapper.insertPaymentDinfo", o);
+		}
+		public int updateMemberPoint(Order o) {
+			return sqlSession.update("orderMapper.updateMemberPoint", o);
+		}
 
 }

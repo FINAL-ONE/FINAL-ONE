@@ -27,7 +27,6 @@
 
 		<typeAlias type="com.kh.awesome.cart.model.vo.CartList"   alias="CartList"/>
 		<typeAlias type="com.kh.awesome.cart.model.vo.Cart"   alias="Cart"/>
-  		<typeAlias type="com.kh.awesome.cart.model.vo.Buyer"   alias="Buyer"/>
    </typeAliases>
 
     <!-- sql문들을 지닌 mapper.xml들을 등록 -->
