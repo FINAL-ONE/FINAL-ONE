@@ -45,7 +45,7 @@
 <body>
 
 	<jsp:include page ="../common/menubar.jsp"/>
-	<%-- <jsp:include page ="../admin/adminMenu.jsp"/> --%>
+	<jsp:include page ="../admin/adminMenu.jsp"/>
 	
 	
 <h1 align="center"> 상품 수정 페이지 </h1>

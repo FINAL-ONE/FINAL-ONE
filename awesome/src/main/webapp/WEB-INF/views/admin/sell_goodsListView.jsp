@@ -17,7 +17,12 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" href="js/switch-master/css/style.css">
 
+
+
 <style>
+
+
+
 .outer{
 	width : 100%;
 	height : 100%;
@@ -28,6 +33,7 @@
   width: 1300px;
   border: 1px solid #ddd;
   text-align :center;
+  margin-left : 50px;
 }
 #checkboxTestTbl2{
   border-collapse: collapse;
@@ -110,12 +116,12 @@ tr:nth-child(even) {
 </head>
 <body>
 	<jsp:include page="../common/menubar.jsp"/>   
-	<%-- <jsp:include page ="../admin/adminMenu.jsp"/> --%>
+
  	<div class = "outer">
 		<div id="container" style= "height: auto; overflow: auto;"><!-- container -->
 
 			<c:if test="${!empty loginUser }">
-		   		<div style="margin-left : 1420px; margin-top : 20px;">
+		   		<div style="margin-left : 1471px; margin-top : 20px;">
 		   			<button class="myBtn success" onclick="location.href='goodsWriterView.do'"><span>상품 등록</span></button>
 		   		</div>
 			</c:if>

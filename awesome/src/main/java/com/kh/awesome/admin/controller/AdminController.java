@@ -46,7 +46,7 @@ public class AdminController {
 	@RequestMapping("adminMain.do")
 	public String nWriterView() {
 		
-		return "admin/adminListView";	
+		return "admin/adminHome";	
 	}
 	
 	// 메뉴바에서 상품조회 클릭시 관리자용 상품조회 테이블 조회--준배

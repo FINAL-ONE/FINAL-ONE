@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.awesome.admin.model.exception.AdminException;
 import com.kh.awesome.admin.model.vo.Admin;
+import com.kh.awesome.member.model.exception.MemberException;
 import com.kh.awesome.shop.model.exception.ShopException;
 import com.kh.awesome.shop.model.serivce.ShopService;
 import com.kh.awesome.shop.model.vo.SellReply;
@@ -161,27 +163,6 @@ public class ShopController {
 
 
 		
-	/*
-	 * // 카트에 상품 추가
-	 * 
-	 * @RequestMapping("goCart.do") public String goodsgoCartView(HttpServletRequest
-	 * request, Cart2 c, Admin a) {
-	 * 
-	 * ArrayList<Cart> list = ShopService.selectList(); System.out.println("Cart : "
-	 * + c); System.out.println("Admin : " + a);
-	 * 
-	 * int result = ShopService.CartInsert(c); System.out.println(result);
-	 * 
-	 * 
-	 * if(result > 0 ) { return "redirect:moveCart.do"; } else { throw new
-	 * ShopException("장바구니 이동 실패!!"); } }
-	 * 
-	 * // 카트 뷰로 이동
-	 * 
-	 * @RequestMapping("moveCart.do") public String moveCart() {
-	 * 
-	 * return "shop/shopCartView"; }
-	 */
 
 	// 상품별 평균 조회
 	@RequestMapping("stargIdSelect.do")
@@ -218,7 +199,6 @@ public class ShopController {
 		
 		if(mflist != null) {
 			mv.addObject("mflist", mflist);
-			
 			mv.setViewName("shop/myafterView");
 		}else {
 			throw new ShopException("내 후기 목록 보기 실패!!");
@@ -227,4 +207,28 @@ public class ShopController {
 		
 		return mv;
 	}	
+	
+	// 내가 쓴 후기 삭제하기
+	@RequestMapping("myafterDelete.do")
+	public String myafterDelete(HttpSession session, String userId) {
+		System.out.println("del ++++ userId:::" + userId);
+		
+		int result = ShopService.myafterDelete(userId);
+		System.out.println("result del ___ : " + result );
+		if(result > 0) {
+			
+			return "redirect:moveafterdelete.do";
+			// 알아서 로그아웃을 해주는 메소드를 활용하자!!
+		}else {
+			throw new ShopException("내가 쓴 후기 삭제 실패!");
+		}
+		
+	}
+	
+	@RequestMapping("moveafterdelete.do") 
+	public String moveafterdeleteView() {
+		return "shop/myafterView"; 
+	}
+	
+	
 }

@@ -9,7 +9,50 @@
 <link rel="shortcut icon" href="${contextPath}/resources/images/favicon.ico" type="image/x-icon">
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<!-- 관리자 사이드 메뉴 아이콘  -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
 <style>
+/* 관리자 사이드 메뉴 */
+body {font-family: "Lato", sans-serif;}
+
+.admin_sidebar {
+  height: 84%;
+  width: 160px;
+  position: absolute;
+  z-index: 1;
+  top: 20;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  padding-top: 16px;
+}
+
+.admin_sidebar a {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 20px;
+  color: #818181;
+  display: block;
+}
+
+.admin_sidebar a:hover {
+  color: #f1f1f1;
+}
+
+.admin_main {
+  margin-left: 160px; /* Same as the width of the sidenav */
+  padding: 0px 10px;
+}
+
+@media screen and (max-height: 450px) {
+  .admin_sidebar {padding-top: 15px;}
+  .admin_sidebar a {font-size: 18px;}
+}
+
+
+
  select[multiple]{
      height: 100%;
    }
@@ -29,24 +72,40 @@
 
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
+<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">	<!--  -->
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
 
 <!-- include summernote css/js-->
 <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
 <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
-   
+
+
 </head>
 <body>
 
 	<jsp:include page ="../common/menubar.jsp"/>
-	<%-- <jsp:include page ="../admin/adminMenu.jsp"/> --%>
 	
+	<div class="admin_sidebar">
+	  <a href="#home"><i class="fa fa-fw fa-home"></i>
+	  	<c:url var ="myinfo" value="home.do"/>
+	  	<span onclick ="location.href='${myinfo }'">Home </span>
+	  </a>
+  
+  <a href="#services"><i class="fa fa-fw fa-wrench"></i> Services</a>
+  
+  
+  <a href="#clients"><i class="fa fa-fw fa-user"></i> Clients</a>
+  
+  
+  <a href="#contact"><i class="fa fa-fw fa-envelope"></i> Contact</a>
+</div>
+	
+		
 	
 	<div id="container" style="overflow: auto; height: auto;" ><!-- container -->
 	
-<h1 align="center"> 상품 등록 페이지 </h1>
+	<h1 align="center"> 상품 등록 페이지 </h1>
 	
 	<br><br>
 	<form action="sellgoodsInsert.do" method="post" enctype="Multipart/form-data" id="sellgoodsInsertForm">

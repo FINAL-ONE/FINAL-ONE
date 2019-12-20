@@ -12,12 +12,49 @@
 <!-- Star Rating -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+<!-- 관리자 사이드 메뉴 아이콘  -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     
 <style>
-.outer{
-	width : 100%;
-	height : 100%;
+/* 관리자용 사이드 메뉴 */
+body {font-family: "Lato", sans-serif;}
+
+.admin_sidebar {
+  height: 106%;
+  width: 160px;
+  position: absolute;
+  z-index: 1;
+  top: 20;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  padding-top: 16px;
 }
+
+.admin_sidebar a {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 20px;
+  color: #818181;
+  display: block;
+}
+
+.admin_sidebar a:hover {
+  color: #f1f1f1;
+}
+
+.admin_main {
+  margin-left: 160px; /* Same as the width of the sidenav */
+  padding: 0px 10px;
+}
+
+@media screen and (max-height: 450px) {
+  .admin_sidebar {padding-top: 15px;}
+  .admin_sidebar a {font-size: 18px;}
+}
+
+
+
 
 
 /* 상품 후기  */
@@ -27,6 +64,7 @@
   width: 1300px;
   border: 1px solid #ddd;
   text-align :center;
+  margin-left : 250px;
 }
 #afterWrite th, td {
   text-align: center;
@@ -107,24 +145,37 @@ tr:nth-child(even) {
 
 </head>
 <body>
-<jsp:include page ="../common/menubar.jsp"/>
-<%-- <jsp:include page ="../admin/adminMenu.jsp"/> --%>
-
+	<jsp:include page ="../common/menubar.jsp"/>
+	<div class="admin_sidebar">
+	  <a href="#home"><i class="fa fa-fw fa-home"></i>
+	  	<c:url var ="myinfo" value="home.do"/>
+	  	<span onclick ="location.href='${myinfo }'">Home </span>
+	  </a>
+	  
+	  <a href="#services"><i class="fa fa-fw fa-wrench"></i> Services</a>
+	  
+	  
+	  <a href="#clients"><i class="fa fa-fw fa-user"></i> Clients</a>
+	  
+	  
+	  <a href="#contact"><i class="fa fa-fw fa-envelope"></i> Contact</a>
+	</div>
 	
 	<div id="container" style="overflow: auto; height: auto;" ><!-- container -->
-		<div class = "outer">
-			<div id ="afterWriteDiv" style="margin-left : 790px; margin-top : 20px; margin-bottom: 20px;">
-				<span align="center" style="font-size : 30px; font-weight: bold;"> 후기리뷰 </span>
+			<div id ="afterWriteDiv" style= "margin-top : 20px; margin-bottom: 100px;">
+				
 					
 					 <form id = "afterAvgForm" action="stargIdSelect.do" method="post" enctype="Multipart/form-data">
-						<span>상품별 후기 평점 보기</span>
-						<br>
+						
 						<c:forEach var="aflist" items="${aflist}">
 							<input id="aGid" type="hidden" name="gId">
 						</c:forEach>
-											    
+						<div id = "sellheaderArea" style="margin-left : 780px; width : 300px;">
+							<div style="font-size : 30px; text-align : center; font-weight: bold; background : yellow; width : 200px;"> 후기리뷰 </div>					    
+							<div id ="sAvgListArea" style= "width:100px;  background : red;">
+						</div>
 						
-						<div id ="sAvgListArea" style="width:200px; height : 200px; margin-left : 520px;">
+						<p style="margin-bottom: 3px;">상품별 후기 평점 보기</p>
 						<select id="goodsList" name="goodsList" style="margin-bottom : 5px; width : 180px; height : 30px;">
 								<option value="0" selected>옵션을 선택하세요</option>
 								<c:forEach var="aflist" items="${aflist}">
@@ -137,6 +188,7 @@ tr:nth-child(even) {
 					    <button id="gId-btn" class="myBtn success" onclick="selectTitleList()"><span>확인</span></button>&nbsp;
 						<button type="button" id="myBtn" class="myBtn success" onclick="restList()"><span>리셋</span></button>
 							<c:forEach var="sAvgList" items="${sAvgList}">
+							<br>
 					      	 		<span style= "margin-left : 73px;"  class="fa fa-star checked"></span>
 					      	 		<span style="width : 400px; height : 200px; font-size : 20px; margin-left : 5px;">${sAvgList}</span>
 				      		</c:forEach>
@@ -158,7 +210,7 @@ tr:nth-child(even) {
 				<c:forEach var="aflist" items="${aflist}">
 						
 					<tr>
-						<td><img src="resources/afteruploadFiles/${aflist.ref_filePath}" width ="150px" height ="150px"></td>
+						<td><img src="resources/afteruploadFiles/${aflist.ref_filePath}" width ="150px" height ="130px"></td>
 				 		<td>${aflist.goodsTitle}</td>
 						<td>${aflist.rContent}</td>
 						<td>
@@ -217,7 +269,6 @@ tr:nth-child(even) {
 			</table>
 		</div>
 
-		</div>
 	
 	<script>
 		$("#goodsList").on("change",function(){

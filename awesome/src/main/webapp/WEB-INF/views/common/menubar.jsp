@@ -32,11 +32,12 @@
       position: relative;
    }
    
-   .nav{
+   .menu_nav{
       width:880px;
       margin-left:auto;
       margin-right:auto;
       height: 100%;
+     position: relative;
    }
    
     .conmmunityNav{
@@ -193,7 +194,7 @@
 </div>
 
 <div class= menubar1>
-   <div class= nav> 	
+   <div class= menu_nav> 	
       <div class= "menu normalMenu" onclick ="location.href='info.do'">소개</div>
       <div class= "menu normalMenu" onclick= "goNboardList();">공지사항</div> 
       <div class= "menu communityMenu">커뮤니티</div>

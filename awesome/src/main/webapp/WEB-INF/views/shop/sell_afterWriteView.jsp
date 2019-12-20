@@ -42,6 +42,26 @@
   	color: orange;
 }
 
+
+#goodsGobackBtn {
+    margin: 10px 0px 15px;
+    border: 1px solid #fe6666;
+    background: #fe6666;
+    border-radius: 2px;
+    color: #fff;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    width: 259px;
+    height: 40px;
+    cursor: pointer;
+}
+
+#goodsGobackBtn:hover{
+	background: #fff;
+	color: #fe6666;
+}
+
 </style>
 </head>
 <body>
@@ -76,7 +96,7 @@
 							<c:param name="sellNum" value="${a.sellNum }"/>
 						</c:url>
 						<br>
-						<a href="${adetail}"><button> 제품 상세보기 </button></a>
+						<button id="goodsGobackBtn"><a href="${adetail}" style="font-size : 20px; text-decoration: none; color : black;">제품 상세보기</a></button>
 					</c:forEach>	
 				</td>
 			</tr>

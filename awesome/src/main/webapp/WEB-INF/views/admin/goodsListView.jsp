@@ -20,7 +20,7 @@
 <body>
 
 	<jsp:include page ="../common/menubar.jsp"/>
-	<%-- <jsp:include page ="../admin/adminMenu.jsp"/> --%>
+	<jsp:include page ="../admin/adminMenu.jsp"/>
 	
 	<br><br>
 	<c:if test="${!empty loginUser }">

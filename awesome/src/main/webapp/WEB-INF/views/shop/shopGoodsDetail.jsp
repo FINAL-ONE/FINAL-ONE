@@ -80,6 +80,8 @@ body{
 #decreaseQuantity{
    text-decoration: none;
 }
+
+/* 분류 탭 */
 #tablinkDiv{
    margin-left : 1px;
    padding-left : 1px;
@@ -314,7 +316,7 @@ body{
 }
 
 /* Add animation (fade in the popup) */
-@-webkit-keyframes fadeIn {
+/* @-webkit-keyframes fadeIn {
   from {opacity: 0;} 
   to {opacity: 1;}
 }
@@ -322,12 +324,11 @@ body{
 @keyframes fadeIn {
   from {opacity: 0;}
   to {opacity:1 ;}
-  
+   */
   
 .goodshare-color{
 	width : 200px;
 	height : 100px;
-	background : red;
 }  
 
 
@@ -406,66 +407,26 @@ body{
 
 }
 
-.centerDiv tr {
-
-
+.cartBtn1, #cartBtn2 {
+    margin: 10px 0px 15px;
+    border: 1px solid #fe6666;
+    background: #fe6666;
+    border-radius: 2px;
+    color: #fff;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    width: 259px;
+    height: 40px;
+    cursor: pointer;
 }
 
-
-.centerDiv #th td{	
-	text-align: center;
-	font-weight: 600;
-	height: 50px;
-	font-size: 14px;
-	background: #fbfbfb;
-	border-top: 1px solid black;
-    border-left: 0 none;
-/*     border-right: 1px solid #d0d0d0; */
-    border-bottom: 1px solid #d0d0d0;
+.cartBtn1:hover, #cartBtn2:hover{
+	background: #fff;
+	color: #fe6666;
 }
-
-
-#boardTable{
-	border:none;
-	border-bottom: 1px solid black;
-}
-.centerDiv #tr td{	
-	text-align: center;
-	font-weight: 600;
-	height: 50px;
-	font-size: 14px;
-	border-top : none;
-    border-left: 0 none;
-/*     border-right: 1px solid #d0d0d0; */
-    border-bottom: 1px solid #d0d0d0;
-  
-}
-
-#boardTable tr td{
-	height: 50px;
-	border-bottom:  1px solid #d0d0d0;
-	font-size: 14px;
-}
-
-
-
-.searchResult{
-     border-radius: 8px;
-    overflow: hidden;
-    border: 1px solid #cfcfcf;
-    font-size: 20px;
-    color: #383838;
-    height: 100px;
-    padding-top: 15px;
-    padding-bottom: 15px;
-    padding-left: 25px;
-    padding-right: 25px;
-    margin-bottom: 10px;
-}
-
-
-
-
+    
+    
 
 /* 버튼 css  */
 .myBtn{
@@ -614,10 +575,10 @@ body{
 								</div>
 								<br>
 								<c:if test="${empty sessionScope.loginUser }">
-									<button type="button" style="width : 110px; height : 40px; background : green;" onclick="notLogin();">장바구니</button>
+									<button class="cartBtn1" type="button" onclick="notLogin();">장바구니</button>
 						        </c:if>
 						        <c:if test="${!empty sessionScope.loginUser }">
-									<button class="popup" type="button" style="width : 200px; height : 40px;" onclick="goCart();">장바구니 <span class="popuptext" id="myPopup">장바구니에 추가되었습니다.</span></button>
+									<button id="cartBtn2" class="popup" type="button" onclick="goCart();">장바구니 <span class="popuptext" id="myPopup">장바구니에 추가되었습니다.</span></button>
 								</c:if>
 									<!-- <input type="button" value="찜하기" style="width : 110px; height : 40px;"/> -->
 									
@@ -649,7 +610,7 @@ body{
 				</div>	
 				<c:forEach var="a" items="${list}">
 					<div id ="goods-img1" class = "goods-img1" style = "margin-bottom: 15px;">
-							<img src="resources/auploadFiles/${a.contentFilePath}" width ="800px" height ="4500px">
+						<img src="resources/auploadFiles/${a.contentFilePath}" width ="800px" height ="4500px">
 					</div>
 				</c:forEach>
 					<div id="sell-infoDiv">
@@ -840,7 +801,7 @@ body{
 			</div>
 		</div>
 				
-
+	<button onclick="topFunction()" id="upBtn" title="Go to top">Top</button>
 
 
 
@@ -959,6 +920,7 @@ body{
 			
 		</script>
 		
+		<script src="js/Modal.js-master/modal.js"></script>
 		
 		<script>
 			function notLogin(){
@@ -986,13 +948,12 @@ body{
 	    		alert('관리자는 작성할 수 없습니다.'); 
 	     	}
 		</script>
-		<script src="js/Modal.js-master/modal.js"></script>
 
 		<script>
 		 	function goCart(){
 			  /* 장바구니 클릭시 팝업 */
-			 	  var popup = document.getElementById("myPopup");
-				  popup.classList.toggle("show");
+		 	  var popup = document.getElementById("myPopup");
+			  popup.classList.toggle("show");
 			  $("#goCartForm").submit();
 				 
 			  Modal.confirm({
@@ -1010,31 +971,6 @@ body{
 		</script>
 		
 		
-		<!-- 후기작성 테이블에서 td 선택시 수정 팝업 -->
-		 <script>
-			$('#afterWrite td').click(function(event){
-					Modal.confirm({
-						  title: '후기수정여부',
-						  message: '후기를 수정 하시겠습니까?',
-						  onConfirm: function() {
-							  /* $("#updateafter").attr("style", "display:block"); */
-							  location.href="afterdelete.do?";
-				  		},
-						  onCancel: function() {
-				  		},
-					});
-			       
-			    });
-			   
-			     $(".close").click(function(){
-			        /* $("#updateafter").attr("style", "display:none"); */
-			    });      
-		 
-		</script>
-		
-		
-		
-		
 		<!-- 모달창 script -->
 		<script>
 			  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -1047,8 +983,8 @@ body{
 		
 		</script>
 		
-		<button onclick="topFunction()" id="upBtn" title="Go to top">Top</button>
 		
+		<!-- 위로가기  -->
 		<script>
 			//Get the button
 			var mybutton = document.getElementById("upBtn");
@@ -1090,8 +1026,6 @@ body{
 			  })();
 			
 		</script>
-
-
 
 </body>
 

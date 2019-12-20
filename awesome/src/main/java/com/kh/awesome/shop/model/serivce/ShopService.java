@@ -25,5 +25,8 @@ public interface ShopService {
 	// 내 상품후기 조회
 	ArrayList<SellReply> myafterSelectList(int mid);
 	
+	// 내 후기 삭제
+	int myafterDelete(String userId);
+	
 
 }
