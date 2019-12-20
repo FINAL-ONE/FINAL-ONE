@@ -114,6 +114,10 @@
 	      height: auto;
 	      padding-left: 40px;
 	}
+	
+	#formform{
+		margin-left:180px;
+	}
 		
 	</style>
 	
@@ -199,7 +203,7 @@
 					</div>
 				
 					<div class="thumb">
-					 <%-- 	<img src="${cartList.filePath}" />  --%>
+					 	<img src="resources/auploadFiles/${cartList.filePath}" />  
 					</div>
 					<div class="gdsInfo">
 						<p>
@@ -208,7 +212,7 @@
 									<input id= "eachPrice${cartList.cartNum}"  value= "${cartList.goodsPrice}"  type ="hidden">
 						<span>구입 수량</span>
 						<button type="button" class="plus" onclick = "plus(${cartList.cartNum});">+</button>
-						<input type="number"  id= "numBox${cartList.cartNum}" class="numBox" min="1" max="${cartList.count}" value="1" readonly="readonly"/>
+						<input type="number"  id= "numBox${cartList.cartNum}" class="numBox" min="1" max="${cartList.count}" value="${cartList.count}" readonly="readonly"/>
 						<button type="button"<%--   id= "numBox${cartList.cartNum}" --%> class="minus" onclick = "minus(${cartList.cartNum});">-</button>
 						
 						<input type="hidden" value="${cartList.count}" class="gdsStock_hidden" />
@@ -327,7 +331,8 @@
 				<%-- 반복할 때마다 sum에 상품 가격(gdsPrice)*상품 갯수(cartStock)만큼을 더함 --%>
 				<%-- <c:set var="sum" value="${sum + (cartList.goodsPrice * cartList.count)}" /> --%>
 				<%-- <c:set var="sum" value="${sum + (cartList.goodsPrice * cartList.count)}" /> --%>
-				<c:set var="sum" value="${sum + (cartList.goodsPrice * cartList.count)}" />
+				<c:set var="sum" value="${sum + finalPrice${cartList.cartNum}}" />
+				
 				
 				</c:forEach>
 			</ul>
@@ -351,7 +356,7 @@
 			</div>
 			
          <div class="orderInfo">
-            <form role="form" method="post" autocomplete="off">
+            <form role="form" method="post" id="formform" autocomplete="off">
                      
                <input type="hidden" name="amount" value="${sum}" />
                      
@@ -519,8 +524,7 @@
             alert("포인트가 모자랍니다.");
       	return; 
       
-      } 
-      else{  
+      }else{  
     	  var IMP = window.IMP; // 생략가능
 	        IMP.init('imp15219507'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
 	        var msg;
