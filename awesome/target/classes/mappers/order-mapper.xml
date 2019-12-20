@@ -17,8 +17,15 @@
 		<result property="rowCount" column="ROWCOUNT"/>
 		<result property="usedPoint" column="USERD_POINT"/>
 		<result property="orderPrice" column="ORDER_PRICE"/>
-		<result property="goodsTitle" column="GOODS_TITLE"/>
-		<result property="filePath" column="GOODS_FILE_PATH"/>
+		
+		<result property="goodsTitle" 	column="GOODS_TITLE"/>
+		<result property="filePath" 	column="GOODS_FILE_PATH"/>
+		
+		<!-- 동복 : 결제 INSERT문을 위해 생성 -->
+		<result property="dName" 		column="D_NAME"/>
+		<result property="dAddress" 	column="D_ADDRESS"/>
+		<result property="dPhone" 		column="D_PHONE"/>
+		
 	</resultMap>
 
 	<select id="selectOrder" resultMap="orderResultSet">
@@ -59,10 +66,12 @@
 		WHERE M.MID = O.MID AND G.GID=O.GID AND P.ORDER_NUM=O.ORDER_NUM AND O.ORDER_NUM=#{orderNum} AND S.GID=O.GID
 	</select>
 	<update id="orderCancel" parameterType="Order">
-		UPDATE ORDER_LIST
+		UPDATE ORD_LIST
 		SET ORDER_STATUS='X'
 		WHERE OID=#{number}
 	</update>
+		
+		
 	<select id="getOrderListCount" resultType="_int">
 		SELECT COUNT(*)
 		FROM ORDER_LIST
@@ -79,9 +88,58 @@
 		WHERE O.MID= #{mid} AND ORDER_DATE BETWEEN #{date1} AND  #{date2}
 		ORDER BY O.ORDER_NUM DESC
 	</select>
-	<select id="getOrderSearchCount" resultType="_int">
+		<select id="getOrderSearchCount" resultType="_int">
 		SELECT COUNT(*)
 		FROM ORDER_LIST
 		WHERE MID= #{mid} AND ORDER_DATE BETWEEN #{date1} AND #{date2}
 	</select>
+
+
+  <!--========================================= INSERT  =========================================-->	
+	
+	<!-- 동복 - 결제 완료시 주문 테이블 insert -->
+	<insert id ="insertPaymentList" parameterType="Order">
+		INSERT INTO ORDER_LIST VALUES(
+			SEQ_OID.NEXTVAL, #{gId}, #{mId}, CONCAT(TO_CHAR(SYSDATE,'YYYYMMDD'), TO_CHAR(SEQ_OID.nextval, 'FM0000')), #{orderCount}, SYSDATE, #{orderStatus} 
+		)
+	</insert>
+   
+	<!-- 동복 - 결제 완료시 결제 테이블 insert -->
+	<insert id ="insertPayment" parameterType="Order">
+		INSERT INTO PAYMENT VALUES(
+			<!-- #{orderNum}, #{orderPrice}, #{usedPoint} -->
+			(SELECT ORDER_NUM FROM( SELECT * FROM ORDER_LIST ORDER BY 1 DESC) WHERE ROWNUM = 1), #{orderPrice}, #{usedPoint}
+			
+		)
+	</insert>   
+   
+ 	<!-- 동복 - 결제 완료시 받는이 테이블 insert -->
+	<insert id ="insertPaymentDinfo" parameterType="Order">
+		INSERT INTO D_INFO VALUES(
+			<!-- SEQ_DID.NEXTVAL, #{orderNum}, #{dName}, #{dAddress}, #{dPhone} -->
+			SEQ_DID.NEXTVAL, (SELECT ORDER_NUM FROM( SELECT * FROM ORDER_LIST ORDER BY 1 DESC) WHERE ROWNUM = 1), #{dName}, #{dAddress}, #{dPhone}
+		)
+	</insert>    
+
+	<!--========================================= SELECT  =========================================-->
+	<!-- 결제한 상품의 orderNum 주문번호를 조회해서  PAYMENT,D_INFO 넣기위해 
+	<select id="getOrderListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM ORDER_LIST
+		WHERE MID=#{mId}
+	</select>-->
+
+	<!--========================================= UPDATE  =========================================-->
+	<!-- 가용 포인트 사용시  포인트 테이블 UPDATE (POINT 테이블 사용안함. 결제시 총금액에 1% 적립)-->
+	<update id="updateMemberPoint"  parameterType="Order">
+   		UPDATE MEMBER
+   		<if test="usedPoint == '0'">
+			SET POINT = POINT+(#{orderPrice}*0.01)
+		</if>
+		<if test="usedPoint != '0'">
+			SET POINT = (POINT+(#{orderPrice}*0.01))-#{usedPoint}
+		</if>
+		WHERE MID = #{mId}
+	</update>
+
 </mapper>
