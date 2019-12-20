@@ -159,7 +159,7 @@ public class CartController {
 //		return "cart/cartOrder";
 //	}
 //	
-//	// 배송 정보
+//	// 배송 정보	
 //	@RequestMapping("dinfoview.do")
 //	public ModelAndView deliveryInfo(ModelAndView mv, HttpServletRequest request) throws Exception {
 //		
