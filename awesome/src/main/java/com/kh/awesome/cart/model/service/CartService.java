@@ -31,6 +31,10 @@ public interface CartService {
 	public ArrayList<Buyer> buyer(int mId);
 
 	public int CartInsert(Cart c);
+
+	public int addAmount(int cartNum);
+
+	public int subAmount(int cartNum);
 	
 	
 	

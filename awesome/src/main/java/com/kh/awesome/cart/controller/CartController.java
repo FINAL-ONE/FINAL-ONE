@@ -18,6 +18,7 @@ import org.springframework.web.server.adapter.HttpWebHandlerAdapter;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.awesome.admin.model.vo.Admin;
+import com.kh.awesome.board.model.exception.BoardException;
 import com.kh.awesome.cart.model.exception.CartException;
 import com.kh.awesome.cart.model.service.CartService;
 import com.kh.awesome.cart.model.vo.Cart;
@@ -45,10 +46,12 @@ public class CartController {
       System.out.println("controller 카트리스트 : " + cartList);
       
       
-      
       mv.addObject("cartList", cartList);
       mv.setViewName("cart/cartList");
       return mv;
+      
+      
+      
    }
       
       
@@ -76,8 +79,35 @@ public class CartController {
       }      
       return result;      
    }
-   
 
+   @ResponseBody
+   @RequestMapping(value = "addAmount.do")
+   public int addAmount(HttpSession session, int cartNum) {
+      System.out.println("cartNum: " +  cartNum);   
+      
+  
+      int result =  cService.addAmount(cartNum);
+         
+      return result;      
+     
+   }
+   
+   @ResponseBody
+   @RequestMapping(value = "subAmount.do")
+   public int subAmount(HttpSession session, int cartNum) {
+      System.out.println("cartNum: " +  cartNum);   
+      
+  
+      int result =  cService.subAmount(cartNum);
+         
+      return result;      
+     
+   }
+ 
+  
+   
+   
+   
    // 카트에 상품 추가
       @RequestMapping("goCart.do")
       public String goodsgoCartView(HttpServletRequest request, Cart c, Admin a) {
@@ -104,6 +134,18 @@ public class CartController {
     * 
     * return "cart/cartList"; }
     */                  
+      
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
       
 }
 

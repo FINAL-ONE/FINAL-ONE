@@ -37,5 +37,13 @@ public class CartDao {
 		return sqlSession.insert("cartMapper.CartInsert", c);
 	}
 
+	public int addAmount(int cartNum) {
+		return sqlSession.update("addAmount", cartNum);
+	}
+
+	public int subAmount(int cartNum) {
+		return sqlSession.update("subAmount", cartNum);
+	}
+
 
 }
