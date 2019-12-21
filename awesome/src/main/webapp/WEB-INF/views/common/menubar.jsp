@@ -300,12 +300,12 @@ $(function(){
         $(".normalMenubar").css("display","none");
              
      });
-    
+     
     $(".communityMenu").mouseleave(function(){
         $(".communityMenubar").css("display","none");
         $(".normalMenubar").css("display","block");
     });
-    
+
     
      $(".myPageMenu").mouseenter(function(){
          $(".myPageMenubar").css("display","block");

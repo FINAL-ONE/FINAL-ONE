@@ -312,6 +312,11 @@ textarea {
     -webkit-transform: rotate(-360deg);
   }
 }
+
+.conmmunityNav:after {
+    top: -44px !important;
+    left: -94px !important;
+}
 </style>
 
     

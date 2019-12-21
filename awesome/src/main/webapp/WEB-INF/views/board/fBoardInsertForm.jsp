@@ -32,8 +32,6 @@
 <style> 
 
 
-
-
  #outer{
        width: 100%;
        position: relative;
@@ -355,6 +353,11 @@
     background: #fff;
 }
 
+
+ .conmmunityNav:after {
+	left: -5px !important;
+    top: -35px !important;
+}
 </style>
 
 <body>
@@ -501,6 +504,12 @@
 
 
 <script>
+
+$(function(){
+	
+	 $(".conmmunityNav:after").css("left", "50")
+});
+
 
 //광고 및 미리보기 
 function goBoardDetailView(bId){

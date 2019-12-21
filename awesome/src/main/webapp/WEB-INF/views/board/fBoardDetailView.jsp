@@ -944,13 +944,17 @@
   cursor: pointer;
 }
 
+ .conmmunityNav:after {
+	left: -5px !important;
+    top: -35px !important;
+}
 	
 	</style>
 	
 	<body>
-	<input id="loginUserMid" value="${loginUser.mid}" type="text"> 
-	<input id="loginUserAdmin" value="${loginUser.manager}" type="text" >
-	<input id="loginUserNickname" value="${loginUser.userNickname }" type="text">
+	<input id="loginUserMid" value="${loginUser.mid}" type="hidden"> 
+	<input id="loginUserAdmin" value="${loginUser.manager}" type="hidden" >
+	<input id="loginUserNickname" value="${loginUser.userNickname }" type="hidden">
 	
 	<jsp:include page="../common/menubar.jsp"/>	
 	<div id="container" style="overflow: auto; height: auto;"><!-- container -->

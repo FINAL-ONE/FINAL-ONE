@@ -58,7 +58,10 @@
 
 <style> 
 
-
+ .conmmunityNav:after {
+	left: -5px !important;
+    top: -35px !important;
+}
 
 
  #outer{
