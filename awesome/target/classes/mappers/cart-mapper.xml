@@ -17,6 +17,19 @@
       
    </resultMap>
    
+   <update id="addAmount" parameterType = "_int">
+  	UPDATE CART
+  	SET COUNT = COUNT + 1
+  	WHERE CARTNUM = #{cartNum}
+  </update>
+
+   <update id="subAmount" parameterType = "_int">
+  	UPDATE CART
+  	SET COUNT = COUNT -1
+  	WHERE CARTNUM = #{cartNum}
+  </update>
+   
+   
    
    <!-- 저장될 VO -->
    <resultMap type="CartList" id="cartListResultSet">
@@ -37,16 +50,11 @@
    
    <!-- 카트 리스트 -->
    <select id="cartList" parameterType="Member" resultMap="cartListResultSet">
-select * from ( SELECT C.CARTNUM, C.GID, G.GOODS_NAME, G.GOODS_PRICE, C.MID MID, C.COUNT, SG.GOODS_FILE_PATH, G.SOLDOUT, M.USER_NAME, M.PHONE, M.ADDRESS, M.POINT
+  select * from ( SELECT C.CARTNUM, C.GID, G.GOODS_NAME, G.GOODS_PRICE, C.MID MM, C.COUNT, SG.GOODS_FILE_PATH, G.SOLDOUT, M.USER_NAME, M.PHONE, M.ADDRESS, M.POINT
       FROM GOODS G, SELL_GOODS SG, CART C, MEMBER M
       WHERE G.GID = SG.GID
       AND G.GID = C.GID)
-      where MID = #{mid} and USER_NAME =#{userName}
-  <!-- select * from ( SELECT C.CARTNUM, C.GID, G.GOODS_NAME, G.GOODS_PRICE, C.MID MM, C.COUNT, SG.GOODS_FILE_PATH, G.SOLDOUT, M.USER_NAME, M.PHONE, M.ADDRESS, M.POINT
-      FROM GOODS G, SELL_GOODS SG, CART C, MEMBER M
-      WHERE G.GID = SG.GID
-      AND G.GID = C.GID)
-      where MM = #{mid} and USER_NAME =#{userName} -->
+      where MM = #{mid} and USER_NAME =#{userName}
    </select>
    
    <!-- 카트 삭제 -->
@@ -64,12 +72,13 @@ select * from ( SELECT C.CARTNUM, C.GID, G.GOODS_NAME, G.GOODS_PRICE, C.MID MID,
       )
    </insert>
 
-	<!-- 동복 - 상품판매 시 상품리스트 조회 -->
-	<select id="selectCartCheck" resultType="_int">
-	  	SELECT COUNT(*)
-		  FROM CART
-		 WHERE MID = #{mId} 
-		   AND GID = #{gId}
+   	<select id ="selectCartOne" parameterType="_int" resultMap="CartResultSet">
+
+		SELECT * FROM CART WHERE CARTNUM = #{cartNum}
+	
+	
 	</select>
+
+
 
 </mapper>

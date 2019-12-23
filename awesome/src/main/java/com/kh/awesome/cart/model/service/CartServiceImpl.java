@@ -22,7 +22,7 @@ public class CartServiceImpl implements CartService{
 	public List<CartList> cartList(Member loginUser) throws Exception {
 		return cDao.cartList(loginUser);
 	}
-
+	
 	@Override
 	public void deleteCart(Cart cart) {
 		cDao.deleteCart(cart);
@@ -38,10 +38,15 @@ public class CartServiceImpl implements CartService{
 		return cDao.CartInsert(c);
 	}
 
-	// 동복 - 장바구니 클릭시 해당 상품이 이미 장바구니에 있으면 체크
 	@Override
-	public int selectCartCheck(Cart a) {
-		return cDao.selectCartCheck(a);
+	public int addAmount(int cartNum) {
+		return cDao.addAmount(cartNum);
 	}
-	
+
+	@Override
+	public int subAmount(int cartNum) {
+		return cDao.subAmount(cartNum);
+	}
+
+
 }
