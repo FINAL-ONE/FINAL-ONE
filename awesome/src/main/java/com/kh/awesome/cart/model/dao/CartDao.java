@@ -24,8 +24,6 @@ public class CartDao {
 	}
 
 	public void deleteCart(Cart cart) {
-        System.out.println("카트넘 : " + cart.getCartNum());
-
 		sqlSession.delete("cartMapper.deleteCart", cart);
 	}
 
@@ -39,6 +37,14 @@ public class CartDao {
 
 	public int CartInsert(Cart c) {
 		return sqlSession.insert("cartMapper.CartInsert", c);
+	}
+
+	public int addAmount(int cartNum) {
+		return sqlSession.update("addAmount", cartNum);
+	}
+
+	public int subAmount(int cartNum) {
+		return sqlSession.update("subAmount", cartNum);
 	}
 
 

@@ -22,7 +22,7 @@ public class CartServiceImpl implements CartService{
 	public List<CartList> cartList(Member loginUser) throws Exception {
 		return cDao.cartList(loginUser);
 	}
-
+	
 	@Override
 	public void deleteCart(Cart cart) {
 		cDao.deleteCart(cart);
@@ -36,6 +36,16 @@ public class CartServiceImpl implements CartService{
 	@Override
 	public int CartInsert(Cart c) {
 		return cDao.CartInsert(c);
+	}
+
+	@Override
+	public int addAmount(int cartNum) {
+		return cDao.addAmount(cartNum);
+	}
+
+	@Override
+	public int subAmount(int cartNum) {
+		return cDao.subAmount(cartNum);
 	}
 
 

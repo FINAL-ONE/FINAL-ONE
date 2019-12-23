@@ -1,24 +1,32 @@
-﻿package com.kh.awesome.cart.controller;
+﻿﻿package com.kh.awesome.cart.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.server.adapter.HttpWebHandlerAdapter;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.awesome.admin.model.vo.Admin;
+import com.kh.awesome.board.model.exception.BoardException;
 import com.kh.awesome.cart.model.exception.CartException;
 import com.kh.awesome.cart.model.service.CartService;
 import com.kh.awesome.cart.model.vo.Cart;
 import com.kh.awesome.cart.model.vo.CartList;
+import com.kh.awesome.member.model.exception.MemberException;
 import com.kh.awesome.member.model.vo.Member;
+import com.kh.awesome.order.model.vo.Order;
+import com.sun.media.jfxmedia.logging.Logger;
 
 @Controller
 public class CartController {
@@ -69,8 +77,35 @@ public class CartController {
       }      
       return result;      
    }
-   
 
+   @ResponseBody
+   @RequestMapping(value = "addAmount.do")
+   public int addAmount(HttpSession session, int cartNum) {
+      System.out.println("cartNum: " +  cartNum);   
+      
+  
+      int result =  cService.addAmount(cartNum);
+         
+      return result;      
+     
+   }
+   
+   @ResponseBody
+   @RequestMapping(value = "subAmount.do")
+   public int subAmount(HttpSession session, int cartNum) {
+      System.out.println("cartNum: " +  cartNum);   
+      
+  
+      int result =  cService.subAmount(cartNum);
+         
+      return result;      
+     
+   }
+ 
+  
+   
+   
+   
    // 카트에 상품 추가
       @RequestMapping("goCart.do")
       public String goodsgoCartView(HttpServletRequest request, Cart c, Admin a) {
@@ -97,6 +132,18 @@ public class CartController {
     * 
     * return "cart/cartList"; }
     */                  
+      
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
       
 }
 

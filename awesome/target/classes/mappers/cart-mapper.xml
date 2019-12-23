@@ -17,6 +17,19 @@
       
    </resultMap>
    
+   <update id="addAmount" parameterType = "_int">
+  	UPDATE CART
+  	SET COUNT = COUNT + 1
+  	WHERE CARTNUM = #{cartNum}
+  </update>
+
+   <update id="subAmount" parameterType = "_int">
+  	UPDATE CART
+  	SET COUNT = COUNT -1
+  	WHERE CARTNUM = #{cartNum}
+  </update>
+   
+   
    
    <!-- 저장될 VO -->
    <resultMap type="CartList" id="cartListResultSet">
@@ -58,6 +71,13 @@
       VALUES(TBL_CART_SEQ.NEXTVAL, #{mId}, #{gId}, #{count}
       )
    </insert>
+   
+   	<select id ="selectCartOne" parameterType="_int" resultMap="CartResultSet">
+		SELECT * FROM CART WHERE CARTNUM = #{cartNum}
+	
+	
+	</select>
+
 
 
 </mapper>
