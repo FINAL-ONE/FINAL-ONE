@@ -86,35 +86,6 @@ body{
    text-decoration: none;
 }
 
-/* 분류 탭 */
-#tablinkDiv{
-   margin-left : 1px;
-   padding-left : 1px;
-}
-.tablink {
-  background-color: #555;
-  color: white;
-  float: left;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  padding : 15px 4px;
-  font-size: 17px;
-  width: 266px;
-}
-
-.tablink:hover {
-  background-color: #777;
-  
-}
-
-/* Style the tab content */
-.tabcontent {
-  color: black;
-  display: none;
-  padding: 50px;
-  text-align: center;
-}
 
 /* 상품 후기  */
 #afterWrite{

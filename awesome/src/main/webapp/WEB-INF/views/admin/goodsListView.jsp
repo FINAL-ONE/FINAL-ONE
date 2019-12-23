@@ -144,7 +144,6 @@
 <body>
 
 	<jsp:include page ="../common/menubar.jsp"/>
-	<jsp:include page ="../admin/adminMenu.jsp"/>
 	
 	<c:if test="${!empty loginUser }">
    		<div align ="center">

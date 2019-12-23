@@ -15,7 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
@@ -23,6 +25,8 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
 import com.kh.awesome.admin.model.exception.AdminException;
 import com.kh.awesome.admin.model.vo.Admin;
+import com.kh.awesome.board.model.exception.BoardException;
+import com.kh.awesome.board.model.vo.Answer;
 import com.kh.awesome.board.model.vo.PageInfo;
 import com.kh.awesome.cart.model.vo.Cart;
 import com.kh.awesome.common.Pagination;
@@ -341,7 +345,7 @@ public class OrderController {
 		/*
 		// 동복 - 결제 진행 ( TABLE INSERT && UPDATE )
 		@RequestMapping("paymentViewSuccess.do")
-		public ModelAndView paymentViewSuccess(ModelAndView mv, Order o, int gId, int mId, int orderCount, String orderStatus, int usedPoint, String dName, String dAddress, String dPhone, int orderPrice ) {
+		public ModelAndView paymentViewSuccess(ModelAndView mv, Order o, int usedPoint, String dName, String dAddress, String dPhone, int orderPrice ) {
 
 			System.out.println(" gId : " + gId +", mId : " + mId +", orderCount : " + orderCount +", orderStatus : " + orderStatus +
 			", usedPoint : " +usedPoint +", dName : " + dName +", dAddress : " + dAddress +", dPhone : " + dPhone +", orderPrice : " + orderPrice);
@@ -382,7 +386,6 @@ public class OrderController {
 	*/
 	
 	
-	
 	// 관리자 주문조회------------------------------------------------------------------------
 		// 관리자용 주문목록 리스트 
 		@RequestMapping("AdminorderList.do")
@@ -411,7 +414,7 @@ public class OrderController {
 				mv.addObject("pi", pi);
 				mv.setViewName("admin/adminOrdeerList");
 			} else{		  
-				throw new MemberException("회원 전체 조회 실패!!");
+				throw new MemberException("주문 목록 조회 실패!!");
 			}
 			return mv;
 		}

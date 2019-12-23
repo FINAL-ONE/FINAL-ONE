@@ -155,7 +155,7 @@ tr:nth-child(even) {
 					<th width ="200px">작성자</th>
 					<th width ="200px">별점</th>
 					<th width ="200px">작성일</th>
-					<th width ="150px">수정</th>
+					<!-- <th width ="150px">수정</th> -->
 					<th width ="150px">삭제</th>
 				</tr>
 				<c:forEach var="mflist" items="${mflist}">
@@ -210,12 +210,11 @@ tr:nth-child(even) {
 					      	 </c:if>
 						</td>
 						<td><c:out value = "${mflist.createDate }"/></td>
-						<td>
+						<!-- <td>
 							<button class="myupdate-btn" type="button" style="width : 110px; height : 40px;" onclick="updateForm();">수정하기</button>	
-						</td>
+						</td> -->
 						<td>
 							<button class="mydelet-btn" type="button" style="width : 110px; height : 40px;" onclick="deleteForm('${mflist.userId}');">삭제하기</button>
-							${mflist.gId}
 						</td>
 					</tr>
 				</c:forEach>

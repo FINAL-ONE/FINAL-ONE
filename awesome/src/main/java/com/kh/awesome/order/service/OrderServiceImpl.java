@@ -113,6 +113,28 @@ public class OrderServiceImpl implements OrderService{
 	}
 	
 	
+
+	// 관리자 주문리스트 전체 갯수 
+	@Override
+	public int getListCount() {
+		return oDao.getListCount();
+	}
+
+
+	// 관리자용 주문 리스트 
+	@Override
+	public ArrayList<Order> AdminOrderselectList(PageInfo pi) {
+		return oDao.AdminOrderselectList(pi);
+	}
+
+
+	// 관리자 배송상태 변경
+	@Override
+	public int updateStatusUpdate(Order o) {
+		return oDao.updateStatusUpdate(o);
+	}
+
+
 	@Override
 	public Cart selectCartOne(int cartNum) {
 		return oDao.selectCartOne(cartNum);
@@ -144,29 +166,6 @@ public class OrderServiceImpl implements OrderService{
 	@Override
 	public Member selectMemberAsMid(int mId) {
 		return oDao.selectMemberAsMid(mId);
-	}
-
-	
-	
-
-	// 관리자 주문리스트 전체 갯수 
-	@Override
-	public int getListCount() {
-		return oDao.getListCount();
-	}
-
-
-	// 관리자용 주문 리스트 
-	@Override
-	public ArrayList<Order> AdminOrderselectList(PageInfo pi) {
-		return oDao.AdminOrderselectList(pi);
-	}
-
-
-	// 관리자 배송상태 변경
-	@Override
-	public int updateStatusUpdate(Order o) {
-		return oDao.updateStatusUpdate(o);
 	}
 
 

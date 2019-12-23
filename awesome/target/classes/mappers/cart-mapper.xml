@@ -17,7 +17,7 @@
       
    </resultMap>
    
-    <update id="addAmount" parameterType = "_int">
+   <update id="addAmount" parameterType = "_int">
   	UPDATE CART
   	SET COUNT = COUNT + 1
   	WHERE CARTNUM = #{cartNum}
@@ -28,6 +28,7 @@
   	SET COUNT = COUNT -1
   	WHERE CARTNUM = #{cartNum}
   </update>
+   
    
    
    <!-- 저장될 VO -->
@@ -48,7 +49,7 @@
    </resultMap>
    
    <!-- 카트 리스트 -->
- <select id="cartList" resultMap="cartListResultSet">
+   <select id="cartList" resultMap="cartListResultSet">
       SELECT C.CARTNUM, C.GID, G.GOODS_NAME, G.GOODS_PRICE, M.MID, C.COUNT, SG.GOODS_FILE_PATH, G.SOLDOUT, M.USER_NAME, M.PHONE, M.ADDRESS, M.POINT
       FROM GOODS G, SELL_GOODS SG, CART C, MEMBER M
       WHERE G.GID = SG.GID
@@ -57,9 +58,9 @@
    </select>
    
    <!-- 카트 삭제 -->
-   <delete id="deleteCart" parameterType="Member">
+   <delete id="deleteCart">
       DELETE CART
-      WHERE CARTNUM IN #{cartNum}
+      WHERE CARTNUM = #{cartNum}
       AND MID=#{mId}
    </delete>
    
@@ -72,12 +73,6 @@
    </insert>
 	
 	
-	<select id ="selectCartOne" parameterType="_int" resultMap="CartResultSet">
-		SELECT * FROM CART WHERE CARTNUM = #{cartNum}
-	
-	
-	</select>
-	
 	
 	<!-- 동복 - 상품판매 시 상품리스트 조회 -->
 	<select id="selectCartCheck" resultType="_int">
@@ -86,5 +81,13 @@
 		 WHERE MID = #{mId} 
 		   AND GID = #{gId}
 	</select>
+
+	<select id ="selectCartOne" parameterType="_int" resultMap="CartResultSet">
+		SELECT * FROM CART WHERE CARTNUM = #{cartNum}
+	
+	
+	</select>
+
+
 
 </mapper>

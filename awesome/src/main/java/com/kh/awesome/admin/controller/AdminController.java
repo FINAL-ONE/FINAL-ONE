@@ -302,7 +302,7 @@ public class AdminController {
 				
 			
 		
-	
+		// 후기 중복체크
 		@RequestMapping("selectafterCheck.do")
 		public ModelAndView selectafterCheck(HttpServletResponse response,  int mId, int gId,  ModelAndView mv, Admin a ) throws JsonIOException, IOException {
 			Map map = new HashMap();

@@ -279,6 +279,19 @@ textarea {
 
 
 
+.conmmunityNav:after {
+    top: -44px !important;
+    left: -94px !important;
+}
+
+
+#layer_popup_area{
+	top: 230;
+	left: 200;
+	z-index: 1;
+	position: absolute;
+}
+
 </style>
 
 
@@ -290,6 +303,20 @@ textarea {
 <jsp:include page ="common/menubar.jsp"/>
 <div id="container" style="overflow: auto; height: auto;" ><!-- container -->
 
+	
+	<!-- 레이어 팝업 -->
+	<div id="layer_popup_area">
+		<div id="layer_popup" style="visibility: visible; width : 450px; height :500px;">
+		   <img src="resources/images/about_popup.jpg"  style = "width : 450px; height : 450px;">
+		    <div class="close">
+		        <form name="pop_form" style="width:450px; background : black;">
+		            <!-- <div id="check" style="width : 360px; height : 5px;"></div> -->
+		            <div id ="closeDiv" style="margin-left : 20px; color: white; padding : 5px 5px 5px 5px; display : inline-block;"><input type="checkbox" name="chkbox" value="checkbox" style="width : 30px;">24시간동안 다시 열람하지 않습니다.</div>
+		            <div id="close" style="margin-left : 30px; display : inline-block; color: white; padding : 5px 5px 5px 5px; text-align : center;"><a href="javascript:closePop();" style="text-decoration: none; color : white;">닫기</a></div>
+		        </form> 
+		    </div>
+		</div>
+	</div>
 	    
 <div class="content">
     <!-- content -->
@@ -388,6 +415,9 @@ textarea {
 </section>
 </div>
 
+
+
+
  <!-- 메인이미지 비디오 슬라이더 -->
 	<script
 	type="text/javascript"
@@ -419,7 +449,31 @@ textarea {
 </script>
 
 
+<!-- 레이어 팝업 -->
+<script language="Javascript">
+    cookiedata = document.cookie;   
+    if ( cookiedata.indexOf("maindiv=done") < 0 ){     
+        document.all['layer_popup'].style.visibility = "visible";
+    }
+    else {
+        document.all['layer_popup'].style.visibility = "hidden";
+    }
+</script>
 
+
+<script language="JavaScript">
+    function setCookie( name, value, expiredays ) {
+            var todayDate = new Date();
+            todayDate.setDate( todayDate.getDate() + expiredays ); 
+            document.cookie = name + "=" + escape( value ) + "; path=/; expires=" + todayDate.toGMTString() + ";"
+        }
+        function closePop() {
+            if ( document.pop_form.chkbox.checked ){
+                setCookie( "maindiv", "done" , 1 );
+            } 
+            document.all['layer_popup'].style.visibility = "hidden";
+        }    
+</script>
 
 
 

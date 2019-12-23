@@ -110,7 +110,6 @@ tr:nth-child(even) {
 </head>
 <body>
 	<jsp:include page="../common/menubar.jsp"/>   
-	<jsp:include page ="../admin/adminMenu.jsp"/>
 		
 		<div id="container" style= "height: auto; overflow: auto;"><!-- container -->
 		<h1 align="center"> 판매상품 관리 </h1>

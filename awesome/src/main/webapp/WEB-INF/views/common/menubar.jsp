@@ -246,13 +246,12 @@
 <c:if test="${sessionScope.loginUser.userId eq 'admin' }">
 <div class="menubar2 myPageMenubar myPageMenu" style="display:none;">
    <div class= "myPageNav">
-	  <span class= menu2 style="left: 612px;" onclick= "location.href='categoryView.do'">카테고리 관리</span>
-      <span class= menu2 style="left: 647px;" onclick= "location.href='goodsWriterView.do'">상품판매</span>
-      <span class= menu2 style="left: 682px;" onclick= "location.href='sell_goodsList.do'">판매상품조회</span>
-      <span class= menu2 style="left: 717px;" onclick= "location.href='goodsList.do'">상품관리</span>
-      <span class= menu2 style="left: 752px;" onclick= "location.href='memberLookup.do'">회원조회</span>
-      <span class= menu2 style="left: 745px;" onclick= "location.href='sellafterlistViewAdmin.do'">상품후기 조회</span>
-      
+      <span class= menu2 style="left: 627px;" onclick= "location.href='goodsWriterView.do'">상품판매</span>
+      <span class= menu2 style="left: 652px;" onclick= "location.href='sell_goodsList.do'">판매상품조회</span>
+      <span class= menu2 style="left: 687px;" onclick= "location.href='goodsList.do'">상품관리</span>
+      <span class= menu2 style="left: 722px;" onclick= "location.href='memberLookup.do'">회원조회</span>
+      <span class= menu2 style="left: 740px;" onclick= "location.href='sellafterlistViewAdmin.do'">상품후기 조회</span>
+      <span class= menu2 style="left: 755px;" onclick= "location.href='AdminorderList.do'">주문목록</span>
    </div>	
 </div>   
 </c:if>
@@ -300,12 +299,12 @@ $(function(){
         $(".normalMenubar").css("display","none");
              
      });
-    
+     
     $(".communityMenu").mouseleave(function(){
         $(".communityMenubar").css("display","none");
         $(".normalMenubar").css("display","block");
     });
-    
+
     
      $(".myPageMenu").mouseenter(function(){
          $(".myPageMenubar").css("display","block");

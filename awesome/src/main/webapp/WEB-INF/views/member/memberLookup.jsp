@@ -148,7 +148,6 @@ tr:nth-child(even) {
 <body>
 
 	<jsp:include page ="../common/menubar.jsp"/>
-	<jsp:include page ="../admin/adminMenu.jsp"/>
 		
 		
 	<div id="container" style="overflow: auto; height: auto;" ><!-- container -->

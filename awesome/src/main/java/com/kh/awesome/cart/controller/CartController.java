@@ -83,7 +83,6 @@ public class CartController {
       }      
       return result;      
    }
-   
 
    // 카트에 상품 추가
       @RequestMapping("goCart.do")
@@ -130,7 +129,37 @@ System.out.println("isUsable : " + isUsable);
     * 
     * return "cart/cartList"; }
     */                  
+   @ResponseBody
+   @RequestMapping(value = "addAmount.do")
+   public int addAmount(HttpSession session, int cartNum) {
+      System.out.println("cartNum: " +  cartNum);   
       
+  
+      int result =  cService.addAmount(cartNum);
+         
+      return result;      
+     
+   }
+   
+   @ResponseBody
+   @RequestMapping(value = "subAmount.do")
+   public int subAmount(HttpSession session, int cartNum) {
+      System.out.println("cartNum: " +  cartNum);   
+      
+  
+      int result =  cService.subAmount(cartNum);
+         
+      return result;      
+     
+   }
+ 
+   /*
+    * // 카트 뷰로 이동
+    * 
+    * @RequestMapping("moveCart.do") public String moveCart() {
+    * 
+    * return "cart/cartList"; }
+    */                  
 }
 
 
