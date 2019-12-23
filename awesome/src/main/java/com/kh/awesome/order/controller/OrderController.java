@@ -229,6 +229,8 @@ public class OrderController {
 		}
 		
 		int listCount = oService.getOrderSearchCount(os);
+	
+		
 		
 		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
 		session = request.getSession(true);
@@ -238,7 +240,7 @@ public class OrderController {
 		
 		ArrayList<Order> list = oService.datePicker(os,pi); 
 		
-		System.out.println("searchController : " + list);
+		System.out.println("Order컨트롤, searchController : " + list);
 		
 		System.out.println("파이"+pi);
 		if(list != null && list.size()>0) {

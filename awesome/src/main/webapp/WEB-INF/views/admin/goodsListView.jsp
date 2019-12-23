@@ -36,11 +36,10 @@
 	  width: 1400px;
 	  border: 1px solid #ddd;
 	  text-align :center;
-	  margin-left  :150px;
 	}
 	
-	tr:nth-child(even) {
-	  background-color: #f2f2f2;
+	#surveyListTable tr:nth-child(even) {
+	  /* background-color: #f2f2f2; */
 	}
 	
 	
@@ -137,14 +136,34 @@
 	span.ok{color:green;}
 	span.error{color:red;}
 	
-
-
+	
+	.aOrder{
+		cursor: pointer;
+		/* color: black; */
+		color: white;
+	}
+	.dOrder{
+		cursor: pointer;
+		/* color: black; */
+		color: white;
+	}
+	.aOrder:hover{
+		/* color: white; */
+		color: black;
+	}
+	.dOrder:hover{
+		/* color: white; */
+		color: black;
+	}	
+	
 </style>
 </head>
 <body>
 
 	<jsp:include page ="../common/menubar.jsp"/>
+	<%-- <jsp:include page ="../admin/adminMenu.jsp"/> --%>
 	
+	<br><br>
 	<c:if test="${!empty loginUser }">
    		<div align ="center">
    		<!--
@@ -155,12 +174,10 @@
    			상품 상태
    			매진 구분
    		-->
-   		<h1 align="center"> 상품 관리 페이지 </h1>
-   		<br>
    		<table>
    					<th><input type="checkbox" name="user_CheckBox" id="categoryCk">카테고리</th>
 		            <td id="Chidden">	    
-						<select id="lclCd" name="lclCd" style="width:100px;" class="category">
+						<select id="lclCd" name="lclCd" style="width:100px; height: 20.67px;" class="category">
 							<option value="">선택하세요</option>
 							<c:forEach var="c" items="${gClist}">
 								<c:if test="${c.cateCd eq lclCd}">
@@ -177,7 +194,7 @@
 				<td style="width:50px;"></td>
 		            <th>대 선택</th>
 		            <td>
-						<select id="mclCd" name="mclCd" style="width:100px;" class="category">
+						<select id="mclCd" name="mclCd" style="width:100px; height: 20.67px;" class="category">
 							<option value="">선택하세요</option>
 							<c:forEach var="l" items="${gLlist}">
 								<c:if test="${l.cateCd eq mclCd}">
@@ -194,7 +211,7 @@
 				<td style="width:50px;"></td>
 		            <th>중 선택</th>
 		            <td>
-						<select id="sclCd" name="sclCd" style="width:100px;" class="category">
+						<select id="sclCd" name="sclCd" style="width:100px; height: 20.67px;" class="category">
 							<option value="">선택하세요</option>
 							<c:forEach var="m" items="${gMlist}">
 								<c:if test="${m.cateCd eq sclCd}">
@@ -209,7 +226,7 @@
 				<tr></tr>
 				<th><input type="checkbox" name="user_CheckBox" id="statusCk">상품상태</th>
 				<td id="statushidden" >
-					<select id="goodsStatus" name ="goodsStatus" style="width:100px;">
+					<select id="goodsStatus" name ="goodsStatus" style="width:100px; height: 20.67px;">
 		                    <option value="Y" selected="selected">사용
 		                    <option value="N">미사용
 	                </select>
@@ -219,7 +236,7 @@
 				<td style="width:50px;"></td>
 				<th><input type="checkbox" name="user_CheckBox" id="soldoutCk">매진구분</th> 
 				<td id="soldouthidden" >
-					<select id="soldout" name ="soldout" style="width:100px;" style="width:100px;">
+					<select id="soldout" name ="soldout" style="width:100px; height: 20.67px;">
 							<option value="Y">매진
 							<option value="N" selected="selected">판매
 	                </select>
@@ -228,7 +245,7 @@
    				<td style="width:50px;"></td>
 	            <th>상품 이름</th>
 	            <td>
-	            	<input type="text" id="goodsName" name="goodsName" placeholder="상품명을 입력 하세요." list="myinter" />
+	            	<input type="text" id="goodsName" name="goodsName" placeholder="상품명을 입력 하세요." list="myinter"/>
 					<%-- <input type="text" id="goodsName" name="goodsName" placeholder="선택하세요." list="myinter" />   
 					<datalist id="myinter" name="myinter">
 						<select id="selectBox" name="selectBox">
@@ -255,20 +272,151 @@
 	<br>
 					
 	
-	<table align="center" width="90%" border="1" cellspaction="1" id="surveyListTable"
+	<table align="center" width="100%" border="1" cellspaction="1" id="surveyListTable"
 		class="table table-bordered table-striped table-hover rowfy">
 		<thead>
 			<tr bgcolor ="#fa4a4a" style = "color : white; height:53px;" class="noExl">
 			<th style="display:none;">숨킨 상품번호</th>
-				<th>상품번호</th>
+			
+				<th>
+					<div style="display:flex; width: 100%">
+						<div align="center" style="padding-top: 8%; padding-left: 10%; width: 80%" >상품번호</div>
+						<div>
+							<div>
+								<!-- <button onclick="sortTD ( 0 )" >▲</button> -->
+								<div onclick="sortTD ( 0 )" class="aOrder">▲</div>
+							</div>
+							<div>
+								<!-- <button onclick="reverseTD ( 0 )">▼</button> -->
+								<div  onclick="reverseTD ( 0 )" class="dOrder">▼</div>
+							</div>
+						</div>
+					</div>
+				</th>
+				<th>
+					<div style="display:flex; width: 100%">
+						<div align="center" style="padding-top: 4%; padding-left: 10%; width: 80%" >상품이름</div>
+						<div>
+							<div>
+								<!-- <button onclick="sortTD ( 1 )" >▲</button> -->
+								<div onclick="sortTD ( 1 )" class="aOrder">▲</div>
+							</div>
+							<div>
+								<!-- <button onclick="reverseTD ( 1 )">▼</button> -->
+								<div  onclick="reverseTD ( 1 )" class="dOrder">▼</div>
+							</div>
+						</div>
+					</div>
+				</th>	
+				<th>
+					<div style="display:flex; width: 100%">
+						<div align="center" style="padding-top: 8%; padding-left: 10%; width: 80%" >상품가격</div>
+						<div>
+							<div>
+								<!-- <button onclick="sortTD ( 2 )" >▲</button> -->
+								<div onclick="sortTD ( 2 )" class="aOrder">▲</div>
+							</div>
+							<div>
+								<!-- <button onclick="reverseTD ( 2 )">▼</button> -->
+								<div  onclick="reverseTD ( 2 )" class="dOrder">▼</div>
+							</div>
+						</div>
+					</div>
+				</th>					
+				<th>
+					<div style="display:flex; width: 100%">
+						<div align="center" style="padding-top: 8%; padding-left: 10%; width: 80%" >상품수량</div>
+						<div>
+							<div>
+								<!-- <button onclick="sortTD ( 3 )" >▲</button> -->
+								<div onclick="sortTD ( 3 )" class="aOrder">▲</div>
+							</div>
+							<div>
+								<!-- <button onclick="reverseTD ( 3 )">▼</button> -->
+								<div  onclick="reverseTD ( 3 )" class="dOrder">▼</div>
+							</div>
+						</div>
+					</div>
+				</th>					
+				
+				<th>
+					<div style="display:flex; width: 100%">
+						<div align="center" style="padding-top: 8%; padding-left: 10%; width: 80%" >상품상태</div>
+						<div>
+							<div>
+								<!-- <button onclick="sortTD ( 4 )" >▲</button> -->
+								<div onclick="sortTD ( 4 )" class="aOrder">▲</div>
+							</div>
+							<div>
+								<!-- <button onclick="reverseTD ( 4 )">▼</button> -->
+								<div  onclick="reverseTD ( 4 )" class="dOrder">▼</div>
+							</div>
+						</div>
+					</div>
+				</th>					
+				<th>
+					<div style="display:flex; width: 100%">
+						<div align="center" style="padding-top: 8%; padding-left: 10%; width: 80%" >매진구분</div>
+						<div>
+							<div>
+								<!-- <button onclick="sortTD ( 5 )" >▲</button> -->
+								<div onclick="sortTD ( 5 )" class="aOrder">▲</div>
+							</div>
+							<div>
+								<!-- <button onclick="reverseTD ( 5 )">▼</button> -->
+								<div  onclick="reverseTD ( 5 )" class="dOrder">▼</div>
+							</div>
+						</div>
+					</div>
+				</th>					
+				<th>
+					<div style="display:flex; width: 100%">
+						<div align="center" style="padding-top: 8%; padding-left: 10%; width: 80%" >등록날짜</div>
+						<div>
+							<div>
+								<!-- <button onclick="sortTD ( 6 )" >▲</button> -->
+								<div onclick="sortTD ( 6 )" class="aOrder">▲</div>
+							</div>
+							<div>
+								<!-- <button onclick="reverseTD ( 6 )">▼</button> -->
+								<div  onclick="reverseTD ( 6 )" class="dOrder">▼</div>
+							</div>
+						</div>
+					</div>
+				</th>					
+				<th>
+					<div style="display:flex; width: 100%">
+						<div align="center" style="padding-top: 8%; padding-left: 10%; width: 80%" >수정날짜</div>
+						<div>
+							<div>
+								<!-- <button onclick="sortTD ( 7 )" >▲</button> -->
+								<div onclick="sortTD ( 7 )" class="aOrder">▲</div>
+							</div>
+							<div>
+								<!-- <button onclick="reverseTD ( 7 )">▼</button> -->
+								<div  onclick="reverseTD ( 7 )" class="dOrder">▼</div>
+							</div>
+						</div>
+					</div>
+				</th>					
+				
+		   <!-- <th>상품이름<button onclick="sortTD ( 1 )">▲</button><button onclick="reverseTD ( 1 )">▼</button></th>
+				<th>상품가격<button onclick="sortTD ( 2 )">▲</button><button onclick="reverseTD ( 2 )">▼</button></th>
+				<th>상품수량<button onclick="sortTD ( 3 )">▲</button><button onclick="reverseTD ( 3 )">▼</button></th>
+				<th>상품상태<button onclick="sortTD ( 4 )">▲</button><button onclick="reverseTD ( 4 )">▼</button></th>
+				<th>매진구분<button onclick="sortTD ( 5 )">▲</button><button onclick="reverseTD ( 5 )">▼</button></th>
+				<th>등록날짜<button onclick="sortTD ( 6 )">▲</button><button onclick="reverseTD ( 6 )">▼</button></th>
+				<th>수정날짜<button onclick="sortTD ( 7 )">▲</button><button onclick="reverseTD ( 7 )">▼</button></th> -->
+				
+		<!-- <th>상품번호</th>
 				<th>상품이름</th>
 				<th>상품가격</th>
 				<th>상품수량</th>
 				<th>상품상태</th>
 				<th>매진구분</th>
 				<th>등록날짜</th>
-				<th>수정날짜</th>
-	<!-- 			<th>카c</th>
+				<th>수정날짜</th> -->
+	<!-- 		<th>카c</th>
 				<th>카n</th>
 				<th>대</th>
 				<th>중</th>
@@ -358,7 +506,7 @@
 		            <th>대 선택  <span style = "color:red; font-size : 1.5em;">*</span> </th>
 		            <td>
 						<select id="modmclCd" name="mclCd" style="width:100%;">
-							<c:forEach var="l" items="${dLlist}">
+							<c:forEach var="l" items="${gLlist}">
 							
 								<option value="${l.cateCd}">${l.cateNm}</option>
 							
@@ -381,7 +529,7 @@
 		            <th>중 선택  <span style = "color:red; font-size : 1.5em;">*</span> </th>
 		            <td>
 						<select id="modsclCd" name="sclCd" style="width:100%;">
-							<c:forEach var="m" items="${dMlist}">
+							<c:forEach var="m" items="${gMlist}">
 								<option value="${m.cateCd}" selected="${sclCd}">${m.cateNm}</option>
 								<%-- <c:if test="${m.cateCd eq sclCd}">
 									<option value="${m.cateCd}" selected="${sclCd}">${m.cateNm}</option>
@@ -554,16 +702,16 @@
 					<tr>
 						<th>상품상태</th>
 						<td>
-							<select name ="modIgoodsStatus" style="width:100%;">
-			                    <option value="Y" selected="selected">사용
-			                    <option value="N">미사용
+							<select id="modIgoodsStatus" name ="goodsStatus" style="width:100%;">
+			                    <option value="Y" >사용</option>
+			                    <option value="N" >미사용</option>
 			                </select>
 						</td>
 					</tr>
 					<tr>
 						<th>매진구분</th>
 						<td>
-							<select name ="modIsoldout" style="width:100%;">
+							<select id="modIsoldout" name ="soldout" style="width:100%;">
 			                    <option value="Y">매진
 			                    <option value="N" selected="selected">판매
 			                </select>
@@ -631,51 +779,105 @@
 			var goodsStatus = $(this).parent().children("#goodsStatus").val();
 			var soldout = $(this).parent().children("#soldout").val();
 			
-			
-
 			$("#modgoodsName").val(goodsName);
 			$("#modgoodsPrice").val(goodsPrice);
 			$("#modcount").val(count);
 			$("#modgoodsStatus").val(goodsStatus);
 			$("#modsoldout").val(soldout);
 			
-			$("#modcateCd").val(cateCd);
-			$("#modgId").val(gId);
 			
-			$("#modlclCd").val(lclCd);
-			$("#modmclCd").val(mclCd);
-			$("#modsclCd").val(sclCd);
 			
-			/* $("#modeHlclCd").val(lclCd);
-			$("#modeHmclCd").val(mclCd);
-			$("#modeHsclCd").val(sclCd); */
-			
-/* 			$.ajax({
-				url:"goodsDetailList.do",
-				dataType : "json",
-				data:{gId:gId,
-					cateCd:cateCd,
-					cateNm:cateNm,
-					lclCd:lclCd,
-					mclCd:mclCd, 
-					sclCd:sclCd},
-				 // data:{goodsName:goodsName,goodsStatus:goodsStatus},
-					  
-				success:function(data){
-					var modal = document.getElementById("myModal");
-					modal.style.display = "block";
+//str 카테고리 리스트 조회 (view 안만들고 modal로 하려고하니.. 코드 겁나 더러워짐 나도몰라!!!)----------------------------------------------------------------------------------------------------------------------------------------------------
+ 				//var lclCd =$(this).val();
+				$("#modmclCd option").remove();
+				$("#modsclCd option").remove();
+				$("#modnclCd option").remove();
+				$("#modcateCd").val("");
+		
+				//$("#modgoodsName").val("");
+				//$("#modgoodsPrice").val("");
+				//$("#modcount").val("");
+				
+				$.ajax({
+					url:"categoryCSelectBox.do",
+					data:{lclCd:lclCd},
+					success:function(data){
+						for(var i=0; i<data.list.length; i++){
+							$("#modmclCd").append("<option value='" + data.list[i].cateCd + "'>" + data.list[i].cateNm +'</option>');
+						}
+		//str 처음 조회시 카테고리 전체 조회---------------------------------------------					
+						var mclCd = null;
+						
+						if(data.list.length == 0){	// 데이터 없으면 조회안되게
+							return;
+						}
+						
+						for(var i=0; i<1; i++){
+							$("#modmclCd").append("<option value='" + data.list[i].cateCd + "'>" + data.list[i].cateNm +'</option>');
+							mclCd = data.list[i].cateCd;
+						}	
+						
+						$.ajax({
+							url:"categoryLSelectBox.do",
+							data:{lclCd:lclCd, mclCd:mclCd},
+							success:function(data){
+								
+								for(var i=0; i<data.list.length; i++){
+									$("#modsclCd").append("<option value='" + data.list[i].cateCd + "'>" + data.list[i].cateNm +'</option>');
+								}
+								
+								var sclCd = null;
+								
+								for(var i=0; i<1; i++){
+									$("#modsclCd").append("<option value='" + data.list[i].cateCd + "'>" + data.list[i].cateNm +'</option>');
+									sclCd = data.list[i].cateCd;
+								}
+								
+								$.ajax({
+									url:"categoryMSelectBox.do",
+									data:{lclCd:lclCd, mclCd:mclCd, sclCd:sclCd},
+									success:function(data){
+		
+										for(var i=0; i<data.list.length; i++){
+											//$("#nclCd").append("<option value='" + data.list[i].cateCd + "'>" + data.list[i].cateNm +'</option>');
+											$("#modnclCd").append("<option value='" + data.list[i].cateCd + "' + cost_value='"+data.list[i].cateNm+"'>" + data.list[i].cateNm +'</option>');
+										}		
+		
+											for(var i=0; i<data.list.length; i++){
+											sizeLCd = data.list[i].lclCd;
+											sizeMCd = data.list[i].mclCd;
+											sizeSCd = data.list[i].sclCd;
+										}	 
+										
+											$("#modlclCd").val(lclCd);
+											$("#modmclCd").val(mclCd);
+											$("#modsclCd").val(sclCd);
+											$("#modcateCd").val(cateCd);
+											$("#modgId").val(gId);
+											
+									},
+									error:function(request, status, errorData){
+										alert("error code : " + request.status + "\n"
+															  + "message : " + request.responseText
+															  + "error : " + errorData);
+									}
+								});
+							},
+							error:function(request, status, errorData){
+								alert("error code : " + request.status + "\n"
+													  + "message : " + request.responseText
+													  + "error : " + errorData);
+							}
+						});
+		//end 처음 조회시 카테고리 전체 조회---------------------------------------------					
+					},
+					error:function(request, status, errorData){
+						alert("error code : " + request.status + "\n"
+											  + "message : " + request.responseText
+											  + "error : " + errorData);
+					}
+				});	
 
-				},
-				error:function(request, status, errorData){
-					alert("error code : " + request.status + "\n"
-										  + "message : " + request.responseText
-										  + "error : " + errorData);
-				}
-			}); */
-			
-			
-			
-			
 				
 // ajax 이전 리스트에서 적용되던 이벤트
 /* 			$("#surveyListTable td").mouseenter(function(){
@@ -1393,7 +1595,6 @@
 	
 //str 등록버튼 클릭시----------------------------------------------------------------------------------------------------
 		function validate(){
-			
 			if($("#modgoodsName").val()==0){
 				alert("사용 가능한 상품명을 입력해 주세요");
 				$("#modgoodsName").focus();
@@ -1417,7 +1618,8 @@
 					data:{gId:gId},
 					success:function(data){
 						if(data.isUsable != true){	// 판매중인 상품이 있다면 팝업 메세지 띄워서 진행여부 확인
-							soldout();
+							//soldout();
+							$("#goodsUpdateForm").submit();
 						}else{
 							// 데이터 없으면
 							 $("#goodsUpdateForm").submit();
@@ -1460,8 +1662,8 @@
 
 //end 등록버튼 클릭시----------------------------------------------------------------------------------------------------
 
-			
-		function soldout(){
+		/* modal 위에 modal 띄우기 힘들어서... function 주석처리 (무조건 판매중인 상품도 update 됨)*/
+/* 		function soldout(){
 			Modal.confirm({
 				title: '수정 진행 여부',
 				message: 'OK 클릭시 현재 판매중인 상품의 상태도 변경됩니다.',
@@ -1474,8 +1676,7 @@
 		  		},
 			});
 			return;
-		}
-		
+		} */
 		
 		$(function() {
 		    var modal = document.getElementById("myModal");
@@ -1527,10 +1728,8 @@
 			$("#modIgoodsName").val("");
 			$("#modIgoodsPrice").val("");
 			$("#modIcount").val("");
-			//$("#modIgoodsStatus").valtrue;
-			//$("#modIsoldout").val("");
 			
-			$("#modIgoodsStatus option:eq(0)").attr("selected",true);
+			$("#modIgoodsStatus option:eq(0)").prop("selected",true);
 			$("#modIsoldout option:eq(1)").prop("selected",true);
 			
 			// 등록버튼 modal 초기화 작업..
@@ -1869,5 +2068,223 @@
 
 	</script>
 	
+	
+	
+	
+	
+	
+	
+	
+<!-- ====================================================================================================================================== -->
+
+<script type="text/javascript">
+	
+	// 출처 : http://tonks.tistory.com/79 
+	// 에러가 나온다면, 여기에 댓글을 남겨주세요. 
+	
+	
+	/* sortingNumber() : 숫자인 실수만으로 되어있을 때, 적용될 함수 */ 
+	
+	function sortingNumber( a , b ){  
+	
+	        if ( typeof a == "number" && typeof b == "number" ) return a - b; 
+	
+	        // 천단위 쉼표와 공백문자만 삭제하기.  
+	        var a = ( a + "" ).replace( /[,\s\xA0]+/g , "" ); 
+	        var b = ( b + "" ).replace( /[,\s\xA0]+/g , "" ); 
+	
+	        var numA = parseFloat( a ) + ""; 
+	        var numB = parseFloat( b ) + ""; 
+	
+	        if ( numA == "NaN" || numB == "NaN" || a != numA || b != numB ) return false; 
+	
+	        return parseFloat( a ) - parseFloat( b ); 
+	} 
+	
+	
+	/* changeForSorting() : 문자열 바꾸기. */ 
+	
+	function changeForSorting( first , second ){  
+	
+	        // 문자열의 복사본 만들기. 
+	        var a = first.toString().replace( /[\s\xA0]+/g , " " ); 
+	        var b = second.toString().replace( /[\s\xA0]+/g , " " ); 
+	
+	        var change = { first : a, second : b }; 
+	
+	        if ( a.search( /\d/ ) < 0 || b.search( /\d/ ) < 0 || a.length == 0 || b.length == 0 ) return change; 
+	
+	        var regExp = /(\d),(\d)/g; // 천단위 쉼표를 찾기 위한 정규식. 
+	
+	        a = a.replace( regExp , "$1" + "$2" ); 
+	        b = b.replace( regExp , "$1" + "$2" ); 
+	
+	        var unit = 0; 
+	        var aNb = a + " " + b; 
+	        var numbers = aNb.match( /\d+/g ); // 문자열에 들어있는 숫자 찾기 
+	
+	        for ( var x = 0; x < numbers.length; x++ ){ 
+	
+	                var length = numbers[ x ].length; 
+	                if ( unit < length ) unit = length; 
+	        } 
+	
+	        var addZero = function( string ){ // 숫자들의 단위 맞추기 
+	
+	                var match = string.match( /^0+/ ); 
+	
+	                if ( string.length == unit ) return ( match == null ) ? string : match + string; 
+	
+	                var zero = "0"; 
+	
+	                for ( var x = string.length; x < unit; x++ ) string = zero + string; 
+	
+	                return ( match == null ) ? string : match + string; 
+	        }; 
+	
+	        change.first = a.replace( /\d+/g, addZero ); 
+	        change.second = b.replace( /\d+/g, addZero ); 
+	
+	        return change; 
+	} 
+	
+	
+	/* byLocale() */ 
+	
+	function byLocale(){ 
+	
+	        var compare = function( a , b ){ 
+	
+	                var sorting = sortingNumber( a , b ); 
+	
+	                if ( typeof sorting == "number" ) return sorting; 
+	
+	                var change = changeForSorting( a , b ); 
+	
+	                var a = change.first; 
+	                var b = change.second; 
+	
+	                return a.localeCompare( b ); 
+	        }; 
+	
+	        var ascendingOrder = function( a , b ){  return compare( a , b );  }; 
+	        var descendingOrder = function( a , b ){  return compare( b , a );  }; 
+	
+	        return { ascending : ascendingOrder, descending : descendingOrder }; 
+	} 
+	
+	
+	/* replacement() */ 
+	 
+	function replacement( parent ){  
+	        var tagName = parent.tagName.toLowerCase(); 
+	        if ( tagName == "table" ) parent = parent.tBodies[ 0 ]; 
+	        tagName = parent.tagName.toLowerCase(); 
+	        if ( tagName == "tbody" ) var children = parent.rows; 
+	        else var children = parent.getElementsByTagName( "li" ); 
+	
+	        var replace = { 
+	                order : byLocale(), 
+	                index : false, 
+	                array : function(){ 
+	                        var array = [ ]; 
+	                        for ( var x = 0; x < children.length; x++ ) array[ x ] = children[ x ]; 
+	                        return array; 
+	                }(), 
+	                checkIndex : function( index ){ 
+	                        if ( index ) this.index = parseInt( index, 10 ); 
+	                        var tagName = parent.tagName.toLowerCase(); 
+	                        if ( tagName == "tbody" && ! index ) this.index = 0; 
+	                }, 
+	                getText : function( child ){ 
+	                        if ( this.index ) child = child.cells[ this.index ]; 
+	                        return getTextByClone( child ); 
+	                }, 
+	                setChildren : function(){ 
+	                        var array = this.array; 
+	                        while ( parent.hasChildNodes() ) parent.removeChild( parent.firstChild ); 
+	                        for ( var x = 0; x < array.length; x++ ) parent.appendChild( array[ x ] ); 
+	                }, 
+	                ascending : function( index ){ // 오름차순 
+	                        this.checkIndex( index ); 
+	                        var _self = this; 
+	                        var order = this.order; 
+	                        var ascending = function( a, b ){ 
+	                                var a = _self.getText( a ); 
+	                                var b = _self.getText( b ); 
+	                                return order.ascending( a, b ); 
+	                        }; 
+	                        this.array.sort( ascending ); 
+	                        this.setChildren(); 
+	                }, 
+	                descending : function( index ){ // 내림차순
+	                        this.checkIndex( index ); 
+	                        var _self = this; 
+	                        var order = this.order; 
+	                        var descending = function( a, b ){ 
+	                                var a = _self.getText( a ); 
+	                                var b = _self.getText( b ); 
+	                                return order.descending( a, b ); 
+	                        }; 
+	                        this.array.sort( descending ); 
+	                        this.setChildren(); 
+	                } 
+	        }; 
+	        return replace; 
+	} 
+	
+	function getTextByClone( tag ){  
+	        var clone = tag.cloneNode( true ); // 태그의 복사본 만들기. 
+	        var br = clone.getElementsByTagName( "br" ); 
+	        while ( br[0] ){ 
+	                var blank = document.createTextNode( " " ); 
+	                clone.insertBefore( blank , br[0] ); 
+	                clone.removeChild( br[0] ); 
+	        } 
+	        var isBlock = function( tag ){ 
+	                var display = ""; 
+	                if ( window.getComputedStyle ) display = window.getComputedStyle ( tag, "" )[ "display" ]; 
+	                else display = tag.currentStyle[ "display" ]; 
+	                return ( display == "block" ) ? true : false; 
+	        }; 
+	        var children = clone.getElementsByTagName( "*" ); 
+	        for ( var x = 0; x < children.length; x++){ 
+	                var child = children[ x ]; 
+	                if ( ! ("value" in child) && isBlock(child) ) child.innerHTML = child.innerHTML + " "; 
+	        } 
+	        var textContent = ( "textContent" in clone ) ? clone.textContent : clone.innerText; 
+	        return textContent; 
+	} 
+</script>
+
+	<script type="text/javascript">
+		var myTable = document.getElementById( "surveyListTable" ); 
+		var replace = replacement( myTable ); 
+		function sortTD( index ){    replace.ascending( index );    } 
+		function reverseTD( index ){    replace.descending( index );    } 
+	</script>
+
+<!-- ====================================================================================================================================== -->
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 </body>
+
+<footer>
+   <jsp:include page ="../common/footer.jsp"/>
+</footer>
+
 </html>

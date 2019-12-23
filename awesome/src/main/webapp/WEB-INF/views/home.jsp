@@ -30,7 +30,14 @@ body {
 	margin: 0;
 	padding: 0;
 	font-family: 'Raleway', sans-serif;
+	
+
 }
+
+.footer{
+	line-height: 18px !important;
+}
+
 .flex-container {
 	position: absolute;
 	height: 100vh;

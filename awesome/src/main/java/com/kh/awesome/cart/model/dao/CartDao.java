@@ -18,13 +18,14 @@ public class CartDao {
 	@Autowired
 	SqlSessionTemplate sqlSession;
 
-	public List<CartList> cartList(int mId) {
-		return sqlSession.selectList("cartMapper.cartList", mId);
+	public List<CartList> cartList(Member loginUser) {
+		System.out.println("list mId : " + loginUser);
+		return sqlSession.selectList("cartMapper.cartList", loginUser);
 	}
 
 	public void deleteCart(Cart cart) {
 		sqlSession.delete("cartMapper.deleteCart", cart);
-	}
+	} 
 
 	public ArrayList<Cart> deliveryInfo(int mId) {
 		return (ArrayList)sqlSession.selectList("cartMapper.deliveryInfo", mId);
@@ -37,7 +38,7 @@ public class CartDao {
 	public int CartInsert(Cart c) {
 		return sqlSession.insert("cartMapper.CartInsert", c);
 	}
-	
+
 	public int addAmount(int cartNum) {
 		return sqlSession.update("addAmount", cartNum);
 	}
@@ -46,8 +47,6 @@ public class CartDao {
 		return sqlSession.update("subAmount", cartNum);
 	}
 
-	
-	
 	// 동복 - 장바구니 클릭시 해당 상품이 이미 장바구니에 있으면 체크
 	public int selectCartCheck(Cart a) {
 		return sqlSession.selectOne("cartMapper.selectCartCheck", a);

@@ -308,7 +308,7 @@ tr:nth-child(even) {
    
    <script type="text/javascript">
       $(function(){
-         $("#checkboxTestTbl td").mouseenter(function(){
+         $("#checkboxTestTbl td[class='tableList']").mouseenter(function(){
          //$(".tableList").mouseenter(function(){
             /* $(this).parent().css({"background":"#fa4a4a","cursor":"pointer"}); */
             $(this).parent().css({"background":"#FFF7D5","cursor":"pointer"});
@@ -336,14 +336,15 @@ tr:nth-child(even) {
          }).mouseout(function(){
             $(this).parent().css({"background":"white"});
          }).click(function(){ */
-		$("#checkboxTestTbl2 td").mouseenter(function(){
+		$("#checkboxTestTbl td[id='testStatus']").mouseenter(function(){
+		/* $("#checkboxTestTbl2 td").mouseenter(function(){ */
 		   // $(this).parent().css({"background":"#FFF7D5","cursor":"pointer"});
 		 }).mouseout(function(){
 		   // $(this).parent().css({"background":"white"});
 		 }).click(function(){
             //soldout();
-            var sellNum = $(this).parent().children("#sellNum2").val();
-            var status = $(this).parent().children("#status2").val();
+            var sellNum = $(this).parent().children("#sellNum").val();
+            var status = $(this).parent().children("#status").val();
             var gId = $(this).parent().children("#gId").val();
 
 //alert("sellNum : " + sellNum + " / " + "status : " + status);
@@ -371,16 +372,17 @@ tr:nth-child(even) {
    </script>
       
       
-<script>
-   jQuery(document).ready(function() { 
-   
+<!-- <script>
+   jQuery(document).ready(function() {
+	// $(function(){
+	   
        var tableHeight = jQuery("#checkboxTestTbl td").height(); 
    
-       //alert(tableHeight); 
+       alert(tableHeight); 
        $("#checkboxTestTbl2 td").height(tableHeight);
    }); 
 
-</script>
+</script> -->
       
       
       

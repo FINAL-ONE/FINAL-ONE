@@ -1,4 +1,5 @@
-﻿package com.kh.awesome.cart.controller;
+﻿﻿package com.kh.awesome.cart.controller;
+
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -44,18 +45,18 @@ public class CartController {
    public ModelAndView getCartList(HttpSession session, ModelAndView mv) throws Exception {
       
       Member loginUser = (Member)session.getAttribute("loginUser");
-      int mId = loginUser.getMid();
+
+//      int mId = loginUser.getMid();
       
-      List<CartList> cartList = cService.cartList(mId);
+      List<CartList> cartList = cService.cartList(loginUser);
       System.out.println("controller 카트리스트 : " + cartList);
+      
       
       
       mv.addObject("cartList", cartList);
       mv.setViewName("cart/cartList");
       return mv;
-      
-      
-      
+
    }
       
       
@@ -84,51 +85,6 @@ public class CartController {
       return result;      
    }
 
-   // 카트에 상품 추가
-      @RequestMapping("goCart.do")
-      public String goodsgoCartView(HttpServletRequest request, Cart c, Admin a) {
-         
-         /* ArrayList<Cart> list = ShopService.selectList(); */
-         System.out.println("Cart : " + c);
-         System.out.println("Admin : " + a);
-         
-         int result = cService.CartInsert(c);
-         System.out.println(result);
-         
-         
-         if(result > 0 ) {
-            return "redirect:cartList.do";
-         } else {
-            throw new CartException("장바구니 이동 실패!!");
-         }   
-      }
- 
-		// 동복 - 장바구니 클릭시 해당 상품이 이미 장바구니에 있으면 체크
-		@RequestMapping("selectCartCheck.do")
-		public ModelAndView selectCartCheck(HttpServletResponse response,  int mId, int gId, ModelAndView mv, Cart a ) throws JsonIOException, IOException {
-			Map map = new HashMap();
-			
-			a.setmId(mId);
-			a.setgId(gId);
-			
-			boolean isUsable = cService.selectCartCheck(a) == 0? true : false;
-System.out.println("isUsable : " + isUsable);
-			map.put("isUsable", isUsable);
-			
-			mv.addAllObjects(map);
-			
-			mv.setViewName("jsonView");
-			
-			return mv;
-		}
- 
-   /*
-    * // 카트 뷰로 이동
-    * 
-    * @RequestMapping("moveCart.do") public String moveCart() {
-    * 
-    * return "cart/cartList"; }
-    */                  
    @ResponseBody
    @RequestMapping(value = "addAmount.do")
    public int addAmount(HttpSession session, int cartNum) {
@@ -153,15 +109,67 @@ System.out.println("isUsable : " + isUsable);
      
    }
  
+  
+   
+   
+   
+   // 카트에 상품 추가
+      @RequestMapping("goCart.do")
+      public String goodsgoCartView(HttpServletRequest request, Cart c, Admin a) {
+         
+         /* ArrayList<Cart> list = ShopService.selectList(); */
+         System.out.println("Cart : " + c);
+         System.out.println("Admin : " + a);
+         
+         int result = cService.CartInsert(c);
+         System.out.println(result);
+         
+         
+         if(result > 0 ) {
+            return "redirect:cartList.do";
+         } else {
+            throw new CartException("장바구니 이동 실패!!");
+         }   
+      }
+      
    /*
-    * // 카트 뷰로 이동
+    * // 카트 뷰로 이동 
     * 
     * @RequestMapping("moveCart.do") public String moveCart() {
     * 
     * return "cart/cartList"; }
     */                  
-}
+      
 
+      
+      
+		// 동복 - 장바구니 클릭시 해당 상품이 이미 장바구니에 있으면 체크
+		@RequestMapping("selectCartCheck.do")
+		public ModelAndView selectCartCheck(HttpServletResponse response,  int mId, int gId, ModelAndView mv, Cart a ) throws JsonIOException, IOException {
+			Map map = new HashMap();
+			
+			a.setmId(mId);
+			a.setgId(gId);
+			
+			boolean isUsable = cService.selectCartCheck(a) == 0? true : false;
+System.out.println("isUsable : " + isUsable);
+			map.put("isUsable", isUsable);
+			
+			mv.addAllObjects(map);
+			
+			mv.setViewName("jsonView");
+			
+			return mv;
+		}      
+      
+      
+      
+      
+      
+      
+      
+      
+}
 
 
 

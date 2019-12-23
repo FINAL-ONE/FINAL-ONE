@@ -50,7 +50,7 @@ public class AdminController {
 		return "admin/adminHome";	
 	}
 	
-	// 메뉴바에서 상품조회 클릭시 관리자용 상품조회 테이블 조회--준배
+	// 메뉴바에 서 상품조회 클릭시 관리자용 상품조회 테이블 조회--준배
 	@RequestMapping("sell_goodsList.do")
 	public ModelAndView sell_goodsList(ModelAndView mv) {
 		
