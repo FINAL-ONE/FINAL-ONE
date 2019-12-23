@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.awesome.cart.model.vo.Buyer;
 import com.kh.awesome.cart.model.vo.Cart;
 import com.kh.awesome.cart.model.vo.CartList;
+import com.kh.awesome.member.model.vo.Member;
 
 @Repository("cDao")
 public class CartDao {
@@ -17,11 +18,14 @@ public class CartDao {
 	@Autowired
 	SqlSessionTemplate sqlSession;
 
-	public List<CartList> cartList(int mId) {
-		return sqlSession.selectList("cartMapper.cartList", mId);
+	public List<CartList> cartList(Member loginUser) {
+		System.out.println("list mId : " + loginUser);
+		return sqlSession.selectList("cartMapper.cartList", loginUser);
 	}
 
 	public void deleteCart(Cart cart) {
+        System.out.println("카트넘 : " + cart.getCartNum());
+
 		sqlSession.delete("cartMapper.deleteCart", cart);
 	}
 

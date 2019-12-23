@@ -75,8 +75,11 @@ public class MemberController {
 										@RequestParam("post") String post,
 										@RequestParam("address1") String address1,
 										@RequestParam("address2") String address2) {
-		 System.out.println("member 출력 " + m);
-		
+		// 이메일이 배열로 설정되어있기 때문에 컴마를 기준으로 나눠라~
+		 System.out.println("member 출력 " + m.getEmail().split(","));
+		 String e1 = m.getEmail().split(",")[0];
+		 String e2 = m.getEmail().split(",")[1];
+		 m.setEmail(e1+"@"+e2);
 		/*
 		 *  1. 실행 해보면 한글 부분이 깨져 있는 것을 볼 수 있을 것이다.
 		 *  스프링에서 제공하는 필터를 이용해서 요청시 전달되어 오는 값에 한글이 있을 경우 인코딩 처리하는 걸 추가해보자
