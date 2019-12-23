@@ -21,6 +21,10 @@
 <!-- Star Rating -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+<!-- input css  -->
+<link href="js/icheck-material-master/icheck-material.css" rel="stylesheet" type="text/css">
+
+
 <style>
 
 .afterGoods tr{
@@ -40,6 +44,26 @@
 }
 .checked {
   	color: orange;
+}
+
+
+#goodsGobackBtn {
+    margin: 10px 0px 15px;
+    border: 1px solid #fe6666;
+    background: #fe6666;
+    border-radius: 2px;
+    color: #fff;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    width: 259px;
+    height: 40px;
+    cursor: pointer;
+}
+
+#goodsGobackBtn:hover{
+	background: #fff;
+	color: #fe6666;
 }
 
 </style>
@@ -76,7 +100,7 @@
 							<c:param name="sellNum" value="${a.sellNum }"/>
 						</c:url>
 						<br>
-						<a href="${adetail}"><button> 제품 상세보기 </button></a>
+						<button id="goodsGobackBtn"><a href="${adetail}" style="font-size : 20px; text-decoration: none; color : black;">제품 상세보기</a></button>
 					</c:forEach>	
 				</td>
 			</tr>
@@ -110,36 +134,56 @@
 			<tr>
 				<th> 만족도 </th>
 				<td>
-					<input type="radio" name ="star" value = "1"style="margin-left : 30px;">
-						<span class="fa fa-star checked"></span>
-						<span class="fa fa-star"></span>
-						<span class="fa fa-star"></span>
-						<span class="fa fa-star"></span>
-						<span class="fa fa-star"></span>
-					<input type="radio" name ="star" value = "2" style="margin-left : 30px;">
-						<span class="fa fa-star checked"></span>
-						<span class="fa fa-star checked"></span>
-						<span class="fa fa-star"></span>
-						<span class="fa fa-star"></span>
-						<span class="fa fa-star"></span>
-					<input type="radio" name ="star" value = "3" style="margin-left : 30px;" >
-						<span class="fa fa-star checked"></span>
-						<span class="fa fa-star checked"></span>
-						<span class="fa fa-star checked"></span>
-						<span class="fa fa-star"></span>
-						<span class="fa fa-star"></span>
-					<input type="radio" name ="star" value = "4" style="margin-left : 30px;">
-						<span class="fa fa-star checked"></span>
-						<span class="fa fa-star checked"></span>
-						<span class="fa fa-star checked"></span>
-						<span class="fa fa-star checked"></span>
-						<span class="fa fa-star"></span>
-					<input type="radio" name ="star" value = "5" style="margin-left : 30px;">
-						<span class="fa fa-star checked"></span>
-						<span class="fa fa-star checked"></span>
-						<span class="fa fa-star checked"></span>
-						<span class="fa fa-star checked"></span>
-						<span class="fa fa-star checked"></span>
+            	<div class="icheck-material-deeporange" style = "display : inline-block; margin-left : 20px;">
+					<input type="radio" id="deeporange1" name ="star" value = "1">
+						<label for="deeporange1">
+							<span class="fa fa-star checked"></span>
+							<span class="fa fa-star"></span>
+							<span class="fa fa-star"></span>
+							<span class="fa fa-star"></span>
+							<span class="fa fa-star"></span>
+						</label>
+				</div>
+				<div class="icheck-material-deeporange" style = "display : inline-block; margin-left : 20px;">
+					<input type="radio" id="deeporange2" name ="star" value = "2">
+						<label for="deeporange2">
+							<span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked"></span>
+							<span class="fa fa-star"></span>
+							<span class="fa fa-star"></span>
+							<span class="fa fa-star"></span>
+						</label>
+				</div>
+				<div class="icheck-material-deeporange" style = "display : inline-block; margin-left : 20px;">
+					<input type="radio" id="deeporange3" name ="star" value = "3">
+						<label for="deeporange3">
+							<span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked"></span>
+							<span class="fa fa-star"></span>
+							<span class="fa fa-star"></span>
+						</label>
+				</div>
+				<div class="icheck-material-deeporange" style = "display : inline-block; margin-left : 20px;">
+					<input type="radio" id="deeporange4" name ="star" value = "4">
+						<label for="deeporange4">
+							<span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked"></span>
+							<span class="fa fa-star"></span>
+						</label>
+				</div>
+				<div class="icheck-material-deeporange" style = "display : inline-block; margin-left : 20px;">
+					<input type="radio" id="deeporange5" name ="star" value = "5">
+						<label for="deeporange5">
+							<span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked"></span>
+						</label>
+				</div>
 				</td>
 			</tr>
 			<tr>
@@ -217,6 +261,18 @@
 	</script>
 
 
+
+<!-- input css script -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-46156385-1', 'cssscript.com');
+  ga('send', 'pageview');
+
+</script>
 
 
 </body>

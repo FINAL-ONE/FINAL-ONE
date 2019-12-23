@@ -32,9 +32,9 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
 @SessionAttributes("loginUser")
 
-@Controller	
+@Controller   
 public class MemberController {
-	
+   
 	@Autowired
 	private MemberService mService;
 	
@@ -75,8 +75,11 @@ public class MemberController {
 										@RequestParam("post") String post,
 										@RequestParam("address1") String address1,
 										@RequestParam("address2") String address2) {
-		 System.out.println("member 출력 " + m);
-		
+		// 이메일이 배열로 설정되어있기 때문에 컴마를 기준으로 나눠라~
+		 System.out.println("member 출력 " + m.getEmail().split(","));
+		 String e1 = m.getEmail().split(",")[0];
+		 String e2 = m.getEmail().split(",")[1];
+		 m.setEmail(e1+"@"+e2);
 		/*
 		 *  1. 실행 해보면 한글 부분이 깨져 있는 것을 볼 수 있을 것이다.
 		 *  스프링에서 제공하는 필터를 이용해서 요청시 전달되어 오는 값에 한글이 있을 경우 인코딩 처리하는 걸 추가해보자
@@ -134,234 +137,234 @@ public class MemberController {
 		
 	}
 
-	// 뷰 페이지로 이동시키는 컨트롤러 메소드 추가
-		@RequestMapping("loginView.do")
-		public String enrollloginView() {
-			
-			return "member/loginView";
-		}
-		
-		
-	// 암호화 처리 후 로그인 부분
-		@RequestMapping(value = "login.do", method = RequestMethod.POST)
-		public String memberLogin(Member m, Model model, SessionStatus status) {
-			/*
-			 * matches() 메소드를 통해 우리는 암호화되어 있는 DB값과
-			 * 사용자가 입력한 비밀번호를 비교할 수 있다.
-			 * 당연히 일치하면 로그인 성공!, 실패하면 로그인실패!
-			 */
-			
-			// 로그아웃 두번 클릭해야 로그아웃 될때 로그인에서 setComplete() 실행 해주면 된다.
-			// status.setComplete();
-			
-			Member loginUser = mService.loginMember(m);
-									// matches 안에서 긁어온 암호화된 녀석이랑 사용자가 입력한 녀석이랑 비교해준다.
-			
-			if(bcryptPasswordEncoder.matches(m.getUserPwd(),loginUser.getUserPwd())) {
-				model.addAttribute("loginUser", loginUser);
-			}else {
-				throw new MemberException("로그인실패");
-			}
-			return "home";
-		}
-		
-		
-		// ---------------------이제 로그인/ 로그아웃, 회원가입은 완벽하게 끝냈다!--------------------------
-		
-		// 그럼 이제 로그인 이후에 자신의 정보를 보고 수정하는 페이지를 만들자
-		// menubar에서 myinfo.do로 넘어오니까..
-		
-		@RequestMapping("myinfo.do")
-		public String myInfoView() {
-			
-			return "member/mypage";		// mypage.jsp 만들자.
-		}
-		
-		//관리자에게 이메일 전송
-		@RequestMapping("email.do")
-		public String email() {
-			
-			return "common/email";		
-		}
-		
-		
-		// 회원정보 수정
-		@RequestMapping("mupdate.do")
-		public String memberUpdate(Member m, Model model, @RequestParam("post") String post,
-														  @RequestParam("address1") String addr1,
-														  @RequestParam("address2") String addr2) {
-			
-			m.setAddress(post + "," + addr1 + "," + addr2);
-			
-			int result = mService.updateMember(m);
-			
-			if(result > 0) {
-				model.addAttribute("loginUser" , m);
-				
-			} else {
-				throw new MemberException("수정 실패!!");
-			}
-			
-			return "home";
-		}
-		
-		
-		// 회원탈퇴
-		@RequestMapping("mdelete.do")
-		public String memberDelete(HttpSession session, String userId) {
-			
-			int result = mService.deleteMember(userId);
-			if(result > 0) {
-				// session.invalidate();
-				
-				return "redirect:logout.do";
-				// 알아서 로그아웃을 해주는 메소드를 활용하자!!
-			}else {
-				throw new MemberException("탈퇴 실패!");
-			}
-			
-		}
-		
-		@RequestMapping("memberLookup.do")
-		public ModelAndView boardList(ModelAndView mv, @RequestParam(value="page", required=false) Integer page) {
-			// 마이바티스 때 했던 PageInfo의 Pagination을 그대로 쓰자.
-			
-			// 페이지의 정보 없으면 디폴트 1로
-			int currentPage = 1; 
-			
-			if(page != null) {
-				currentPage = page;
-			}
-			
-			// 전체글 갯수 조회 
-			int listCount = mService.getListCount();
-			//System.out.println(listCount);
-			
-			PageInfo pi = Pagination.getPageInfo2(currentPage, listCount);
-			
-			ArrayList<Member> list = mService.selectList(pi);
-			
-			System.out.println(list);
-			
-			if(list != null && list.size() > 0) {	
-				mv.addObject("list", list);
-				mv.addObject("pi", pi);
-				mv.setViewName("member/memberLookup");
-			} else{		  
-				throw new MemberException("회원 전체 조회 실패!!");
-			}
-			return mv;
-		}
-		
-		// 최근가입한 5명 미리보기 리스트	
-		@RequestMapping("topList.do")
-		public void boardTopList(HttpServletResponse response) throws JsonIOException, IOException {
-			
-			ArrayList<Member> list = mService.selectTopList();
-			
-			for(Member m : list) {
-				//인코딩 작업				(예외처리 필요)
-				m.setUserName(URLEncoder.encode(m.getUserName(), "utf-8")); // 한글이 들어있을 것에 대해선 인코딩 처리
-				m.setGender(URLEncoder.encode(m.getGender(), "utf-8")); // 한글이 들어있을 것에 대해선 인코딩 처리
-			}
-			
-			Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-							// 예외처리 필요
-			gson.toJson(list, response.getWriter());
-			
-		}
-		
+   // 뷰 페이지로 이동시키는 컨트롤러 메소드 추가
+      @RequestMapping("loginView.do")
+      public String enrollloginView() {
+         
+         return "member/loginView";
+      }
+      
+      
+   // 암호화 처리 후 로그인 부분
+      @RequestMapping(value = "login.do", method = RequestMethod.POST)
+      public String memberLogin(Member m, Model model, SessionStatus status) {
+         /*
+          * matches() 메소드를 통해 우리는 암호화되어 있는 DB값과
+          * 사용자가 입력한 비밀번호를 비교할 수 있다.
+          * 당연히 일치하면 로그인 성공!, 실패하면 로그인실패!
+          */
+         
+         // 로그아웃 두번 클릭해야 로그아웃 될때 로그인에서 setComplete() 실행 해주면 된다.
+         // status.setComplete();
+         
+         Member loginUser = mService.loginMember(m);
+                           // matches 안에서 긁어온 암호화된 녀석이랑 사용자가 입력한 녀석이랑 비교해준다.
+         
+         if(bcryptPasswordEncoder.matches(m.getUserPwd(),loginUser.getUserPwd())) {
+            model.addAttribute("loginUser", loginUser);
+         }else {
+            throw new MemberException("로그인실패");
+         }
+         return "home";
+      }
+      
+      
+      // ---------------------이제 로그인/ 로그아웃, 회원가입은 완벽하게 끝냈다!--------------------------
+      
+      // 그럼 이제 로그인 이후에 자신의 정보를 보고 수정하는 페이지를 만들자
+      // menubar에서 myinfo.do로 넘어오니까..
+      
+      @RequestMapping("myinfo.do")
+      public String myInfoView() {
+         
+         return "member/mypage";      // mypage.jsp 만들자.
+      }
+      
+      //관리자에게 이메일 전송
+      @RequestMapping("email.do")
+      public String email() {
+         
+         return "common/email";      
+      }
+      
+      
+      // 회원정보 수정
+      @RequestMapping("mupdate.do")
+      public String memberUpdate(Member m, Model model, @RequestParam("post") String post,
+                                            @RequestParam("address1") String addr1,
+                                            @RequestParam("address2") String addr2) {
+         
+         m.setAddress(post + "," + addr1 + "," + addr2);
+         
+         int result = mService.updateMember(m);
+         
+         if(result > 0) {
+            model.addAttribute("loginUser" , m);
+            
+         } else {
+            throw new MemberException("수정 실패!!");
+         }
+         
+         return "home";
+      }
+      
+      
+      // 회원탈퇴
+      @RequestMapping("mdelete.do")
+      public String memberDelete(HttpSession session, String userId) {
+         
+         int result = mService.deleteMember(userId);
+         if(result > 0) {
+            // session.invalidate();
+            
+            return "redirect:logout.do";
+            // 알아서 로그아웃을 해주는 메소드를 활용하자!!
+         }else {
+            throw new MemberException("탈퇴 실패!");
+         }
+         
+      }
+      
+      @RequestMapping("memberLookup.do")
+      public ModelAndView boardList(ModelAndView mv, @RequestParam(value="page", required=false) Integer page) {
+         // 마이바티스 때 했던 PageInfo의 Pagination을 그대로 쓰자.
+         
+         // 페이지의 정보 없으면 디폴트 1로
+         int currentPage = 1; 
+         
+         if(page != null) {
+            currentPage = page;
+         }
+         
+         // 전체글 갯수 조회 
+         int listCount = mService.getListCount();
+         //System.out.println(listCount);
+         
+         PageInfo pi = Pagination.getPageInfo2(currentPage, listCount);
+         
+         ArrayList<Member> list = mService.selectList(pi);
+         
+         System.out.println(list);
+         
+         if(list != null && list.size() > 0) {   
+            mv.addObject("list", list);
+            mv.addObject("pi", pi);
+            mv.setViewName("member/memberLookup");
+         } else{        
+            throw new MemberException("회원 전체 조회 실패!!");
+         }
+         return mv;
+      }
+      
+      // 최근가입한 5명 미리보기 리스트   
+      @RequestMapping("topList.do")
+      public void boardTopList(HttpServletResponse response) throws JsonIOException, IOException {
+         
+         ArrayList<Member> list = mService.selectTopList();
+         
+         for(Member m : list) {
+            //인코딩 작업            (예외처리 필요)
+            m.setUserName(URLEncoder.encode(m.getUserName(), "utf-8")); // 한글이 들어있을 것에 대해선 인코딩 처리
+            m.setGender(URLEncoder.encode(m.getGender(), "utf-8")); // 한글이 들어있을 것에 대해선 인코딩 처리
+         }
+         
+         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+                     // 예외처리 필요
+         gson.toJson(list, response.getWriter());
+         
+      }
+      
 
-		// 회원조회시 포인트 수정
+      // 회원조회시 포인트 수정
 
-		@RequestMapping("pointUpdate.do")	
-		public String updatePointMember(Member m, Model model, int mId, int point) {
-			
-			m.setMid(mId);
-			m.setPoint(point);
-			
-			int result = mService.updatePointMember(m);
-			
-			if(result > 0) {
-				model.addAttribute("m" , m);
-			} else {
-				throw new MemberException("수정 실패!!");
-			}
-			
-			return "redirect:memberLookup.do";
-		}
-		
-		@RequestMapping("bmicalc.do")
-		public String bmiCalculator() {
-			return "common/bmiCalculator";
-		}
-			
-		@RequestMapping("dupNickName.do")
-		public ModelAndView nickNameDuplicateCheck(String nickName, ModelAndView mv) {
-			
-				
-			System.out.println("컨트롤 닉네임: " + nickName);
-				
-			
-			 Map map = new HashMap();
-			 boolean isUsable = mService.checkNickNameDup(nickName) == 0? true : false;
-			
-			 map.put("isUsable", isUsable);
-			
-			 System.out.println("isUsable: "  + isUsable);
-			 
-			 
-			 mv.addAllObjects(map);
-			  
-			 mv.setViewName("jsonView");
-			 
-			return mv;
-		}
-			
-				
-	
-	
-			@RequestMapping("dupid.do")
-			public ModelAndView idDuplicateCheck(String id, ModelAndView mv) {
-				Map map = new HashMap();
-				
-				boolean isUsable = mService.checkIdDup(id) == 0? true : false;
-				
-				map.put("isUsable", isUsable);
-				
-				mv.addAllObjects(map);
-				
-				mv.setViewName("jsonView");
-				
-				return mv;
-			}
-			
-			// 아이디 찾기 
-			@RequestMapping(value = "find_id_form.do")
-			public String find_id_form() throws Exception{
-				return "/member/find_id_form";
-			}
-			
-			// 비밀번호 찾기 X
-			@RequestMapping(value = "find_pw_form.do")
-			public String find_pw_form() throws Exception{
-				return "/member/find_pw_form";
-			}
-			
-			// 아이디 찾기
-			@RequestMapping(value = "find_id.do", method = RequestMethod.POST)
-			public String find_id(HttpServletResponse response, @RequestParam("email") String email, Model md) throws Exception{
-				md.addAttribute("userId", mService.find_id(response, email));
-				return "/member/find_id";
-			}
-		
-			// 비밀번호 찾기
-			@RequestMapping(value = "find_pw.do", method = RequestMethod.POST)
-			public void find_pw(@ModelAttribute Member member, HttpServletResponse response) throws Exception{
-				System.out.println(member.getUserId());
-				mService.find_pw(response, member);
-			}
-			
-				
-	
+      @RequestMapping("pointUpdate.do")   
+      public String updatePointMember(Member m, Model model, int mId, int point) {
+         
+         m.setMid(mId);
+         m.setPoint(point);
+         
+         int result = mService.updatePointMember(m);
+         
+         if(result > 0) {
+            model.addAttribute("m" , m);
+         } else {
+            throw new MemberException("수정 실패!!");
+         }
+         
+         return "redirect:memberLookup.do";
+      }
+      
+      @RequestMapping("bmicalc.do")
+      public String bmiCalculator() {
+         return "common/bmiCalculator";
+      }
+         
+      @RequestMapping("dupNickName.do")
+      public ModelAndView nickNameDuplicateCheck(String nickName, ModelAndView mv) {
+         
+            
+         System.out.println("컨트롤 닉네임: " + nickName);
+            
+         
+          Map map = new HashMap();
+          boolean isUsable = mService.checkNickNameDup(nickName) == 0? true : false;
+         
+          map.put("isUsable", isUsable);
+         
+          System.out.println("isUsable: "  + isUsable);
+          
+          
+          mv.addAllObjects(map);
+           
+          mv.setViewName("jsonView");
+          
+         return mv;
+      }
+         
+            
+   
+   
+         @RequestMapping("dupid.do")
+         public ModelAndView idDuplicateCheck(String id, ModelAndView mv) {
+            Map map = new HashMap();
+            
+            boolean isUsable = mService.checkIdDup(id) == 0? true : false;
+            
+            map.put("isUsable", isUsable);
+            
+            mv.addAllObjects(map);
+            
+            mv.setViewName("jsonView");
+            
+            return mv;
+         }
+         
+         // 아이디 찾기 
+         @RequestMapping(value = "find_id_form.do")
+         public String find_id_form() throws Exception{
+            return "/member/find_id_form";
+         }
+         
+         // 비밀번호 찾기 X
+         @RequestMapping(value = "find_pw_form.do")
+         public String find_pw_form() throws Exception{
+            return "/member/find_pw_form";
+         }
+         
+         // 아이디 찾기
+         @RequestMapping(value = "find_id.do", method = RequestMethod.POST)
+         public String find_id(HttpServletResponse response, @RequestParam("email") String email, Model md) throws Exception{
+            md.addAttribute("userId", mService.find_id(response, email));
+            return "/member/find_id";
+         }
+      
+         // 비밀번호 찾기
+         @RequestMapping(value = "find_pw.do", method = RequestMethod.POST)
+         public void find_pw(@ModelAttribute Member member, HttpServletResponse response) throws Exception{
+            System.out.println(member.getUserId());
+            mService.find_pw(response, member);
+         }
+         
+            
+   
 }

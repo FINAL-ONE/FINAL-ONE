@@ -10,9 +10,7 @@
 <!-- Star Rating -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-<!-- 모달 -->
-<link href="js/Modal.js-master/build/css/modal.css" rel="stylesheet">
-    
+
 <style>
 .outer{
 	width : 100%;
@@ -59,92 +57,77 @@ tr:nth-child(even) {
 
 
 
-/*포인트 수정 버튼 css  */
-.myBtn{
-	width :80px;
-	height : 30px;
-	font-size : 13px;
-	border-radius: 4px;
-	background-color: #4CAF50;
-	border: none;
-	color: #FFFFFF;
-	text-align: center;
-	padding: 6px;
-	transition: all 0.5s;
-	cursor: pointer;
-	margin: 3px;
-}
 
-.myBtn span {
-  cursor: pointer;
-  display: inline-block;
-  position: relative;
-  transition: 0.5s;
-}
-
-.myBtn span:after {
-  content: '\00bb';
-  position: absolute;
-  opacity: 0;
+/* 모달창 css */
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
   top: 0;
-  right: -20px;
-  transition: 0.5s;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
 
-.myBtn:hover span {
-  padding-right: 25px;
-}
-
-.myBtn:hover span:after {
-  opacity: 1;
-  right: 0;
-}
-
-
-
-/* 모달 팝업 */
-#updatenmodal {
-		display: none; /* Hidden by default */
-        position: fixed; /* Stay in place */
-        z-index: 1; /* Sit on top */
-        left: 0;
-        top: 0;
-        width: 100%; /* Full width */
-        height: 100%; /* Full height */
-        overflow: auto; /* Enable scroll if needed */
-        background-color: rgb(0,0,0); /* Fallback color */
-        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  /* margin: auto; */
+  margin-top : 200px;
+  margin-left : 40%;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 300px;
+  text-align : center;
 
 }
 
-#updatenmodal .login_modal_content {
-  		background-color: #fefefe;
-        margin: 15% auto; /* 15% from the top and centered */
-        padding: 20px;
-        border: 1px solid #888;
-        width: 30%; /* Could be more or less, depending on screen size */ 
+/* The Close Button */
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
 }
-.login_modal_content{
-		text-align:center; 
-		width: 500px;
-		height: 500px;
-		margin-top: 100px;
-		margin-left: auto;
-		margin-right: auto;
-}
-.close{
-	display : inline-block;
-	float : right;
-	color: #aaaaaa;
-  	font-size: 28px;
-  	font-weight: bold;
-}		
+
 .close:hover,
 .close:focus {
   color: #000;
   text-decoration: none;
   cursor: pointer;
 }
+
+
+
+.myupdate-btn, .mydelet-btn {
+    margin: 10px 0px 15px;
+    border: 1px solid #fe6666;
+    background: #fe6666;
+    border-radius: 2px;
+    color: #fff;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    width: 259px;
+    height: 40px;
+    cursor: pointer;
+}
+
+.myupdate-btn:hover, .mydelet-btn:hover{
+	background: #fff;
+	color: #fe6666;
+}	
+	
+	
+	
+	
+
+
 
 </style>
 
@@ -160,9 +143,7 @@ tr:nth-child(even) {
 				<span align="center" style="font-size : 30px; font-weight: bold;"> 후기리뷰 </span>
 					
 					 <form id = "afterAvgForm" action="stargIdSelect.do" method="post" enctype="Multipart/form-data">
-						<c:forEach var="mflist" items="${mflist}">
 							<input id="aGid" type="hidden" name="gId">
-						</c:forEach>		
 					 </form>
 			</div>
 			
@@ -174,7 +155,7 @@ tr:nth-child(even) {
 					<th width ="200px">작성자</th>
 					<th width ="200px">별점</th>
 					<th width ="200px">작성일</th>
-					<th width ="150px">수정</th>
+					<!-- <th width ="150px">수정</th> -->
 					<th width ="150px">삭제</th>
 				</tr>
 				<c:forEach var="mflist" items="${mflist}">
@@ -229,11 +210,11 @@ tr:nth-child(even) {
 					      	 </c:if>
 						</td>
 						<td><c:out value = "${mflist.createDate }"/></td>
-						<td>
+						<!-- <td>
 							<button class="myupdate-btn" type="button" style="width : 110px; height : 40px;" onclick="updateForm();">수정하기</button>	
-						</td>
+						</td> -->
 						<td>
-							<button id="mydelet-btn" onclick="test();">삭제하기</button>
+							<button class="mydelet-btn" type="button" style="width : 110px; height : 40px;" onclick="deleteForm('${mflist.userId}');">삭제하기</button>
 						</td>
 					</tr>
 				</c:forEach>
@@ -242,60 +223,60 @@ tr:nth-child(even) {
 
 	</div>
 	
-	<div id="updatenmodal">
-	    <div class="login_modal_content">
-			<b style="font-size:36px">LOGIN</b>	
-	    	<span class="close">&times;</span>
-			<br><br>
-			<p style="font-size: 13px; color:#888888; font-weight: bold;line-height:1.5">
-				AWESOME의 다양한 서비스를 이용하시려면 로그인을 해주세요.<br>
-				회원가입을 하시면 다양한 서비스를 받으실 수 있습니다<br><br>
-			</p>
-	        <form id= "loginForm" action="login.do" method="post">
+	
 
-
-
-			</form>
-	       <br><br>
-			<p style="color:#666666; font-size:12px; margin:0px; line-height:1.5">
-			문제가 있거나 문의 사항이 있으시면 아래의 주소로 문의하시기 바랍니다.<br>
-			고객지원: <a href="">hokwan92@naver.com</a> 
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			</p>
-	    </div>
-	   
-	    <div class="login_modal_layer"></div>
+ 	<div id="myModal" class="modal">
+	  <div class="modal-content">
+	    <span class="close">&times;</span>
+	    	 <form action="myafterDelete.do" method="post">
+	    	 <br>
+		    	<!-- <span>상품 후기를 삭제하시겠습니까?</span> -->
+		    	<span>해당 상품 후기를 삭제하시겠습니까?</span>
+		    	<%-- <c:forEach var="mflist" items="${mflist}"> --%>
+		    		<input id="modaluserId" type="hidden" name="userId" value="">
+			    	<input type="hidden" name="mId" value="${sessionScope.loginUser.mid }">
+		    	<%-- </c:forEach> --%>
+		    	<input class="myupdate-btn" type="submit" value="삭제하기">&nbsp;
+	    	</form>
+	  </div>
 	</div>
-	
-	
-	
-	
-	
-	<!-- 수정하기 모달  -->
-	<script>
-			function updateForm(){
-				alert('클릭11');
-				Modal.confirm({
-					  title: '로그인여부',
-					  message: '로그인 하시겠습니까?',
-					  onConfirm: function() {
-						  $("#updatenmodal").attr("style", "display:block");
-						 
-			  		},
-					  onCancel: function() {
-			  		},
-				});
-		       
-		    };
-		   
-		     $(".close").click(function(){
-		        $("#updatenmodal").attr("style", "display:none");
-		    });      
-		     
 
-	</script>
-		
-		
+	
+	<!-- 포인트 수정 script   -->
+		<script>
+				$(function() {
+					
+					var modal = document.getElementById("myModal");
+					
+					$(".close").click(function(){
+						modal.style.display = "none";
+					})
+					
+					window.onclick = function(event) {
+						  if (event.target == modal) {
+						    modal.style.display = "none";
+						  }
+					}
+				});
+				
+				
+				function deleteForm(userId){
+					showModal(userId);
+					/* modal.style.display = "block"; */
+				}
+				
+				function showModal(userId, gId){
+					var modal = document.getElementById("myModal");
+					modal.style.display = "block";
+					$("#modaluserId").val(userId);
+					
+					/* $("#modalUserName").html(userName)
+					
+					$("#modalPoint").val(point); */
+				}
+			</script>
+			 
+
 </body>
 
 <footer>

@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,11 +23,14 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
+import com.kh.awesome.admin.model.exception.AdminException;
+import com.kh.awesome.admin.model.vo.Admin;
 import com.kh.awesome.board.model.exception.BoardException;
 import com.kh.awesome.board.model.vo.Answer;
 import com.kh.awesome.board.model.vo.PageInfo;
 import com.kh.awesome.cart.model.vo.Cart;
 import com.kh.awesome.common.Pagination;
+import com.kh.awesome.member.model.exception.MemberException;
 import com.kh.awesome.member.model.vo.Member;
 import com.kh.awesome.order.model.vo.Order;
 import com.kh.awesome.order.model.vo.OrderSearch;
@@ -384,11 +388,66 @@ public class OrderController {
 	*/
 	
 	
+	// 관리자 주문조회------------------------------------------------------------------------
+		// 관리자용 주문목록 리스트 
+		@RequestMapping("AdminorderList.do")
+		public ModelAndView boardList(ModelAndView mv, @RequestParam(value="page", required=false) Integer page) {
+			// 마이바티스 때 했던 PageInfo의 Pagination을 그대로 쓰자.
+			
+			// 페이지의 정보 없으면 디폴트 1로
+			int currentPage = 1; 
+			
+			if(page != null) {
+				currentPage = page;
+			}
+			
+			// 전체글 갯수 조회 
+			int listCount = oService.getListCount();
+			//System.out.println(listCount);
+			
+			PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
+			
+			ArrayList<Order> adminOrderlist = oService.AdminOrderselectList(pi);
+			
+			System.out.println("관리자용 주문목록 조회" + adminOrderlist);
+			
+			if(adminOrderlist != null && adminOrderlist.size() > 0) {	
+				mv.addObject("adminOrderlist", adminOrderlist);
+				mv.addObject("pi", pi);
+				mv.setViewName("admin/adminOrdeerList");
+			} else{		  
+				throw new MemberException("주문 목록 조회 실패!!");
+			}
+			return mv;
+		}
+		
+			
 	
-	
-	
-	
-	
+		// 관리자용 주문리스트 배송 상태 수정
+		@RequestMapping("StatusUpdate.do")	
+		public String updateStatusUpdate(Order o, Model model, int orderNum, String orderStatus) {
+			
+			/*
+			 	m.setMid(mId);
+				m.setPoint(point);
+			 */
+			System.out.println("orderNum 는???" + orderNum);
+			System.out.println("orderStatus 는???" + orderStatus);
+			
+			o.setOrderStatus(orderStatus);
+			
+			int result = oService.updateStatusUpdate(o);
+			
+			if(result > 0) {
+				model.addAttribute("o" , o);
+			} else {
+				throw new MemberException("배송 상태 변경 실패!!");
+			}
+			
+			return "redirect:AdminorderList.do";
+		}
+				
+				
 	
 	
 }

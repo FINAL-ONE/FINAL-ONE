@@ -27,7 +27,6 @@
 <body>
 
 	<jsp:include page ="../common/menubar.jsp"/>
-	<%-- <jsp:include page ="../admin/adminMenu.jsp"/> --%>
 	
 	
 <h1 align="center"> 상품 등록 페이지 </h1>
