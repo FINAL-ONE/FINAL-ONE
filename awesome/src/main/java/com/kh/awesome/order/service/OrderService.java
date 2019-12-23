@@ -51,5 +51,22 @@ public interface OrderService {
 	int insertPaymentDinfo(Order o);
 	
 	int updateMemberPoint(Order o);
+	
 
+	// -------------------------------
+	// 준배 - 관리자용 주문 리스트 전체갯수
+	int getListCount();
+
+	// 관리자용 주문 리스트 
+	ArrayList<Order> AdminOrderselectList(PageInfo pi);
+
+	// 관리자 배송상태 변경
+	int updateStatusUpdate(Order o);
+
+	
+	
+	
+	
+	
+	
 }

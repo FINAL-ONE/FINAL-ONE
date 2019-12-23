@@ -8,202 +8,133 @@
 <meta charset="UTF-8">
 <link rel="shortcut icon" href="${contextPath}/resources/images/favicon.ico" type="image/x-icon">
 <title>Insert title here</title>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> 
 
-<!-- 관리자 사이드 메뉴 아이콘  -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <link href="https://www.cssscript.com/wp-includes/css/sticky.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="js/speed-dial-menu-master/style.css">
+
 
 <style>
-body {font-family: "Lato", sans-serif;}
 
-.admin_sidebar {
-  height: 106%;
-  width: 160px;
-  position: absolute;
-  z-index: 1;
-  top: 20;
-  left: 0;
-  background-color: #111;
-  overflow-x: hidden;
-  padding-top: 16px;
-}
 
-.admin_sidebar a {
-  padding: 6px 8px 6px 16px;
-  text-decoration: none;
-  font-size: 20px;
-  color: #818181;
-  display: block;
-}
 
-.admin_sidebar a:hover {
-  color: #f1f1f1;
-}
-
-.admin_main {
-  margin-left: 160px; /* Same as the width of the sidenav */
-  padding: 0px 10px;
-}
-
-@media screen and (max-height: 450px) {
-  .admin_sidebar {padding-top: 15px;}
-  .admin_sidebar a {font-size: 18px;}
-}
-
+   
 </style>
 </head>
 <body>
-	<div class="admin_sidebar">
-	  <a href="#home"><i class="fa fa-fw fa-home"></i>
-	  	<c:url var ="myinfo" value="home.do"/>
-	  	<span onclick ="location.href='${myinfo }'">Home </span>
-	  </a>
-  
-  <a href="#services"><i class="fa fa-fw fa-wrench"></i> Services</a>
-  
-  
-  <a href="#clients"><i class="fa fa-fw fa-user"></i> Clients</a>
-  
-  
-  <a href="#contact"><i class="fa fa-fw fa-envelope"></i> Contact</a>
-</div>
 
 
-<%-- 	<!-- Vertical navbar -->
-	<div class="vertical-nav bg-dark" id="sidebar">
-  		<div class="py-4 px-3 mb-4 bg-dark">
-      		<div class="media-body">
-        		<h4 class="font-weight-white text-muted mb-0">관리자 메뉴</h4>
-        		<p class="font-weight-grey text-muted mb-0">awesome 관리</p>
-      		</div>
-  		</div>
 
-  		<p class="text-white font-weight-bold text-uppercase px-3 small pb-4 mb-0">Main</p>
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+    <symbol id="plus" viewBox="0 0 24 24">
+      <path
+        d="M5 13h6v6c0 0.552 0.448 1 1 1s1-0.448 1-1v-6h6c0.552 0 1-0.448 1-1s-0.448-1-1-1h-6v-6c0-0.552-0.448-1-1-1s-1 0.448-1 1v6h-6c-0.552 0-1 0.448-1 1s0.448 1 1 1z" />
+    </symbol>
+  </svg>
+  <div class="speed-dial">
+    <button class="speed-dial__button--root flex-center">
+      <svg class="icon icon__plus">
+        <use xlink:href="#plus"></use>
+      </svg>
+    </button>
+    <div class="speed-dial__action" data-direction="bottom">
+       
+     <div class="speed-dial__item flex-center" style="transition-delay: 150ms;">
+        <button class="speed-dial__button--small flex-center">
+          <a href="AdminorderList.do">
+          	<img src="resources/images/admin_orderList.png" style="width : 25px; height : 25px">
+		  	<span>주문 목록 </span>
+		  </a>
+        </button>
+      </div>
+       
+      <div class="speed-dial__item flex-center" style="transition-delay: 150ms;">
+        <button class="speed-dial__button--small flex-center">
+          <a href="sellafterlistViewAdmin.do">
+          	<img src="resources/images/admin_afterList.png" style="width : 25px; height : 25px">
+		  	<span>후기 조회 </span>
+		  </a>
+        </button>
+      </div>
+       
+     <div class="speed-dial__item flex-center" style="transition-delay: 150ms;">
+        <button class="speed-dial__button--small flex-center">
+          <a href="memberLookup.do">
+          	<img src="resources/images/admin_member.png" style="width : 25px; height : 25px">
+		  	<span>회원 조회 </span>
+		  </a>
+        </button>
+      </div>
+      
+    <div class="speed-dial__item flex-center" style="transition-delay: 150ms;">
+        <button class="speed-dial__button--small flex-center">
+          <a href="goodsList.do">
+          	<img src="resources/images/admin_goodsmanag.png" style="width : 25px; height : 25px">
+		  	<span>상품 관리 </span>
+		  </a>
+        </button>
+      </div> 
+    
+    <div class="speed-dial__item flex-center" style="transition-delay: 150ms;">
+        <button class="speed-dial__button--small flex-center">
+          <a href="sell_goodsList.do">
+          	<img src="resources/images/admin_sell_goods.png" style="width : 25px; height : 25px">
+		  	<span>판매 상품 조회 </span>
+		  </a>
+        </button>
+      </div> 
+    
+    <div class="speed-dial__item flex-center" style="transition-delay: 150ms;">
+        <button class="speed-dial__button--small flex-center">
+          <a href="goodsWriterView.do">
+          		<img src="resources/images/admin_goodsPlus.png" style="width : 25px; height : 25px">
+		  	<span>상품 등록 </span>
+		  </a>
+        </button>
+      </div>
+      <div class="speed-dial__item flex-center" style="transition-delay: 200ms;">
+        <button class="speed-dial__button--small flex-center">
+           <a href="adminMain.do">
+          	<img src="resources/images/admin_home.png" style="width : 25px; height : 25px">
+		  	<span>관리자 홈</span>
+		  </a>
+        </button>
+      </div>
 
-  		<ul class="nav flex-column bg-dark mb-0">
-    		<li class="nav-item">
-      			<a href="#" class="nav-link text-light font-italic bg-dark">
-                	<i class="fa fa-th-large mr-3 text-primary fa-fw"></i>
-               		<c:url var ="myinfo" value="home.do"/>
-           			 <span onclick ="location.href='${myinfo }'">Home </span>
-            	</a>
-    		</li>
-    		<li class="nav-item">
-      			<a href="#" class="nav-link text-light font-italic bg-dark">
-                	<i class="fa fa-address-card mr-3 text-primary fa-fw"></i>
-                	<c:url var ="memberLook" value="memberLookup.do"/>
-           			 <span onclick ="location.href='${memberLook }'">회원관리 </span>
-            	</a>
-    		</li>
-    		<li class="nav-item">
-      			<a href="#" class="nav-link text-light font-italic bg-dark">
-                	<i class="fa fa-cubes mr-3 text-primary fa-fw"></i>
-                	<c:url var ="boardList" value="boardListView.do?category=1"/>
-           			 <span onclick ="location.href='${boardList }'">공지사항 </span>
-            	</a>
-    		</li>
-    		<li class="nav-item">
-      			<a href="#" class="nav-link text-light font-italic bg-dark">
-                	<i class="fa fa-shopping-bag mr-3 text-primary fa-fw"></i>
-                	<c:url var ="shoplist" value="shopGoodsListView.do?mid=1"/>
-           			 <span onclick ="location.href='${shoplist }'">shop </span>
-            	</a>
-    		</li>
-  		</ul>
-		
-  		<p class="text-gray font-weight-bold text-uppercase px-3 small py-4 mb-0">goods</p>
+    </div>
+  </div>
+  <script>
+try {
+  fetch(new Request("https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js", { method: 'HEAD', mode: 'no-cors' })).then(function(response) {
+    return true;
+  }).catch(function(e) {
+    var carbonScript = document.createElement("script");
+    carbonScript.src = "//cdn.carbonads.com/carbon.js?serve=CE7DC2JW&placement=wwwcssscriptcom";
+    carbonScript.id = "_carbonads_js";
+    document.getElementById("carbon-block").appendChild(carbonScript);
+  });
+} catch (error) {
+  console.log(error);
+}
+</script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-  			<ul class="nav flex-column bg-dark mb-0">
-    			<li class="nav-item">
-      				<a href="#" class="nav-link text-light font-italic bg-dark">
-                	<i class="fa fa-plus-square mr-3 text-primary fa-fw"></i>
-                		<c:url var ="goodsWriter" value="goodsWriterView.do"/>
-           			 	<span onclick ="location.href='${goodsWriter }'">상품등록 </span>
-            		</a>
-    			</li>
-    			<li class="nav-item">
-      				<a href="#" class="nav-link text-light font-italic bg-dark">
-                	<i class="fa fa-search mr-3 text-primary fa-fw"></i>
-               			<c:url var ="sell_goodsList" value="sell_goodsList.do"/>
-           			 	<span onclick ="location.href='${sell_goodsList }'">판매상품조회 </span>
-            		</a>
-    			</li>
-    			<li class="nav-item">
-      				<a href="#" class="nav-link text-light font-italic bg-dark">
-                	<i class="fa fa-tasks mr-3 text-primary fa-fw"></i>
-           				<c:url var ="goodsList" value="goodsList.do"/>
-   			 			<span onclick ="location.href='${goodsList }'">상품관리 </span>
-            		</a>
-    			</li>
-    			<li class="nav-item">
-      				<a href="#" class="nav-link text-light font-italic bg-dark">
-                	<i class="fa fa-comments mr-3 text-primary fa-fw"></i>
-                		<c:url var ="sellafterlistView" value="sellafterlistViewAdmin.do"/>
-   			 			<span onclick ="location.href='${sellafterlistView }'">후기조회 </span>
-            		</a>
-    			</li>
-   				<li class="nav-item">
-      				<a href="#" class="nav-link text-light font-italic bg-dark">
-                	<i class="fa fa-truck mr-3 text-primary fa-fw"></i>
-               			<c:url var ="orderView" value="orderView.do"/>
-   			 			<span onclick ="location.href='${orderView }'">주문목록 조회 </span>
-            		</a>
-    			</li>
-  			</ul>
-	</div>
-	<!-- End vertical navbar -->
+  ga('create', 'UA-46156385-1', 'cssscript.com');
+  ga('send', 'pageview');
 
-	<!-- Page content holder -->
-	<div class="page-content p-5" id="content">
-  		<!-- Toggle button -->
-  		<button id="sidebarCollapse" type="button" class="btn btn-dark bg-dark rounded-pill shadow-sm px-4 mb-4"><i class="fa fa-bars mr-2"></i><small class="text-uppercase font-weight-bold">Toggle</small></button>
-	
-	</div>
+</script>
 
-	
-	
-	<!-- 사이드메뉴바 js  -->
-		<!-- End content -->
-		<script>
-		try {
-		  fetch(new Request("https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js", { method: 'HEAD', mode: 'no-cors' })).then(function(response) {
-		    return true;
-		  }).catch(function(e) {
-		    var carbonScript = document.createElement("script");
-		    carbonScript.src = "//cdn.carbonads.com/carbon.js?serve=CK7DKKQU&placement=wwwjqueryscriptnet";
-		    carbonScript.id = "_carbonads_js";
-		    document.getElementById("carbon-block").appendChild(carbonScript);
-		  });
-		} catch (error) {
-		  console.log(error);
-		}
-		</script>
-		<script type="text/javascript">
-		
-		  var _gaq = _gaq || [];
-		  _gaq.push(['_setAccount', 'UA-36251023-1']);
-		  _gaq.push(['_setDomainName', 'jqueryscript.net']);
-		  _gaq.push(['_trackPageview']);
-		
-		  (function() {
-		    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-		    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-		  })();
-		
-		</script>
-			
-		
-		
-		
-		
-		 --%>
-		
-	
-	
-	
-	
-	
+
+
+
+
+
+
 
 </body>
 

@@ -21,19 +21,13 @@
 
 <style>
 
-
-
-.outer{
-	width : 100%;
-	height : 100%;
-}
 #checkboxTestTbl{
   border-collapse: collapse;
   border-spacing: 0;
   width: 1300px;
   border: 1px solid #ddd;
   text-align :center;
-  margin-left : 50px;
+  margin-left : 30px;
 }
 #checkboxTestTbl2{
   border-collapse: collapse;
@@ -60,31 +54,31 @@ tr:nth-child(even) {
     .modal_container {text-align: center; }
     
 .tablestatus{
-	min-width: 100px;
+   min-width: 100px;
 }
 #tableLeft1{
-	float : left;
-	margin-left : 165px;
+   float : left;
+   margin-left : 165px;
 }
 #tableLeft2{
-	float : left;
+   float : left;
 }
 
 
 /*상품 등록하기  버튼 css  */
 .myBtn{
-	width :145px;
-	height : 40px;
-	font-size : 15px;
-	border-radius: 4px;
-	background-color: #4CAF50;
-	border: none;
-	color: #FFFFFF;
-	text-align: center;
-	padding: 6px;
-	transition: all 0.5s;
-	cursor: pointer;
-	margin: 3px;
+   width :145px;
+   height : 40px;
+   font-size : 15px;
+   border-radius: 4px;
+   background-color: #4CAF50;
+   border: none;
+   color: #FFFFFF;
+   text-align: center;
+   padding: 6px;
+   transition: all 0.5s;
+   cursor: pointer;
+   margin: 3px;
 }
 
 .myBtn span {
@@ -116,12 +110,12 @@ tr:nth-child(even) {
 </head>
 <body>
 	<jsp:include page="../common/menubar.jsp"/>   
-
- 	<div class = "outer">
+	<jsp:include page ="../admin/adminMenu.jsp"/>
+		
 		<div id="container" style= "height: auto; overflow: auto;"><!-- container -->
-
+		<h1 align="center"> 판매상품 관리 </h1>
 			<c:if test="${!empty loginUser }">
-		   		<div style="margin-left : 1471px; margin-top : 20px;">
+		   		<div style="margin-left : 1449px; margin-top : 20px;">
 		   			<button class="myBtn success" onclick="location.href='goodsWriterView.do'"><span>상품 등록</span></button>
 		   		</div>
 			</c:if>
@@ -204,201 +198,205 @@ tr:nth-child(even) {
 			
 	
 			</div>
-			<p align="center">
+			<p align="center" style="margin : 50px 0 50px 0;">
 				<c:url var ="adminMain" value="adminMain.do"/>
 				<a href="${adminMain}" style="text-decoration: none;">관리자페이지 이동</a>&nbsp;
 				<c:url var ="sell_goodsList" value="sell_goodsList.do"/>
 				<a href="${sell_goodsList}" style="text-decoration: none;">목록전체보기</a>
 			</p>
-	</div> 
 	
 
-		<!-- 체크박스 전체선택 -->	
-		  <script>
-		        $(document).ready(function(){
-		            var tbl = $("#checkboxTestTbl");
-		            
-		            // 테이블 헤더에 있는 checkbox 클릭시
-		            $(":checkbox:first", tbl).click(function(){
-		                // 클릭한 체크박스가 체크상태인지 체크해제상태인지 판단
-		                if( $(this).is(":checked") ){
-		                    $(":checkbox", tbl).attr("checked", "checked");
-		                }
-		                else{
-		                    $(":checkbox", tbl).removeAttr("checked");
-		                }
-		 
-		                // 모든 체크박스에 change 이벤트 발생시키기               
-		                $(":checkbox", tbl).trigger("change");
-		            });
-		             
-		            // 헤더에 있는 체크박스외 다른 체크박스 클릭시
-		            $(":checkbox:not(:first)", tbl).click(function(){
-		                var allCnt = $(":checkbox:not(:first)", tbl).length;
-		                var checkedCnt = $(":checkbox:not(:first)", tbl).filter(":checked").length;
-		                 
-		                // 전체 체크박스 갯수와 현재 체크된 체크박스 갯수를 비교해서 헤더에 있는 체크박스 체크할지 말지 판단
-		                if( allCnt==checkedCnt ){
-		                    $(":checkbox:first", tbl).attr("checked", "checked");
-		                }
-		                else{
-		                    $(":checkbox:first", tbl).removeAttr("checked");
-		                }
-		            }).change(function(){
-		                if( $(this).is(":checked") ){
-		                    // 체크박스의 부모 > 부모 니까 tr 이 되고 tr 에 selected 라는 class 를 추가한다.
-		                    $(this).parent().parent().addClass("selected");
-		                }
-		                else{
-		                    $(this).parent().parent().removeClass("selected");
-		                }
-		            });
-		        });
-		        
-		        
-			    // 품절버튼 클릭시
-        	/* 	function soldout () {
-	        		if(confirm('품절처리하시겠습니까?')){
-	        			$("#goodsInsertForm").submit();
-	        			alert("품절되었습니다.");
-	        		} else {
-	        			alert("취소되었습니다.");
-	        		}
-		        }  */
-			    	
-			    	</script>
-		    
-				<div class="modal_container">
-				  <div class="css-script-ads">
-				    	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-					<!-- CSSScript Demo Page -->
-					<ins class="adsbygoogle"
-					     style="display:inline-block;width:728px;height:90px"
-					     data-ad-client="ca-pub-2783044520727903"
-					     data-ad-slot="3025259193"></ins>
-						<script>
-							(adsbygoogle = window.adsbygoogle || []).push({});
-						</script>
-					</div>
-				</div>
-				<script src="js/Modal.js-master/modal.js"></script>
-				
-		<script>
-			function soldout(){
-				Modal.confirm({
-					title: '상태 변경 여부',
-					message: '상태 변경 처리하시겠습니까?',
-					onConfirm: function() {
-						$("#goodsInsertForm").submit();
-					    //alert('완료되었습니다');
-			  		},
-					  	onCancel: function() {
-					    //alert('취소되었습니다.');
-			  		},
-				});
-				return;
-			}
-		</script>
-				  
-		<!-- 모달창 script -->
-		<script>
-			  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-			  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-			  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-			  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-			
-			  ga('create', 'UA-46156385-1', 'cssscript.com');
-			  ga('send', 'pageview');
-		
-		</script>
+      <!-- 체크박스 전체선택 -->   
+        <script>
+              $(document).ready(function(){
+                  var tbl = $("#checkboxTestTbl");
+                  
+                  // 테이블 헤더에 있는 checkbox 클릭시
+                  $(":checkbox:first", tbl).click(function(){
+                      // 클릭한 체크박스가 체크상태인지 체크해제상태인지 판단
+                      if( $(this).is(":checked") ){
+                          $(":checkbox", tbl).attr("checked", "checked");
+                      }
+                      else{
+                          $(":checkbox", tbl).removeAttr("checked");
+                      }
+       
+                      // 모든 체크박스에 change 이벤트 발생시키기               
+                      $(":checkbox", tbl).trigger("change");
+                  });
+                   
+                  // 헤더에 있는 체크박스외 다른 체크박스 클릭시
+                  $(":checkbox:not(:first)", tbl).click(function(){
+                      var allCnt = $(":checkbox:not(:first)", tbl).length;
+                      var checkedCnt = $(":checkbox:not(:first)", tbl).filter(":checked").length;
+                       
+                      // 전체 체크박스 갯수와 현재 체크된 체크박스 갯수를 비교해서 헤더에 있는 체크박스 체크할지 말지 판단
+                      if( allCnt==checkedCnt ){
+                          $(":checkbox:first", tbl).attr("checked", "checked");
+                      }
+                      else{
+                          $(":checkbox:first", tbl).removeAttr("checked");
+                      }
+                  }).change(function(){
+                      if( $(this).is(":checked") ){
+                          // 체크박스의 부모 > 부모 니까 tr 이 되고 tr 에 selected 라는 class 를 추가한다.
+                          $(this).parent().parent().addClass("selected");
+                      }
+                      else{
+                          $(this).parent().parent().removeClass("selected");
+                      }
+                  });
+              });
+              
+              
+             // 품절버튼 클릭시
+           /*    function soldout () {
+                 if(confirm('품절처리하시겠습니까?')){
+                    $("#goodsInsertForm").submit();
+                    alert("품절되었습니다.");
+                 } else {
+                    alert("취소되었습니다.");
+                 }
+              }  */
+                
+                </script>
+          
+            <div class="modal_container">
+              <div class="css-script-ads">
+                   <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+               <!-- CSSScript Demo Page -->
+               <ins class="adsbygoogle"
+                    style="display:inline-block;width:728px;height:90px"
+                    data-ad-client="ca-pub-2783044520727903"
+                    data-ad-slot="3025259193"></ins>
+                  <script>
+                     (adsbygoogle = window.adsbygoogle || []).push({});
+                  </script>
+               </div>
+            </div>
+            <script src="js/Modal.js-master/modal.js"></script>
+            
+      <script>
+         function soldout(){
+            Modal.confirm({
+               title: '상태 변경 여부',
+               message: '상태 변경 처리하시겠습니까?',
+               onConfirm: function() {
+                  $("#goodsInsertForm").submit();
+                   //alert('완료되었습니다');
+                 },
+                    onCancel: function() {
+                   //alert('취소되었습니다.');
+                 },
+            });
+            return;
+         }
+      </script>
+              
+      <!-- 모달창 script -->
+      <script>
+           (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+           (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+           m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+           })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+         
+           ga('create', 'UA-46156385-1', 'cssscript.com');
+           ga('send', 'pageview');
+      
+      </script>
 
 
-	
-	<script type="text/javascript">
-		$(function(){
-			$("#checkboxTestTbl td").mouseenter(function(){
-			//$(".tableList").mouseenter(function(){
-				/* $(this).parent().css({"background":"#fa4a4a","cursor":"pointer"}); */
-				$(this).parent().css({"background":"#FFF7D5","cursor":"pointer"});
-				//$(".tableList").css({"background":"#FFF7D5","cursor":"pointer"});
-				
-			}).mouseout(function(){ 
-				//$(".tableList").css({"background":"white"});
-				$(this).parent().css({"background":"white"});
-			}).click(function(){	
-				var gId = $(this).parent().children("#gId").val();
-				var sellNum = $(this).parent().children("#sellNum").val();
-				//var goodsTitle = $(this).parent().children("#goodsTitle").val();
-				//var goodsPrice = $(this).parent().children("#goodsPrice").val();
-				//var count = $(this).parent().children("#count").val();
-				//var goodsContent = $(this).parent().children("#goodsContent").val();
-				//var status = $(this).parent().children("#status").val();
+   
+   <script type="text/javascript">
+      $(function(){
+         $("#checkboxTestTbl td").mouseenter(function(){
+         //$(".tableList").mouseenter(function(){
+            /* $(this).parent().css({"background":"#fa4a4a","cursor":"pointer"}); */
+            $(this).parent().css({"background":"#FFF7D5","cursor":"pointer"});
+            //$(".tableList").css({"background":"#FFF7D5","cursor":"pointer"});
+            
+         }).mouseout(function(){ 
+            //$(".tableList").css({"background":"white"});
+            $(this).parent().css({"background":"white"});
+         }).click(function(){   
+            var gId = $(this).parent().children("#gId").val();
+            var sellNum = $(this).parent().children("#sellNum").val();
+            //var goodsTitle = $(this).parent().children("#goodsTitle").val();
+            //var goodsPrice = $(this).parent().children("#goodsPrice").val();
+            //var count = $(this).parent().children("#count").val();
+            //var goodsContent = $(this).parent().children("#goodsContent").val();
+            //var status = $(this).parent().children("#status").val();
 
-				location.href="sell_goodsDetailView.do?sellNum="+sellNum;
-			});
-			
+            location.href="sell_goodsDetailView.do?sellNum="+sellNum;
+         });
+         
 //--------------------------------------------------------------------------------------------------
 
-			$("#checkboxTestTbl2 td").mouseenter(function(){
-				$(this).parent().css({"background":"#FFF7D5","cursor":"pointer"});
-			}).mouseout(function(){ ;
-				$(this).parent().css({"background":"white"});
-			}).click(function(){	
-				//soldout();
-				var sellNum = $(this).parent().children("#sellNum2").val();
-				var status = $(this).parent().children("#status2").val();
-				var gId = $(this).parent().children("#gId").val();
+/*          $("#checkboxTestTbl2 td").mouseenter(function(){
+            $(this).parent().css({"background":"#FFF7D5","cursor":"pointer"});
+         }).mouseout(function(){
+            $(this).parent().css({"background":"white"});
+         }).click(function(){ */
+		$("#checkboxTestTbl2 td").mouseenter(function(){
+		   // $(this).parent().css({"background":"#FFF7D5","cursor":"pointer"});
+		 }).mouseout(function(){
+		   // $(this).parent().css({"background":"white"});
+		 }).click(function(){
+            //soldout();
+            var sellNum = $(this).parent().children("#sellNum2").val();
+            var status = $(this).parent().children("#status2").val();
+            var gId = $(this).parent().children("#gId").val();
 
 //alert("sellNum : " + sellNum + " / " + "status : " + status);
-				
- 				Modal.confirm({
-					title: '상태 변경 여부',
-					message: '상태 변경 처리하시겠습니까?',
-					onConfirm: function() {
-						//$("#goodsInsertForm").submit();
-						location.href="aStatusUpdate.do?sellNum="+sellNum+"&status="+status+"&gId="+gId;
-						
-					    //alert('완료되었습니다');
-			  		},
-					  	onCancel: function() {
-					    //alert('취소되었습니다.');
-			  		},
-				}); 
-				
-				return;
-				
-			});				
-			
-			
-		}); 
+            
+             Modal.confirm({
+               title: '상태 변경 여부',
+               message: '상태 변경 처리하시겠습니까?',
+               onConfirm: function() {
+                  //$("#goodsInsertForm").submit();
+                  location.href="aStatusUpdate.do?sellNum="+sellNum+"&status="+status+"&gId="+gId;
+                  
+                   //alert('완료되었습니다');
+                 },
+                    onCancel: function() {
+                   //alert('취소되었습니다.');
+                 },
+            }); 
+            
+            return;
+            
+         });            
+         
+         
+      }); 
    </script>
-		
-		
+      
+      
 <script>
-	jQuery(document).ready(function() { 
-	
-	    var tableHeight = jQuery("#checkboxTestTbl td").height(); 
-	
-	    //alert(tableHeight); 
-	    $("#checkboxTestTbl2 td").height(tableHeight);
-	}); 
+   jQuery(document).ready(function() { 
+   
+       var tableHeight = jQuery("#checkboxTestTbl td").height(); 
+   
+       //alert(tableHeight); 
+       $("#checkboxTestTbl2 td").height(tableHeight);
+   }); 
 
 </script>
-		
-		
-		
-		<!-- switch script -->
-		<script>
-			  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-			  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-			  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-			  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-			
-			  ga('create', 'UA-46156385-1', 'cssscript.com');
-			  ga('send', 'pageview');
-		</script>
-		
-		
+      
+      
+      
+      <!-- switch script -->
+      <script>
+           (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+           (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+           m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+           })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+         
+           ga('create', 'UA-46156385-1', 'cssscript.com');
+           ga('send', 'pageview');
+      </script>
+      
+      
 </body>
 <footer>
    <jsp:include page ="../common/footer.jsp"/>

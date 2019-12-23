@@ -11,6 +11,7 @@
    width: 100%;
    height: 390px;
    display: block;
+   
 }
 
 .footerSpan{

@@ -95,4 +95,25 @@ public class OrderDao {
 			return sqlSession.update("orderMapper.updateMemberPoint", o);
 		}
 
+		
+		
+		// 관리자용 주문 리스트 전체 갯수 
+		public int getListCount() {
+			return sqlSession.selectOne("orderMapper.getListCount");
+		}
+
+		// 관리자용 주문 리스트 
+		public ArrayList<Order> AdminOrderselectList(PageInfo pi) {
+			int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+
+			RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+			
+			return (ArrayList)sqlSession.selectList("orderMapper.AdminOrderselectList", null, rowBounds);
+		}
+
+		// 관리자 배송상태 변경
+		public int updateStatusUpdate(Order o) {
+			return sqlSession.update("orderMapper.updateStatusUpdate", o);
+		}
+
 }

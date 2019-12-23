@@ -24,9 +24,13 @@ public interface AdminService {
 	// 해당 글의 리플 갯수 조회
 	public int getReplylistCount(int sellNum);
 	
+	// 해당 상품 후기 평균
+	public ArrayList<Admin> sAvgListSelect(int gId);
+	
+	// 구매한 상품에서 후기작성 중복 체크
+	public int selectafterCheck(Admin a);
 	
 	
-
 	//---------------------------- INSERT ----------------------------	
 	// 동복- 상품 등록
 	int insertCategory(Category c);
@@ -86,5 +90,9 @@ public interface AdminService {
 	public ArrayList<Category> detailLCategoryList();
 	// 동복 - 상품 수정 (중)카테고리 조회
 	public ArrayList<Category> detailCategoryList();
+
+
+
+	
 	
 }

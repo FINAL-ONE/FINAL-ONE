@@ -58,7 +58,7 @@
 }
 .goods-list{
 	width : 270px;
-	height : 380px;
+	height : 333px;
 	/* background : yellow; */
 	display : inline-block;
  	margin-left: 17px;
@@ -184,6 +184,7 @@
 						<c:url var="adetail" value="adetail.do">
 							<c:param name="sellNum" value="${a.sellNum }"/>
 							<c:param name="userId" value="${a.userId }"/>
+							<c:param name="gId" value="${a.gId }"/>
 						</c:url>
 						<a href="${adetail}" style="text-decoration:none">
 							<div class="goods-img" style ="margin-bottom: 10px;">
@@ -194,18 +195,18 @@
 								<img src="resources/images/line.png">
 								<span style="color:gray;">${a.goodsContent}</span>
 								<span style="font-weight: bold; font-size: 18px; color:black;">${a.goodsPrice}원</span><br>
-								<input type="hidden" name ="star" value = "1" style="size : 10px">
-									<span class="fa fa-star checked"></span>
+								<!-- <input type="hidden" name ="star" value = "1" style="size : 10px">
+									<span class="fa fa-star checked"></span> -->	
 							</div>
 						</a>
 				</div>
 			</c:forEach>
 			
-			</div>		
+			</div>	<!--contentArea 끝  -->
 			
-		</div>
+		</div>	<!-- outer 끝 -->
 		
-	</div>
+	</div> <!-- container -->
 	
 	<!-- 롤링 배너  -->
 	<script>

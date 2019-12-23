@@ -11,12 +11,23 @@
 <title>Insert title here</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <link href="js/Modal.js-master/build/css/modal.css" rel="stylesheet">
-<style>
-	.outer{
-		width : 100%;
-		height : 100%;
-	}
 
+<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
+
+<!-- include summernote css/js-->
+<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
+
+
+
+<style>
+
+#updateTable{
+	margin-left : 300px;
+	background :  red;
+}
  select[multiple]{
      height: 100%;
    }
@@ -48,14 +59,16 @@
 	<jsp:include page ="../admin/adminMenu.jsp"/>
 	
 	
-<h1 align="center"> 상품 수정 페이지 </h1>
-	
-	<br><br>
-	<div class = "outer">
+	<div id="container" style="overflow: auto; height: auto;" ><!-- container -->
+		<div id="updateTableArea">
+		
+		<h1 align="center"> 상품 수정 페이지 </h1>
+
 		<form action="goodsUpdate.do" method="post" enctype="Multipart/form-data" id="goodsUpdateForm">
-			<table class="type02" align="center"><!--  style="border-spacing:60px" -->	
-				<td><input id="selectcateCd" type="hidden"  width="100%" name ="cateCd" value="${cateCd}" /></td>
-				<td><input id="gId" width="100%" type="hidden" name ="gId" value="${goods.gId}"/></td><!-- type="hidden"  -->
+			<table  id="updateTable" class="type02" align="center" style="margin-left : 300px;">
+				
+				<input id="selectcateCd" type="hidden" name ="cateCd" value="${cateCd}" />
+				<input id="gId"  type="hidden" name ="gId" value="${goods.gId}"/>
 				<tr>
 		            <th>카테고리<span style = "color:red; font-size : 1.5em;">*</span> </th>
 		            <td>	    
@@ -156,11 +169,16 @@
 					</td> 
 				</tr>
 			</table>
-					
-					
 					<!-- InsertThumbnailServlet 만들러 ㄱㄱ!!!! -->
 		</form>	
 		
+		<p align="center">
+			<a href="adminMain.do">관리자페이지로 이동</a>
+			<a href="goodsList.do">목록 보기로 이동</a>
+		</p>
+	</div>
+		
+</div>	
 			<div class="modal_container">
 			  <div class="css-script-ads">
 			    	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
@@ -186,12 +204,7 @@
 			
 			</script>
 		
-	</div>
-	
-	<p align="center">
-		<a href="adminMain.do">관리자페이지로 이동</a>
-		<a href="goodsList.do">목록 보기로 이동</a>
-	</p>
+
 
 <script>
 //-----------------------------------
@@ -560,7 +573,6 @@
 				return;
 			}
 		</script>
-	
-	
+
 </body>
 </html>

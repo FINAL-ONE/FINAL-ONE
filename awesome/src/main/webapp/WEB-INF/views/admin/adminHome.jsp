@@ -20,6 +20,9 @@
 <link rel="stylesheet" href="js/switch-master/css/style.css">
 
 
+<!-- 관리자 사이드 메뉴 아이콘  -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 <style>
 
 body {
@@ -88,7 +91,7 @@ body {
 <jsp:include page ="../admin/adminMenu.jsp"/>
 	<div id="container" style="overflow: auto; height: 900px;" ><!-- container -->
 
-
+<!-- 
    	  <div id="draggable1" class="ui-widget-content">
 	 	<div style="width : 100%; height : 50px; background : red; position: relative; overflow-x : none;">
 			<label class="switch" style="margin-left: 10px; margin-top : 5px">
@@ -141,9 +144,9 @@ body {
 	 </div>
 			
 	
-	</div>			<!-- container -->
+	</div>			container
 		
- 		<!-- switch script -->
+ 		switch script
 	 	<script>
 		  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 		  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -154,7 +157,7 @@ body {
 		  ga('send', 'pageview');
 		</script>
 
-	<!-- 드래그앤드롭 js  -->
+	드래그앤드롭 js 
 		<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 	    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 		  <script>
@@ -229,7 +232,7 @@ body {
 			  } 
 			}
 		</script>
-		
+		 -->
 		
 		
 </body>

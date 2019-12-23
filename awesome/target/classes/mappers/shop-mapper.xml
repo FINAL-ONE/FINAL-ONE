@@ -72,12 +72,12 @@
 	</select>
 
 
-   	<!-- 카트에 담기 -->
+<!--    	카트에 담기
 	<insert id="CartInsert" parameterType="Cart">
 		INSERT INTO CART
 		VALUES(TBL_CART_SEQ.NEXTVAL, #{mId}, #{gId}, #{count}
 		)
-	</insert>
+	</insert> -->
 
 	<!-- 후기 관리자용 조회 -->
 	<select id ="gIdViewList" resultMap="sell_After_goodsResultSet">

@@ -36,6 +36,7 @@
 	  width: 1400px;
 	  border: 1px solid #ddd;
 	  text-align :center;
+	  margin-left  :150px;
 	}
 	
 	tr:nth-child(even) {
@@ -135,14 +136,16 @@
 	}
 	span.ok{color:green;}
 	span.error{color:red;}
+	
+
+
 </style>
 </head>
 <body>
 
 	<jsp:include page ="../common/menubar.jsp"/>
-	<%-- <jsp:include page ="../admin/adminMenu.jsp"/> --%>
+	<jsp:include page ="../admin/adminMenu.jsp"/>
 	
-	<br><br>
 	<c:if test="${!empty loginUser }">
    		<div align ="center">
    		<!--
@@ -153,6 +156,8 @@
    			상품 상태
    			매진 구분
    		-->
+   		<h1 align="center"> 상품 관리 페이지 </h1>
+   		<br>
    		<table>
    					<th><input type="checkbox" name="user_CheckBox" id="categoryCk">카테고리</th>
 		            <td id="Chidden">	    
@@ -251,7 +256,7 @@
 	<br>
 					
 	
-	<table align="center" width="100%" border="1" cellspaction="1" id="surveyListTable"
+	<table align="center" width="90%" border="1" cellspaction="1" id="surveyListTable"
 		class="table table-bordered table-striped table-hover rowfy">
 		<thead>
 			<tr bgcolor ="#fa4a4a" style = "color : white; height:53px;" class="noExl">

@@ -141,5 +141,36 @@
 		</if>
 		WHERE MID = #{mId}
 	</update>
-
+	
+	
+	
+	<!--========================================= 관리자용  =========================================-->
+	<!-- 관리자용 주문리스트 전체갯수 -->
+	<select id ="getListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM ORDER_LIST
+	</select>
+	
+	<!-- 관리자용 주문리스트 목록 -->
+	<select id="AdminOrderselectList" resultMap="orderResultSet">
+		SELECT OL.OID, OL.GID, OL.MID, OL.ORDER_NUM, OL.ORDER_COUNT, OL.ORDER_STATUS, SG.GOODS_NAME, M.USER_ID, M.USER_NAME, M.GENDER, M.PHONE, M.EMAIL, M.ADDRESS, M.POINT, M.USER_NICKNAME, P.ORDER_PRICE
+		FROM ORDER_LIST OL
+		JOIN GOODS SG ON (OL.GID = SG.GID)
+		JOIN MEMBER M ON (OL.MID = M.MID)
+		JOIN PAYMENT P ON (P.ORDER_NUM = OL.ORDER_NUM)
+		ORDER BY OL.ORDER_DATE DESC
+	</select>
+	
+	
+	
+	
+	<update id = "updateStatusUpdate" parameterType ="Order">
+		UPDATE ORDER_LIST
+		SET ORDER_STATUS='I'
+		WHERE ORDER_NUM=#{orderNum}
+	</update>
+	
+	
+	
+	
 </mapper>

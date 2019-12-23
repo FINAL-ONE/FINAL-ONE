@@ -55,7 +55,18 @@ public class AdminServiceImpl implements AdminService{
 	public int getReplylistCount(int sellNum) {
 		return aDao.getReplylistCount(sellNum);
 	}
-
+	
+	// 해당 상품 후기 평균
+	@Override
+	public ArrayList<Admin> sAvgListSelect(int gId) {
+		return aDao.sAvgListSelect(gId);
+	}		
+	
+	// 구매한 상품에서 후기작성 중복 체크
+	@Override
+	public int selectafterCheck(Admin a) {
+		return aDao.selectafterCheck(a);
+	}
 
 	//---------------------------- INSERT ----------------------------
 	// 동복- 상품 등록
@@ -199,6 +210,9 @@ public class AdminServiceImpl implements AdminService{
 	@Override
 	public ArrayList<Category> detailCategoryList() {
 		return aDao.detailCategoryList();
-	}		
+	}
+
+
+
 
 }

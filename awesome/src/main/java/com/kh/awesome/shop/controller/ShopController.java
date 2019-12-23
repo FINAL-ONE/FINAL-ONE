@@ -230,5 +230,5 @@ public class ShopController {
 		return "shop/myafterView"; 
 	}
 	
-	
+
 }
