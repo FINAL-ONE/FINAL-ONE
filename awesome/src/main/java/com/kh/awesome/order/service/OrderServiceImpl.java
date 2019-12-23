@@ -111,4 +111,13 @@ public class OrderServiceImpl implements OrderService{
 	}
 
 
+
+	@Override
+	public int orderComplete(String orderNum) {
+		return oDao.orderComplete(orderNum);
+	}
+	
+	
+
+
 }

@@ -52,4 +52,9 @@ public interface OrderService {
 	
 	int updateMemberPoint(Order o);
 
+
+	//구매홧정
+	int orderComplete(String orderNum);
+
+	
 }

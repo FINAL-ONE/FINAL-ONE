@@ -66,7 +66,7 @@
 		WHERE M.MID = O.MID AND G.GID=O.GID AND P.ORDER_NUM=O.ORDER_NUM AND O.ORDER_NUM=#{orderNum} AND S.GID=O.GID
 	</select>
 	<update id="orderCancel" parameterType="Order">
-		UPDATE ORD_LIST
+		UPDATE ORDER_LIST
 		SET ORDER_STATUS='X'
 		WHERE OID=#{number}
 	</update>
@@ -78,15 +78,15 @@
 		WHERE MID=#{mId}
 	</select>
 	<select id="getOrderSearch" resultMap="orderResultSet">
-		SELECT OID, O.GID GID,GOODS_NAME, GOODS_PRICE, O.MID MID, O.ORDER_NUM ORDER_NUM, ORDER_COUNT, ORDER_DATE, ORDER_STATUS, ROWCOUNT,GOODS_TITLE, GOODS_FILE_PATH
-		FROM ORDER_LIST O 
-		JOIN (SELECT ORDER_NUM, COUNT(*) ROWCOUNT
-		     FROM ORDER_LIST
-		     GROUP BY ORDER_NUM) R ON (O.ORDER_NUM = R.ORDER_NUM)
-		JOIN GOODS G ON (O.GID=G.GID)
+	  SELECT OID, O.GID GID,GOODS_NAME, GOODS_PRICE, O.MID MID, O.ORDER_NUM ORDER_NUM, ORDER_COUNT, ORDER_DATE, ORDER_STATUS, ROWCOUNT,GOODS_TITLE, GOODS_FILE_PATH
+      FROM ORDER_LIST O 
+      JOIN (SELECT ORDER_NUM, COUNT(*) ROWCOUNT
+           FROM ORDER_LIST
+           GROUP BY ORDER_NUM) R ON (O.ORDER_NUM = R.ORDER_NUM)
+      JOIN GOODS G ON (O.GID=G.GID)
         JOIN SELL_GOODS S ON (S.GID = G.GID)
-		WHERE O.MID= #{mid} AND ORDER_DATE BETWEEN #{date1} AND  #{date2}
-		ORDER BY O.ORDER_NUM DESC
+      WHERE O.MID= #{mid} AND ORDER_DATE BETWEEN #{date1} AND  TO_DATE(#{date2},'YY/MM/DD')+1
+      ORDER BY O.ORDER_NUM DESC
 	</select>
 		<select id="getOrderSearchCount" resultType="_int">
 		SELECT COUNT(*)
@@ -142,4 +142,11 @@
 		WHERE MID = #{mId}
 	</update>
 
+
+	<!-- 구매확정 -->
+	<update id="orderComplete" parameterType="Order">
+		UPDATE ORDER_LIST
+		SET ORDER_STATUS='C'
+		WHERE ORDER_STATUS='I' AND ORDER_NUM=#{orderNum}
+	</update>
 </mapper>

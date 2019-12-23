@@ -2,8 +2,11 @@
 	pageEncoding="UTF-8"%>
 	<%@ page session="false" %>
 	<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+	<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <link href="https://fonts.googleapis.com/css?family=Do+Hyeon&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />  
+
 
 <!DOCTYPE html>
 <html>
@@ -197,35 +200,49 @@ input::placeholder {
 					<td style="width: 100px">주문금액</td>
 					<td style="width: 150px">진행상태</td>
 				</tr>
-				<c:forEach var="t" items="${list }">
+ 	<%-- 			<c:forEach var="t" items="${list }">
 					<c:forEach var="r" items="${rowCount }">
 							<c:if test="${t.orderNum eq r.orderNum }">
 								${r.orderNum }
 								${r.rowCount }
 							</c:if>
 						</c:forEach>
-					</c:forEach>
-				
-				
-				
-				
+					</c:forEach>  --%>
+
+			
+				<c:set var="count" value="0" scope="application"/>
 				<c:set var="orderNum" value="0" scope="application"/>
-				
 				<c:forEach var="o" items="${list}">	
+				<c:if test ="${applicationScope.orderNum ne o.orderNum}"  > 
+						<c:set var="orderNum" value="0" scope="application"/>
+						
+					</c:if> 
 					<tr>
-					<c:if test ="${applicationScope.orderNum ne o.orderNum}"  > 
-							<td rowspan="${o.rowCount }">${o.orderDate }<br>
-								<c:url var="odetail" value="orderDetail.do">
-									<c:param name="orderNum" value="${o.orderNum}"/>
-								</c:url>
-								<a href="${odetail }">[${o.orderNum}]</a>
-							</td>
-					</c:if>
-	
-					<c:if test="${applicationScope.orderNum eq o.orderNum}">
+					<c:if test ="${applicationScope.orderNum eq '0'}"  > 
+							<c:set var="orderNum" value="${o.orderNum }" scope="application"/>
+							 <c:if test ="${applicationScope.orderNum eq o.orderNum}"  >  
+							 	<c:forEach var="c" items="${list }">
+							 		<c:if test="${c.orderNum eq applicationScope.orderNum }">
+							 			<c:set var="count" value="${count+1 }"/>
+							 			
+							 		</c:if>
+							 	</c:forEach>
+								<td rowspan="${count }">${o.orderDate }<br>
+									<c:url var="odetail" value="orderDetail.do">
+										<c:param name="orderNum" value="${o.orderNum}"/>
+									</c:url>
+									<a href="${odetail }">[${o.orderNum}]</a>
+								</td>
+							</c:if>
+						<c:set var="count" value="0" />
+							
 					
-					</c:if>
-					<c:set var="orderNum" value="${o.orderNum }" scope="application"/>
+					</c:if>	
+					<c:if test ="${applicationScope.orderNum ne '0'}"  > 
+					<%-- <c:if test="${applicationScope.orderNum ne o.orderNum}"> --%>
+			
+						<c:if test ="${applicationScope.orderNum eq o.orderNum}"  >  
+					
 						<td><img src="resources/auploadFiles/${o.filePath }" style="height:200px; width:150px;"></td>
 						<td><${o.goodsTitle}><br>${o.gName}</td>
 						<td>${o.orderCount }</td>
@@ -244,8 +261,14 @@ input::placeholder {
 						<c:if test = "${o.orderStatus eq 'X'}">
 						<td>주문취소</td>
 						</c:if>
-
+					</c:if>
+					
+					</c:if>
 					</tr>
+					<%-- <c:if test ="${applicationScope.orderNum ne o.orderNum}"  > 
+						<c:set var="orderNum" value="0" scope="application"/>
+						
+					</c:if>  --%>
 				</c:forEach>
 				
 

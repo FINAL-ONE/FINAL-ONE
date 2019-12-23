@@ -34,4 +34,6 @@ public interface MemberService {
 	void send_mail(Member member, String div) throws Exception;
 
 	int checkNickNameDup(String nickName);
+
+
 }

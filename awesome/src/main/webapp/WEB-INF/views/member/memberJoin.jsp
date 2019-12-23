@@ -751,7 +751,7 @@ table.type02 td {
 				$("#checknickName").css("color", "#f53f29");
 				$("#nickName").css("border", "2px solid #f53f29");
 				$("#checknickName").text("문자,숫자를 포함한 2-6자");
-				nickNameCheck = false;
+				nickNameCheck = false;	
 			} else {
 				$("#checknickName").css("color", "blue");
 				$("#nickName").css("border", "2px solid blue");

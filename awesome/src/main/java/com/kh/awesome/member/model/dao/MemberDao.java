@@ -82,5 +82,7 @@ public class MemberDao {
 				return sqlSession.selectOne("memberMapper.nickNameCheck",nickName);
 			}
 
+	
+
 
 }

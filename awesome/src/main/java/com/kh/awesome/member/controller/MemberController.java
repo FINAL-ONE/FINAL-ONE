@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -360,6 +361,25 @@ public class MemberController {
 				mService.find_pw(response, member);
 			}
 			
+			//마이페이지 들어가기전 비밀번호 확인
+			@RequestMapping("beforeMyPage.do")
+			public ModelAndView beforeMyPage(ModelAndView mv, HttpServletRequest request) {
+				HttpSession session = request.getSession(true);
+				Member loginUser = (Member) session.getAttribute("loginUser");
+				int mId = loginUser.getMid();
 				
-	
+				mv.addObject("mId", mId);
+				mv.setViewName("member/beforeMyPage");
+				return mv;
+			}
+			
+			@RequestMapping("privacy.do")
+			public String privacy() {
+				return "/common/privacyStatement";
+			}
+				
+			@RequestMapping("termsOfUse.do")
+			public String termsOfUse() {
+				return "/common/termsOfUse";
+			}
 }

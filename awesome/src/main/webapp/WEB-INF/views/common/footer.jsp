@@ -72,9 +72,9 @@
 <div class= "footer" > 
    <div style="width: 100%; height: 50px; border-bottom: 1px solid #eee">
       <div style=" height: 100%; width: 1288px; margin-left:auto;margin-right: auto" >
-            <span class= footerSpan>개인정보 취급 방침</span>
-            <span class= footerSpan>&nbsp;&nbsp;이용약관</span>
-            <span class= footerSpan style="border:none">&nbsp;&nbsp;제휴문의</span>
+            <span class= footerSpan onclick="location.href='privacy.do'">개인정보 취급 방침</span>
+            <span class= footerSpan onclick="location.href='termsOfUse.do'">&nbsp;&nbsp;이용약관</span>
+            <span class= footerSpan style="border:none" onclick="popupOpen()">&nbsp;&nbsp;제휴문의</span>
       </div>
    </div>
    <div style=" height: 260px; width: 1288px; margin-left:auto;margin-right:auto;margin-top:30px;">
@@ -87,7 +87,8 @@
             연락주시면 빠른 시일내에 회신드리도로하겠습니다.
             </p>  
             <br>
-            <button class="footerButton" style="font-szie:14px; width: 100px;" >관리자에게</button> 
+            <button class="footerButton" style="font-szie:14px; width: 100px;" onclick="location.href='javascript:popupOpen();'">관리자에게</button> 
+
       </div>
       
       <div class= footerDiv>
@@ -128,6 +129,17 @@
 </div>
 
 <body>
- 
+ <script>
+ function popupOpen(){
+
+		var popUrl = "email.do";	//팝업창에 출력될 페이지 URL
+
+		var popOption = "top=55, left=600, width=750, height=880, resizable=no, scrollbars=no, status=no, location=no,";    //팝업창 옵션(optoin)
+
+			window.open(popUrl,"",popOption);
+
+		}
+		
+ </script>
 </body>
 </html>
