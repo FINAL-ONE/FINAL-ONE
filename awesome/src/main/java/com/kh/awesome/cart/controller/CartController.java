@@ -1,8 +1,11 @@
-﻿﻿package com.kh.awesome.cart.controller;
+﻿package com.kh.awesome.cart.controller;
 
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.server.adapter.HttpWebHandlerAdapter;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.JsonIOException;
 import com.kh.awesome.admin.model.vo.Admin;
 import com.kh.awesome.board.model.exception.BoardException;
 import com.kh.awesome.cart.model.exception.CartException;
@@ -129,7 +133,7 @@ public class CartController {
       }
       
    /*
-    * // 카트 뷰로 이동
+    * // 카트 뷰로 이동 
     * 
     * @RequestMapping("moveCart.do") public String moveCart() {
     * 
@@ -139,7 +143,24 @@ public class CartController {
 
       
       
-      
+		// 동복 - 장바구니 클릭시 해당 상품이 이미 장바구니에 있으면 체크
+		@RequestMapping("selectCartCheck.do")
+		public ModelAndView selectCartCheck(HttpServletResponse response,  int mId, int gId, ModelAndView mv, Cart a ) throws JsonIOException, IOException {
+			Map map = new HashMap();
+			
+			a.setmId(mId);
+			a.setgId(gId);
+			
+			boolean isUsable = cService.selectCartCheck(a) == 0? true : false;
+System.out.println("isUsable : " + isUsable);
+			map.put("isUsable", isUsable);
+			
+			mv.addAllObjects(map);
+			
+			mv.setViewName("jsonView");
+			
+			return mv;
+		}      
       
       
       
@@ -149,7 +170,6 @@ public class CartController {
       
       
 }
-
 
 
 

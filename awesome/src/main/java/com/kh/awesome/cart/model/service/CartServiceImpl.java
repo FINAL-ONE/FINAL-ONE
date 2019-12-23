@@ -48,5 +48,9 @@ public class CartServiceImpl implements CartService{
 		return cDao.subAmount(cartNum);
 	}
 
-
+	// 동복 - 장바구니 클릭시 해당 상품이 이미 장바구니에 있으면 체크
+	@Override
+	public int selectCartCheck(Cart a) {
+		return cDao.selectCartCheck(a);
+	}
 }

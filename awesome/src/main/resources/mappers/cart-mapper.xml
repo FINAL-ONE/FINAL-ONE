@@ -18,15 +18,15 @@
    </resultMap>
    
    <update id="addAmount" parameterType = "_int">
-  	UPDATE CART
-  	SET COUNT = COUNT + 1
-  	WHERE CARTNUM = #{cartNum}
+     UPDATE CART
+     SET COUNT = COUNT + 1
+     WHERE CARTNUM = #{cartNum}
   </update>
 
    <update id="subAmount" parameterType = "_int">
-  	UPDATE CART
-  	SET COUNT = COUNT -1
-  	WHERE CARTNUM = #{cartNum}
+     UPDATE CART
+     SET COUNT = COUNT -1
+     WHERE CARTNUM = #{cartNum}
   </update>
    
    
@@ -61,7 +61,7 @@
    <delete id="deleteCart" parameterType="Member">
       DELETE CART
       WHERE CARTNUM IN #{cartNum}
-      AND MID=#{mId}
+      AND MID=#{mId} 
    </delete>
    
    <!-- 포인트 쓰기 -->
@@ -72,13 +72,19 @@
       )
    </insert>
 
-   	<select id ="selectCartOne" parameterType="_int" resultMap="CartResultSet">
+      <select id ="selectCartOne" parameterType="_int" resultMap="CartResultSet">
 
-		SELECT * FROM CART WHERE CARTNUM = #{cartNum}
-	
-	
+      SELECT * FROM CART WHERE CARTNUM = #{cartNum}
+   
+   
+   </select>
+
+	<!-- 동복 - 상품판매 시 상품리스트 조회 -->
+	<select id="selectCartCheck" resultType="_int">
+	  	SELECT COUNT(*)
+		  FROM CART
+		 WHERE MID = #{mId} 
+		   AND GID = #{gId}
 	</select>
-
-
 
 </mapper>

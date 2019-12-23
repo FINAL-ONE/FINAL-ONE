@@ -10,6 +10,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="shortcut icon" href="${contextPath}/resources/images/favicon.ico" type="image/x-icon">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <link href="${contextPath}/resources/fontawesome-free/css/all.css" rel="stylesheet">
 	<title>Awesome 자유게시판</title>
@@ -412,7 +413,16 @@
    <!-- 페이징 처리 시작 -->
    <br>
       <div class="pagingArea" align="center">
-      <button type= "button" style="visibility:hidden; border:none; background: none; height: 30px; color:white;padding-bottom:14px; position:relative; float:left;">글쓰기</button>
+     	<c:if test = "${category eq 1 }">
+	      <c:if test="${loginUser.manager eq 'Y'}">
+	      <button type= "button" style="visibility:hidden; border:none; background: none; height: 30px; color:white;padding-bottom:14px; position:relative; float:left;">글쓰기</button>
+	      </c:if>
+	    </c:if>  
+	    
+	      <c:if test = "${category ne 1 }">
+      	<button type= "button" style="visibility:hidden; border:none; background: none; height: 30px; color:white;padding-bottom:14px; position:relative; float:left;">글쓰기</button>
+      </c:if>
+	    
          <!-- 맨 처음으로(<<) -->
          <button onclick="location.href='boardListView.do?page=1&category=${category}'"> << </button>
          
@@ -444,8 +454,15 @@
          <!-- 맨 끝으로(>>) -->
          <button onclick="location.href='boardListView.do?page=${pi.maxPage}&category=${category}'"> >> </button>
      
-      
+      <c:if test = "${category eq 1 }">
+      	<c:if test="${loginUser.manager eq 'Y'}">
       	<button style="border:none; background: #585858; height: 30px; color:white;padding-bottom:14px; position:relative; float:right;" onclick = "location.href='fBoardInsertForm.do?category=${category}'">글쓰기</button>
+      	</c:if>
+      </c:if>
+      
+      <c:if test = "${category ne 1 }">
+      	<button style="border:none; background: #585858; height: 30px; color:white;padding-bottom:14px; position:relative; float:right;" onclick = "location.href='fBoardInsertForm.do?category=${category}'">글쓰기</button>
+      </c:if>
       </div>
       
       

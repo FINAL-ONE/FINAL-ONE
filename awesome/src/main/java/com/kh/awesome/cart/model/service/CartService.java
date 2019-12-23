@@ -38,7 +38,8 @@ public interface CartService {
 	public int subAmount(int cartNum);
 	
 	
-	
+	// 동복 - 장바구니 클릭시 해당 상품이 이미 장바구니에 있으면 체크
+	public int selectCartCheck(Cart a);	
 	
 
 }

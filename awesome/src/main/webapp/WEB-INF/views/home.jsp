@@ -70,7 +70,14 @@ body {
 	margin: 0;
 	padding: 0;
 	font-family: 'Raleway', sans-serif;
+	
+
 }
+
+.footer{
+	line-height: 18px !important;
+}
+
 .flex-container {
 	position: absolute;
 	height: 100vh;
@@ -311,6 +318,11 @@ textarea {
     transform: rotate(-360deg);
     -webkit-transform: rotate(-360deg);
   }
+}
+
+.conmmunityNav:after {
+    top: -44px !important;
+    left: -94px !important;
 }
 </style>
 

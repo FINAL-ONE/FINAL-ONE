@@ -371,10 +371,14 @@ table.type02 td {
 						requi#f53f29="requi#f53f29"><em>@</em> <input type="text"
 						name="email2" value="naver.com"
 						style="width: 220px; margin-left: 0px;" ReadOnly="true"
-						placeholder="naver.com"><br> <br> <select
+						placeholder="naver.com"><br> <br>
+						
+					<select
 						id="selctEmail" name="email" class="info"
 						style="width: 150px; margin-left: 0px; height: 40px;"
 						onchange="SetEmailTail(selctEmail.options[this.selectedIndex].value)">
+							
+							
 							<!-- <option value = "notSelected">====선택====</option> -->
 							<option value="naver.com">naver.com</option>
 							<option value="goole.com">google.com</option>
@@ -407,6 +411,8 @@ table.type02 td {
 					<td><input type="text" name="address2"
 						class="postcodify_extra_info" value=""></td>
 				</tr>
+
+
 
 				<!-- jQuery와 Postcodify를 로딩하자 -->
 				<script src="//d1p7wdleee1q2z.cloudfront.net/post/search.min.js" z></script>

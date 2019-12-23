@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.awesome.board.model.vo.PageInfo;
+import com.kh.awesome.cart.model.vo.Cart;
+import com.kh.awesome.member.model.vo.Member;
 import com.kh.awesome.order.model.dao.OrderDao;
 import com.kh.awesome.order.model.vo.Order;
 import com.kh.awesome.order.model.vo.OrderSearch;
@@ -108,6 +110,40 @@ public class OrderServiceImpl implements OrderService{
 	@Override
 	public int updateMemberPoint(Order o) {
 		return oDao.updateMemberPoint(o);
+	}
+
+
+	@Override
+	public Cart selectCartOne(int cartNum) {
+		return oDao.selectCartOne(cartNum);
+	}
+
+
+
+	@Override
+	public int checkOrderNumInfo() {
+		return oDao.checkOrderNumInfo();
+	}
+
+
+
+	@Override
+	public int createNewOrderNum() {
+		return oDao.createNewOrderNum();
+	}
+
+
+
+	@Override
+	public int nextOrderNum() {
+		return oDao.nextOrderNum();
+	}
+
+
+
+	@Override
+	public Member selectMemberAsMid(int mId) {
+		return oDao.selectMemberAsMid(mId);
 	}
 
 

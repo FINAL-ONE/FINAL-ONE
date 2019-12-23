@@ -1025,9 +1025,9 @@ body{
 						    
 							Modal.confirm({
 								  title: '장바구니',
-								  message: '해당 상품은 이미 장바구니에 있습니다.',
+								  message: '해당 상품은 이미 장바구니에 있습니다. 장바구니로 이동하시겠습니까?',
 								  onConfirm: function() {
-									  //location.href="cartList.do?";
+									  location.href="cartList.do?";
 									 //alert('장바구니로 이동.');
 							  		},
 									  onCancel: function() {
