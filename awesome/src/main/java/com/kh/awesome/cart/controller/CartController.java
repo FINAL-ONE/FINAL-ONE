@@ -1,4 +1,5 @@
-﻿﻿package com.kh.awesome.cart.controller;
+﻿package com.kh.awesome.cart.controller;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +41,7 @@ public class CartController {
    public ModelAndView getCartList(HttpSession session, ModelAndView mv) throws Exception {
       
       Member loginUser = (Member)session.getAttribute("loginUser");
+
 //      int mId = loginUser.getMid();
       
       List<CartList> cartList = cService.cartList(loginUser);
@@ -50,6 +52,7 @@ public class CartController {
       mv.addObject("cartList", cartList);
       mv.setViewName("cart/cartList");
       return mv;
+
    }
       
       

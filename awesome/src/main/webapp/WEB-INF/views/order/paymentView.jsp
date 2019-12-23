@@ -31,27 +31,14 @@
 				</tr>
 				<tr>
 <!--  카드 결제 정보 보내야 할것들  ------------------------------------------------------------------------------------------->
-					<!-- <th>totalPrice</th>	최종금액
-					<td><input id="totalPrice"  	name="totalPrice" 		value = "100">	</td>
-					<th>email</th>	이메일은 아무거나 보내기? 적혀있는건 동복이꺼
-					<td><input id="email"  			name="email" 			value = "qhrehdths@naver.com"></td>
-					<th>name</th>	카트결제 자 이름
-					<td><input id="name"  			name="name" 			value = "손동복"></td>
-					<th>phone</th>	카드 결제자 폰 번호
-					<td><input id="phone"  			name="phone" 			value = "010-5600-5415"></td>
-					<th>address</th>카드 결제자 주소 
-					<td><input id="address"  		name="address" 			value = "인천 서구 가좌동 여우제로 136 두산위브"></td> -->
-					
-					<!-- ------------------------------ -->
-					
 					<th>totalPrice</th>	<!-- 최종금액 -->
 					<td><input id="totalPrice"  	name="totalPrice" 		value = "100">	</td>
 					<th>email</th>	<!-- 이메일은 아무거나 보내기? 적혀있는건 동복이꺼 -->
-					<td><input id="email"  			name="email" 			value = "alwls3005@naver.com"></td>
+					<td><input id="email"  			name="email" 			value = "qhrehdths@naver.com"></td>
 					<th>name</th>	<!-- 카트결제 자 이름 -->
-					<td><input id="name"  			name="name" 			value = "김미진"></td>
+					<td><input id="name"  			name="name" 			value = "손동복"></td>
 					<th>phone</th>	<!-- 카드 결제자 폰 번호 -->
-					<td><input id="phone"  			name="phone" 			value = "01057183005"></td>
+					<td><input id="phone"  			name="phone" 			value = "010-5600-5415"></td>
 					<th>address</th><!--카드 결제자 주소  -->
 					<td><input id="address"  		name="address" 			value = "인천 서구 가좌동 여우제로 136 두산위브"></td>
 <!--  카드 결제 정보 보내야 할것들  ------------------------------------------------------------------------------------------->
@@ -82,7 +69,7 @@
 					<th>dAddress</th>	<!-- 받는사람 주소 -->
 					<td><input id="dAddress"  		name="dAddress" 		value="역삼역"/></td>
 					<th>dPhone</th>	<!-- 받는사람 전화번호 -->
-					<td><input id="dPhone"  		name="dPhone" 			value="01056005415"/></td>
+					<td><input id="dPhone"  		name="dPhone" 			value="010-5600-5415"/></td>
 				</tr>
 			</table>
 
@@ -98,7 +85,7 @@
 	
 	    <script>
 	    /* 결제창 빼고 결제 버튼 클릭시 테스트 용  */
- 	    /* function paymentNow(){
+/* 	    function paymentNow(){
 
 			var gId 		= $("#gId").val();
 			var mId 		= $("#mId").val();
@@ -134,17 +121,17 @@
 										  + "error : " + errorData);
 				}
 			});
-	    } 
-	     */
+	    } */
 	    
 	    
 	    
- 			function paymentNow(){
+	    
+			function paymentNow(){
 
 		        var IMP = window.IMP; // 생략가능
 		        IMP.init('imp15219507'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
 		        var msg;
-		         
+		        
 		        IMP.request_pay({
 		            pg : 'inicis',
 		            pay_method : 'card',
@@ -168,7 +155,6 @@
 						var dAddress 	= $("#dAddress").val();
 						var dPhone 		= $("#dPhone").val();
 						var orderPrice 	= $("#totalPrice").val();
-						
 						
 						$.ajax({
 							url:"paymentViewSuccess.do",
@@ -195,20 +181,49 @@
 							}
 						});
 
+
+<%-- 		                //[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
+		                jQuery.ajax({
+		                    //url: "/payments/complete", //cross-domain error가 발생하지 않도록 주의해주세요
+		                    url:"selectGoodsValue.do",
+		                    type: 'POST',
+		                    dataType: 'json',
+		                    data: {
+		                        imp_uid : rsp.imp_uid
+		                        //기타 필요한 데이터가 있으면 추가 전달
+		                    }
+		                }).done(function(data) {
+		                    //[2] 서버에서 REST API로 결제정보확인 및 서비스루틴이 정상적인 경우
+		                    if ( everythings_fine ) {
+		                        msg = '결제가 완료되었습니다.';
+		                        msg += '\n고유ID : ' + rsp.imp_uid;
+		                        msg += '\n상점 거래ID : ' + rsp.merchant_uid;
+		                        msg += '\결제 금액 : ' + rsp.paid_amount;
+		                        msg += '카드 승인번호 : ' + rsp.apply_num;
+		                        
+		                        alert(msg);
+		                    } else {
+		                        //[3] 아직 제대로 결제가 되지 않았습니다.
+		                        //[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.
+		                    }
+		                });
+		                //성공시 이동할 페이지
+		                location.href='<%=request.getContextPath()%>/order/paySuccess?msg='+msg;
+					--%>
 					
 		            } else {
 		                msg = '결제에 실패하였습니다.';
 		                msg += '에러내용 : ' + rsp.error_msg;
 		                //실패시 이동할 페이지
-		                location.href="<%=request.getContextPath()%>/order/payFail";
+		                <%-- location.href="<%=request.getContextPath()%>/order/payFail"; --%>
 		                alert(msg);
 		            } 
 		            
 		        });   
-			};  
-			/* 
+			};
+			
 			// 기존 스크립트 정보		        
-			 IMP.request_pay({
+			/* IMP.request_pay({
 			    pg : 'inicis', // version 1.1.0부터 지원.
 			    pay_method : 'card',
 			    merchant_uid : 'merchant_' + new Date().getTime(),
@@ -233,7 +248,7 @@
 			    }
 			    alert(msg);
 			});   
-			 */		   
+				 */	   
 			
     </script>
 		

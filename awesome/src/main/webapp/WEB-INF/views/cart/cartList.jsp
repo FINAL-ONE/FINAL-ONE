@@ -11,6 +11,7 @@
    <link href="js/Modal.js-master/build/css/modal.css" rel="stylesheet">
    <!-- <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script> -->
    <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+   <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 
    <style>
    
@@ -32,38 +33,37 @@
       
       /* ---------- */
       
-   table.type05 {
-    border-collapse: separate;
-    border-spacing: 1px;
+    table.type09 {
+    border-collapse: collapse;
     text-align: left;
     line-height: 1.5;
-    border-top: 1px solid #ccc;
-    margin: 20px 10px;
-   }
-   table.type05 th {
-       width: 150px;
-       padding: 10px;
-       font-weight: bold;
-       vertical-align: top;
-       border-bottom: 1px solid #ccc;
-       background: #efefef;
-   }
-   table.type05 td {
-       width: 350px;
-       padding: 10px;
-       vertical-align: top;
-       border-bottom: 1px solid #ccc;
-   }
+    width:800px;
+	}
+	
+	table.type09 thead th {
+	    padding: 10px;
+	    font-weight: bold;
+	    vertical-align: top;
+	    /* color: #036; */
+	    border-bottom: 3px solid #036;
+	}
+	
+	table.type09 tbody th {
+	    width: 150px;
+	    padding: 10px;
+	    font-weight: bold;
+	    vertical-align: top;
+	    border-bottom: 1px solid #ccc;
+	    /* background: #f3f6f7; */
+	}
+	
+	table.type09 td {
+	    width: 350px;
+	    padding: 10px;
+	    vertical-align: top;
+	    border-bottom: 1px solid #ccc;
+	}
    
-   
-   
-    
-
-   </style>
-   
-   
-   <style>
-      
       section#content ul {margin:10px; }
       section#content div.goodsThumb img { width:200px; height:200px; }
       section#content div.goodsName { padding:10px 0; text-align:center; }
@@ -102,8 +102,8 @@
       .listResult .orderDiv button { font-size:18px; padding:5px 10px; border:1px solid #999; background:#fff;}
       .listResult::after { content:""; display:block; clear:both; } 
       
-      .orderInfo { border:5px solid #eee; padding:20px; display:none; }
-      .orderInfo .inputArea { margin-left: auto; margin-right: auto; width: 155px; }
+      .orderInfo { border:2px solid #eee; padding:20px; display:none; }
+      .orderInfo .inputArea {/*  margin-left: auto; margin-right: auto; width: 155px;  */ margin:200px 0 0 300px; }
       .orderInfo .inputArea label { display:inline-block; width:120px; margin-right:10px; }
       .orderInfo .inputArea input { font-size:14px; padding:5px; }
       #userAddr2, #userAddr3 { width:250px; }
@@ -129,7 +129,27 @@
     
      .order_rdo:hover{cursor:pointer;}
      label{cursor:pointer;}
-      
+   
+   #noCart{
+   	text-align:center;
+   }
+   
+   /* #formform{
+   	padding-left:200px;
+   } */
+   
+   #sdAddress, #address{
+   	width:500px;
+   }
+   
+   input{
+   	/* height:30px; */
+   	font-size:15px;
+   }
+   
+   #pointpoint{
+   	text-align: right;
+   }      
       
    </style>
    
@@ -247,14 +267,19 @@
          </div>
          
          <div class="orderInfo">
-            <form role="form" method="post" autocomplete="off">
+            <form role="form" method="post" autocomplete="off" id="formform">
                      
                <input type="hidden" name="amount" value="${sum}" />
                      
          <h2>정보</h2>
         <div class="order_detail mt80">
    
-            <table class="type05">
+            <table class="type09">
+            <thead>
+            <tr>
+                 <th scope="cols" colspan="2"><h2>보내는 분 정보</h2></th>
+             </tr>
+            </thead>
                <tbody>
                <tr>
                   <th>보내는분</th>
@@ -277,7 +302,7 @@
          </div>
       
          <h3 class="order_detail_tit">배송지 정보</h3>
-         <table class="type05">
+         <table class="type09">
             <thead>
              <tr>
                  <th scope="cols" colspan="2">배송지 정보</th>
@@ -288,14 +313,22 @@
             <th>배송지선택</th>
             <td>
             <div id="addrradio">
-               <div class="order_del_sel" onclick="deliver1()">
+               <!-- <div class="order_del_sel" onclick="deliver1()">
                   <input id="delivradio1" class="order_rdo" type="radio" onclick="" checked="checked" value="" name="delivaddradio">
                   <label style="margin-right:15px" class="order_selected" for="delivradio1">기본 배송지</label>
                </div>
                <div class="order_del_sel" onclick="deliver2()">
                <input id="delivradio2" class="order_rdo" type="radio" onclick="" value="user" name="delivaddradio" >
                <label style="margin-right:15px" for ="delivradio2"  class="">새 배송지</label>
-               </div>
+               </div> -->
+               <span class="order_del_sel" onclick="deliver1()">
+                  <input id="delivradio1" class="order_rdo" type="radio" onclick="" checked="checked" value="" name="delivaddradio">
+                  <label style="margin-right:15px" class="order_selected" for="ss3">기본 배송지</label>
+               </span>
+               <span class="order_del_sel" onclick="deliver2()">
+               <input id="delivradio2" class="order_rdo" type="radio" onclick="" value="user" name="delivaddradio" >
+               <label style="margin-right:15px" for="" class="">새 배송지</label>
+               </span>
             </div>
             </td>
             </tr>
@@ -306,7 +339,16 @@
             </tr>
             <tr>
                <th>주소</th>
-               <td><input type="text" value="${cartList[0].address }" id="address"></td>
+               <td>
+               	<input type="text" value="${cartList[0].address }" id="address">
+               	<div id="test" style="display:none">
+	               	<input type="text" id="sample6_postcode" placeholder="우편번호">
+					<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
+					<input type="text" id="sample6_address" placeholder="주소"><br>
+					<input type="text" id="sample6_detailAddress" placeholder="상세주소">
+					<input type="text" id="sample6_extraAddress" placeholder="참고항목">
+				</div>
+               </td>
             </tr>
             <tr>
                <th><span>연락처</span></th>
@@ -318,17 +360,17 @@
       <br><br>
       
       <div class="order_detail mt80">
-      <h3 class="order_detail_tit">결제 정보</h3>
-         <table class="type05">
+      <!-- <h3 class="order_detail_tit">결제 정보</h3> -->
+         <table class="type09">
             <thead>
              <tr>
-                 <th scope="cols" colspan="2">결제 정보</th>
+                 <th scope="cols" colspan="2"><h3>결제 정보</h3></th>
              </tr>
              </thead>
             <tbody>
             <tr>
                <th>포인트 사용</th>
-               <td><input class="order_txt order_dimmed point" placeholder="사용 포인트 입력" style="width:130px" type="tel" name="dcp" id="dcp" maxlength="10" data-dcp="0" data-usedcp="0" value="0" onchange="pointValidate(${loginUser.point});">원<span class="ml8 fc666">(사용가능 포인트 : <strong class="order_fcT1 fctah" id="mycpp" data-mycpp="0"><span>${loginUser.point }</span></strong>원)</span></em><a id="cupbtn" alt="적용"><span class="order_btn_apply"></span></a><!--20160427 적립금 안내 문구 추가-->
+               <td><input id="pointpoint" class="order_txt order_dimmed point" placeholder="사용 포인트 입력" style="width:130px" type="tel" name="dcp" id="dcp" maxlength="10" data-dcp="0" data-usedcp="0" value="0" onchange="pointValidate(${loginUser.point});">원<span class="ml8 fc666">  (사용가능 포인트 : <strong class="order_fcT1 fctah" id="mycpp" data-mycpp="0"><span>${loginUser.point }</span></strong>원)</span></em><a id="cupbtn" alt="적용"><span class="order_btn_apply"></span></a><!--20160427 적립금 안내 문구 추가-->
                <!-- <span class="fctah ml10 fc666" style="vertical-align:top;position: relative;top:12px">※ 적립금은 최소 2,000원 이상부터 사용가능합니다.</span> -->   
                </td>
             </tr>
@@ -385,188 +427,179 @@
 
 <script>
 
-function pointValidate(userPoint){
-	
-	if($(".point").val()> userPoint ){
-        alert("포인트가 모자랍니다.");
-        $(".point").val(0);
-        $(".point").focus();
-	}
-}
-
-
-// + 버튼을 누르면 수량이 증가하되, 상품의 전체 수량보다 커지지 않음
-
-function plus(cartNum){
-   var num = $("#numBox" + cartNum).val();
-   var plusNum = Number(num) + 1;
-   var stock = $(".gdsStock_hidden");
-   
-   if(num >= 10){
-      alert("10개까지만 주문가능합니다.")
-      return;
-   }
-   
-   $("#numBox" + cartNum).val(plusNum);
-   
-   var eachPrice = $("#eachPrice" + cartNum).val();
-   
-   var amount = $("#numBox" + cartNum).val()
-   
-   var finalPrice= eachPrice * amount; 
-   var finalPrice2 = comma(finalPrice); 
-   
-   $("#finalPrice" + cartNum).html(finalPrice2);
-   
-   
-   totalPrice();
-	
-	 $.ajax({
-         url : "addAmount.do",
-         type : "get",
-         data : { cartNum : cartNum },
-         success : function(data){
-            if(data > 0) {                                    
-            } else {
-               alert("수량 변경실패");
-            }
-         }
-      });
-	
-}
-
-// - 눌렀을 때
-function minus(cartNum){
-   var num = $("#numBox" + cartNum).val();
-   var minusNum = Number(num) - 1;
-   var stock = $(".gdsStock_hidden");
-   
-   if(num <= 1){
-      alert("1개 이상만 주문가능합니다.")
-      return;
-   }
-   
-   $("#numBox" + cartNum).val(minusNum);
-   var eachPrice = $("#eachPrice" + cartNum).val();
-   
-   var amount = $("#numBox" + cartNum).val()
-   
-   var finalPrice = eachPrice * amount; 
-   var finalPrice2 = comma(finalPrice); 
-   
-   $("#finalPrice" + cartNum).html(finalPrice2);
-   
-   totalPrice();
-   
-	 $.ajax({
-         url : "subAmount.do",
-         type : "get",
-         data : { cartNum : cartNum },
-         success : function(data){
-            if(data > 0) {                                    
-            } else {
-               alert("수량 변경실패");
-            }
-         }
-      });
-	
-	
-	
-   
-}
-
-function comma(num){
-    var len, point, str; 
-       
-    num = num + ""; 
-    point = num.length % 3 ;
-    len = num.length; 
-   
-    str = num.substring(0, point); 
-    while (point < len) { 
-        if (str != "") str += ","; 
-        str += num.substring(point, point + 3); 
-        point += 3; 
-    } 
-     
-    return str;
- 
-}
-
-
-$(function(){ //전체선택 체크박스 클릭
-   $("#allCheck").click(function(){ //만약 전체 선택 체크박스가 체크된상태일경우 
-      if($("#allCheck").prop("checked")) { //해당화면에 전체 checkbox들을 체크해준다
-         $("input[type=checkbox]").prop("checked",true); // 전체선택 체크박스가 해제된 경우
-         } else { //해당화면에 모든 checkbox들의 체크를해제시킨다. 
-            $("input[type=checkbox]").prop("checked",false); 
-         }  
-   
-    
-      
-     	totalPrice();
-      
-   });
-
-      $(".chBox").click(function(){
-          if($("#allCheck").is(":checked")){
-              if($(this).prop('checked', false)){
-                 $("#allCheck").prop('checked', false);
-             } 
-          }
-          
-          totalPrice();
-     });
-});
-
-
-function totalPrice(){
+	function pointValidate(userPoint){
 		
-	  var checkArr = new Array();
-      // 체크된 체크박스의 갯수만큼 반복
-      $("input[class='chBox']:checked").each(function(){
-         checkArr.push($(this).attr("data-cartNum"));  // 배열에 데이터 삽입
-      });
+		if($(".point").val()> userPoint ){
+	        alert("포인트가 모자랍니다.");
+	        $(".point").val(0);
+	        $(".point").focus();
+		}
+	}
 	
-	 var totalPrice = 0;
-     
-     checkArr.forEach(function(num){
-   	   	var finalPrice = Number($("#finalPrice"+num).text().replace(",",""));
-   	   		totalPrice = totalPrice + finalPrice;
-     });
-  
-     
-     var totalPrice2= comma(totalPrice); 
-	 $("#totalPrice").html(totalPrice2);
-	$("#totalPriceVal").val(totalPrice);
-     
-	return totalPrice ;
-}
+	
+	// + 버튼을 누르면 수량이 증가하되, 상품의 전체 수량보다 커지지 않음
+	
+	function plus(cartNum){
+	   var num = $("#numBox" + cartNum).val();
+	   var plusNum = Number(num) + 1;
+	   var stock = $(".gdsStock_hidden");
+	   
+	   if(num >= 10){
+	      alert("10개까지만 주문가능합니다.")
+	      return;
+	   }
+	   
+	   $("#numBox" + cartNum).val(plusNum);
+	   
+	   var eachPrice = $("#eachPrice" + cartNum).val();
+	   
+	   var amount = $("#numBox" + cartNum).val()
+	   
+	   var finalPrice= eachPrice * amount; 
+	   var finalPrice2 = comma(finalPrice); 
+	   
+	   $("#finalPrice" + cartNum).html(finalPrice2);
+	   
+	   
+	   totalPrice();
+		
+		 $.ajax({
+	         url : "addAmount.do",
+	         type : "get",
+	         data : { cartNum : cartNum },
+	         success : function(data){
+	            if(data > 0) {                                    
+	            } else {
+	               alert("수량 변경실패");
+	            }
+	         }
+	      });
+		
+	}
+
+	// - 눌렀을 때
+	function minus(cartNum){
+	   var num = $("#numBox" + cartNum).val();
+	   var minusNum = Number(num) - 1;
+	   var stock = $(".gdsStock_hidden");
+	   
+	   if(num <= 1){
+	      alert("1개 이상만 주문가능합니다.")
+	      return;
+	   }
+	   
+	   $("#numBox" + cartNum).val(minusNum);
+	   var eachPrice = $("#eachPrice" + cartNum).val();
+	   
+	   var amount = $("#numBox" + cartNum).val()
+	   
+	   var finalPrice = eachPrice * amount; 
+	   var finalPrice2 = comma(finalPrice); 
+	   
+	   $("#finalPrice" + cartNum).html(finalPrice2);
+	   
+	   totalPrice();
+	   
+		 $.ajax({
+	         url : "subAmount.do",
+	         type : "get",
+	         data : { cartNum : cartNum },
+	         success : function(data){
+	            if(data > 0) {                                    
+	            } else {
+	               alert("수량 변경실패");
+	            }
+	         }
+	      });
+		
+		
+		
+	   
+	}
+	
+	function comma(num){
+	    var len, point, str; 
+	       
+	    num = num + ""; 
+	    point = num.length % 3 ;
+	    len = num.length; 
+	   
+	    str = num.substring(0, point); 
+	    while (point < len) { 
+	        if (str != "") str += ","; 
+	        str += num.substring(point, point + 3); 
+	        point += 3; 
+	    } 
+	     
+	    return str;
+	 
+	}
 
 
+	$(function(){ //전체선택 체크박스 클릭
+	   $("#allCheck").click(function(){ //만약 전체 선택 체크박스가 체크된상태일경우 
+	      if($("#allCheck").prop("checked")) { //해당화면에 전체 checkbox들을 체크해준다
+	         $("input[type=checkbox]").prop("checked",true); // 전체선택 체크박스가 해제된 경우
+	         } else { //해당화면에 모든 checkbox들의 체크를해제시킨다. 
+	            $("input[type=checkbox]").prop("checked",false); 
+	         }  
+	   
+	    
+	      
+	     	totalPrice();
+	      
+	   });
+	
+	      $(".chBox").click(function(){
+	          if($("#allCheck").is(":checked")){
+	              if($(this).prop('checked', false)){
+	                 $("#allCheck").prop('checked', false);
+	             } 
+	          }
+	          
+	          totalPrice();
+	     });
+	});
 
 
-
-
-
-
-
-
-
-
+	function totalPrice(){
+			
+		  var checkArr = new Array();
+	      // 체크된 체크박스의 갯수만큼 반복
+	      $("input[class='chBox']:checked").each(function(){
+	         checkArr.push($(this).attr("data-cartNum"));  // 배열에 데이터 삽입
+	      });
+		
+		 var totalPrice = 0;
+	     
+	     checkArr.forEach(function(num){
+	   	   	var finalPrice = Number($("#finalPrice"+num).text().replace(",",""));
+	   	   		totalPrice = totalPrice + finalPrice;
+	     });
+	  
+	     
+	     var totalPrice2= comma(totalPrice); 
+		 $("#totalPrice").html(totalPrice2);
+		$("#totalPriceVal").val(totalPrice);
+	     
+		return totalPrice ;
+	}
 
    function deliver1(){
       document.getElementById("name").value = "${cartList[0].name}";   
       document.getElementById("address").value = "${cartList[0].address}";
       document.getElementById("phone").value = "${cartList[0].phone}";
-   }
-   
+      $("#test").hide();
+      $("#address").show();
+	}
+	   
    function deliver2(){
+	  $("#test").show();
       document.getElementById("name").value = "";   
-      document.getElementById("address").value = "";
+      /* document.getElementById("address").value = ""; */
+      $("#address").hide();
       document.getElementById("phone").value = "";
-   }
-  
+	}
    
 
    
@@ -579,8 +612,58 @@ function totalPrice(){
 	    } else {
 	      return false
 	    }
-	  };
-   
+	};
+	
+	// 다음 API
+    function sample6_execDaumPostcode() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var addr = ''; // 주소 변수
+                var extraAddr = ''; // 참고항목 변수
+
+                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                    addr = data.roadAddress;
+                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                    addr = data.jibunAddress;
+                }
+
+                // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+                if(data.userSelectedType === 'R'){
+                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                        extraAddr += data.bname;
+                    }
+                    // 건물명이 있고, 공동주택일 경우 추가한다.
+                    if(data.buildingName !== '' && data.apartment === 'Y'){
+                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                    }
+                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                    if(extraAddr !== ''){
+                        extraAddr = ' (' + extraAddr + ')';
+                    }
+                    // 조합된 참고항목을 해당 필드에 넣는다.
+                    document.getElementById("sample6_extraAddress").value = extraAddr;
+                
+                } else {
+                    document.getElementById("sample6_extraAddress").value = '';
+                }
+
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                document.getElementById('sample6_postcode').value = data.zonecode;
+                document.getElementById("sample6_address").value = addr;
+                // 커서를 상세주소 필드로 이동한다.
+                document.getElementById("sample6_detailAddress").focus();
+            }
+        }).open();
+    }	
+	  
+	  
 	  
 	 // 장바구니 결제 
 	
@@ -613,7 +696,7 @@ function totalPrice(){
          var dPhone       = $("#phone").val();
          var orderPrice    = $("#totalPriceVal").val();
          
-        /* 
+         
            IMP.request_pay({
                pg : 'inicis',
                pay_method : 'card',
@@ -629,7 +712,7 @@ function totalPrice(){
                //m_redirect_url : 'http://www.naver.com'
            }, function(rsp) {
               console.log(rsp);
-               if ( rsp.success ) { */
+               if ( rsp.success ) { 
 			     	  
 			           $.ajax({
 			               url : "cartPayment.do",
@@ -653,7 +736,7 @@ function totalPrice(){
 			               }
 			            });
 
-           /*    }else {
+               }else {
                    msg = '결제에 실패하였습니다.';
                    msg += '에러내용 : ' + rsp.error_msg;
                    //실패시 이동할 페이지
@@ -662,7 +745,7 @@ function totalPrice(){
                    console.log(msg);
               } 
            }); 
-         */
+         
 	 	}
 	 }
   

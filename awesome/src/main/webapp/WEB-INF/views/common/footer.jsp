@@ -106,7 +106,7 @@
          </p>  
       </div>
       <div class= footerDiv style="width: 270px;">
-         <b style="font-size: 17px;">공지사항</b><br>
+         <b style="font-size: 17px;">이벤트</b><br>
             <br>
             <a href="">· S파게티 까르보나라 체험단 모집 (11.21~12.01)</a><br>
             <a href="">· 단단파운드 추가 체험단 발표</a><br>

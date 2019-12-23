@@ -71,8 +71,9 @@
       VALUES(TBL_CART_SEQ.NEXTVAL, #{mId}, #{gId}, #{count}
       )
    </insert>
-   
+
    	<select id ="selectCartOne" parameterType="_int" resultMap="CartResultSet">
+
 		SELECT * FROM CART WHERE CARTNUM = #{cartNum}
 	
 	

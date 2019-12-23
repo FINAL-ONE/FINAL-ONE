@@ -999,7 +999,7 @@ body{
 				  title: '장바구니이동',
 				  message: '장바구니로 이동하시겠습니까?',
 				  onConfirm: function() {
-					  location.href="moveCart.do?";
+					  location.href="cartList.do?";
 					 /* alert('장바구니로 이동.'); */
 		  		},
 				  onCancel: function() {

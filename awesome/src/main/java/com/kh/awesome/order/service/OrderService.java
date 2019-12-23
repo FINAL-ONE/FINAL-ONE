@@ -3,6 +3,8 @@ package com.kh.awesome.order.service;
 import java.util.ArrayList;
 
 import com.kh.awesome.board.model.vo.PageInfo;
+import com.kh.awesome.cart.model.vo.Cart;
+import com.kh.awesome.member.model.vo.Member;
 import com.kh.awesome.order.model.vo.Order;
 import com.kh.awesome.order.model.vo.OrderSearch;
 
@@ -51,5 +53,19 @@ public interface OrderService {
 	int insertPaymentDinfo(Order o);
 	
 	int updateMemberPoint(Order o);
+
+	Cart selectCartOne(int cartNum);
+
+
+	int checkOrderNumInfo();
+
+
+	int createNewOrderNum();
+
+
+	int nextOrderNum();
+
+
+	Member selectMemberAsMid(int mId);
 
 }
