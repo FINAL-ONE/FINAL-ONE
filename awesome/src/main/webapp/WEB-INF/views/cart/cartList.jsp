@@ -162,8 +162,6 @@
 								}	
 							});
 						</script>
-						
-						
 					</div>
 					
 				</li>
@@ -209,7 +207,7 @@
 									<input id= "eachPrice${cartList.cartNum}"  value= "${cartList.goodsPrice}"  type ="hidden">
 						<span>구입 수량</span>
 						<button type="button" class="plus" onclick = "plus(${cartList.cartNum});">+</button>
-						<input type="number"  id= "numBox${cartList.cartNum}" class="numBox" min="1" max="${cartList.count}" value="1" readonly="readonly"/>
+						<input type="number"  id= "numBox${cartList.cartNum}" class="numBox" min="1" max="${cartList.count}" value="${cartList.count}" readonly="readonly"/>
 						<button type="button"<%--   id= "numBox${cartList.cartNum}" --%> class="minus" onclick = "minus(${cartList.cartNum});">-</button>
 						
 						<input type="hidden" value="${cartList.count}" class="gdsStock_hidden" />
@@ -283,10 +281,6 @@
 							}
 							
 							
-							
-							
-							
-							
 						</script>
 						
 						
@@ -294,7 +288,7 @@
 							<span>최종 가격</span><span id="finalPrice${cartList.cartNum}">${cartList.goodsPrice}</span>원
 						</p>
 						
-						<div class="delete">
+<%-- 						<div class="delete">
 							<button type="button" class="delete_${cartList.cartNum}_btn" data-cartNum="${cartList.cartNum}">삭제</button>
 							
 							<script>
@@ -321,7 +315,7 @@
 									}	
 								});
 							</script>
-						</div>
+						</div> --%>
 					</div>			
 				</li>
 				
@@ -514,7 +508,7 @@
    
    
    
-    function paymentNow(){
+/*     function paymentNow(){
       //사용할 포인트가 적립포인트보다 크다면
       if($("#dcp").val()>${cartList[0].point}){
             alert("포인트가 모자랍니다.");
@@ -597,57 +591,85 @@
 	           	  } 
 	        });    
 	}
-   }
+   } */
     
-   
-   
-   /* 결제 */
-   
-    /*  
-			var gId 		= $("#gId").val();	// 상품 번호
-			var mId 		= $("#mId").val();	// 
-			var orderCount 	= $(".numBox").val();
-			var orderStatus = $("#orderStatus").val();
-			var usedPoint 	= $("#dcp").val();
-			var dName 		= $("#name").val();
-			var dAddress 	= $("#address").val();
-			var dPhone 		= $("#phone").val();
-			var orderPrice 	= $("#totalPrice").val(); 
-			var orderPrice 	= ${sum} - $("#dcp").val();
-			 alert("gId : " + gId); 
-			 alert("mId : " + mId); 
-			 alert("orderCount : " + orderCount); 
-			 alert("orderStatus : " + orderStatus); 
-			 alert("usedPoint : " + usedPoint); 
-			 alert("dName : " + dName); 
-			 alert("dAddress : " + dAddress); 
-			 alert("dPhone : " + dPhone); 
-			 alert("orderPrice : " + orderPrice);  
-		 
+//-------------------------------------------------------------------------------------------------------------------------------
+// 대충 어떻게 하면 좋을지는 알겠다.
+// 체크한거 gid,orderCount, 두개 배열로 넘기고
+// 컨트롤에서 조회한번에서 시퀀스넘버 가져온다음
+// insert문 3번 돌리면됨
+//-------------------------------------------------------------------------------------------------------------------------------
+
+
+    
+    // 결제 테스트 용(결제 api는 실행됨 테이블에 저장되는지 테스트 용도)
+   function paymentNow(){
+	    // 배열로 넘길 정보 gId,orderCount
+		var gId 		= $("#gId").val();	
+		var orderCount 	= $(".numBox").val();
 		
-			$.ajax({
-				url:"paymentViewSuccess.do",
-					data:{gId:gId,
-						  mId:mId,
-						  orderCount:orderCount,
-						  orderStatus:orderStatus,
-						  usedPoint:usedPoint,
-						  dName:dName,
-						  dAddress:dAddress,
-						  dPhone:dPhone,
-						  orderPrice:orderPrice},
-					
-				success:function(data){
-					
-					alert("성공");
-	
-				},
-				error:function(request, status, errorData){
-					alert("error code : " + request.status + "\n"
-										  + "message : " + request.responseText
-										  + "error : " + errorData);
+		// 나머지 정보는 다 같음
+		var mId 		= $("#mId").val();	
+		var orderStatus = $("#orderStatus").val();
+		var usedPoint 	= $("#dcp").val();
+		var dName 		= $("#name").val();
+		var dAddress 	= $("#address").val();
+		var dPhone 		= $("#phone").val();
+		var orderPrice 	= ${sum} - $("#dcp").val();
+		
+		var checkArr = new Array();
+		
+		// 체크된 체크박스의 갯수만큼 반복
+		$("input[class='chBox']:checked").each(function(){
+			checkArr.push($(this).attr("data-cartNum"));  // 배열에 데이터 삽입\
+		});
+
+			
+alert(" 체크된거 : " + checkArr);		
+		
+/* 		$.ajax({
+			url : "deleteCart.do",
+			type : "post",
+			data : { chbox : checkArr },
+			success : function(result){
+				
+				if(result == 1) {												
+					location.href = "cartList.do";
+				} else {
+					alert("삭제 실패");
 				}
-			});   */
+			}
+		}); */
+	
+		
+		
+		
+/* 		$.ajax({
+			url:"paymentViewSuccess.do",
+				data:{gId:gId,
+					  mId:mId,
+					  orderCount:orderCount,
+					  orderStatus:orderStatus,
+					  usedPoint:usedPoint,
+					  dName:dName,
+					  dAddress:dAddress,
+					  dPhone:dPhone,
+					  orderPrice:orderPrice},
+				
+			success:function(data){
+				
+				alert("성공");
+				// 필요한 구문 작성 
+				location.href="orderView.do";
+	
+			},
+			error:function(request, status, errorData){
+				alert("error code : " + request.status + "\n"
+									  + "message : " + request.responseText
+									  + "error : " + errorData);
+			}
+		}); */
+	}
    
    
    

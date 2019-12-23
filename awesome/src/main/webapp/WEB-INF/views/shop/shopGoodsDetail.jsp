@@ -578,8 +578,8 @@ body{
 				<form id = "goCartForm" action="goCart.do" method="post" target="iframe"> 
 					<div class ="goods-Area">
 						<input type="hidden" name="sellNum" value="${a.sellNum}">
-						<input type="hidden" name="gId" value="${a.gId }">
-						<input type="hidden" name="mId" value="${sessionScope.loginUser.mid }">
+						<input id="gId" type="hidden" name="gId" value="${a.gId }">
+						<input id="mId" type="hidden" name="mId" value="${sessionScope.loginUser.mid }">
 						<div class = "goods-imginfoArea" style = "margin-right : 255px;">
 							<div class = "goods-img" >
 								 <img src="resources/auploadFiles/${a.filePath}" width ="500px" height ="500px" name ="${a.filePath}" value="${a.filePath}">
@@ -607,7 +607,7 @@ body{
 									    <a href="#" id="decreaseQuantity"><span style="font-weight: bold; font-size:40px;" >-</span></a>
 										<span id="numberUpDown">1</span>
 										<a href="#" id="increaseQuantity"><span style="font-weight: bold; font-size:30px;">+</span></a>
-										<input id="numberCount" type="hidden" name="count">
+										<input id="numberCount" type="hidden" name="count" value="1">
 										<!-- <div class="Quantity" style="width : 50px;"> -->
 										<!-- </div> -->
 									</div>
@@ -990,7 +990,73 @@ body{
 
 		<script>
 		 	function goCart(){
-			  /* 장바구니 클릭시 팝업 */
+		 		var mId = $("#mId").val();
+		 		var gId = $("#gId").val();
+		 		
+				$.ajax({
+					url:"selectCartCheck.do",
+					data:{mId:mId, gId:gId},
+					success:function(data){
+						
+						if(data.isUsable == true){
+						// 없다.
+							$("#goCartForm").submit();
+						
+							var popup = document.getElementById("myPopup");
+						    popup.classList.toggle("show");
+							  
+							Modal.confirm({
+							  title: '장바구니',
+							  message: '장바구니로 이동하시겠습니까?',
+							  onConfirm: function() {
+								  location.href="cartList.do?";
+								 //alert('장바구니로 이동.');
+						  		},
+								  onCancel: function() {
+								    // alert('취소되었습니다.');
+						  		},
+							});
+					
+						}else{
+						// 있다.
+							//var popup = document.getElementById("myPopup");
+						    //popup.classList.toggle("show");
+						    
+						    
+							Modal.confirm({
+								  title: '장바구니',
+								  message: '해당 상품은 이미 장바구니에 있습니다.',
+								  onConfirm: function() {
+									  //location.href="cartList.do?";
+									 //alert('장바구니로 이동.');
+							  		},
+									  onCancel: function() {
+									    // alert('취소되었습니다.');
+							  		},
+								});
+						
+						
+							
+						}
+						
+
+					},
+					error:function(request, status, errorData){
+						alert("error code : " + request.status + "\n"
+											  + "message : " + request.responseText
+											  + "error : " + errorData);
+					}
+				});
+		 		
+		 		
+		 		
+		 		
+		 		
+		 		
+		 		
+		 		
+		 		
+		/* 	  // 장바구니 클릭시 팝업
 			 	  var popup = document.getElementById("myPopup");
 				  popup.classList.toggle("show");
 			  $("#goCartForm").submit();
@@ -1000,12 +1066,12 @@ body{
 				  message: '장바구니로 이동하시겠습니까?',
 				  onConfirm: function() {
 					  location.href="cartList.do?";
-					 /* alert('장바구니로 이동.'); */
+					 //alert('장바구니로 이동.');
 		  		},
 				  onCancel: function() {
-				    /* alert('취소되었습니다.'); */
+				    // alert('취소되었습니다.');
 		  		},
-			});
+			}); */
 		}
 		</script>
 		

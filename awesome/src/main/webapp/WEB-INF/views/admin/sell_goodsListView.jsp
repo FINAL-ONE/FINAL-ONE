@@ -50,7 +50,7 @@ th, td {
 }
 
 tr:nth-child(even) {
-  background-color: #f2f2f2;
+  /* background-color: #f2f2f2; */
 }
 
 /* 모달 css */
@@ -64,7 +64,7 @@ tr:nth-child(even) {
 }
 #tableLeft1{
    float : left;
-   margin-left : 165px;
+   /* margin-left : 165px; */
 }
 #tableLeft2{
    float : left;
@@ -121,7 +121,7 @@ tr:nth-child(even) {
       <div id="container" style= "height: auto; overflow: auto;"><!-- container -->
 
          <c:if test="${!empty loginUser }">
-               <div style="margin-left : 1471px; margin-top : 20px;">
+               <div style="margin-left : 1200px; margin-top : 20px;">
                   <button class="myBtn success" onclick="location.href='goodsWriterView.do'"><span>상품 등록</span></button>
                </div>
          </c:if>
@@ -129,7 +129,7 @@ tr:nth-child(even) {
           <div id="tableLeft1" style= "width: auto;">
             <table align="center" id ="checkboxTestTbl" class = "goodsTable" border="1" cellspacing="1">
                   <tr bgcolor ="#fa4a4a" style = "color : white">
-                     <th><input type="checkbox" name="user_CheckBox"></th>
+                     <!-- <th><input type="checkbox" name="user_CheckBox"></th> -->
                      <th>상품번호</th>
                      <th>이미지</th>
                      <th>상품명</th>
@@ -154,7 +154,7 @@ tr:nth-child(even) {
                      <input id=modifyDate     type = "hidden" name="modifyDate"    value = "${a.modifyDate}">
                      <input id=status        type = "hidden" name="statusUpdate" value = "${a.status}">
                      
-                        <td width ="5%"><input type="checkbox" name="user_CheckBox"></td>
+                        <!-- <td width ="5%"><input type="checkbox" name="user_CheckBox"></td> -->
                         <td class="tableList" align="center" width ="10%">${a.sellNum}</td>
                         <td class="tableList" width ="10%">
                            <img src="resources/auploadFiles/${a.filePath}" name="filePath" width ="100px">
@@ -165,41 +165,63 @@ tr:nth-child(even) {
                         <td class="tableList" width ="15%">${a.goodsContent}</td>
                         <td class="tableList" align="center" width ="10%">${a.sellDate}</td>
                         <td class="tableList" align="center" width ="10%">${a.modifyDate}</td>
-                        <td class="tableList" align="center" width ="10%">${a.status}</td> 
+                        <%-- <td id="testStatus"  align="center" width ="10%">${a.status}</td> --%> 
+                        <td id="testStatus">
+                        	<c:if test="${a.status eq 'Y'}">
+	                            <label class="switch" >
+	                              <input id = "statusCheck" type="checkbox" checked  disabled>
+	                              <span></span>
+	                            </label>
+							</c:if>
+                            <c:if test="${a.status eq 'N'}">
+	                            <label class="switch">
+	                              <input id = "statusCheck" type="checkbox" disabled>
+	                              <span></span>
+	                            </label>
+                            </c:if>
+                        </td>
                         <!-- <td class="tablestatus">상태변경</td> -->                  
                      </tr>
                   </c:forEach>
                </table> 
              </div> 
-             <div id="tableLeft2" style= "width: auto;">
+<%--              <div id="tableLeft2" style= "width: auto;">
                <table id ="checkboxTestTbl2" class = "goodsTable" align="center" border="1" cellspacing="1" style="clear:right;">
                   <tr bgcolor ="#fa4a4a" style = "color : white">
                      <th>품절</th>
                   </tr>
                   <c:forEach var="a" items="${list}">
+                     <!-- <tr  style="height:133.75px;"> -->
                      <tr>
                         <input id=gId           type = "hidden" name="gId"          value = "${a.gId}">
                         <input id=sellNum2     type = "hidden" name="sellNum2"     value = "${a.sellNum}">
                         <input id=status2        type = "hidden" name="statusUpdate2" value = "${a.status}">
                         <!-- <td class="tablestatus">상태변경</td> -->
+                        <!-- <div style="display:none;"> -->
+                        <!-- </div> -->
                         <td>
-                        <c:if test="${a.status eq 'Y'}">
-                                <label class="switch">
-                                  <input id = "statusCheck"type="checkbox" checked>
-                                  <span></span>
-                                </label>
-                                </c:if>
-                                <c:if test="${a.status eq 'N'}">
-                                <label class="switch">
-                                  <input id = "statusCheck" type="checkbox">
-                                  <span></span>
-                                </label>
-                                </c:if>
+                        	<c:if test="${a.status eq 'Y'}">
+	                            <label class="switch" >
+	                              <input id = "statusCheck" type="checkbox" checked  disabled>
+	                              <span></span>
+	                            </label>
+							</c:if>
+                            <c:if test="${a.status eq 'N'}">
+	                            <label class="switch">
+	                              <input id = "statusCheck" type="checkbox" disabled>
+	                              <span></span>
+	                            </label>
+                            </c:if>
                         </td>
+                        <!-- ... 테이블 hight 때문에 숨키는 용도.. -->
+                        <td class="tableList" width ="10%" style="visibility: hidden;">
+	                           <img src="resources/auploadFiles/${a.filePath}" name="filePath" width ="100px">
+	                        </td>
+	                        <td class="tableList" width ="15%" style="visibility: hidden;">${a.goodsContent}</td>
                      </tr>
                   </c:forEach>
                </table> 
-            </div> 
+            </div>  --%>
          </form>
          
    
@@ -316,7 +338,7 @@ tr:nth-child(even) {
    
    <script type="text/javascript">
       $(function(){
-         $("#checkboxTestTbl td").mouseenter(function(){
+         $("#checkboxTestTbl td[class='tableList']").mouseenter(function(){
          //$(".tableList").mouseenter(function(){
             /* $(this).parent().css({"background":"#fa4a4a","cursor":"pointer"}); */
             $(this).parent().css({"background":"#FFF7D5","cursor":"pointer"});
@@ -344,14 +366,15 @@ tr:nth-child(even) {
          }).mouseout(function(){
             $(this).parent().css({"background":"white"});
          }).click(function(){ */
-		$("#checkboxTestTbl2 td").mouseenter(function(){
+		$("#checkboxTestTbl td[id='testStatus']").mouseenter(function(){
+		/* $("#checkboxTestTbl2 td").mouseenter(function(){ */
 		   // $(this).parent().css({"background":"#FFF7D5","cursor":"pointer"});
 		 }).mouseout(function(){
 		   // $(this).parent().css({"background":"white"});
 		 }).click(function(){
             //soldout();
-            var sellNum = $(this).parent().children("#sellNum2").val();
-            var status = $(this).parent().children("#status2").val();
+            var sellNum = $(this).parent().children("#sellNum").val();
+            var status = $(this).parent().children("#status").val();
             var gId = $(this).parent().children("#gId").val();
 
 //alert("sellNum : " + sellNum + " / " + "status : " + status);
@@ -379,16 +402,17 @@ tr:nth-child(even) {
    </script>
       
       
-<script>
-   jQuery(document).ready(function() { 
-   
+<!-- <script>
+   jQuery(document).ready(function() {
+	// $(function(){
+	   
        var tableHeight = jQuery("#checkboxTestTbl td").height(); 
    
-       //alert(tableHeight); 
+       alert(tableHeight); 
        $("#checkboxTestTbl2 td").height(tableHeight);
    }); 
 
-</script>
+</script> -->
       
       
       

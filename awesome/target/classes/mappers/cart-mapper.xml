@@ -10,14 +10,14 @@
     -->
    
    <resultMap type="Cart" id ="CartResultSet">
-		<result property="cartNum" column="CARTNUM"/>
-		<result property="mId" column="MID"/>
-		<result property ="gId" column ="GID"/>
-		<result property ="count" column ="COUNT"/>
-		
-	</resultMap>
-	
-	
+      <result property="cartNum" column="CARTNUM"/>
+      <result property="mId" column="MID"/>
+      <result property ="gId" column ="GID"/>
+      <result property ="count" column ="COUNT"/>
+      
+   </resultMap>
+   
+   
    <!-- 저장될 VO -->
    <resultMap type="CartList" id="cartListResultSet">
       <id property ="cartNum" column="CARTNUM"/>
@@ -35,29 +35,41 @@
       <result property="point" column="POINT"/>
    </resultMap>
    
-	<!-- 카트 리스트 -->
-   <select id="cartList" resultMap="cartListResultSet">
-      SELECT C.CARTNUM, C.GID, G.GOODS_NAME, G.GOODS_PRICE, M.MID, C.COUNT, SG.GOODS_FILE_PATH, G.SOLDOUT, M.USER_NAME, M.PHONE, M.ADDRESS, M.POINT
+   <!-- 카트 리스트 -->
+   <select id="cartList" parameterType="Member" resultMap="cartListResultSet">
+select * from ( SELECT C.CARTNUM, C.GID, G.GOODS_NAME, G.GOODS_PRICE, C.MID MID, C.COUNT, SG.GOODS_FILE_PATH, G.SOLDOUT, M.USER_NAME, M.PHONE, M.ADDRESS, M.POINT
       FROM GOODS G, SELL_GOODS SG, CART C, MEMBER M
       WHERE G.GID = SG.GID
-      AND G.GID = C.GID
-      AND M.MID = #{mId}
+      AND G.GID = C.GID)
+      where MID = #{mid} and USER_NAME =#{userName}
+  <!-- select * from ( SELECT C.CARTNUM, C.GID, G.GOODS_NAME, G.GOODS_PRICE, C.MID MM, C.COUNT, SG.GOODS_FILE_PATH, G.SOLDOUT, M.USER_NAME, M.PHONE, M.ADDRESS, M.POINT
+      FROM GOODS G, SELL_GOODS SG, CART C, MEMBER M
+      WHERE G.GID = SG.GID
+      AND G.GID = C.GID)
+      where MM = #{mid} and USER_NAME =#{userName} -->
    </select>
-	
-	<!-- 카트 삭제 -->
-	<delete id="deleteCart">
-		DELETE CART
-		WHERE CARTNUM = #{cartNum}
-		AND MID=#{mId}
-	</delete>
+   
+   <!-- 카트 삭제 -->
+   <delete id="deleteCart" parameterType="Member">
+      DELETE CART
+      WHERE CARTNUM IN #{cartNum}
+      AND MID=#{mId}
+   </delete>
    
    <!-- 포인트 쓰기 -->
    
    <insert id="CartInsert" parameterType="Cart">
-		INSERT INTO CART
-		VALUES(TBL_CART_SEQ.NEXTVAL, #{mId}, #{gId}, #{count}
-		)
-	</insert>
+      INSERT INTO CART
+      VALUES(TBL_CART_SEQ.NEXTVAL, #{mId}, #{gId}, #{count}
+      )
+   </insert>
 
+	<!-- 동복 - 상품판매 시 상품리스트 조회 -->
+	<select id="selectCartCheck" resultType="_int">
+	  	SELECT COUNT(*)
+		  FROM CART
+		 WHERE MID = #{mId} 
+		   AND GID = #{gId}
+	</select>
 
 </mapper>

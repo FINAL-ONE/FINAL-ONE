@@ -179,13 +179,13 @@
 			
 			
 			<tr>
-				<th>상품 내용 <span style = "color:red; font-size : 1.5em;">*</span></th>
+				<th>상품 내용<span style = "color:red; font-size : 1.5em;">*</span>&nbsp;&nbsp;&nbsp;&nbsp;</th>
 					<td><textarea id ="summernote" name="goodsContent" rows="10" cols ="81" size ="resize:none" required></textarea>
 				<!-- <td><textarea id ="goodsContent" name="goodsContent" rows="10" cols ="81" size ="resize:none" required></textarea> -->
 				</td>
 			</tr>
 			<tr>
-				<th>대표이미지  <span style = "color:red; font-size : 1.5em;">*</span> </th>
+				<th>대표이미지  <span style = "color:red; font-size : 1.5em;">*</span></th>
 				<td>
 					<div id = "titleImgArea" >
 						<img id ="titleImg" style="width:100%; min-height:100px; height: auto;" >
@@ -256,7 +256,7 @@
 				<script> 
 				$(document).ready(function() {
 				    $('#summernote').summernote({
-				            height: 150,                 // set editor height
+				            height: 144.016,                 // set editor height
 				            minHeight: null,             // set minimum height of editor
 				            maxHeight: null,             // set maximum height of editor
 				            focus: true                  // set focus to editable area after initializing summernote
