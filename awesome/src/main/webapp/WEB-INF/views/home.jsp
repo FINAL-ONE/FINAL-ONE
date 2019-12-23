@@ -324,8 +324,28 @@ textarea {
     top: -44px !important;
     left: -94px !important;
 }
+
+.desc{
+	
+	height: 270px !important;
+
+}
+
+.desc div{
+/* 	font-family: 'Yeon Sung', cursive; */
+	font-family: 'Jua', sans-serif;
+}
+
+.title{
+	font-family: 'Jua', sans-serif;
+}
+
+
 </style>
 
+
+
+<link href="https://fonts.googleapis.com/css?family=Jua|Yeon+Sung&display=swap" rel="stylesheet">
     
 </head>
 <body>
@@ -651,7 +671,7 @@ textarea {
  -->
 <section class="section-intro back-img" style="background-image: url(resources/images/Diettext3.jpg)">
     <div class="container">
-        <div class="content-wrap">
+        <div class="content-wrap">	
             <h3 class="title parallax-move" data-parallax-content='{"shift": 40, "duration": 3}'>
                <!--  jQuery parallaxContent Example -->
             </h3>
@@ -667,18 +687,20 @@ textarea {
             <li class="feature-item">
                 <div class="content-col">
                     <div class="title">
-                        Lorem ipsum
+                    	Diet proverb 1
                     </div>
                     <div class="desc">
-                        <p>
+                    	<div style="font-size: 30px; margin-left:auto; margin-right: auto; margin-top: 65px; width: 235px"> 인생은 살쪘을 때와<br>안쪘을때로 나뉜다.</div>
+                    
+                     <!--    <p>
                             Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
                             laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto
                             beatae vitae dicta sunt explicabo.
                         </p>
                         <p>
                             Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut
-                            odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
-                        </p>
+                            odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. </p>-->
+                       
                     </div>
                 </div>
                 <div class="img-col">
@@ -690,10 +712,13 @@ textarea {
             <li class="feature-item">
                 <div class="content-col">
                     <div class="title">
-                        Lorem ipsum
+                     	Diet proverb 2
                     </div>
                     <div class="desc">
-                        <p>
+                    
+                    	<div style="font-size: 30px; margin-left:auto; margin-right: auto; margin-top: 90px; width: 246px"> 세끼 다 먹은 세1끼야</div>
+                    
+                      <!--   <p>
                             Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
                             laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto
                             beatae vitae dicta sunt explicabo.
@@ -701,7 +726,7 @@ textarea {
                         <p>
                             Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut
                             odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
-                        </p>
+                        </p> -->
                     </div>
                 </div>
                 <div class="img-col">
@@ -714,18 +739,10 @@ textarea {
             <li class="feature-item">
                 <div class="content-col">
                     <div class="title">
-                        Lorem ipsum
+                      Diet proverb 3
                     </div>
                     <div class="desc">
-                        <p>
-                            Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
-                            laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto
-                            beatae vitae dicta sunt explicabo.
-                        </p>
-                        <p>
-                            Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut
-                            odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
-                        </p>
+                        <div style="font-size: 30px; margin-left:auto; margin-right: auto; margin-top: 90px; width: 110px"> 먹.지.마</div>
                     </div>
                 </div>
                 <div class="img-col">
