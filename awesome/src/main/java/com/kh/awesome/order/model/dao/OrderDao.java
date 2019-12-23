@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.awesome.board.model.vo.PageInfo;
+import com.kh.awesome.cart.model.vo.Cart;
+import com.kh.awesome.member.model.vo.Member;
 import com.kh.awesome.order.model.vo.Order;
 import com.kh.awesome.order.model.vo.OrderSearch;
 
@@ -95,6 +97,36 @@ public class OrderDao {
 			return sqlSession.update("orderMapper.updateMemberPoint", o);
 		}
 
+		
+		//-------------- 호관 
+
+		public Cart selectCartOne(int cartNum) {
+			return sqlSession.selectOne("cartMapper.selectCartOne", cartNum);
+		}
+		
+		
+		public int checkOrderNumInfo() {
+			return sqlSession.selectOne("orderMapper.checkOrderNumInfo");
+		}
+
+
+		public int createNewOrderNum() {
+			
+			 sqlSession.selectOne("orderMapper.dropOrderNum");
+		    sqlSession.selectOne("orderMapper.createOrderNum");
+				
+			return sqlSession.update("orderMapper.updateOrderNumInfo");
+		}
+
+		public int nextOrderNum() {
+			return sqlSession.selectOne("orderMapper.nextOrderNum");
+		}
+
+
+		public Member selectMemberAsMid(int mId) {
+			return sqlSession.selectOne("memberMapper.selectMemberAsMid", mId);
+		}
+		
 		
 		
 		// 관리자용 주문 리스트 전체 갯수 

@@ -86,7 +86,7 @@ public class AdminController {
 		
 		return mv;
 	}
-	// 메뉴바에서 shop으로 뿌려질 리스트 조회 -- 준배
+	// 메뉴바에서 shop으로 뿌려질 리 스트 조회 -- 준배
 	
 	
 	// 상품등록 페이지에서 상품버튼 클릭시 -- 준배

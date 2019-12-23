@@ -6,7 +6,6 @@ import java.util.List;
 import com.kh.awesome.cart.model.vo.Buyer;
 import com.kh.awesome.cart.model.vo.Cart;
 import com.kh.awesome.cart.model.vo.CartList;
-import com.kh.awesome.member.model.vo.Member;
 import com.kh.awesome.order.model.vo.Order;
 
 public interface CartService {
@@ -23,7 +22,7 @@ public interface CartService {
 //	public List<Cart> cartList(int mId);
 	
 	// 카트 리스트
-	public List<CartList> cartList(Member loginUser) throws Exception;
+	public List<CartList> cartList(int mId) throws Exception;
 
 	// 카트 삭제
 	public void deleteCart(Cart cart);
@@ -32,6 +31,10 @@ public interface CartService {
 	public ArrayList<Buyer> buyer(int mId);
 
 	public int CartInsert(Cart c);
+
+	public int addAmount(int cartNum);
+
+	public int subAmount(int cartNum);
 	
 	// 동복 - 장바구니 클릭시 해당 상품이 이미 장바구니에 있으면 체크
 	public int selectCartCheck(Cart a);

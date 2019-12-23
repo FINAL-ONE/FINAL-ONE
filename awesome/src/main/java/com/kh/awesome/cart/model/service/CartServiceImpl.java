@@ -10,7 +10,6 @@ import com.kh.awesome.cart.model.dao.CartDao;
 import com.kh.awesome.cart.model.vo.Buyer;
 import com.kh.awesome.cart.model.vo.Cart;
 import com.kh.awesome.cart.model.vo.CartList;
-import com.kh.awesome.member.model.vo.Member;
 
 @Service
 public class CartServiceImpl implements CartService{
@@ -19,8 +18,8 @@ public class CartServiceImpl implements CartService{
 	CartDao cDao;
 
 	@Override
-	public List<CartList> cartList(Member loginUser) throws Exception {
-		return cDao.cartList(loginUser);
+	public List<CartList> cartList(int mId) throws Exception {
+		return cDao.cartList(mId);
 	}
 
 	@Override
@@ -36,6 +35,16 @@ public class CartServiceImpl implements CartService{
 	@Override
 	public int CartInsert(Cart c) {
 		return cDao.CartInsert(c);
+	}
+
+	@Override
+	public int addAmount(int cartNum) {
+		return cDao.addAmount(cartNum);
+	}
+
+	@Override
+	public int subAmount(int cartNum) {
+		return cDao.subAmount(cartNum);
 	}
 
 	// 동복 - 장바구니 클릭시 해당 상품이 이미 장바구니에 있으면 체크

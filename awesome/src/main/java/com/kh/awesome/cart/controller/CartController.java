@@ -22,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.JsonIOException;
 import com.kh.awesome.admin.model.vo.Admin;
+import com.kh.awesome.board.model.exception.BoardException;
 import com.kh.awesome.cart.model.exception.CartException;
 import com.kh.awesome.cart.model.service.CartService;
 import com.kh.awesome.cart.model.vo.Cart;
@@ -45,14 +46,16 @@ public class CartController {
       Member loginUser = (Member)session.getAttribute("loginUser");
       int mId = loginUser.getMid();
       
-      List<CartList> cartList = cService.cartList(loginUser);
+      List<CartList> cartList = cService.cartList(mId);
       System.out.println("controller 카트리스트 : " + cartList);
-      
       
       
       mv.addObject("cartList", cartList);
       mv.setViewName("cart/cartList");
       return mv;
+      
+      
+      
    }
       
       
