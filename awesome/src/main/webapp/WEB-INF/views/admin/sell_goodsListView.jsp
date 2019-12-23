@@ -44,7 +44,7 @@ th, td {
 }
 
 tr:nth-child(even) {
-  background-color: #f2f2f2;
+  /* background-color: #f2f2f2; */
 }
 
 /* 모달 css */
@@ -58,7 +58,7 @@ tr:nth-child(even) {
 }
 #tableLeft1{
    float : left;
-   margin-left : 165px;
+   /* margin-left : 165px; */
 }
 #tableLeft2{
    float : left;
@@ -109,101 +109,125 @@ tr:nth-child(even) {
 
 </head>
 <body>
-	<jsp:include page="../common/menubar.jsp"/>   
-		
-		<div id="container" style= "height: auto; overflow: auto;"><!-- container -->
-		<h1 align="center"> 판매상품 관리 </h1>
-			<c:if test="${!empty loginUser }">
-		   		<div style="margin-left : 1449px; margin-top : 20px;">
-		   			<button class="myBtn success" onclick="location.href='goodsWriterView.do'"><span>상품 등록</span></button>
-		   		</div>
-			</c:if>
-		<form id = "goodsInsertForm" action="aStatusUpdate.do" method="post">
-			 <div id="tableLeft1" style= "width: auto;">
-				<table align="center" id ="checkboxTestTbl" class = "goodsTable" border="1" cellspacing="1">
-						<tr bgcolor ="#fa4a4a" style = "color : white">
-							<th><input type="checkbox" name="user_CheckBox"></th>
-							<th>상품번호</th>
-							<th>이미지</th>
-							<th>상품명</th>
-							<th>가격</th>
-							<th>수량</th>
-							<th>상품설명</th>
-							<th>등록날짜</th>
-							<th>수정날짜</th>
-							<th>상태</th>
-							<!-- <th width = "200px">품절</th> -->
-						</tr>
-						
-						<c:forEach var="a" items="${list}">
-							<tr>
-							<input id=gId  			type = "hidden" name="gId" 			value = "${a.gId}">
-							<input id=sellNum  		type = "hidden" name="sellNum" 		value = "${a.sellNum}">
-							<input id=goodsTitle  	type = "hidden" name="goodsTitle" 	value = "${a.goodsTitle}">
-							<input id=goodsPrice  	type = "hidden" name="goodsPrice" 	value = "${a.goodsPrice}">
-							<input id=count  		type = "hidden" name="count" 		value = "${a.count}">
-							<input id=goodsContent  type = "hidden" name="goodsContent" value = "${a.goodsContent}">
-							<input id=sellDate  	type = "hidden" name="sellDate" 	value = "${a.sellDate}">
-							<input id=modifyDate  	type = "hidden" name="modifyDate" 	value = "${a.modifyDate}">
-							<input id=status  		type = "hidden" name="statusUpdate" value = "${a.status}">
-							
-								<td width ="5%"><input type="checkbox" name="user_CheckBox"></td>
-								<td class="tableList" align="center" width ="10%">${a.sellNum}</td>
-								<td class="tableList" width ="10%">
-									<img src="resources/auploadFiles/${a.filePath}" name="filePath" width ="100px">
-								</td>
-								<td class="tableList" width ="15%">${a.goodsTitle}</td>
-								<td class="tableList" align="center" width ="8%">${a.goodsPrice}</td>
-								<td class="tableList" align="center" width ="8%">${a.count}</td>
-								<td class="tableList" width ="15%">${a.goodsContent}</td>
-								<td class="tableList" align="center" width ="10%">${a.sellDate}</td>
-								<td class="tableList" align="center" width ="10%">${a.modifyDate}</td>
-								<td class="tableList" align="center" width ="10%">${a.status}</td> 
-								<!-- <td class="tablestatus">상태변경</td> -->						
-							</tr>
-						</c:forEach>
-					</table> 
-				 </div> 
- 				<div id="tableLeft2" style= "width: auto;">
-					<table id ="checkboxTestTbl2" class = "goodsTable" align="center" border="1" cellspacing="1" style="clear:right;">
-						<tr bgcolor ="#fa4a4a" style = "color : white">
-							<th>품절</th>
-						</tr>
-						<c:forEach var="a" items="${list}">
-							<tr>
-								<input id=gId  			type = "hidden" name="gId" 			value = "${a.gId}">
-								<input id=sellNum2  	type = "hidden" name="sellNum2" 	 value = "${a.sellNum}">
-								<input id=status2  		type = "hidden" name="statusUpdate2" value = "${a.status}">
-								<!-- <td class="tablestatus">상태변경</td> -->
-								<td>
-								<c:if test="${a.status eq 'Y'}">
-							           <label class="switch">
-							             <input id = "statusCheck"type="checkbox" checked>
-							             <span></span>
-							           </label>
-					           	   </c:if>
-					           	   <c:if test="${a.status eq 'N'}">
-							           <label class="switch">
-							             <input id = "statusCheck" type="checkbox">
-							             <span></span>
-							           </label>
-					           	   </c:if>
-								</td>
-							</tr>
-						</c:forEach>
-					</table> 
-				</div> 
-			</form>
-			
-	
-			</div>
-			<p align="center" style="margin : 50px 0 50px 0;">
-				<c:url var ="adminMain" value="adminMain.do"/>
-				<a href="${adminMain}" style="text-decoration: none;">관리자페이지 이동</a>&nbsp;
-				<c:url var ="sell_goodsList" value="sell_goodsList.do"/>
-				<a href="${sell_goodsList}" style="text-decoration: none;">목록전체보기</a>
-			</p>
-	
+   <jsp:include page="../common/menubar.jsp"/>   
+
+    <div class = "outer">
+      <div id="container" style= "height: auto; overflow: auto;"><!-- container -->
+
+         <c:if test="${!empty loginUser }">
+               <div style="margin-left : 1200px; margin-top : 20px;">
+                  <button class="myBtn success" onclick="location.href='goodsWriterView.do'"><span>상품 등록</span></button>
+               </div>
+         </c:if>
+      <form id = "goodsInsertForm" action="aStatusUpdate.do" method="post">
+          <div id="tableLeft1" style= "width: auto;">
+            <table align="center" id ="checkboxTestTbl" class = "goodsTable" border="1" cellspacing="1">
+                  <tr bgcolor ="#fa4a4a" style = "color : white">
+                     <!-- <th><input type="checkbox" name="user_CheckBox"></th> -->
+                     <th>상품번호</th>
+                     <th>이미지</th>
+                     <th>상품명</th>
+                     <th>가격</th>
+                     <th>수량</th>
+                     <th>상품설명</th>
+                     <th>등록날짜</th>
+                     <th>수정날짜</th>
+                     <th>상태</th>
+                     <!-- <th width = "200px">품절</th> -->
+                  </tr>
+                  
+                  <c:forEach var="a" items="${list}">
+                     <tr>
+                     <input id=gId           type = "hidden" name="gId"          value = "${a.gId}">
+                     <input id=sellNum        type = "hidden" name="sellNum"       value = "${a.sellNum}">
+                     <input id=goodsTitle     type = "hidden" name="goodsTitle"    value = "${a.goodsTitle}">
+                     <input id=goodsPrice     type = "hidden" name="goodsPrice"    value = "${a.goodsPrice}">
+                     <input id=count        type = "hidden" name="count"       value = "${a.count}">
+                     <input id=goodsContent  type = "hidden" name="goodsContent" value = "${a.goodsContent}">
+                     <input id=sellDate     type = "hidden" name="sellDate"    value = "${a.sellDate}">
+                     <input id=modifyDate     type = "hidden" name="modifyDate"    value = "${a.modifyDate}">
+                     <input id=status        type = "hidden" name="statusUpdate" value = "${a.status}">
+                     
+                        <!-- <td width ="5%"><input type="checkbox" name="user_CheckBox"></td> -->
+                        <td class="tableList" align="center" width ="10%">${a.sellNum}</td>
+                        <td class="tableList" width ="10%">
+                           <img src="resources/auploadFiles/${a.filePath}" name="filePath" width ="100px">
+                        </td>
+                        <td class="tableList" width ="15%">${a.goodsTitle}</td>
+                        <td class="tableList" align="center" width ="8%">${a.goodsPrice}</td>
+                        <td class="tableList" align="center" width ="8%">${a.count}</td>
+                        <td class="tableList" width ="15%">${a.goodsContent}</td>
+                        <td class="tableList" align="center" width ="10%">${a.sellDate}</td>
+                        <td class="tableList" align="center" width ="10%">${a.modifyDate}</td>
+                        <%-- <td id="testStatus"  align="center" width ="10%">${a.status}</td> --%> 
+                        <td id="testStatus">
+                        	<c:if test="${a.status eq 'Y'}">
+	                            <label class="switch" >
+	                              <input id = "statusCheck" type="checkbox" checked  disabled>
+	                              <span></span>
+	                            </label>
+							</c:if>
+                            <c:if test="${a.status eq 'N'}">
+	                            <label class="switch">
+	                              <input id = "statusCheck" type="checkbox" disabled>
+	                              <span></span>
+	                            </label>
+                            </c:if>
+                        </td>
+                        <!-- <td class="tablestatus">상태변경</td> -->                  
+                     </tr>
+                  </c:forEach>
+               </table> 
+             </div> 
+<%--              <div id="tableLeft2" style= "width: auto;">
+               <table id ="checkboxTestTbl2" class = "goodsTable" align="center" border="1" cellspacing="1" style="clear:right;">
+                  <tr bgcolor ="#fa4a4a" style = "color : white">
+                     <th>품절</th>
+                  </tr>
+                  <c:forEach var="a" items="${list}">
+                     <!-- <tr  style="height:133.75px;"> -->
+                     <tr>
+                        <input id=gId           type = "hidden" name="gId"          value = "${a.gId}">
+                        <input id=sellNum2     type = "hidden" name="sellNum2"     value = "${a.sellNum}">
+                        <input id=status2        type = "hidden" name="statusUpdate2" value = "${a.status}">
+                        <!-- <td class="tablestatus">상태변경</td> -->
+                        <!-- <div style="display:none;"> -->
+                        <!-- </div> -->
+                        <td>
+                        	<c:if test="${a.status eq 'Y'}">
+	                            <label class="switch" >
+	                              <input id = "statusCheck" type="checkbox" checked  disabled>
+	                              <span></span>
+	                            </label>
+							</c:if>
+                            <c:if test="${a.status eq 'N'}">
+	                            <label class="switch">
+	                              <input id = "statusCheck" type="checkbox" disabled>
+	                              <span></span>
+	                            </label>
+                            </c:if>
+                        </td>
+                        <!-- ... 테이블 hight 때문에 숨키는 용도.. -->
+                        <td class="tableList" width ="10%" style="visibility: hidden;">
+	                           <img src="resources/auploadFiles/${a.filePath}" name="filePath" width ="100px">
+	                        </td>
+	                        <td class="tableList" width ="15%" style="visibility: hidden;">${a.goodsContent}</td>
+                     </tr>
+                  </c:forEach>
+               </table> 
+            </div>  --%>
+         </form>
+         
+   
+         </div>
+         <p align="center">
+            <c:url var ="adminMain" value="adminMain.do"/>
+            <a href="${adminMain}" style="text-decoration: none;">관리자페이지 이동</a>&nbsp;
+            <c:url var ="sell_goodsList" value="sell_goodsList.do"/>
+            <a href="${sell_goodsList}" style="text-decoration: none;">목록전체보기</a>
+         </p>
+   </div> 
+   
 
       <!-- 체크박스 전체선택 -->   
         <script>

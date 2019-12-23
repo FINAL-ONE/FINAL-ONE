@@ -711,6 +711,7 @@ p {
 	   </div>
    
          <!-- 상품 수량 증가 / 감소 -->
+               <!-- 상품 수량 증가 / 감소 -->
       <script>
          $(function(){
             $('#decreaseQuantity').click(function(e){
@@ -775,7 +776,7 @@ p {
              alert('관리자는 작성할 수 없습니다.'); 
            }
       </script>
-      <script src="js/Modal.js-master/modal.js"></script>
+           <script src="js/Modal.js-master/modal.js"></script>
 
       <script>
           function goCart(){
@@ -810,18 +811,25 @@ p {
                   // 있다.
                      //var popup = document.getElementById("myPopup");
                       //popup.classList.toggle("show");
+                      
+                      
                      Modal.confirm({
                           title: '장바구니',
-                          message: '해당 상품은 이미 장바구니에 있습니다.',
+                          message: '해당 상품은 이미 장바구니에 있습니다. 장바구니로 이동하시겠습니까?',
                           onConfirm: function() {
-                             //location.href="cartList.do?";
+                             location.href="cartList.do?";
                             //alert('장바구니로 이동.');
                              },
                              onCancel: function() {
                                // alert('취소되었습니다.');
                              },
                         });
+                  
+                  
+                     
                   }
+                  
+
                },
                error:function(request, status, errorData){
                   alert("error code : " + request.status + "\n"
@@ -829,80 +837,12 @@ p {
                                    + "error : " + errorData);
                }
             });
-             
-             
-      /*      // 장바구니 클릭시 팝업
-               var popup = document.getElementById("myPopup");
-              popup.classList.toggle("show");
-           $("#goCartForm").submit();
-             
-           Modal.confirm({
-              title: '장바구니이동',
-              message: '장바구니로 이동하시겠습니까?',
-              onConfirm: function() {
-                 location.href="cartList.do?";
-                //alert('장바구니로 이동.');
-              },
-              onCancel: function() {
-                // alert('취소되었습니다.');
-              },
-         }); */
       }
+
+             
       </script>
       
       
-     	 <!-- 상품에 작성한 후기 있는지 체크  후 없으면 작성하기로 이동-->
-	      <script>
-	      function checkWrite(){
-	    	  var mId = $("#mId").val();
-	          var gId = $("#gId").val();
-	          var sellNum = $("#sellNum").val();
-          
-	          $.ajax({
-	              url:"selectafterCheck.do",
-	              data:{mId:mId, gId:gId},
-	              success:function(data){
-	                 
-	                 if(data.isUsable == true){
-	                 // 없다.
-	                   Modal.confirm({
-	                      title: '상품 후기',
-	                      message: '상품 후기 작성으로 이동하시겠습니까?',
-	                      onConfirm: function() {
-	                         location.href="cartList.do?";
-	                         location.href="afterWrite.do?sellNum=" + sellNum;
-	                        //alert('장바구니로 이동.');
-	                         },
-	                         onCancel: function() {
-	                           // alert('취소되었습니다.');
-	                         },
-	                    });
-	              
-	                 }else{
-	                 // 있다.
-	                    //var popup = document.getElementById("myPopup");
-	                     //popup.classList.toggle("show");
-	                    Modal.confirm({
-	                         title: '상품 후기',
-	                         message: '작성하신 후기가 있습니다.',
-	                         onConfirm: function() {
-	                            //location.href="cartList.do?";
-	                           //alert('장바구니로 이동.');
-	                            },
-	                            onCancel: function() {
-	                              // alert('취소되었습니다.');
-	                            },
-	                       });
-	                 }
-	              },
-	              error:function(request, status, errorData){
-	                 alert("error code : " + request.status + "\n"
-	                                  + "message : " + request.responseText
-	                                  + "error : " + errorData);
-	              }
-	           });
-	      }
-	      </script>
       
       
       <!-- 모달창 script -->
@@ -917,7 +857,8 @@ p {
       
       </script>
       
-    <!-- 맨위로 버튼 -->
+      <button onclick="topFunction()" id="upBtn" title="Go to top">Top</button>
+      
       <script>
          //Get the button
          var mybutton = document.getElementById("upBtn");
@@ -960,19 +901,72 @@ p {
          
       </script>
 
+
 	
 	
-		<!-- 상품상세 tab 분류  -->
-     	 <script>
-		  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-		  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-		  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-		
-		  ga('create', 'UA-46156385-1', 'cssscript.com');
-		  ga('send', 'pageview');
-		
-		</script>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+		 	 <!-- 상품에 작성한 후기 있는지 체크  후 없으면 작성하기로 이동-->
+	  <!--     <script>
+	      function checkWrite(){
+	    	  var mId = $("#mId").val();
+	          var gId = $("#gId").val();
+	          var sellNum = $("#sellNum").val();
+          
+	          $.ajax({
+	              url:"selectafterCheck.do",
+	              data:{mId:mId, gId:gId},
+	              success:function(data){
+	                 
+	                 if(data.isUsable == true){
+	                 // 없다.
+	                   Modal.confirm({
+	                      title: '상품 후기',
+	                      message: '상품 후기 작성으로 이동하시겠습니까?',
+	                      onConfirm: function() {
+	                         location.href="afterWrite.do?sellNum=" + sellNum;
+	                        //alert('장바구니로 이동.');
+	                         },
+	                         onCancel: function() {
+	                           // alert('취소되었습니다.');
+	                         },
+	                    });
+	              
+	                 }else{
+	                 // 있다.
+	                    //var popup = document.getElementById("myPopup");
+	                     //popup.classList.toggle("show");
+	                    Modal.confirm({
+	                         title: '상품 후기',
+	                         message: '작성하신 후기가 있습니다.',
+	                         onConfirm: function() {
+	                            //location.href="cartList.do?";
+	                           //alert('장바구니로 이동.');
+	                            },
+	                            onCancel: function() {
+	                              // alert('취소되었습니다.');
+	                            },
+	                       });
+	                 }
+	              },
+	              error:function(request, status, errorData){
+	                 alert("error code : " + request.status + "\n"
+	                                  + "message : " + request.responseText
+	                                  + "error : " + errorData);
+	              }
+	           });
+	      }
+	      </script>
+       -->
+      
 		
 		
 

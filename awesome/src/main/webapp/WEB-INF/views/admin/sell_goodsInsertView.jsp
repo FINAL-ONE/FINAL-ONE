@@ -157,13 +157,13 @@
 				</td>
 			</tr>
 			<tr>
-				<th>상품 내용 <span style = "color:red; font-size : 1.5em;">*</span></th>
+				<th>상품 내용<span style = "color:red; font-size : 1.5em;">*</span>&nbsp;&nbsp;&nbsp;&nbsp;</th>
 					<td><textarea id ="summernote" name="goodsContent" rows="10" cols ="81" size ="resize:none" required></textarea>
 				<!-- <td><textarea id ="goodsContent" name="goodsContent" rows="10" cols ="81" size ="resize:none" required></textarea> -->
 				</td>
 			</tr>
 			<tr>
-				<th>대표이미지  <span style = "color:red; font-size : 1.5em;">*</span> </th>
+				<th>대표이미지  <span style = "color:red; font-size : 1.5em;">*</span></th>
 				<td>
 					<div id = "titleImgArea" >
 						<img id ="titleImg" style="width:100%; min-height:100px; height: auto;" >

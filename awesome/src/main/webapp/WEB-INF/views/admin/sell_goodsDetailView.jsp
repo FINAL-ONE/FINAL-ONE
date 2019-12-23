@@ -157,7 +157,7 @@
 					<input type="hidden" name="idDuplicateCheck" id="idDuplicateCheck" value="0">
 				</td>
 			<tr>
-				<th>상품 내용 <span style = "color:red; font-size : 1.5em;">*</span></th>
+				<th>상품 내용 <span style = "color:red; font-size : 1.5em;">*</span>&nbsp;&nbsp;&nbsp;&nbsp;</th>
 					<td><textarea id ="summernote" name="goodsContent" rows="10" cols ="81" size ="resize:none" required>${n.goodsContent}</textarea>
 				<!-- <td><textarea id ="goodsContent" name="goodsContent" rows="10" cols ="81" size ="resize:none" required></textarea> -->
 				</td>

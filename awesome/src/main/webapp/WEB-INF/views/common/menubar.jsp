@@ -512,7 +512,7 @@ This class is added to the container
            <div class= "menu myPageMenu">마이페이지</div> 
       </c:if>
       <c:if test="${sessionScope.loginUser.userId eq 'admin' }">
-         <div class= "menu myPageMenu" onclick ="location.href='adminMain.do'">관리자페이지</div> 
+         <div class= "menu myPageMenu" onclick ="#">관리자페이지</div> 
       </c:if>
       
    </div>

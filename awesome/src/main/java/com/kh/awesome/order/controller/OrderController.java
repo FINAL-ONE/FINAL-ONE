@@ -218,7 +218,7 @@ public class OrderController {
 		Member loginUser = (Member) session.getAttribute("loginUser");
 		int mid = loginUser.getMid();
 		
-
+		
 		os.setDate1(date3);
 		os.setDate2(date4);
 		os.setMid(mid);
