@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.awesome.board.model.vo.PageInfo;
 import com.kh.awesome.cart.model.vo.Cart;
+import com.kh.awesome.member.model.vo.Member;
 import com.kh.awesome.order.model.dao.OrderDao;
 import com.kh.awesome.order.model.vo.Order;
 import com.kh.awesome.order.model.vo.OrderSearch;
@@ -136,6 +137,13 @@ public class OrderServiceImpl implements OrderService{
 	@Override
 	public int nextOrderNum() {
 		return oDao.nextOrderNum();
+	}
+
+
+
+	@Override
+	public Member selectMemberAsMid(int mId) {
+		return oDao.selectMemberAsMid(mId);
 	}
 
 

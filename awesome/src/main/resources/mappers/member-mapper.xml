@@ -27,8 +27,17 @@
 		FROM MEMBER
 		WHERE USER_ID=#{userId}
 		AND STATUS='Y'
-	
 	</select>
+	
+	<select id ="selectMemberAsMid" parameterType="Member" resultMap="memberResultSet">
+		<!-- 암호화 적용 이후 -->
+		SELECT *
+		FROM MEMBER
+		WHERE MID=#{mId}
+		AND STATUS='Y'
+	</select>
+	
+	
 	
 	<insert id ="insertMember" parameterType ="Member">
 		INSERT INTO MEMBER

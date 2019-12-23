@@ -325,8 +325,11 @@ public class OrderController {
 		
 			   //포인트 적립(결제시 사용포인트 차감 )
 			 	int result4 = oService.updateMemberPoint(o);
-				System.out.println("result4 결제완료 : " + result4);		
-			     
+				System.out.println("result4 결제완료 : " + result4);	
+				
+				loginUser = oService.selectMemberAsMid(mId);
+				session.setAttribute("loginUser", loginUser);  // 멤버 포인트 변경했기 때문에 세션 새로 설정해줬음 
+				
 				return result4;
 		   }
 			   

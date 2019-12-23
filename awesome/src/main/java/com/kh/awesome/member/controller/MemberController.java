@@ -119,7 +119,9 @@ public class MemberController {
 		m.setAddress(post + "," + address1 + "," + address2);
 		/*
 		 * System.out.println("add1 :" + address1);
-		 */System.out.println("add2 :" + address2);
+		 		System.out.println("add2 :" + address2);
+		 */
+	
 		// 이제 서비스로 넘기자 
 		int result = mService.insertMember(m);
 		

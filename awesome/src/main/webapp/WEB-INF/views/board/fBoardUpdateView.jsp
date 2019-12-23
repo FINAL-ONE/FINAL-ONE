@@ -51,7 +51,7 @@
 <!-- include summernote css/js-->
 <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
 <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
-	
+	<link rel="shortcut icon" href="${contextPath}/resources/images/favicon.ico" type="image/x-icon">
 	
 	
 </head>

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.awesome.board.model.vo.PageInfo;
 import com.kh.awesome.cart.model.vo.Cart;
+import com.kh.awesome.member.model.vo.Member;
 import com.kh.awesome.order.model.vo.Order;
 import com.kh.awesome.order.model.vo.OrderSearch;
 
@@ -119,6 +120,11 @@ public class OrderDao {
 
 		public int nextOrderNum() {
 			return sqlSession.selectOne("orderMapper.nextOrderNum");
+		}
+
+
+		public Member selectMemberAsMid(int mId) {
+			return sqlSession.selectOne("memberMapper.selectMemberAsMid", mId);
 		}
 
 }
