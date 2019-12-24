@@ -143,9 +143,6 @@ tr:nth-child(even) {
       color: #828282;
 }
 
-
-
-
 #ExportBtn{
 	position: relative; 
 	float: right;

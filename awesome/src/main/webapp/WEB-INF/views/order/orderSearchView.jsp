@@ -187,6 +187,8 @@ input::placeholder {
       </div>
       <br>
 
+<<<<<<< HEAD
+=======
 
 			<table align="center" cellspacing="0" width="880px" id="orderTable">
 				<tr id="th">
@@ -205,7 +207,29 @@ input::placeholder {
 							</c:if>
 						</c:forEach>
 					</c:forEach>  --%>
+>>>>>>> refs/remotes/origin/master
 
+<<<<<<< HEAD
+			<table align="center" cellspacing="0" width="880px" id="orderTable">
+				<tr id="th">
+					<td style="width: 130px">주문일자<br>[주문번호]</td>
+					<td style="width: 200px" align="center">이미지</td>
+					<td style="width: 300px" align="center">상품정보</td>
+					<td style="width: 100px">수량</td>
+					<td style="width: 100px">주문금액</td>
+					<td style="width: 150px">진행상태</td>
+				</tr>
+ 	<%-- 			<c:forEach var="t" items="${list }">
+					<c:forEach var="r" items="${rowCount }">
+							<c:if test="${t.orderNum eq r.orderNum }">
+								${r.orderNum }
+								${r.rowCount }
+							</c:if>
+						</c:forEach>
+					</c:forEach>  --%>
+
+=======
+>>>>>>> refs/remotes/origin/master
 			
 				<c:set var="count" value="0" scope="application"/>
 				<c:set var="orderNum" value="0" scope="application"/>
@@ -292,9 +316,15 @@ input::placeholder {
          <!-- 10개의 페이지 목록 -->
          <c:set var="selectP" value="0"/>
          <c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage }">
+<<<<<<< HEAD
 
            <c:if test="${pi.currentPage == p }">    	  
 
+=======
+
+           <c:if test="${pi.currentPage == p }">    	  
+
+>>>>>>> refs/remotes/origin/master
                <button style="background:#ec434a;color:white" disabled >${p}</button>
            </c:if>
             <c:if test="${pi.currentPage != p }">
@@ -313,6 +343,7 @@ input::placeholder {
          <!-- 맨 끝으로(>>) -->
          <button onclick="maxPageSearch()"> >> </button>
             </div>
+<<<<<<< HEAD
 
 			
 			<div>
@@ -323,6 +354,18 @@ input::placeholder {
 		</div>
 		<c:set var="to" value="${os.date1 }"/>
 
+=======
+
+			
+			<div>
+				  
+			</div>
+			<br><br>
+		</div>
+		</div>
+		<c:set var="to" value="${os.date1 }"/>
+
+>>>>>>> refs/remotes/origin/master
 
 </body>
 
@@ -332,20 +375,56 @@ var to  ='${os.date1}';
 var from ='${os.date2}';
 
 $(function() {
+<<<<<<< HEAD
+=======
 
+	   $( "#date1" ).datepicker({
+>>>>>>> refs/remotes/origin/master
+
+<<<<<<< HEAD
 	   $( "#date1" ).datepicker({
 
 	dateFormat: "yy-mm-dd",
 	changeMonth: true, 
 
+=======
+	dateFormat: "yy-mm-dd",
+	changeMonth: true, 
+
+>>>>>>> refs/remotes/origin/master
     changeYear: true,
     nextText: '다음 달',
     prevText: '이전 달',
     maxDate: 0
+<<<<<<< HEAD
+=======
 
 		 	});
 	   
+>>>>>>> refs/remotes/origin/master
 
+<<<<<<< HEAD
+		 	});
+	   
+=======
+		});
+	
+	$(function() {
+	    $( "#date2" ).datepicker({
+	    	dateFormat: "yy-mm-ddd",
+	    	changeMonth: true, 
+	         changeYear: true,
+	         nextText: '다음 달',
+	         prevText: '이전 달',
+	         maxDate: 0
+	    });
+	    
+	});
+	
+
+>>>>>>> refs/remotes/origin/master
+
+<<<<<<< HEAD
 		});
 	
 	$(function() {
@@ -363,6 +442,9 @@ $(function() {
 
 
 
+=======
+
+>>>>>>> refs/remotes/origin/master
 	function nextPageSearch(){
 	 	location.href="orderSearch.do?page=${pi.currentPage + 1}&date1="+to+"&date2="+from; 
 	}
@@ -408,7 +490,11 @@ $(function() {
          var dd = sysdate.getDate();
          var mm = sysdate.getMonth()+1; //January is 0!
          var yy = sysdate.getFullYear();
+<<<<<<< HEAD
 
+=======
+
+>>>>>>> refs/remotes/origin/master
  
       /*    if(yy>100){
             yy=yy-100;

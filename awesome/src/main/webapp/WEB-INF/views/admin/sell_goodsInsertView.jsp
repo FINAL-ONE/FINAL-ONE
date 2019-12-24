@@ -26,7 +26,8 @@
 <style>
 
 #insertTable{
-/* 	margin-left : 300px; */
+	margin-left: auto; 
+	margin-right: auto;
 }
 
  select[multiple]{
@@ -102,7 +103,7 @@
 	}
 	
 	
-	.centerDiv{
+.centerDiv{
 	
 		  width:1200px;
 		  border:none;

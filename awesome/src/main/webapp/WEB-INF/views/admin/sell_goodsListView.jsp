@@ -156,7 +156,8 @@ tr:nth-child(even) {
                </div>
          </c:if>
       <form id = "goodsInsertForm" action="aStatusUpdate.do" method="post">
-            <table align="center" id ="checkboxTestTbl" class = "goodsTable" border="1" cellspacing="1">
+          <div id="tableLeft1" style= "width:auto;">
+            <table align="center" id ="checkboxTestTbl" class = "goodsTable"  style="border: 1; cellspacing:1">
                   <tr bgcolor ="#fa4a4a" style = "color : white">
                      <th>상품번호</th>
                      <th>이미지</th>
@@ -210,7 +211,8 @@ tr:nth-child(even) {
                         <!-- <td class="tablestatus">상태변경</td> -->                  
                      </tr>
                   </c:forEach>
-               </table> 
+               </table>
+              </div>
 <%--              <div id="tableLeft2" style= "width: auto;">
                <table id ="checkboxTestTbl2" class = "goodsTable" align="center" border="1" cellspacing="1" style="clear:right;">
                   <tr bgcolor ="#fa4a4a" style = "color : white">
@@ -328,6 +330,7 @@ tr:nth-child(even) {
                      (adsbygoogle = window.adsbygoogle || []).push({});
                   </script>
                </div>
+            </div>
             </div>
             <script src="js/Modal.js-master/modal.js"></script>
             

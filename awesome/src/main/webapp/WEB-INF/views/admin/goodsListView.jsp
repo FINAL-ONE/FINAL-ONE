@@ -199,6 +199,8 @@
 	
 	<br><br>
 	<c:if test="${!empty loginUser }">
+		
+				
    		<div align ="center">
    		<!--
    			상품 이름 

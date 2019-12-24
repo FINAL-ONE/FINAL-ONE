@@ -319,7 +319,7 @@ tr:nth-child(even) {
 			
 			
 			function showModifyStatus(orderNum, orderStatus){
-				var orderStatus = document.getElementById("orderStatusUpdate-btn)
+				/* var orderStatus = document.getElementById("orderStatusUpdate-btn); */
 				showModal(orderNum);
 				/* modal.style.display = "block"; */
 			}

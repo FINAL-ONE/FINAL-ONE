@@ -539,6 +539,7 @@ This class is added to the container
 <div class="menubar2 myPageMenubar myPageMenu" style="display:none;">
    <div class= "myPageNav">
 
+
       <span class= menu2 style="left: 637px;" onclick= "myPage()">내정보보기</span>
 	  <span class= menu2 style="left: 652px;" onclick= "cart()">장바구니</span>
       <span class= menu2 style="left: 667px;" onclick= "orderList()" >주문조회</span>
@@ -579,7 +580,7 @@ This class is added to the container
       <h2>관리자 메뉴</h2><!--  <a href="#" id="close"><span class="entypo-cancel"></span></a> -->
     
     <ul> 
-      <li onclick= "location.href='categoryView.do'">카테고리 관리</li>
+      <li onclick= "location.href='AdminorderList.do'">주문목록 조회</li>
       <li onclick= "location.href='goodsWriterView.do'">상품판매</li>
       <li onclick= "location.href='sell_goodsList.do'">판매상품조회</li>
       <li onclick= "location.href='goodsList.do'">상품관리</li>

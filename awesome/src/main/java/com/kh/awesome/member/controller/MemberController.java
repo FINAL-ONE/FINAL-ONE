@@ -1,4 +1,4 @@
- package com.kh.awesome.member.controller;
+package com.kh.awesome.member.controller;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;

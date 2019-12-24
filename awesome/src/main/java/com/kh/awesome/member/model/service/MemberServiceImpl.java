@@ -17,6 +17,10 @@ import com.kh.awesome.member.model.vo.PageInfo;
 @Service("mService")
 public class MemberServiceImpl implements MemberService {
 
+
+	
+
+	
 	@Autowired
 	MemberDao mDao;
 	

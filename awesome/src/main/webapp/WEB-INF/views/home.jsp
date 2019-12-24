@@ -34,7 +34,12 @@ body {
 	
 
 }
-
+.menu2 {
+    color: white !important;
+    line-height: 3 !important;
+    position: relative !important;
+    font-size: 16px !important;
+}
 .footer{
 	line-height: 18px !important;
 }
