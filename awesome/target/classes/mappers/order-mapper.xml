@@ -66,7 +66,7 @@
 		WHERE M.MID = O.MID AND G.GID=O.GID AND P.ORDER_NUM=O.ORDER_NUM AND O.ORDER_NUM=#{orderNum} AND S.GID=O.GID
 	</select>
 	<update id="orderCancel" parameterType="Order">
-		UPDATE ORDER_LIST
+		UPDATE ORD_LIST
 		SET ORDER_STATUS='X'
 		WHERE OID=#{number}
 	</update>
@@ -78,15 +78,15 @@
 		WHERE MID=#{mId}
 	</select>
 	<select id="getOrderSearch" resultMap="orderResultSet">
-	  SELECT OID, O.GID GID,GOODS_NAME, GOODS_PRICE, O.MID MID, O.ORDER_NUM ORDER_NUM, ORDER_COUNT, ORDER_DATE, ORDER_STATUS, ROWCOUNT,GOODS_TITLE, GOODS_FILE_PATH
-      FROM ORDER_LIST O 
-      JOIN (SELECT ORDER_NUM, COUNT(*) ROWCOUNT
-           FROM ORDER_LIST
-           GROUP BY ORDER_NUM) R ON (O.ORDER_NUM = R.ORDER_NUM)
-      JOIN GOODS G ON (O.GID=G.GID)
+		SELECT OID, O.GID GID,GOODS_NAME, GOODS_PRICE, O.MID MID, O.ORDER_NUM ORDER_NUM, ORDER_COUNT, ORDER_DATE, ORDER_STATUS, ROWCOUNT,GOODS_TITLE, GOODS_FILE_PATH
+		FROM ORDER_LIST O 
+		JOIN (SELECT ORDER_NUM, COUNT(*) ROWCOUNT
+		     FROM ORDER_LIST
+		     GROUP BY ORDER_NUM) R ON (O.ORDER_NUM = R.ORDER_NUM)
+		JOIN GOODS G ON (O.GID=G.GID)
         JOIN SELL_GOODS S ON (S.GID = G.GID)
-      WHERE O.MID= #{mid} AND ORDER_DATE BETWEEN #{date1} AND  TO_DATE(#{date2},'YY/MM/DD')+1
-      ORDER BY O.ORDER_NUM DESC
+		WHERE O.MID= #{mid} AND ORDER_DATE BETWEEN #{date1} AND TO_DATE(#{date2},'YY/MM/DD')+1  
+		ORDER BY O.ORDER_NUM DESC
 	</select>
 		<select id="getOrderSearchCount" resultType="_int">
 		SELECT COUNT(*)
@@ -100,7 +100,7 @@
 	<!-- 동복 - 결제 완료시 주문 테이블 insert -->
 	<insert id ="insertPaymentList" parameterType="Order">
 		INSERT INTO ORDER_LIST VALUES(
-			SEQ_OID.NEXTVAL, #{gId}, #{mId}, CONCAT(TO_CHAR(SYSDATE,'YYYYMMDD'), TO_CHAR(SEQ_OID.nextval, 'FM0000')), #{orderCount}, SYSDATE, #{orderStatus} 
+			SEQ_OID.NEXTVAL, #{gId}, #{mId}, CONCAT(TO_CHAR(SYSDATE,'YYYYMMDD'), TO_CHAR(DID.currval, 'FM0000')), #{orderCount}, SYSDATE, #{orderStatus} 
 		)
 	</insert>
    
@@ -108,7 +108,7 @@
 	<insert id ="insertPayment" parameterType="Order">
 		INSERT INTO PAYMENT VALUES(
 			<!-- #{orderNum}, #{orderPrice}, #{usedPoint} -->
-			(SELECT ORDER_NUM FROM( SELECT * FROM ORDER_LIST ORDER BY 1 DESC) WHERE ROWNUM = 1), #{orderPrice}, #{usedPoint}
+			SEQ_PID.NEXTVAL,(SELECT ORDER_NUM FROM( SELECT * FROM ORDER_LIST ORDER BY 1 DESC) WHERE ROWNUM = 1), #{orderPrice}, #{usedPoint}
 			
 		)
 	</insert>   
@@ -141,12 +141,64 @@
 		</if>
 		WHERE MID = #{mId}
 	</update>
+	
+	
+	
+	<!--========================================= 관리자용  =========================================-->
+	<!-- 관리자용 주문리스트 전체갯수 -->
+	<select id ="getListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM ORDER_LIST
+	</select>
+	
+	<!-- 관리자용 주문리스트 목록 -->
+	<select id="AdminOrderselectList" resultMap="orderResultSet">
+		SELECT OL.OID, OL.GID, OL.MID, OL.ORDER_NUM, OL.ORDER_COUNT, OL.ORDER_STATUS, SG.GOODS_NAME, M.USER_ID, M.USER_NAME, M.GENDER, M.PHONE, M.EMAIL, M.ADDRESS, M.POINT, M.USER_NICKNAME, P.ORDER_PRICE
+		FROM ORDER_LIST OL
+		JOIN GOODS SG ON (OL.GID = SG.GID)
+		JOIN MEMBER M ON (OL.MID = M.MID)
+		JOIN PAYMENT P ON (P.ORDER_NUM = OL.ORDER_NUM)
+		ORDER BY OL.ORDER_DATE DESC
+	</select>
+	
+	
+	
+	
+	<update id = "updateStatusUpdate" parameterType ="Order">
+		UPDATE ORDER_LIST
+		SET ORDER_STATUS='I'
+		WHERE ORDER_NUM=#{orderNum}
+	</update>
+	
+	
+	
 
 
-	<!-- 구매확정 -->
+	<select id ="checkOrderNumInfo" resultType="_int">
+		select count(*) from orderNum_info where create_date = to_char(sysdate, 'yyyy-mm-dd')
+	</select>
+	
+	<select id="dropOrderNum">
+		drop sequence DID
+	</select>
+	
+	<select id="createOrderNum">
+		create sequence DID
+	</select>
+	
+	<update id="updateOrderNumInfo" >
+		update orderNum_info set create_date = to_char(sysdate, 'yyyy-mm-dd') where info_id = 1
+	</update>
+	
+	
+	<select id="nextOrderNum" resultType="_int">
+	    select DID.nextval from dual
+	</select>
+		<!-- 구매확정 -->
 	<update id="orderComplete" parameterType="Order">
 		UPDATE ORDER_LIST
 		SET ORDER_STATUS='C'
 		WHERE ORDER_STATUS='I' AND ORDER_NUM=#{orderNum}
 	</update>
+	
 </mapper>

@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.awesome.board.model.vo.PageInfo;
+import com.kh.awesome.cart.model.vo.Cart;
+import com.kh.awesome.member.model.vo.Member;
 import com.kh.awesome.order.model.dao.OrderDao;
 import com.kh.awesome.order.model.vo.Order;
 import com.kh.awesome.order.model.vo.OrderSearch;
@@ -109,15 +111,67 @@ public class OrderServiceImpl implements OrderService{
 	public int updateMemberPoint(Order o) {
 		return oDao.updateMemberPoint(o);
 	}
+	
+	
+
+	// 관리자 주문리스트 전체 갯수 
+	@Override
+	public int getListCount() {
+		return oDao.getListCount();
+	}
 
 
+	// 관리자용 주문 리스트 
+	@Override
+	public ArrayList<Order> AdminOrderselectList(PageInfo pi) {
+		return oDao.AdminOrderselectList(pi);
+	}
+
+
+	// 관리자 배송상태 변경
+	@Override
+	public int updateStatusUpdate(Order o) {
+		return oDao.updateStatusUpdate(o);
+	}
+
+
+	@Override
+	public Cart selectCartOne(int cartNum) {
+		return oDao.selectCartOne(cartNum);
+	}
+
+
+
+	@Override
+	public int checkOrderNumInfo() {
+		return oDao.checkOrderNumInfo();
+	}
+
+
+
+	@Override
+	public int createNewOrderNum() {
+		return oDao.createNewOrderNum();
+	}
+
+
+
+	@Override
+	public int nextOrderNum() {
+		return oDao.nextOrderNum();
+	}
+
+
+
+	@Override
+	public Member selectMemberAsMid(int mId) {
+		return oDao.selectMemberAsMid(mId);
+	}
 
 	@Override
 	public int orderComplete(String orderNum) {
 		return oDao.orderComplete(orderNum);
 	}
 	
-	
-
 
 }

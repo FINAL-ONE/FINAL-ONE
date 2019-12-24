@@ -8,6 +8,7 @@
 <meta charset="UTF-8">
    <title>장바구니</title>
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+   <link rel="shortcut icon" href="${contextPath}/resources/images/favicon.ico" type="image/x-icon">
    <link href="js/Modal.js-master/build/css/modal.css" rel="stylesheet">
    <!-- <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script> -->
    <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
@@ -277,7 +278,6 @@
                      
                <input type="hidden" name="amount" value="${sum}" />
                      
-         <h2>정보</h2>
         <div class="order_detail mt80">
    
             <table class="type09">
@@ -307,11 +307,10 @@
                </table>
          </div>
       
-         <h3 class="order_detail_tit">배송지 정보</h3>
          <table class="type09">
             <thead>
              <tr>
-                 <th scope="cols" colspan="2">배송지 정보</th>
+                 <th scope="cols" colspan="2"><h3>배송지 정보</h3></th>
              </tr>
              </thead>
             <tbody>
@@ -786,7 +785,7 @@ $(function(){
  
    function deleteCart(flag){
       
-      if(flag >0){
+      if(flag > 0){
          var con_val = confirm("정말 삭제하시겠습니까");
          if(con_val == true){
         
