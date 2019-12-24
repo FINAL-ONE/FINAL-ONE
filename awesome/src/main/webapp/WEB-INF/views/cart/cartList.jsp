@@ -78,7 +78,7 @@
       section#content div.gdsInfo { font-size:20px; line-height:2; }
       section#content div.gdsInfo span { display:inline-block; width:100px; font-weight:bold; margin-right:10px; }
       section#content div.gdsInfo .delete { text-align:right; }
-      section#content div.gdsInfo .delete button { font-size:18px; padding:5px 10px; border:1px solid #eee; background:#eee;}
+      section#content div.gdsInfo .delete button { font-size:18px; padding:5px 10px; border:1px solid #cbcbcb; background:#fff;}
       
       .allCheck { float:left; width:200px; }
       .allCheck input { width:16px; height:16px; }
@@ -86,15 +86,15 @@
       .allCheck label:hover{ cursor:pointer;}
       input[type="checkbox"]:hover {cursor:pointer;}
       .delBtn { float:right; width:300px; text-align:right; }
-      .delBtn button { font-size:18px; padding:5px 10px; border:1px solid #eee; background:#eee;}
+      .delBtn button { font-size:18px; padding:5px 10px; border:1px solid #cbcbcb; background:#fff;}
       
       .checkBox { float:left; width:30px; }
       .checkBox input { width:16px; height:16px; }
       
-      .listResult { padding:20px; background:#eee; }
+      .listResult { padding:20px; background:#036; }
       .listResult .sum { float:right;font-size:22px;
                    font-weight: bold;
-                   color: #fa4a4a;}
+                   color: #ffffff;}
       
       .listResult .orderOpne { float:right; width:45%; text-align:right; }
       .listResult .orderOpne button { font-size:18px; padding:5px 10px; border:1px solid #999; background:#fff; margin-top: 20px;}
@@ -103,7 +103,7 @@
       .listResult .orderDiv button { font-size:18px; padding:5px 10px; border:1px solid #999; background:#fff;}
       .listResult::after { content:""; display:block; clear:both; } 
       
-      .orderInfo { border:2px solid #eee; padding:20px; display:none; }
+      .orderInfo { border:2px solid #036; padding:20px; display:none; }
       .orderInfo .inputArea {/*  margin-left: auto; margin-right: auto; width: 155px;  */ margin:200px 0 0 300px; }
       .orderInfo .inputArea label { display:inline-block; width:120px; margin-right:10px; }
       .orderInfo .inputArea input { font-size:14px; padding:5px; }
@@ -293,11 +293,11 @@
                </tr>
                <tr class="last">
                   <th>연락처</th>
-                  <td><input type="text" id="sdPhone" value="${cartList[0].phone }"></td>
+                  <td><input type="text" id="sdPhone" value="${sessionScope.loginUser.phone }"></td>
                </tr>
                <tr class="last">
                   <th>주소</th>
-                  <td><input type="text" id="sdAddress" value="${cartList[0].address }"></td>
+                  <td><input type="text" id="sdAddress" value="${sessionScope.loginUser.address }"></td>
                </tr>
                <tr class="last">
                   <th>이메일</th>
@@ -712,7 +712,7 @@ $(function(){
          var IMP = window.IMP; // 생략가능
              IMP.init('imp15219507'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
          var msg; 
-         var usedPoint    = $("#dcp").val();
+         var usedPoint    = $("#pointpoint").val();
          var dName       = $("#name").val();
          var dAddress    = $("#address").val(); 
          
@@ -728,15 +728,17 @@ $(function(){
          
          var dPhone       = $("#phone").val();
          var orderPrice    = $("#totalPriceVal").val();
-         
+         //alert("usedPoint : " + usedPoint);
+         var realOrderPrice = orderPrice - usedPoint;
+         //alert("real : " + realOrderPrice);
          
            IMP.request_pay({
                pg : 'inicis',
                pay_method : 'card',
                merchant_uid : 'merchant_' + new Date().getTime(),
                name : '결제 TEST',
-               //amount : orderPrice,
-               amount : '100',
+               amount : realOrderPrice,
+               //amount : '100',
                buyer_email : $("#sdEmail").val(),
                buyer_name : $("#sdname").val(),
                buyer_tel : $("#sdPphone").val(),

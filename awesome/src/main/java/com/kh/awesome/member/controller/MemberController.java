@@ -1,6 +1,7 @@
  package com.kh.awesome.member.controller;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,7 +11,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.mail.HtmlEmail;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +23,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
@@ -76,10 +82,7 @@ public class MemberController {
 										@RequestParam("address1") String address1,
 										@RequestParam("address2") String address2) {
 		// 이메일이 배열로 설정되어있기 때문에 컴마를 기준으로 나눠라~
-		 System.out.println("member 출력 " + m.getEmail().split(","));
-		 String e1 = m.getEmail().split(",")[0];
-		 String e2 = m.getEmail().split(",")[1];
-		 m.setEmail(e1+"@"+e2);
+
 		/*
 		 *  1. 실행 해보면 한글 부분이 깨져 있는 것을 볼 수 있을 것이다.
 		 *  스프링에서 제공하는 필터를 이용해서 요청시 전달되어 오는 값에 한글이 있을 경우 인코딩 처리하는 걸 추가해보자
@@ -108,6 +111,9 @@ public class MemberController {
 		 *   
 		 */
 		 
+		
+		System.out.println("멤버가입: " + m);
+		
 		// 암호화된 값을 변수에다 기록하자!
 		String encPwd = bcryptPasswordEncoder.encode(m.getUserPwd());
 		// 이 암호화 클래스를 쓰려면 bean설정을 해야된다.
@@ -147,7 +153,8 @@ public class MemberController {
       
    // 암호화 처리 후 로그인 부분
       @RequestMapping(value = "login.do", method = RequestMethod.POST)
-      public String memberLogin(Member m, Model model, SessionStatus status) {
+      @ResponseBody
+      public String memberLogin(Member m, Model model, SessionStatus status) throws UnsupportedEncodingException {
          /*
           * matches() 메소드를 통해 우리는 암호화되어 있는 DB값과
           * 사용자가 입력한 비밀번호를 비교할 수 있다.
@@ -160,12 +167,24 @@ public class MemberController {
          Member loginUser = mService.loginMember(m);
                            // matches 안에서 긁어온 암호화된 녀석이랑 사용자가 입력한 녀석이랑 비교해준다.
          
+         
+
+         JSONObject job =new JSONObject();
+         
+         
          if(bcryptPasswordEncoder.matches(m.getUserPwd(),loginUser.getUserPwd())) {
             model.addAttribute("loginUser", loginUser);
+         
+            String userNickname = loginUser.getUserNickname();
+          
+    		job.put("result", URLEncoder.encode(userNickname,"utf-8"));
+    		return job.toJSONString();
+    		
          }else {
-            throw new MemberException("로그인실패");
+    		job.put("result", URLEncoder.encode("","utf-8"));
+    		return job.toJSONString();
          }
-         return "home";
+       
       }
       
       
@@ -365,6 +384,24 @@ public class MemberController {
             mService.find_pw(response, member);
          }
          
+         @RequestMapping("emailCheck.do")
+         @ResponseBody
+         public String send_mailCheck(@RequestParam("userEmail") String userEmail) throws Exception {
+        	 
+        	String result =  mService.send_mailCheck(userEmail);
+        	 return result; 
+         }
+         
             
-   
+
+			@RequestMapping("privacy.do")
+			public String privacy() {
+				return "/common/privacyStatement";
+			}
+				
+			@RequestMapping("termsOfUse.do")
+			public String termsOfUse() {
+				return "/common/termsOfUse";
+			}
+
 }

@@ -11,7 +11,7 @@
    width: 100%;
    height: 390px;
    display: block;
-   
+   padding-left: 60px;
 }
 
 .footerSpan{
@@ -64,31 +64,37 @@
 	cursor: pointer;
 }
 
+.fa-envelope-open-text:before {
+    content: "\f658";
+    font-size: 22px;
+}
+
 </style>
 
-
+<link href="${contextPath}/resources/fontawesome-free/css/all.css" rel="stylesheet">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>footer test</title>
 </head>
 <div class= "footer" > 
    <div style="width: 100%; height: 50px; border-bottom: 1px solid #eee">
       <div style=" height: 100%; width: 1288px; margin-left:auto;margin-right: auto" >
-            <span class= footerSpan>개인정보 취급 방침</span>
-            <span class= footerSpan>&nbsp;&nbsp;이용약관</span>
-            <span class= footerSpan style="border:none">&nbsp;&nbsp;제휴문의</span>
+            <span class= footerSpan onclick="location.href='privacy.do'">개인정보 취급 방침</span>
+            <span class= footerSpan onclick="location.href='termsOfUse.do'">&nbsp;&nbsp;이용약관</span>
+            <span class= footerSpan style="border:none" onclick="popupOpen()">&nbsp;&nbsp;제휴문의</span>
       </div>
    </div>
    <div style=" height: 260px; width: 1288px; margin-left:auto;margin-right:auto;margin-top:30px;">
       <div class= footerDiv>
             <b style="font-size: 17px;">고객센터</b><br><br>
-            hokwan92@naver.com 
+            <i class="fas fa-envelope-open-text" ></i> hokwan92@naver.com 
             <br><br>
             <p style="width:300px; margin:0px; font-size:12px;color:#999999">
             문의사항은 관리자에게 게시판 또는 이메일 주소로<br>
             연락주시면 빠른 시일내에 회신드리도로하겠습니다.
             </p>  
             <br>
-            <button class="footerButton" style="font-szie:14px; width: 100px;" >관리자에게</button> 
+            <button class="footerButton" style="font-szie:14px; width: 100px;" onclick="location.href='javascript:popupOpen();'">관리자에게</button> 
+
       </div>
       
       <div class= footerDiv>
@@ -115,10 +121,10 @@
             <a href="">· 크런치킨 체험단 모집 (11.15~11.24)</a><br>
             <a href="">· 달짝 아이스단호박 체험단 모집 (11.12~11.21)</a><br>
          <br>
-         <b style="font-size: 17px;">SNS</b><br><br>
-        <img src="resources/images/facebook.png" style="height:25%; width:25%; " class="sns" onclick="window.open('https://www.facebook.com')">&nbsp;&nbsp;
-       <img src="resources/images/instagram.png" style="height:25%; width:25%; "class="sns" onclick="window.open('https://www.instagram.com')">&nbsp;&nbsp;
-      <img src="resources/images/twitter.png" style="height:25%; width:25%; "class="sns" onclick="window.open('http://twitter.com')">
+         <b style="font-size: 17px;">SNS</b><br><div style="height: 10px;"></div>
+        <img src="resources/images/facebook.png" style="height:15%; width:15%; " class="sns" onclick="window.open('https://www.facebook.com')">&nbsp;&nbsp;
+       <img src="resources/images/instagram.png" style="height:15%; width:15%; "class="sns" onclick="window.open('https://www.instagram.com')">&nbsp;&nbsp;
+      <img src="resources/images/twitter.png" style="height:15%; width:15%; "class="sns" onclick="window.open('http://twitter.com')">
       </div>
    </div>
    <div style="width: 1288px; margin-left:auto;margin-right: auto;margin-top:0px; border-top: 1px solid #eee">
@@ -129,6 +135,17 @@
 </div>
 
 <body>
- 
+ <script>
+ function popupOpen(){
+
+		var popUrl = "email.do";	//팝업창에 출력될 페이지 URL
+
+		var popOption = "top=55, left=600, width=750, height=880, resizable=no, scrollbars=no, status=no, location=no,";    //팝업창 옵션(optoin)
+
+			window.open(popUrl,"",popOption);
+
+		}
+		
+ </script>
 </body>
 </html>

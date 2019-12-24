@@ -288,9 +288,26 @@ textarea {
 
 
 .conmmunityNav:after {
-    top: -44px !important;
-    left: -94px !important;
+    top: -42px !important;
+    left: -49px !important;
 }
+
+
+.desc{
+	
+	height: 270px !important;
+
+}
+
+.desc div{
+/* 	font-family: 'Yeon Sung', cursive; */
+	font-family: 'Jua', sans-serif;
+}
+
+.title{
+	font-family: 'Jua', sans-serif;
+}
+
 
 
 #layer_popup_area{
@@ -300,9 +317,13 @@ textarea {
 	position: absolute;
 }
 
+
 </style>
 
 
+
+
+<link href="https://fonts.googleapis.com/css?family=Jua|Yeon+Sung&display=swap" rel="stylesheet">
 
 </head>
 <body>
@@ -340,27 +361,66 @@ textarea {
 	</ul>
 </div>
 
-			
-	<section class="section-features">
-	 <div class="container">
+
+
+</div>
+<script>
+
+
+(function(){
+	$('.flex-container').waitForImages(function() {
+		$('.spinner').fadeOut();
+	}, $.noop, true);
+	
+	$(".flex-slide").each(function(){
+		$(this).hover(function(){
+			$(this).find('.flex-title').css({
+				transform: 'rotate(0deg)',
+				top: '10%'
+			});
+			$(this).find('.flex-about').css({
+				opacity: '1'
+			});
+		}, function(){
+			$(this).find('.flex-title').css({
+				transform: 'rotate(90deg)',
+				top: '15%'
+			});
+			$(this).find('.flex-about').css({
+				opacity: '0'
+			});
+		})
+	});
+})();
+
+
+</script>
+
+<section class="section-features">
+
+    <div class="container">
 
         <ul class="features-list">
 
             <li class="feature-item">
                 <div class="content-col">
-                    <div class="title" style="background : none;">
-                        Lorem ipsum
+
+                    <div class="title">
+                    	Diet proverb 1
+
                     </div>
                     <div class="desc">
-                        <p>
+                    	<div style="font-size: 30px; margin-left:auto; margin-right: auto; margin-top: 65px; width: 235px"> 인생은 살쪘을 때와<br>안쪘을때로 나뉜다.</div>
+                    
+                     <!--    <p>
                             Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
                             laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto
                             beatae vitae dicta sunt explicabo.
                         </p>
                         <p>
                             Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut
-                            odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
-                        </p>
+                            odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. </p>-->
+                       
                     </div>
                 </div>
                 <div class="img-col">
@@ -371,11 +431,16 @@ textarea {
 
             <li class="feature-item">
                 <div class="content-col">
-                    <div class="title" style="background : none;">
-                        Lorem ipsum
+
+                    <div class="title">
+                     	Diet proverb 2
+
                     </div>
                     <div class="desc">
-                        <p>
+                    
+                    	<div style="font-size: 30px; margin-left:auto; margin-right: auto; margin-top: 90px; width: 246px"> 세끼 다 먹은 세1끼야</div>
+                    
+                      <!--   <p>
                             Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
                             laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto
                             beatae vitae dicta sunt explicabo.
@@ -383,7 +448,7 @@ textarea {
                         <p>
                             Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut
                             odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
-                        </p>
+                        </p> -->
                     </div>
                 </div>
                 <div class="img-col">
@@ -394,20 +459,14 @@ textarea {
             </li>
 
             <li class="feature-item">
-                <div class="content-col" >
-                    <div class="title" style="background : none;">
-                        Lorem ipsum
+
+                <div class="content-col">
+                    <div class="title">
+                      Diet proverb 3
+
                     </div>
                     <div class="desc">
-                        <p>
-                            Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
-                            laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto
-                            beatae vitae dicta sunt explicabo.
-                        </p>
-                        <p>
-                            Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut
-                            odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
-                        </p>
+                        <div style="font-size: 30px; margin-left:auto; margin-right: auto; margin-top: 90px; width: 110px"> 먹.지.마</div>
                     </div>
                 </div>
                 <div class="img-col">

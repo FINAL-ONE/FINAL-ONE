@@ -46,7 +46,9 @@ public class OrderController {
 	public ModelAndView abc(ModelAndView mv, @RequestParam(value = "page", required = false) Integer page,
 			HttpServletRequest request, HttpSession session) {
 		
-		int currentPage = 1;
+		
+	 System.out.println("들어오니 ");
+	 int currentPage = 1;
 		if(page != null) {
 			currentPage = page;
 		}
@@ -67,10 +69,11 @@ public class OrderController {
 		System.out.println(pi);
 		System.out.println(list);
 		
-		 if(list != null && list.size()>0) {
+		
 			mv.addObject("list", list);
 			mv.addObject("pi", pi);
-		 } 
+
+			System.out.println("야 장난하냐 ");
 			mv.setViewName("order/orderListView");
 		return mv;
 	}
@@ -448,6 +451,29 @@ public class OrderController {
 		}
 				
 				
-	
+		//구매확정 나혜!!
+		@RequestMapping("orderComplete.do")
+		public void orderComplete(HttpServletResponse response, String orderNum, HttpServletRequest request, int usedPoint, int orderPrice, Order o ) throws JsonIOException, IOException {
+			/*System.out.println("CONTROLLER: " + orderNum);*/
+			int orderComplete = oService.orderComplete(orderNum);
+			
+			HttpSession session = request.getSession(true);
+			Member loginUser = (Member) session.getAttribute("loginUser");
+			int mId = loginUser.getMid();
+			
+			o.setmId(mId);
+			o.setUsedPoint(usedPoint);
+			o.setOrderPrice(orderPrice);
+			
+			System.out.println(o);
+			int updatePoint = oService.updateMemberPoint(o);
+			
+			
+			if(orderComplete>0) {
+			Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+			gson.toJson( orderComplete, response.getWriter());
+			}
+		}
+
 	
 }

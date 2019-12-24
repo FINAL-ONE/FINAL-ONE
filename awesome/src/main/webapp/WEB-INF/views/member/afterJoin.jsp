@@ -28,6 +28,13 @@
 	box-shadow: gray 0 0px 0px 2px inset;
 }
 
+a{
+
+font-family: none !important;
+font-size: 16px !important;
+
+
+}
 
 
 /* .button:hover {
@@ -64,10 +71,7 @@ font-size:35px;
 font-family: 'Nanum Gothic', sans-serif;
 }
 
-a{
-font-size: 25px;
-font-family: 'Nanum Gothic', sans-serif;
-}
+
 </style>
 </head>
 <body>
@@ -98,8 +102,12 @@ font-family: 'Nanum Gothic', sans-serif;
 	
 
 
-
+<br><br>
 </body>
+
+<footer>
+		<jsp:include page ="../common/footer.jsp"/>
+	</footer>
 
 <script>
 $("#goLogin").mouseover(function(){

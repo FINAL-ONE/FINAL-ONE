@@ -176,6 +176,56 @@ public class MemberServiceImpl implements MemberService {
 		}
 	}
 
+	
+	@Override
+	public String send_mailCheck(String userEmail) throws Exception {
+		// Mail Server 설정
+		String charSet = "utf-8";
+		String hostSMTP = "smtp.gmail.com";
+		String hostSMTPid = "awesomefinalone@gmail.com";
+		String hostSMTPpwd = "wkqk1212";
+
+		String rNum = "";
+		for (int i = 0; i < 5; i++) {
+			 int random = (int) (Math.random() * 10);
+			rNum += String.valueOf(random);
+		}
+		
+		// 보내는 사람 EMail, 제목, 내용
+		String fromEmail = "awesomefinalone@gmail.com";
+		String fromName = "AWESOME";
+		String subject = "AWESOME 이메일 인증 번호 입니다. ";
+		String msg = "<b>*** AWESOME ***</b>";
+				msg += "회원님의 이메일 인증번호:<b>" + rNum + "</b> <br>";
+				msg += "이메일 인증칸에 인증번호를 입력해주세요!";
+	
+		
+		
+		// 받는 사람 E-Mail 주소
+		String mail = userEmail;
+		try {
+			HtmlEmail email = new HtmlEmail();
+			email.setDebug(true);
+			email.setCharset(charSet);
+			email.setSSL(true);
+			email.setHostName(hostSMTP);
+			email.setSmtpPort(587);
+
+			email.setAuthentication(hostSMTPid, hostSMTPpwd);
+			email.setTLS(true);
+			email.addTo(mail, charSet);
+			email.setFrom(fromEmail, fromName, charSet);
+			email.setSubject(subject);
+			email.setHtmlMsg(msg);
+			email.send();
+			return rNum; 
+			
+		} catch (Exception e) {
+			System.out.println("메일발송 실패 : " + e);
+			return "fail"; 
+		}
+	}
+	
 	@Override
 	public int checkNickNameDup(String nickName) {
 	
@@ -183,6 +233,8 @@ public class MemberServiceImpl implements MemberService {
 		
 		
 	}
+
+
 
 	
 }

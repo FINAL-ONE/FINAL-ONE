@@ -6,8 +6,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> 
-     
-     
+ <link rel="shortcut icon" href="${contextPath}/resources/images/favicon.ico" type="image/x-icon">
  <!-- 텍스트 이미지삽입 효과   -->
  <link rel="stylesheet" href="css/Awesome Text Effects/style.css"> 
     
@@ -16,8 +15,11 @@
     <link href="https://fonts.googleapis.com/css?family=Hind&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" charset="utf-8"></script>   
    
-   
 <style>
+.footer{
+ padding-left: 90px !important;
+}
+
  .container {
  	margin: 70px auto; 
   }
@@ -33,10 +35,9 @@
 	width : 830px;
 	height : 400px;
 	background : lightgray;
-	margin-left : 350px;
+	margin-left : 0px;
 	padding : 40px 60px 40px 40px;
 	position: relative;
-	left: 10px; 
 	top: -560px; 
 	z-index: 1;
 }
@@ -48,39 +49,63 @@
 	/* margin-right : 150px; */
 	padding : 40px 40px 40px 80px;
 	position: relative;
-	left: 630px; 
+	left: 330px; 
 	top: -500px; 
 	z-index: 1;;
 	
 }
 #content-img1{
-	margin-left : 1150px;
+	margin-left :780px;
 	position: relative;
 	z-index: 2;
 	margin-bottom: 60px;
 }
 
 #content-img2{
-	margin-left : 290px;
 	position: relative;
 	z-index: 2;
 	margin-bottom: 10px;
 }
 
 
+.centerDiv{
+	
+		  width:1200px;
+		  border:none;
+/* 	  border: 3px solid pink;   */
+	      margin-left:auto;
+	      margin-right:auto;
+	      height: auto;
+	      padding-left: 40px;
+	      
+	
+	}
+	
+	
+	
+ .conmmunityNav:after {
+    top: -45px !important;
+}
+
+
+
 
 </style>
-    
+    		<link rel="shortcut icon" href="${contextPath}/resources/images/favicon.ico" type="image/x-icon">
 <body>
 	<jsp:include page ="../common/menubar.jsp"/> 
 
- <div id="text-awesome" style ="margin-left : 230px;" >Awesome</div>
+
+<div class = "centerDiv"> 
+
+ <div id="text-awesome"  style="width: 1050px; margin-left: auto; margin-right: auto; position:relative; top:0px; left:0px; transform:none; margin-top:0px; margin-bottom:50px;">Awesome</div>
 
 		
 		<div id ="content-area-awesome1" style="height : 500px; padding-bottom: -600px;">
-			 <div id="content-img1">
-				<img src="resources/images/diet_context7.jpg" style="width : 370px; height : 450px;">
-			</div> 
+			<div id="content-img1">
+				<img src="resources/images/main_image_content1.jpg" style="width : 370px; height : 450px;">
+			</div>
+			
 			<div id = "center-box1">
 				<b>SONGS REPREND LA ROUTE</b><br><br>
 				Songs, spectacle créé en octobre 2018 au Théâtre de La Croix-Rousse, repart en tournée à partir du mardi 10 décembre 2019 à La Roche-sur-Yon, Niort, Poitiers, Blois, Genève et Dijon.
@@ -92,9 +117,9 @@
 				Retrouvez toutes les dates des représentations
 			</div>
 		</div>
-		<div id ="content-area-awesome1" style="height : 600px; padding-bottom: -600px;">
+		<div id ="content-area-awesome1" style="height : 520px; padding-bottom: -600px; margin-top: 50px; ">
 			<div id="content-img2">
-					<img src="resources/images/diet_context3.jpg" style="width : 370px; height : 450px;">
+					<img src="resources/images/main_image_content2.jpg" style="width : 370px; height : 450px;">
 				</div>
 				
 			<div id = "center-box2">
@@ -108,7 +133,6 @@
 				Retrouvez toutes les dates des représentations
 			</div>
 		</div>
-	
 	
 	 <div class="testimonial-section">
       <div class="inner-width">
@@ -163,9 +187,9 @@
 	
 	
 	
+	</div> <!--  centerDiv 끝 -->
 	
-	
-
+		<br><br>
 
 </body>
 

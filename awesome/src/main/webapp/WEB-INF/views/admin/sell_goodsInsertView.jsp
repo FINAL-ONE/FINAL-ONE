@@ -101,6 +101,19 @@
 	  right: 0;
 	}
 	
+	
+	.centerDiv{
+	
+		  width:1200px;
+		  border:none;
+/* 	 border: 1px solid pink;  */
+	      margin-left:auto;
+	      margin-right:auto;
+	      height: auto;
+	      padding-left: 40px;
+	      
+	
+	}
 
 .adminMain-btn, .adminList-btn {
     margin: 10px 0px 15px;
@@ -121,7 +134,6 @@
 	color: #fe6666;
 }	
 
-
 	
 </style>
 
@@ -129,6 +141,8 @@
 <body>
 
 	<jsp:include page ="../common/menubar.jsp"/>
+	
+	<div class= "centerDiv">
 	
 	<div id="container" style="overflow: auto; height: auto;" ><!-- container -->
 
@@ -274,7 +288,7 @@
 			</p>
 	
 	</div>
-	
+	</div>
 	<script>
 	// 선택한 상품의 가격,수량 조회후 출력 ---------------------------------------------------------
 		$(function(){

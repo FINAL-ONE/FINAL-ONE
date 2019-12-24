@@ -168,5 +168,10 @@ public class OrderServiceImpl implements OrderService{
 		return oDao.selectMemberAsMid(mId);
 	}
 
+	@Override
+	public int orderComplete(String orderNum) {
+		return oDao.orderComplete(orderNum);
+	}
+	
 
 }

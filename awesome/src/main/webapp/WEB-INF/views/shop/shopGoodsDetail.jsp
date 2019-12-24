@@ -456,13 +456,14 @@ p {
                         <input type="hidden" name ="star" value = "1" style="size : 10px">
 							후기 평균 <span class="fa fa-star checked"></span>
 							<c:forEach var="sAvgList" items="${sAvgList}">
-								<span>: ${sAvgList}</span>
-								<%-- <c:if test = "${sAvgList gt 0}">
-									<span>: ${sAvgList}</span>
+							<%-- 		<span>: ${sAvgList}</span> --%>
+							
+								 <c:if test = "${sAvg == null}">
+									<span>: 없음 </span>
 								</c:if>
-								<c:if test = "${sAvgList lt 0}">
+							<%-- 	<c:if test = "${sAvgList lt 0}">
 										<span>후기 없음</span>
-								</c:if> --%>
+								</c:if> --%> 
 							</c:forEach>
 									
                         <hr>
