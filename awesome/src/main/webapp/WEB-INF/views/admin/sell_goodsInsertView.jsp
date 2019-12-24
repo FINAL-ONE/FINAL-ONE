@@ -26,7 +26,7 @@
 <style>
 
 #insertTable{
-	margin-left : 300px;
+/* 	margin-left : 300px; */
 }
 
  select[multiple]{
@@ -62,9 +62,9 @@
 	}
 	/*포인트 수정 버튼 css  */
 	.myBtn{
-		width :80px;
-		height : 30px;
-		font-size : 13px;
+		 width: 259px;
+    	height: 40px;
+		font-size : 17px;
 		border-radius: 4px;
 		background-color: #4CAF50;
 		border: none;
@@ -101,7 +101,25 @@
 	  right: 0;
 	}
 	
-	
+
+.adminMain-btn, .adminList-btn {
+    margin: 10px 0px 15px;
+    border: 1px solid #fe6666;
+    background: #fe6666;
+    border-radius: 2px;
+    color: #fff;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    width: 259px;
+    height: 40px;
+    cursor: pointer;
+}
+
+.adminMain-btn:hover, .adminList-btn:hover{
+	background: #fff;
+	color: #fe6666;
+}	
 
 
 	
@@ -250,10 +268,11 @@
 	</form>	
 	
 		
-		<p align="center">
-			<a href="adminMain.do">관리자페이지로 이동</a>
-			<a href="sell_goodsList.do">목록 보기로 이동</a>
-		</p>
+			<p align="center" style="margin : 50px 0 50px 0;">
+				<button class="adminMain-btn" type="button" style="width : 110px; height : 40px;" onclick="location.href='home.do'">HOME 이동</button>
+				<button class="adminList-btn" type="button" style="width : 110px; height : 40px;" onclick="location.href='sell_goodsList.do'">목록전체보기</button>
+			</p>
+	
 	</div>
 	
 	<script>

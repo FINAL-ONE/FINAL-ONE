@@ -66,6 +66,27 @@
 	color: #fe6666;
 }
 
+.adminMain-btn, .adminList-btn {
+    margin: 10px 0px 15px;
+    border: 1px solid #fe6666;
+    background: #fe6666;
+    border-radius: 2px;
+    color: #fff;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    width: 259px;
+    height: 40px;
+    cursor: pointer;
+}
+
+.adminMain-btn:hover, .adminList-btn:hover{
+	background: #fff;
+	color: #fe6666;
+}	
+
+
+
 </style>
 </head>
 <body>
@@ -188,8 +209,8 @@
 			</tr>
 			<tr>
 				<td colspan="2" align="center">
-					<input type="submit" value="등록하기"> &nbsp;
-					<input type="reset" value="등록취소">
+					<input class="adminMain-btn" type="submit" style="width : 110px; height : 40px;"  value="등록하기">
+					<input class="adminList-btn" type="reset" style="width : 110px; height : 40px;" value="등록취소">
 				</td> 
 			</tr>	
 		</table>

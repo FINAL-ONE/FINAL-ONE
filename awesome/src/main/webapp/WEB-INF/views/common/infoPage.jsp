@@ -6,7 +6,8 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> 
- 
+     
+     
  <!-- 텍스트 이미지삽입 효과   -->
  <link rel="stylesheet" href="css/Awesome Text Effects/style.css"> 
     
@@ -14,6 +15,7 @@
    <link rel="stylesheet" href="css/Our Clients/style.css">
     <link href="https://fonts.googleapis.com/css?family=Hind&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" charset="utf-8"></script>   
+   
    
 <style>
  .container {
@@ -67,12 +69,6 @@
 
 
 
-
-
-
-
-
-
 </style>
     
 <body>
@@ -82,10 +78,9 @@
 
 		
 		<div id ="content-area-awesome1" style="height : 500px; padding-bottom: -600px;">
-			<div id="content-img1">
-				<img src="resources/images/main_image_content1.jpg" style="width : 370px; height : 450px;">
-			</div>
-			
+			 <div id="content-img1">
+				<img src="resources/images/diet_context7.jpg" style="width : 370px; height : 450px;">
+			</div> 
 			<div id = "center-box1">
 				<b>SONGS REPREND LA ROUTE</b><br><br>
 				Songs, spectacle créé en octobre 2018 au Théâtre de La Croix-Rousse, repart en tournée à partir du mardi 10 décembre 2019 à La Roche-sur-Yon, Niort, Poitiers, Blois, Genève et Dijon.
@@ -99,7 +94,7 @@
 		</div>
 		<div id ="content-area-awesome1" style="height : 600px; padding-bottom: -600px;">
 			<div id="content-img2">
-					<img src="resources/images/main_image_content2.jpg" style="width : 370px; height : 450px;">
+					<img src="resources/images/diet_context3.jpg" style="width : 370px; height : 450px;">
 				</div>
 				
 			<div id = "center-box2">
@@ -113,6 +108,7 @@
 				Retrouvez toutes les dates des représentations
 			</div>
 		</div>
+	
 	
 	 <div class="testimonial-section">
       <div class="inner-width">

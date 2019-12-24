@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
+<link rel="shortcut icon" href="${contextPath}/resources/images/favicon.ico" type="image/x-icon">
 
 <!-- switch버튼 css -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css" rel="stylesheet" type="text/css">
@@ -142,6 +142,9 @@ tr:nth-child(even) {
 	  font-size: 13px;
       color: #828282;
 }
+
+
+
 </style>
 
 </head>
@@ -174,7 +177,7 @@ tr:nth-child(even) {
 							<th width = "120px">포인트</th>
 							<th width = "160px">가입일</th>
 							<th width = "160px">수정일</th>
-							<th width = "140px">탈퇴상태</th>
+							<th width = "140px">회원상태</th>
 							<!-- <th>탈퇴처리</th> -->
 						</tr>
 					<c:forEach var="n" items="${list}">

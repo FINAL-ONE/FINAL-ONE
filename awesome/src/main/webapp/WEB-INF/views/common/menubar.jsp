@@ -512,7 +512,7 @@ This class is added to the container
            <div class= "menu myPageMenu">마이페이지</div> 
       </c:if>
       <c:if test="${sessionScope.loginUser.userId eq 'admin' }">
-         <div class= "menu myPageMenu" onclick ="#">관리자페이지</div> 
+         <div class= "menu myPageMenu">관리자페이지</div> 
       </c:if>
       
    </div>
@@ -576,7 +576,7 @@ This class is added to the container
       <h2>관리자 메뉴</h2><!--  <a href="#" id="close"><span class="entypo-cancel"></span></a> -->
     
     <ul> 
-      <li onclick= "location.href='categoryView.do'">카테고리 관리</li>
+      <li onclick= "location.href='AdminorderList.do'">주문 목록조회</li>
       <li onclick= "location.href='goodsWriterView.do'">상품판매</li>
       <li onclick= "location.href='sell_goodsList.do'">판매상품조회</li>
       <li onclick= "location.href='goodsList.do'">상품관리</li>

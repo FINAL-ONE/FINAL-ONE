@@ -915,7 +915,7 @@ p {
 	
 	
 		 	 <!-- 상품에 작성한 후기 있는지 체크  후 없으면 작성하기로 이동-->
-	  <!--     <script>
+	     <script>
 	      function checkWrite(){
 	    	  var mId = $("#mId").val();
 	          var gId = $("#gId").val();
@@ -965,7 +965,7 @@ p {
 	           });
 	      }
 	      </script>
-       -->
+       
       
 		
 		

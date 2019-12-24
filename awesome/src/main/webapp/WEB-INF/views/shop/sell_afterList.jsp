@@ -95,7 +95,24 @@ tr:nth-child(even) {
 }
 
 
+.adminMain-btn, .adminList-btn {
+    margin: 10px 0px 15px;
+    border: 1px solid #fe6666;
+    background: #fe6666;
+    border-radius: 2px;
+    color: #fff;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    width: 259px;
+    height: 40px;
+    cursor: pointer;
+}
 
+.adminMain-btn:hover, .adminList-btn:hover{
+	background: #fff;
+	color: #fe6666;
+}	
 
 </style>
 
@@ -205,12 +222,9 @@ tr:nth-child(even) {
 				</c:forEach>
 			</table>
 			
-			
 			<p align="center" style="margin : 50px 0 50px 0;">
-				<c:url var ="adminMain" value="adminMain.do"/>
-				<a href="${adminMain}" style="text-decoration: none;">관리자페이지 이동</a>&nbsp;
-				<c:url var ="sell_goodsList" value="sell_goodsList.do"/>
-				<a href="${sell_goodsList}" style="text-decoration: none;">목록전체보기</a>
+				<button class="adminMain-btn" type="button" style="width : 110px; height : 40px;" onclick="location.href='home.do'">HOME 이동</button>
+				<button class="adminList-btn" type="button" style="width : 110px; height : 40px;" onclick="location.href='sell_goodsList.do'">목록전체보기</button>
 			</p>
 	
 	</div>

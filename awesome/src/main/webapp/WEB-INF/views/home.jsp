@@ -11,6 +11,7 @@
 	<title>Home</title>
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
  	
+ 	
 
 <script src="js/parallax_content-master/demo/build/app.js"></script>
  
@@ -314,7 +315,7 @@ textarea {
 	<!-- 레이어 팝업 -->
 	<div id="layer_popup_area">
 		<div id="layer_popup" style="visibility: visible; width : 450px; height :500px;">
-		   <img src="resources/images/about_popup.jpg"  style = "width : 450px; height : 450px;">
+		   <img src="resources/images/about_popupGif.gif"  style = "width : 450px; height : 450px;">
 		    <div class="close">
 		        <form name="pop_form" style="width:450px; background : black;">
 		            <!-- <div id="check" style="width : 360px; height : 5px;"></div> -->

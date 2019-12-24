@@ -425,7 +425,7 @@ public class OrderController {
 	
 		// 관리자용 주문리스트 배송 상태 수정
 		@RequestMapping("StatusUpdate.do")	
-		public String updateStatusUpdate(Order o, Model model, int orderNum, String orderStatus) {
+		public String updateStatusUpdate(Order o, Model model, String orderNum, String orderStatus) {
 			
 			/*
 			 	m.setMid(mId);

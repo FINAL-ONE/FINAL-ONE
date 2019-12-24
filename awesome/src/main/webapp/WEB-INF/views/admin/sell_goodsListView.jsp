@@ -27,7 +27,7 @@
   width: 1300px;
   border: 1px solid #ddd;
   text-align :center;
-  margin-left : 30px;
+  /* margin-left : 30px; */
 }
 #checkboxTestTbl2{
   border-collapse: collapse;
@@ -105,6 +105,29 @@ tr:nth-child(even) {
   opacity: 1;
   right: 0;
 }
+
+
+
+.adminMain-btn, .adminList-btn {
+    margin: 10px 0px 15px;
+    border: 1px solid #fe6666;
+    background: #fe6666;
+    border-radius: 2px;
+    color: #fff;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    width: 259px;
+    height: 40px;
+    cursor: pointer;
+}
+
+.adminMain-btn:hover, .adminList-btn:hover{
+	background: #fff;
+	color: #fe6666;
+}	
+
+
 </style>
 
 </head>
@@ -115,12 +138,11 @@ tr:nth-child(even) {
       <div id="container" style= "height: auto; overflow: auto;"><!-- container -->
 
          <c:if test="${!empty loginUser }">
-               <div style="margin-left : 1200px; margin-top : 20px;">
+               <div style="margin-left : 1345px; margin-top : 20px;">
                   <button class="myBtn success" onclick="location.href='goodsWriterView.do'"><span>상품 등록</span></button>
                </div>
          </c:if>
       <form id = "goodsInsertForm" action="aStatusUpdate.do" method="post">
-          <div id="tableLeft1" style= "width: auto;">
             <table align="center" id ="checkboxTestTbl" class = "goodsTable" border="1" cellspacing="1">
                   <tr bgcolor ="#fa4a4a" style = "color : white">
                      <!-- <th><input type="checkbox" name="user_CheckBox"></th> -->
@@ -178,7 +200,6 @@ tr:nth-child(even) {
                      </tr>
                   </c:forEach>
                </table> 
-             </div> 
 <%--              <div id="tableLeft2" style= "width: auto;">
                <table id ="checkboxTestTbl2" class = "goodsTable" align="center" border="1" cellspacing="1" style="clear:right;">
                   <tr bgcolor ="#fa4a4a" style = "color : white">
@@ -220,13 +241,13 @@ tr:nth-child(even) {
          
    
          </div>
-         <p align="center">
-            <c:url var ="adminMain" value="adminMain.do"/>
-            <a href="${adminMain}" style="text-decoration: none;">관리자페이지 이동</a>&nbsp;
-            <c:url var ="sell_goodsList" value="sell_goodsList.do"/>
-            <a href="${sell_goodsList}" style="text-decoration: none;">목록전체보기</a>
-         </p>
-   </div> 
+         
+         	<p align="center" style="margin : 50px 0 50px 0;">
+				<button class="adminMain-btn" type="button" style="width : 110px; height : 40px;" onclick="location.href='home.do'">HOME 이동</button>
+				<button class="adminList-btn" type="button" style="width : 110px; height : 40px;" onclick="location.href='sell_goodsList.do'">목록전체보기</button>
+			</p>
+	
+         </div>		
    
 
       <!-- 체크박스 전체선택 -->   

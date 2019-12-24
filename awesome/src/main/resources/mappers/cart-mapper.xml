@@ -50,11 +50,13 @@
    
    <!-- 카트 리스트 -->
    <select id="cartList" parameterType="Member" resultMap="cartListResultSet">
-  select * from ( SELECT C.CARTNUM, C.GID, G.GOODS_NAME, G.GOODS_PRICE, M.MID MM, C.COUNT, SG.GOODS_FILE_PATH, G.SOLDOUT, M.USER_NAME, M.PHONE, M.ADDRESS, M.POINT
-      FROM GOODS G, SELL_GOODS SG, CART C, MEMBER M
-      WHERE G.GID = SG.GID
-      AND G.GID = C.GID)
-      where MM = #{mid}
+       select * from (
+      SELECT C.CARTNUM, C.GID, G.GOODS_NAME, G.GOODS_PRICE, M.MID MM, C.COUNT, SG.GOODS_FILE_PATH, G.SOLDOUT, M.USER_NAME, M.PHONE, M.ADDRESS, M.POINT
+      from cart c 
+      join Member m on (c.mid = m.mid) 
+      join goods g on (c.gid = g.gid) 
+      join sell_goods sg on (c.gid = sg.gid))
+      where mm = #{mid}
    </select>
    
    <!-- 카트 삭제 -->

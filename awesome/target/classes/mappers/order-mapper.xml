@@ -168,6 +168,7 @@
 		UPDATE ORDER_LIST
 		SET ORDER_STATUS='I'
 		WHERE ORDER_NUM=#{orderNum}
+		AND ORDER_STATUS='B'
 	</update>
 	
 	
