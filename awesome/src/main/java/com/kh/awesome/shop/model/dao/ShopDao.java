@@ -47,8 +47,14 @@ public class ShopDao {
 		return (ArrayList)sqlSession.selectList("shopMapper.starAvgCount", gId);
 	}
 
+	// 내 후기 조회
 	public ArrayList<SellReply> myafterSelectList(int mid) {
 		return (ArrayList)sqlSession.selectList("shopMapper.myafterSelectList", mid);
+	}
+	
+	// 내후기 삭제
+	public int myafterDelete(String userId) {
+		return sqlSession.update("shopMapper.myafterDelete", userId);
 	}
 
 

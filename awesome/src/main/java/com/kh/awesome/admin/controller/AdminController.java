@@ -29,12 +29,13 @@ import com.kh.awesome.admin.model.vo.Admin;
 import com.kh.awesome.admin.model.vo.Category;
 import com.kh.awesome.admin.model.vo.Goods;
 import com.kh.awesome.admin.model.vo.PageInfo;
+import com.kh.awesome.cart.model.vo.Cart;
 import com.kh.awesome.common.Pagination;
 import com.kh.awesome.member.model.exception.MemberException;
 import com.kh.awesome.member.model.vo.Member;
 import com.kh.awesome.shop.model.serivce.ShopService;
 import com.kh.awesome.shop.model.vo.SellReply;
-
+import com.kh.awesome.admin.model.vo.PageInfo;
 
 @Controller
 public class AdminController {
@@ -46,10 +47,10 @@ public class AdminController {
 	@RequestMapping("adminMain.do")
 	public String nWriterView() {
 		
-		return "admin/adminListView";	
+		return "admin/adminHome";	
 	}
 	
-	// 메뉴바에서 상품조회 클릭시 관리자용 상품조회 테이블 조회--준배
+	// 메뉴바에 서 상품조회 클릭시 관리자용 상품조회 테이블 조회--준배
 	@RequestMapping("sell_goodsList.do")
 	public ModelAndView sell_goodsList(ModelAndView mv) {
 		
@@ -74,7 +75,7 @@ public class AdminController {
 		
 		ArrayList<Admin> list = aService.selectList();
 		// System.out.println(list);
-		
+	
 		if(list != null) {
 			mv.addObject("list", list);
 			mv.setViewName("shop/shopGoodsListView");
@@ -85,7 +86,7 @@ public class AdminController {
 		
 		return mv;
 	}
-	// 메뉴바에서 shop으로 뿌려질 리스트 조회 -- 준배
+	// 메뉴바에서 shop으로 뿌려질 리 스트 조회 -- 준배
 	
 	
 	// 상품등록 페이지에서 상품버튼 클릭시 -- 준배
@@ -190,8 +191,10 @@ public class AdminController {
 	
 	// 상품메인 페이지에서 상품 클릭시 디테일페이지 보여줄 리스트 불러오기 --준배 (동복 list 추가)
 	@RequestMapping("adetail.do")
-	public ModelAndView shopgoodsDetail(ModelAndView mv, int sellNum, 
+	public ModelAndView shopgoodsDetail(ModelAndView mv, int sellNum, int gId,
 					@RequestParam(value="page", required=false) Integer page) {
+		
+		System.out.println("shop gId ::: " + gId);
 		
 		int rCurrentPage = 1;
 		if(page != null) {
@@ -210,14 +213,32 @@ public class AdminController {
 		ArrayList<Admin> list = aService.selectshopgoods(sellNum);
 		ArrayList<Admin> replylist = aService.selectreply(sellNum, pi);
 		
+		ArrayList<Admin> sAvgList = aService.sAvgListSelect(gId);
+		
+		ArrayList<Admin> sAvgList = new ArrayList<Admin>();  
+		
+		
+		sAvgList= aService.sAvgListSelect(gId);
+		
+		if(sAvgList.isEmpty()) {
+			System.out.println("널이다 임마 ");
+			
+		}else {
+			System.out.println("널 아니다");
+			
+		}
+		
+		
 		System.out.println("상품디테일 list : "+ list);
 		System.out.println("pi :" + pi);
+		System.out.println(sAvgList);
 		
 		
 		if(list != null) {
 			mv.addObject("list", list)
 			.addObject("replylist", replylist)
 			.addObject("pi", pi)
+			.addObject("sAvgList", sAvgList)
 			.setViewName("shop/shopGoodsDetail");
 		
 		} else {
@@ -295,11 +316,27 @@ public class AdminController {
 		}
 				
 			
-	
-
+		
+		// 후기 중복체크
+		@RequestMapping("selectafterCheck.do")
+		public ModelAndView selectafterCheck(HttpServletResponse response,  int mId, int gId,  ModelAndView mv, Admin a ) throws JsonIOException, IOException {
+			Map map = new HashMap();
+				
+			a.setmId(mId);
+			a.setgId(gId);
 			
-	
-	
+			
+			boolean isUsable = aService.selectafterCheck(a) == 0? true : false;
+			
+System.out.println("isUsable : " + isUsable);
+			map.put("isUsable", isUsable);
+			
+			mv.addAllObjects(map);
+			
+			mv.setViewName("jsonView");
+			
+			return mv;
+		}
 	
 
 		
@@ -374,7 +411,8 @@ public class AdminController {
 				// 동복 - 판매상품 등록 화면으로 이동
 				@RequestMapping("goodsWriterView.do")
 				public ModelAndView goodsWriterViewList(ModelAndView mv) {
-					ArrayList<Goods> glist = aService.goodsList();
+					//동복 - 판매중인 상품을 제외한 상품 리스트 조회
+					ArrayList<Goods> glist = aService.sellGoodsList();
 			System.out.println("goodsWriterView_glist : " + glist);
 					
 					if(glist != null) {
@@ -440,7 +478,6 @@ public class AdminController {
 				}
 				
 				
-			//-3- 작업중
 				// 동복 - 상품 리스트 조회
 				@RequestMapping("goodsList.do")
 				public ModelAndView goodsList(ModelAndView mv, Category c) {
@@ -455,7 +492,7 @@ public class AdminController {
 
 					if(glist != null) {
 						mv.addObject("glist",glist);
-						
+						 
 						//신규 등록시 필요
 						mv.addObject("cateCd", aService.categoryCDselect());
 						
@@ -899,7 +936,6 @@ public class AdminController {
 				}	
 				
 				
-			// -3-
 				// 동복 - 상품관리 화면에서 조건 검색
 				@RequestMapping("checkTextSelectGoods.do")
 				public void checkTextSelectGoods(HttpServletResponse response,  String lclCd, String mclCd, String sclCd, String goodsStatus, String soldout, String goodsName, Goods g ) throws JsonIOException, IOException {
@@ -936,6 +972,74 @@ public class AdminController {
 					gson.toJson(glist, response.getWriter());	
 					
 				}	
+				
+
+				
+				
+//-3-
+				// 동복 - 관리자 페이지 
+				@RequestMapping("adminSalesVolume.do")
+				public ModelAndView salesVolumeList(ModelAndView mv, Category c,@RequestParam(value="page", required=false) Integer page) {
+			         // 마이바티스 때 했던 PageInfo의 Pagination을 그대로 쓰자.
+			         
+			         // 페이지의 정보 없으면 디폴트 1로
+			         int currentPage = 1; 
+			         
+			         if(page != null) {
+			            currentPage = page;
+			         }
+			         
+			         // 전체글 갯수 조회 
+			         int listCount = aService.salesVolumePageCount();
+
+			         PageInfo pi = Pagination.getPageInfo4(currentPage, listCount);
+
+					
+					String lclCd = "1";
+					String mclCd = "101";
+					c.setLclCd(lclCd);
+					c.setMclCd(mclCd);
+					
+					ArrayList<Goods> glist = aService.salesVolumeList();
+					
+			System.out.println("전체 상품 리스트 : " + glist);
+
+					if(glist != null) {
+						mv.addObject("glist",glist);
+						
+						//신규 등록시 필요
+						mv.addObject("cateCd", aService.categoryCDselect());
+						
+						//공통
+						mv.addObject("gClist", aService.goodsCategoryList()); // 동복 - 상품 수정 카테고리 조회 (카테고리)
+						
+						//조회용
+						mv.addObject("gLlist", aService.goodsLCategoryList(lclCd)); // 동복 - 상품 수정 카테고리 조회 (대)
+						mv.addObject("gMlist", aService.goodsMCategoryList(c)); // 동복 - 상품 수정 카테고리 조회 (중)
+						
+						// 수정용
+						mv.addObject("dLlist", aService.detailLCategoryList()); // 동복 - 상품 수정 카테고리 조회 (대)
+						mv.addObject("dMlist", aService.detailCategoryList()); // 동복 - 상품 수정 카테고리 조회 (중)
+						
+						mv.addObject("pi", pi);
+						
+						mv.setViewName("admin/adminListView");
+					}else {
+						throw new AdminException("상품 목록 보기 실패!!");
+					}
+					return mv;
+				}				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
 				
 				
 				

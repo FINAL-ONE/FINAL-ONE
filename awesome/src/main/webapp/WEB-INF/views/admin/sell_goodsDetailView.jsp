@@ -9,6 +9,17 @@
 <meta charset="UTF-8">
 <link rel="shortcut icon" href="${contextPath}/resources/images/favicon.ico" type="image/x-icon">
 <title>Insert title here</title>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">	<!--  -->
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
+
+<!-- include summernote css/js-->
+<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
+
+
 <style>
  select[multiple]{
      height: 100%;
@@ -84,6 +95,7 @@
 	  right: 0;
 	}
 
+
 </style>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -99,7 +111,6 @@
 <body>
 
 	<jsp:include page ="../common/menubar.jsp"/>
-	<%-- <jsp:include page ="../admin/adminMenu.jsp"/> --%>
 	
 	
 	<div id="container" style="overflow: auto; height: auto;" ><!-- container -->

@@ -21,21 +21,15 @@
 
 <style>
 
-
-
-.outer{
-   width : 100%;
-   height : 100%;
-}
 #checkboxTestTbl{
   border-collapse: collapse;
   border-spacing: 0;
   width: 1300px;
   border: 1px solid #ddd;
-  text-align :center;
-  margin-left : 50px;
+  text-align :center; 
+  margin-left : 30px;
 }
-#checkboxTestTbl2{
+#checkboxTestTbl2{ 
   border-collapse: collapse;
   border-spacing: 0;
   width: 100px;
@@ -121,7 +115,7 @@ tr:nth-child(even) {
       <div id="container" style= "height: auto; overflow: auto;"><!-- container -->
 
          <c:if test="${!empty loginUser }">
-               <div style="margin-left : 1200px; margin-top : 20px;">
+               <div style="margin-left : 1180px; margin-top : 20px;">
                   <button class="myBtn success" onclick="location.href='goodsWriterView.do'"><span>상품 등록</span></button>
                </div>
          </c:if>

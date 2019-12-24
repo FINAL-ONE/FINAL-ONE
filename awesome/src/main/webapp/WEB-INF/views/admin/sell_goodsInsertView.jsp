@@ -9,7 +9,26 @@
 <link rel="shortcut icon" href="${contextPath}/resources/images/favicon.ico" type="image/x-icon">
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
+
+<!-- include summernote css/js-->
+<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
+
+
 <style>
+
+#insertTable{
+	/* margin-left : 300px; */
+}
+
  select[multiple]{
      height: 100%;
    }
@@ -81,32 +100,26 @@
 	  opacity: 1;
 	  right: 0;
 	}
+	
+	
+
+
+	
 </style>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
-<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
-<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
-
-<!-- include summernote css/js-->
-<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
-<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
-   
 </head>
 <body>
 
 	<jsp:include page ="../common/menubar.jsp"/>
-	<%-- <jsp:include page ="../admin/adminMenu.jsp"/> --%>
-	
 	
 	<div id="container" style="overflow: auto; height: auto;" ><!-- container -->
-	
-<h1 align="center"> 상품 등록 페이지 </h1>
-	
-	<br><br>
-	<form action="sellgoodsInsert.do" method="post" enctype="Multipart/form-data" id="sellgoodsInsertForm">
-		<table class="type02" align="center">	
-		
+
+
+
+		<h1 align="center"> 상품 등록 페이지 </h1>
+
+		<form action="sellgoodsInsert.do" method="post" enctype="Multipart/form-data" id="sellgoodsInsertForm">
+		<table id="insertTable" class="type02" align="center">	
 		
 		<input id="mId" type="hidden" width="100%" name ="mId" readonly value="${sessionScope.loginUser.mid }"/>
 		
@@ -143,41 +156,6 @@
 					<input type="hidden" name="idDuplicateCheck" id="idDuplicateCheck" value="0">
 				</td>
 			</tr>
-
-			
-			
-<%-- 			<tr>
-	            <th> 상품 선택  <span style = "color:red; font-size : 1.5em;">*</span> </th>
-	            <td>
-					<input type="text" id="goodsName" name="goodsName" placeholder="선택하세요." list="myinter" />   
-					<datalist id="myinter" name="myinter">
-						<select id="selectBox" name="selectBox">
-							<c:forEach var="g" items="${glist}">
-								<option value="${g.goodsName}">${g.goodsName}</option>
-							</c:forEach>
-						</select>
-					</datalist>
-					
-				</td>
-			</tr>
-			<tr>
-				<th></th>
-				<td>
-					<!-- <span class="guide ok">이 상품명은 사용 가능합니다.</span> -->
-					<span class="guide error">이 상품은 사용할수 없습니다.</span>
-					<input type="hidden" name="id	DuplicateCheck" id="idDuplicateCheck" value="0">
-				</td>
-			</tr>
-			<tr>
-				<th>상품 가격  <span style = "color:red; font-size : 1.5em;">*</span> </th>
-				<td><input id="goodsPrice" type="text" name ="goodsPrice" style="height:20px;" numberOnly></td>
-			</tr>
-			<tr>
-				<th>상품 수량  <span style = "color:red; font-size : 1.5em;">*</span> </th>
-				<td><input id="count" type="text" name ="count" style="height:20px;" numberOnly></td>
-			</tr> --%>
-			
-			
 			<tr>
 				<th>상품 내용<span style = "color:red; font-size : 1.5em;">*</span>&nbsp;&nbsp;&nbsp;&nbsp;</th>
 					<td><textarea id ="summernote" name="goodsContent" rows="10" cols ="81" size ="resize:none" required></textarea>
@@ -454,6 +432,9 @@
 	});
 
 	</script>
+
+
+
 
 </body>
 

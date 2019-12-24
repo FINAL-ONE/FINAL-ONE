@@ -24,9 +24,13 @@ public interface AdminService {
 	// 해당 글의 리플 갯수 조회
 	public int getReplylistCount(int sellNum);
 	
+	// 해당 상품 후기 평균
+	public ArrayList<Admin> sAvgListSelect(int gId);
+	
+	// 구매한 상품에서 후기작성 중복 체크
+	public int selectafterCheck(Admin a);
 	
 	
-
 	//---------------------------- INSERT ----------------------------	
 	// 동복- 상품 등록
 	int insertCategory(Category c);
@@ -49,8 +53,14 @@ public interface AdminService {
 	// 동복 - 상품관리에서 수정시 판매중인 상품리스트에 대한 상태도 변경
 	int updateSellGoodsStatus(Admin a);
 //---------------------------- SELECT ----------------------------	
+	// 동복- 판매량 많은 상품 조회 페이징처리 
+	int salesVolumePageCount();
 	// 동복- 상품 리스트 조회
 	public ArrayList<Goods> goodsList();
+	// 동복- 판매량 많은 상품 조회
+	public ArrayList<Goods> salesVolumeList();
+	// 동복 - 판매중인 상품을 제외한 상품 리스트 조회
+	public ArrayList<Goods> sellGoodsList();
 	// 동복 - 상품판매 시 상품리스트 조회
 	public ArrayList<Goods> checkIdDup(String goodsName);
 	// 동복 - 상품 등록 카테고리 조회
@@ -77,7 +87,7 @@ public interface AdminService {
 	public int checkGoodsNm(String goodsName);
 	// 동복 - 상품 수정시 현재 해당 상품이 판매 중인지 조회
 	public int selectsellGoodsList(String gId);
-	// 동복 - 판매 상품 조회 수정 페이지
+	// 동복 - 판매 상품회 수정 페이지
 	public ArrayList<Admin> sell_goodsDetailView(int sellNum);	
 	// 동복 - 상품관리 화면에서 조건 검색
 	public ArrayList<Goods> checkTextSelectGoods(Goods g);
@@ -86,5 +96,9 @@ public interface AdminService {
 	public ArrayList<Category> detailLCategoryList();
 	// 동복 - 상품 수정 (중)카테고리 조회
 	public ArrayList<Category> detailCategoryList();
+
+
+
+	
 	
 }
