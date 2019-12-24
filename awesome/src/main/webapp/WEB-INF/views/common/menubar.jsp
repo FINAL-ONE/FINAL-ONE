@@ -574,6 +574,7 @@ This class is added to the container
            <div>따라갑시다.</div>  
         </div>  
 </div>  -->
+
 	<c:if test="${sessionScope.loginUser.userId eq 'admin' }">
 		<div class="sidebar closed">
 			<div align="center" id="scroll">
@@ -597,6 +598,7 @@ This class is added to the container
 			</div>
 		</div>
 	</c:if>
+
 </body>
 
 
@@ -713,10 +715,10 @@ $(function(){
              
      });
      
-    $(".communityMenu").mouseleave(function(){
+   $(".communityMenu").mouseleave(function(){
         $(".communityMenubar").css("display","none");
         $(".normalMenubar").css("display","block");
-    });
+    }); 
 
     
      $(".myPageMenu").mouseenter(function(){

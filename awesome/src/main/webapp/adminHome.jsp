@@ -87,11 +87,11 @@ body {
 </style>
 </head>
 <body>
-<jsp:include page ="../common/menubar.jsp"/>
-<jsp:include page ="../admin/adminMenu.jsp"/>
-	<div id="container" style="overflow: auto; height: 900px;" ><!-- container -->
+<%-- <jsp:include page ="../common/menubar.jsp"/>
+<jsp:include page ="../admin/adminMenu.jsp"/> --%>
+	<div id="container" style="overflow: auto; height: auto;" ><!-- container -->
 
-<!-- 
+
    	  <div id="draggable1" class="ui-widget-content">
 	 	<div style="width : 100%; height : 50px; background : red; position: relative; overflow-x : none;">
 			<label class="switch" style="margin-left: 10px; margin-top : 5px">
@@ -144,10 +144,12 @@ body {
 	 </div>
 			
 	
-	</div>			container
+	</div>			
+	<!-- container
 		
  		switch script
-	 	<script>
+	 -->
+	  	<script>
 		  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 		  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
 		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
@@ -157,7 +159,7 @@ body {
 		  ga('send', 'pageview');
 		</script>
 
-	드래그앤드롭 js 
+	<!-- 드래그앤드롭 js --> 
 		<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 	    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 		  <script>
@@ -232,13 +234,13 @@ body {
 			  } 
 			}
 		</script>
-		 -->
+	
 		
 		
 </body>
 
-<footer>
+<%-- <footer>
    <jsp:include page ="../common/footer.jsp"/>
-</footer>
+</footer> --%>
 
 </html>

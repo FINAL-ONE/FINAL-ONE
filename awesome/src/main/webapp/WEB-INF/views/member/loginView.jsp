@@ -144,18 +144,18 @@ function loginCheck(){
 			userPwd : userPwd
 		},
 		success : function(data) {
-			if (data != "실패") {
+			if (data.result != "") {
 				console.log(data);
-				alert(data + "님 환영합니다." );
+				alert(decodeURIComponent(data.result)+ "님 환영합니다." );
 				location.href="home.do";
 			}else{ 
-				alert("아이디나 비밀번호를 다시 확인해주세요1 ");
+				alert("아이디나 비밀번호를 다시 확인해주세요");
 			}
 			
 			
 		},
 		error : function(request, status, errorData) {
-			alert("아이디나 비밀번호를 다시 확인해주세요 2");
+			alert("아이디나 비밀번호를 다시 확인해주세요");
 		}
 	});	
        

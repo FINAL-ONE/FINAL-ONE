@@ -44,6 +44,17 @@
 	
 	
 	
+	.centerDiv{
+		    width: 1500px;
+    /* border: 1px solid pink; */
+    margin-left: auto;
+    margin-right: auto;
+    height: auto;
+    padding-left: 90px;
+	}
+	
+	
+	
 	/* 모달창 css */
 	/* The Modal (background) */
 	.modal {
@@ -156,6 +167,29 @@
 		color: black;
 	}	
 	
+	
+	
+.adminMain-btn, .adminList-btn {
+    margin: 10px 0px 15px;
+    border: 1px solid #fe6666;
+    background: #fe6666;
+    border-radius: 2px;
+    color: #fff;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    width: 259px;
+    height: 40px;
+    cursor: pointer;
+}
+
+.adminMain-btn:hover, .adminList-btn:hover{
+	background: #fff;
+	color: #fe6666;
+}	
+	
+	
+	
 </style>
 </head>
 <body>
@@ -165,6 +199,8 @@
 	
 	<br><br>
 	<c:if test="${!empty loginUser }">
+		
+				
    		<div align ="center">
    		<!--
    			상품 이름 
@@ -744,14 +780,11 @@
 	
 	<br><br><br>
 	
-	<p align="center">
-		<c:url var ="adminMain" value="adminMain.do"/>
-		<a href="${adminMain}">관리자페이지 이동</a>&nbsp;
-		<c:url var ="goodsList" value="goodsList.do"/>
-		<a href="${goodsList}">목록전체보기</a>
+	<p align="center" style="margin : 50px 0 50px 0;">
+		<button class="adminMain-btn" type="button" style="width : 110px; height : 40px;" onclick="location.href='home.do'">HOME 이동</button>
+		<button class="adminList-btn" type="button" style="width : 110px; height : 40px;" onclick="location.href='goodsList.do'">목록전체보기</button>
 	</p>
-	
-	
+
 	
 
 	<script type="text/javascript">

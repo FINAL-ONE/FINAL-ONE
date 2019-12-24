@@ -213,7 +213,19 @@ public class AdminController {
 		ArrayList<Admin> list = aService.selectshopgoods(sellNum);
 		ArrayList<Admin> replylist = aService.selectreply(sellNum, pi);
 		
-		ArrayList<Admin> sAvgList = aService.sAvgListSelect(gId);
+		ArrayList<Admin> sAvgList = new ArrayList<Admin>();  
+		
+		
+		sAvgList= aService.sAvgListSelect(gId);
+		
+		if(sAvgList.isEmpty()) {
+			System.out.println("널이다 임마 ");
+			
+		}else {
+			System.out.println("널 아니다");
+			
+		}
+		
 		
 		ArrayList<Admin> sAvgList = new ArrayList<Admin>();  
 		

@@ -21,13 +21,22 @@
 
 <style>
 
+.centerDiv{
+		    width: 1500px;
+    /* border: 1px solid pink; */
+    margin-left: auto;
+    margin-right: auto;
+    height: auto;
+    padding-left: 90px;
+	}
+
+	
 #checkboxTestTbl{
   border-collapse: collapse;
   border-spacing: 0;
   width: 1300px;
   border: 1px solid #ddd;
-  text-align :center; 
-  margin-left : 30px;
+  text-align :center;
 }
 #checkboxTestTbl2{ 
   border-collapse: collapse;
@@ -67,18 +76,21 @@ tr:nth-child(even) {
 
 /*상품 등록하기  버튼 css  */
 .myBtn{
-   width :145px;
-   height : 40px;
-   font-size : 15px;
-   border-radius: 4px;
-   background-color: #4CAF50;
-   border: none;
-   color: #FFFFFF;
-   text-align: center;
-   padding: 6px;
-   transition: all 0.5s;
-   cursor: pointer;
-   margin: 3px;
+     width: 145px;
+    height: 40px;
+    font-size: 15px;
+    border-radius: 4px;
+    background-color: #4CAF50;
+    border: none;
+    color: #FFFFFF;
+    text-align: center;
+    padding: 6px;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin: 3px;
+    position: relative;
+    right: 20px;
+    margin-bottom: 20px;
 }
 
 .myBtn span {
@@ -105,25 +117,47 @@ tr:nth-child(even) {
   opacity: 1;
   right: 0;
 }
+
+
+
+.adminMain-btn, .adminList-btn {
+    margin: 10px 0px 15px;
+    border: 1px solid #fe6666;
+    background: #fe6666;
+    border-radius: 2px;
+    color: #fff;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    width: 259px;
+    height: 40px;
+    cursor: pointer;
+}
+
+.adminMain-btn:hover, .adminList-btn:hover{
+	background: #fff;
+	color: #fe6666;
+}	
+
+
 </style>
 
 </head>
 <body>
    <jsp:include page="../common/menubar.jsp"/>   
-
+	<div class="centerDiv">
     <div class = "outer">
       <div id="container" style= "height: auto; overflow: auto;"><!-- container -->
 
          <c:if test="${!empty loginUser }">
-               <div style="margin-left : 1180px; margin-top : 20px;">
+               <div style="margin-left : 1345px; margin-top : 20px;">
                   <button class="myBtn success" onclick="location.href='goodsWriterView.do'"><span>상품 등록</span></button>
                </div>
          </c:if>
       <form id = "goodsInsertForm" action="aStatusUpdate.do" method="post">
-          <div id="tableLeft1" style= "width: auto;">
-            <table align="center" id ="checkboxTestTbl" class = "goodsTable" border="1" cellspacing="1">
+          <div id="tableLeft1" style= "width:auto;">
+            <table align="center" id ="checkboxTestTbl" class = "goodsTable"  style="border: 1; cellspacing:1">
                   <tr bgcolor ="#fa4a4a" style = "color : white">
-                     <!-- <th><input type="checkbox" name="user_CheckBox"></th> -->
                      <th>상품번호</th>
                      <th>이미지</th>
                      <th>상품명</th>
@@ -133,7 +167,6 @@ tr:nth-child(even) {
                      <th>등록날짜</th>
                      <th>수정날짜</th>
                      <th>상태</th>
-                     <!-- <th width = "200px">품절</th> -->
                   </tr>
                   
                   <c:forEach var="a" items="${list}">
@@ -177,8 +210,8 @@ tr:nth-child(even) {
                         <!-- <td class="tablestatus">상태변경</td> -->                  
                      </tr>
                   </c:forEach>
-               </table> 
-             </div> 
+               </table>
+              </div>
 <%--              <div id="tableLeft2" style= "width: auto;">
                <table id ="checkboxTestTbl2" class = "goodsTable" align="center" border="1" cellspacing="1" style="clear:right;">
                   <tr bgcolor ="#fa4a4a" style = "color : white">
@@ -220,13 +253,13 @@ tr:nth-child(even) {
          
    
          </div>
-         <p align="center">
-            <c:url var ="adminMain" value="adminMain.do"/>
-            <a href="${adminMain}" style="text-decoration: none;">관리자페이지 이동</a>&nbsp;
-            <c:url var ="sell_goodsList" value="sell_goodsList.do"/>
-            <a href="${sell_goodsList}" style="text-decoration: none;">목록전체보기</a>
-         </p>
-   </div> 
+         
+         	<p align="center" style="margin : 50px 0 50px 0;">
+				<button class="adminMain-btn" type="button" style="width : 110px; height : 40px;" onclick="location.href='home.do'">HOME 이동</button>
+				<button class="adminList-btn" type="button" style="width : 110px; height : 40px;" onclick="location.href='sell_goodsList.do'">목록전체보기</button>
+			</p>
+	
+         </div>		
    
 
       <!-- 체크박스 전체선택 -->   
@@ -296,6 +329,7 @@ tr:nth-child(even) {
                      (adsbygoogle = window.adsbygoogle || []).push({});
                   </script>
                </div>
+            </div>
             </div>
             <script src="js/Modal.js-master/modal.js"></script>
             

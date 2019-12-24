@@ -85,4 +85,7 @@ public interface OrderService {
 	// 관리자 배송상태 변경
 	int updateStatusUpdate(Order o);
 
+	//구매홧정
+	int orderComplete(String orderNum);
+
 }

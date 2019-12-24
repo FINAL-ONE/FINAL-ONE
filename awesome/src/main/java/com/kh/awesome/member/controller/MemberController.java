@@ -1,6 +1,7 @@
- package com.kh.awesome.member.controller;
+package com.kh.awesome.member.controller;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.mail.HtmlEmail;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -152,7 +154,7 @@ public class MemberController {
    // 암호화 처리 후 로그인 부분
       @RequestMapping(value = "login.do", method = RequestMethod.POST)
       @ResponseBody
-      public ResponseEntity<String> memberLogin(Member m, Model model, SessionStatus status, HttpServletResponse response ) {
+      public String memberLogin(Member m, Model model, SessionStatus status) throws UnsupportedEncodingException {
          /*
           * matches() 메소드를 통해 우리는 암호화되어 있는 DB값과
           * 사용자가 입력한 비밀번호를 비교할 수 있다.
@@ -165,19 +167,22 @@ public class MemberController {
          Member loginUser = mService.loginMember(m);
                            // matches 안에서 긁어온 암호화된 녀석이랑 사용자가 입력한 녀석이랑 비교해준다.
          
+         
+
+         JSONObject job =new JSONObject();
+         
+         
          if(bcryptPasswordEncoder.matches(m.getUserPwd(),loginUser.getUserPwd())) {
             model.addAttribute("loginUser", loginUser);
          
             String userNickname = loginUser.getUserNickname();
-            System.out.println(userNickname);
-            HttpHeaders responseHeaders = new HttpHeaders();
-            responseHeaders.add("Content-Type", "text/html; charset=utf-8");
-            
-            return new ResponseEntity(userNickname, responseHeaders, HttpStatus.CREATED);
+          
+    		job.put("result", URLEncoder.encode(userNickname,"utf-8"));
+    		return job.toJSONString();
+    		
          }else {
-        	 HttpHeaders responseHeaders = new HttpHeaders();
-             responseHeaders.add("Content-Type", "text/html; charset=utf-8");
-        	 return new ResponseEntity("실패", responseHeaders, HttpStatus.CREATED);
+    		job.put("result", URLEncoder.encode("","utf-8"));
+    		return job.toJSONString();
          }
        
       }
@@ -388,5 +393,15 @@ public class MemberController {
          }
          
             
-   
+
+			@RequestMapping("privacy.do")
+			public String privacy() {
+				return "/common/privacyStatement";
+			}
+				
+			@RequestMapping("termsOfUse.do")
+			public String termsOfUse() {
+				return "/common/termsOfUse";
+			}
+
 }

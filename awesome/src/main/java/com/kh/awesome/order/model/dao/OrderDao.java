@@ -148,4 +148,11 @@ public class OrderDao {
 			return sqlSession.update("orderMapper.updateStatusUpdate", o);
 		}
 
+		
+		//구매확정
+		public int orderComplete(String orderNum) {
+			
+			return sqlSession.update("orderMapper.orderComplete", orderNum);
+		}
+
 }

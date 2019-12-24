@@ -7,6 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="shortcut icon" href="${contextPath}/resources/images/favicon.ico" type="image/x-icon">
 <title>Insert title here</title>
 
 
@@ -318,6 +319,7 @@ tr:nth-child(even) {
 			
 			
 			function showModifyStatus(orderNum, orderStatus){
+				/* var orderStatus = document.getElementById("orderStatusUpdate-btn); */
 				showModal(orderNum);
 				/* modal.style.display = "block"; */
 			}
