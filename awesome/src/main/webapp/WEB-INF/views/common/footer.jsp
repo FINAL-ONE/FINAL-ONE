@@ -11,6 +11,7 @@
    width: 100%;
    height: 390px;
    display: block;
+   padding-left: 60px;
 }
 
 .footerSpan{
@@ -63,9 +64,14 @@
 	cursor: pointer;
 }
 
+.fa-envelope-open-text:before {
+    content: "\f658";
+    font-size: 22px;
+}
+
 </style>
 
-
+<link href="${contextPath}/resources/fontawesome-free/css/all.css" rel="stylesheet">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>footer test</title>
 </head>
@@ -80,7 +86,7 @@
    <div style=" height: 260px; width: 1288px; margin-left:auto;margin-right:auto;margin-top:30px;">
       <div class= footerDiv>
             <b style="font-size: 17px;">고객센터</b><br><br>
-            hokwan92@naver.com 
+            <i class="fas fa-envelope-open-text" ></i> hokwan92@naver.com 
             <br><br>
             <p style="width:300px; margin:0px; font-size:12px;color:#999999">
             문의사항은 관리자에게 게시판 또는 이메일 주소로<br>
@@ -107,7 +113,7 @@
          </p>  
       </div>
       <div class= footerDiv style="width: 270px;">
-         <b style="font-size: 17px;">공지사항</b><br>
+         <b style="font-size: 17px;">이벤트</b><br>
             <br>
             <a href="">· S파게티 까르보나라 체험단 모집 (11.21~12.01)</a><br>
             <a href="">· 단단파운드 추가 체험단 발표</a><br>
@@ -115,10 +121,10 @@
             <a href="">· 크런치킨 체험단 모집 (11.15~11.24)</a><br>
             <a href="">· 달짝 아이스단호박 체험단 모집 (11.12~11.21)</a><br>
          <br>
-         <b style="font-size: 17px;">SNS</b><br><br>
-        <img src="resources/images/facebook.png" style="height:25%; width:25%; " class="sns" onclick="window.open('https://www.facebook.com')">&nbsp;&nbsp;
-       <img src="resources/images/instagram.png" style="height:25%; width:25%; "class="sns" onclick="window.open('https://www.instagram.com')">&nbsp;&nbsp;
-      <img src="resources/images/twitter.png" style="height:25%; width:25%; "class="sns" onclick="window.open('http://twitter.com')">
+         <b style="font-size: 17px;">SNS</b><br><div style="height: 10px;"></div>
+        <img src="resources/images/facebook.png" style="height:15%; width:15%; " class="sns" onclick="window.open('https://www.facebook.com')">&nbsp;&nbsp;
+       <img src="resources/images/instagram.png" style="height:15%; width:15%; "class="sns" onclick="window.open('https://www.instagram.com')">&nbsp;&nbsp;
+      <img src="resources/images/twitter.png" style="height:15%; width:15%; "class="sns" onclick="window.open('http://twitter.com')">
       </div>
    </div>
    <div style="width: 1288px; margin-left:auto;margin-right: auto;margin-top:0px; border-top: 1px solid #eee">

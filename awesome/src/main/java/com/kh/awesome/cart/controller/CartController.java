@@ -1,7 +1,11 @@
 ﻿package com.kh.awesome.cart.controller;
 
+
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,7 +21,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.server.adapter.HttpWebHandlerAdapter;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.JsonIOException;
 import com.kh.awesome.admin.model.vo.Admin;
+import com.kh.awesome.board.model.exception.BoardException;
 import com.kh.awesome.cart.model.exception.CartException;
 import com.kh.awesome.cart.model.service.CartService;
 import com.kh.awesome.cart.model.vo.Cart;
@@ -39,9 +45,10 @@ public class CartController {
    public ModelAndView getCartList(HttpSession session, ModelAndView mv) throws Exception {
       
       Member loginUser = (Member)session.getAttribute("loginUser");
-      int mId = loginUser.getMid();
+
+//      int mId = loginUser.getMid();
       
-      List<CartList> cartList = cService.cartList(mId);
+      List<CartList> cartList = cService.cartList(loginUser);
       System.out.println("controller 카트리스트 : " + cartList);
       
       
@@ -49,6 +56,7 @@ public class CartController {
       mv.addObject("cartList", cartList);
       mv.setViewName("cart/cartList");
       return mv;
+
    }
       
       
@@ -76,8 +84,35 @@ public class CartController {
       }      
       return result;      
    }
-   
 
+   @ResponseBody
+   @RequestMapping(value = "addAmount.do")
+   public int addAmount(HttpSession session, int cartNum) {
+      System.out.println("cartNum: " +  cartNum);   
+      
+  
+      int result =  cService.addAmount(cartNum);
+         
+      return result;      
+     
+   }
+   
+   @ResponseBody
+   @RequestMapping(value = "subAmount.do")
+   public int subAmount(HttpSession session, int cartNum) {
+      System.out.println("cartNum: " +  cartNum);   
+      
+  
+      int result =  cService.subAmount(cartNum);
+         
+      return result;      
+     
+   }
+ 
+  
+   
+   
+   
    // 카트에 상품 추가
       @RequestMapping("goCart.do")
       public String goodsgoCartView(HttpServletRequest request, Cart c, Admin a) {
@@ -98,15 +133,43 @@ public class CartController {
       }
       
    /*
-    * // 카트 뷰로 이동
+    * // 카트 뷰로 이동 
     * 
     * @RequestMapping("moveCart.do") public String moveCart() {
     * 
     * return "cart/cartList"; }
     */                  
       
-}
 
+      
+      
+		// 동복 - 장바구니 클릭시 해당 상품이 이미 장바구니에 있으면 체크
+		@RequestMapping("selectCartCheck.do")
+		public ModelAndView selectCartCheck(HttpServletResponse response,  int mId, int gId, ModelAndView mv, Cart a ) throws JsonIOException, IOException {
+			Map map = new HashMap();
+			
+			a.setmId(mId);
+			a.setgId(gId);
+			
+			boolean isUsable = cService.selectCartCheck(a) == 0? true : false;
+System.out.println("isUsable : " + isUsable);
+			map.put("isUsable", isUsable);
+			
+			mv.addAllObjects(map);
+			
+			mv.setViewName("jsonView");
+			
+			return mv;
+		}      
+      
+      
+      
+      
+      
+      
+      
+      
+}
 
 
 

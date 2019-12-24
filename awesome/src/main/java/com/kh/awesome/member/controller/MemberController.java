@@ -388,6 +388,7 @@ public class MemberController {
          }
          
             
+
 			@RequestMapping("privacy.do")
 			public String privacy() {
 				return "/common/privacyStatement";
@@ -397,4 +398,5 @@ public class MemberController {
 			public String termsOfUse() {
 				return "/common/termsOfUse";
 			}
+
 }

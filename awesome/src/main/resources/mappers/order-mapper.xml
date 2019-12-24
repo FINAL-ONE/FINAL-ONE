@@ -194,11 +194,13 @@
 	<select id="nextOrderNum" resultType="_int">
 	    select DID.nextval from dual
 	</select>
+
 		<!-- 구매확정 -->
 	<update id="orderComplete" parameterType="Order">
 		UPDATE ORDER_LIST
 		SET ORDER_STATUS='C'
 		WHERE ORDER_STATUS='I' AND ORDER_NUM=#{orderNum}
 	</update>
+
 	
 </mapper>

@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    	<%@ page session="false" %>
-    	<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+       <%@ page session="false" %>
+       <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />  
 <!DOCTYPE html>
 <html>
@@ -16,17 +16,17 @@
 </head>
 <style>
 .pagingArea button {
-	  border: 1px solid #dcdcdc;
-	  outline: none;
-	  padding: 6px 12px;
-	  cursor: pointer;
-	  background: white;
-	  font-size: 13px;
+     border: 1px solid #dcdcdc;
+     outline: none;
+     padding: 6px 12px;
+     cursor: pointer;
+     background: white;
+     font-size: 13px;
       color: #828282;
 }
 
 .centerDiv{
-	  width:880px;
+     width:880px;
       margin-left:auto;
       margin-right:auto;
       height: auto;
@@ -35,15 +35,15 @@
 }
 
 #orderTable{
-	border:none;
-	border-top: 1px solid black;
+   border:none;
+   border-top: 1px solid black;
 }
-.centerDiv #tr td{	
-	text-align: center;
-	font-weight: 600;
-	height: 50px;
-	font-size: 14px;
-	border-top : none;
+.centerDiv #tr td{   
+   text-align: center;
+   font-weight: 600;
+   height: 50px;
+   font-size: 14px;
+   border-top : none;
     border-left: 0 none;
 /*     border-right: 1px solid #d0d0d0; */
     border-bottom: 1px solid #d0d0d0;
@@ -51,10 +51,10 @@
 }
 
 #orderTable td{
-	height: 70px;
-	border-bottom:  1px solid #d0d0d0;
-	font-size: 14px;
-	text-align : center;
+   height: 70px;
+   border-bottom:  1px solid #d0d0d0;
+   font-size: 14px;
+   text-align : center;
 }
 
 
@@ -91,101 +91,102 @@ input::placeholder {
 }
 
 .date{
-	height: 30px;
-	width: 100px;
-	padding-top: 6px;
-	cursor: pointer;
+   height: 30px;
+   width: 100px;
+   padding-top: 6px;
+   cursor: pointer;
 }
 
 #search {
-	-webkit-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
-	-moz-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
-	-ms-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
-	-o-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
-	transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+   -webkit-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+   -moz-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+   -ms-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+   -o-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+   transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
 
-	max-width: 32px;
+   max-width: 32px;
 
-	border-radius: 4px;
-	padding: 6px;
+   border-radius: 4px;
+   padding: 6px;
 
-	text-align: center;
+   text-align: center;
 }
 
 
 #search.button {
-	color: gray;
-	box-shadow: gray 0 0px 0px 2px inset;
-	cursor: pointer;
+   color: gray;
+   box-shadow: gray 0 0px 0px 2px inset;
+   cursor: pointer;
 }
 
 #search.button:hover {
-	color: rgba(255, 255, 255, 0.85);
-	box-shadow: #fa4a4a 0 80px 0px 2px inset;
+   color: rgba(255, 255, 255, 0.85);
+   box-shadow: #fa4a4a 0 80px 0px 2px inset;
 }
 .term{
-	-webkit-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
-	-moz-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
-	-ms-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
-	-o-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
-	transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+   -webkit-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+   -moz-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+   -ms-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+   -o-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+   transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
 
-	max-width: 32px;
+   max-width: 32px;
 
-	border-radius: 4px;
-	padding: 6px;
+   border-radius: 4px;
+   padding: 6px;
 
-	text-align: center;
-	color: gray;
-	box-shadow: gray 0 0px 0px 2px inset;
+   text-align: center;
+   color: gray;
+   box-shadow: gray 0 0px 0px 2px inset;
 }
 
 
 
 .term:hover {
-	color: rgba(255, 255, 255, 0.85);
-	box-shadow: #fa4a4a 0 80px 0px 2px inset;
-	cursor: pointer;
+   color: rgba(255, 255, 255, 0.85);
+   box-shadow: #fa4a4a 0 80px 0px 2px inset;
+   cursor: pointer;
 }
 #back{
-	-webkit-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
-	-moz-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
-	-ms-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
-	-o-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
-	transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+   -webkit-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+   -moz-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+   -ms-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+   -o-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+   transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
 
-	max-width: 32px;
+   max-width: 32px;
 
-	border-radius: 4px;
-	padding: 6px;
+   border-radius: 4px;
+   padding: 6px;
 
-	text-align: center;
-	color: gray;
-	box-shadow: gray 0 0px 0px 2px inset;
+   text-align: center;
+   color: gray;
+   box-shadow: gray 0 0px 0px 2px inset;
 }
 
 
 
 #back:hover {
-	color: rgba(255, 255, 255, 0.85);
-	box-shadow: #fa4a4a 0 80px 0px 2px inset;
-	cursor: pointer;
+   color: rgba(255, 255, 255, 0.85);
+   box-shadow: #fa4a4a 0 80px 0px 2px inset;
+   cursor: pointer;
 
 
 
 </style>
 <body>
 
-	<jsp:include page="../common/menubar.jsp" />
+   <jsp:include page="../common/menubar.jsp" />
 
 <div class = "centerDiv"> 
-		<div>
-		<h1>주문/배송 조회</h1>
-	
-		<div align="right">
-		<a id=week onclick="searchWeek()" class="term">1주일</a>&nbsp;<a id=oneMon onclick="searchAmon()" class="term">1개월</a>&nbsp;<a id=threeMon onclick="searchTmon()" class="term">3개월</a>&nbsp;<a id=sixMon onclick="searchSmon()" class="term">6개월</a>&nbsp;<input class="date" type="text" id="date1" placeholder="시작날짜" value="${os.date1 }" readonly>&nbsp;<input class="date" type="text" id="date2" placeholder="마지막날짜" size="25px" value="${os.date2 }" readonly>&nbsp;<a id=search onclick="search2()" class="button">검색</a>
-		</div>
-		<br>
+      <div>
+      <h1>주문/배송 조회</h1>
+   
+      <div align="right">
+      <a id=week onclick="searchWeek()" class="term">1주일</a>&nbsp;<a id=oneMon onclick="searchAmon()" class="term">1개월</a>&nbsp;<a id=threeMon onclick="searchTmon()" class="term">3개월</a>&nbsp;<a id=sixMon onclick="searchSmon()" class="term">6개월</a>&nbsp;<input class="date" type="text" id="date1" placeholder="시작날짜" value="${os.date1 }" readonly>&nbsp;<input class="date" type="text" id="date2" placeholder="마지막날짜" size="25px" value="${os.date2 }" readonly>&nbsp;<a id=search onclick="search2()" class="button">검색</a>
+      </div>
+      <br>
+
 
 			<table align="center" cellspacing="0" width="880px" id="orderTable">
 				<tr id="th">
@@ -268,13 +269,12 @@ input::placeholder {
 				</c:forEach>
 				
 
-
-			</table>
-			<br><br><div align="right">
-					<a id=back onclick="location.href='orderView.do'">목록으로 돌아가기</a>
-					</div>
-					<!-- 페이징처리 하쟈-->
-			 <br><br>
+         </table>
+         <br><br><div align="right">
+               <a id=back onclick="location.href='orderView.do'">목록으로 돌아가기</a>
+               </div>
+               <!-- 페이징처리 하쟈-->
+          <br><br>
       <div class="pagingArea" align="center">
          <!-- 맨 처음으로(<<) -->
 
@@ -292,7 +292,9 @@ input::placeholder {
          <!-- 10개의 페이지 목록 -->
          <c:set var="selectP" value="0"/>
          <c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage }">
+
            <c:if test="${pi.currentPage == p }">    	  
+
                <button style="background:#ec434a;color:white" disabled >${p}</button>
            </c:if>
             <c:if test="${pi.currentPage != p }">
@@ -300,7 +302,7 @@ input::placeholder {
             </c:if>
             
        </c:forEach>
-	 				
+                
          <c:if test="${pi.currentPage >= pi.maxPage }">
             <button disabled> > </button>
           </c:if>
@@ -311,6 +313,7 @@ input::placeholder {
          <!-- 맨 끝으로(>>) -->
          <button onclick="maxPageSearch()"> >> </button>
             </div>
+
 			
 			<div>
 				  
@@ -320,6 +323,7 @@ input::placeholder {
 		</div>
 		<c:set var="to" value="${os.date1 }"/>
 
+
 </body>
 
 <script>
@@ -328,14 +332,17 @@ var to  ='${os.date1}';
 var from ='${os.date2}';
 
 $(function() {
+
 	   $( "#date1" ).datepicker({
 
 	dateFormat: "yy-mm-dd",
 	changeMonth: true, 
+
     changeYear: true,
     nextText: '다음 달',
     prevText: '이전 달',
     maxDate: 0
+
 		 	});
 	   
 
@@ -353,6 +360,8 @@ $(function() {
 	    
 	});
 	
+
+
 
 	function nextPageSearch(){
 	 	location.href="orderSearch.do?page=${pi.currentPage + 1}&date1="+to+"&date2="+from; 
@@ -390,210 +399,212 @@ $(function() {
 		
 	}
 	
-	 function searchWeek(){
-			
-			
-			var sysdate = new Date();
-			var dd = sysdate.getDate();
-			var mm = sysdate.getMonth()+1; //January is 0!
-			var yy = sysdate.getFullYear();
-	
+
+   
+    function searchWeek(){
+         
+         
+         var sysdate = new Date();
+         var dd = sysdate.getDate();
+         var mm = sysdate.getMonth()+1; //January is 0!
+         var yy = sysdate.getFullYear();
+
  
-		/* 	if(yy>100){
-				yy=yy-100;
-			}
+      /*    if(yy>100){
+            yy=yy-100;
+         }
 */
-			 if(dd<10) {
-			    dd='0'+dd;
-			} 
+          if(dd<10) {
+             dd='0'+dd;
+         } 
 
-			if(mm<10) {
-			    mm='0'+mm;
-			}  
-			
-			var to = yy+"/"+mm+"/"+dd;
-			var date2 = to;
-			
-			var Ago = new Date(sysdate);
-			
-			
-			Ago.setDate(Ago.getDate() - 7);
-			
-			dd = Ago.getDate();
-			mm = Ago.getMonth()+1; //January is 0!
-			yy = Ago.getFullYear(); 
-			
-			/* if(yy>100){
-				yy=yy-100;
-			} */
-			 if(dd<10) {
-				    dd='0'+dd
-				} 
+         if(mm<10) {
+             mm='0'+mm;
+         }  
+         
+         var to = yy+"/"+mm+"/"+dd;
+         var date2 = to;
+         
+         var Ago = new Date(sysdate);
+         
+         
+         Ago.setDate(Ago.getDate() - 7);
+         
+         dd = Ago.getDate();
+         mm = Ago.getMonth()+1; //January is 0!
+         yy = Ago.getFullYear(); 
+         
+         /* if(yy>100){
+            yy=yy-100;
+         } */
+          if(dd<10) {
+                dd='0'+dd
+            } 
 
-				if(mm<10) {
-				    mm='0'+mm
-				}  
-				
-			
-			var from = ""+yy+"/"+mm+"/"+dd;
-			var date1 = from;
+            if(mm<10) {
+                mm='0'+mm
+            }  
+            
+         
+         var from = ""+yy+"/"+mm+"/"+dd;
+         var date1 = from;
 
-		 location.href="termSearch.do?date3="+date1+"&date4="+date2;  
-			
-		}
-		
-	 function searchAmon(){
-			var sysdate = new Date();
-			var dd = sysdate.getDate();
-			var mm = sysdate.getMonth()+1; //January is 0!
-			var yy = sysdate.getFullYear();
-	
+       location.href="termSearch.do?date3="+date1+"&date4="+date2;  
+         
+      }
+      
+    function searchAmon(){
+         var sysdate = new Date();
+         var dd = sysdate.getDate();
+         var mm = sysdate.getMonth()+1; //January is 0!
+         var yy = sysdate.getFullYear();
+   
  
-		/* 	if(yy>100){
-				yy=yy-100;
-			}
+      /*    if(yy>100){
+            yy=yy-100;
+         }
 */
-			 if(dd<10) {
-			    dd='0'+dd;
-			} 
+          if(dd<10) {
+             dd='0'+dd;
+         } 
 
-			if(mm<10) {
-			    mm='0'+mm;
-			}  
-			
-			var to = yy+"/"+mm+"/"+dd;
-			var date2 = to;
-			
-			var Ago = new Date(sysdate);
-	
-			Ago.setMonth(Ago.getMonth() - 1);
-			
-			dd = Ago.getDate();
-			mm = Ago.getMonth()+1; //January is 0!
-			yy = Ago.getFullYear(); 
-			
-			/* if(yy>100){
-				yy=yy-100;
-			} */
-			 if(dd<10) {
-				    dd='0'+dd
-				} 
+         if(mm<10) {
+             mm='0'+mm;
+         }  
+         
+         var to = yy+"/"+mm+"/"+dd;
+         var date2 = to;
+         
+         var Ago = new Date(sysdate);
+   
+         Ago.setMonth(Ago.getMonth() - 1);
+         
+         dd = Ago.getDate();
+         mm = Ago.getMonth()+1; //January is 0!
+         yy = Ago.getFullYear(); 
+         
+         /* if(yy>100){
+            yy=yy-100;
+         } */
+          if(dd<10) {
+                dd='0'+dd
+            } 
 
-				if(mm<10) {
-				    mm='0'+mm
-				}  
-				
-			
-			var from = ""+yy+"/"+mm+"/"+dd;
-			var date1 = from;
+            if(mm<10) {
+                mm='0'+mm
+            }  
+            
+         
+         var from = ""+yy+"/"+mm+"/"+dd;
+         var date1 = from;
 
 
-		 location.href="termSearch.do?date3="+date1+"&date4="+date2; 
-	 }
-	 
-	 function searchTmon(){
-		 var sysdate = new Date();
-			var dd = sysdate.getDate();
-			var mm = sysdate.getMonth()+1; //January is 0!
-			var yy = sysdate.getFullYear();
-	
+       location.href="termSearch.do?date3="+date1+"&date4="+date2; 
+    }
+    
+    function searchTmon(){
+       var sysdate = new Date();
+         var dd = sysdate.getDate();
+         var mm = sysdate.getMonth()+1; //January is 0!
+         var yy = sysdate.getFullYear();
+   
  
-		/* 	if(yy>100){
-				yy=yy-100;
-			}
+      /*    if(yy>100){
+            yy=yy-100;
+         }
 */
-			 if(dd<10) {
-			    dd='0'+dd;
-			} 
+          if(dd<10) {
+             dd='0'+dd;
+         } 
 
-			if(mm<10) {
-			    mm='0'+mm;
-			}  
-			
-			var to = yy+"/"+mm+"/"+dd;
-			var date2 = to;
-			
-			var Ago = new Date(sysdate);
-	
-			Ago.setMonth(Ago.getMonth() - 3);
-			
-			dd = Ago.getDate();
-			mm = Ago.getMonth()+1; //January is 0!
-			yy = Ago.getFullYear(); 
-			
-			/* if(yy>100){
-				yy=yy-100;
-			} */
-			 if(dd<10) {
-				    dd='0'+dd
-				} 
+         if(mm<10) {
+             mm='0'+mm;
+         }  
+         
+         var to = yy+"/"+mm+"/"+dd;
+         var date2 = to;
+         
+         var Ago = new Date(sysdate);
+   
+         Ago.setMonth(Ago.getMonth() - 3);
+         
+         dd = Ago.getDate();
+         mm = Ago.getMonth()+1; //January is 0!
+         yy = Ago.getFullYear(); 
+         
+         /* if(yy>100){
+            yy=yy-100;
+         } */
+          if(dd<10) {
+                dd='0'+dd
+            } 
 
-				if(mm<10) {
-				    mm='0'+mm
-				}  
-				
-			
-			var from = ""+yy+"/"+mm+"/"+dd;
-			var date1 = from;
+            if(mm<10) {
+                mm='0'+mm
+            }  
+            
+         
+         var from = ""+yy+"/"+mm+"/"+dd;
+         var date1 = from;
 
 
-		 location.href="termSearch.do?date3="+date1+"&date4="+date2; 
-	 }
-	 
-	 function searchSmon(){
-		 var sysdate = new Date();
-			var dd = sysdate.getDate();
-			var mm = sysdate.getMonth()+1; //January is 0!
-			var yy = sysdate.getFullYear();
-	
+       location.href="termSearch.do?date3="+date1+"&date4="+date2; 
+    }
+    
+    function searchSmon(){
+       var sysdate = new Date();
+         var dd = sysdate.getDate();
+         var mm = sysdate.getMonth()+1; //January is 0!
+         var yy = sysdate.getFullYear();
+   
  
-		/* 	if(yy>100){
-				yy=yy-100;
-			}
+      /*    if(yy>100){
+            yy=yy-100;
+         }
 */
-			 if(dd<10) {
-			    dd='0'+dd;
-			} 
+          if(dd<10) {
+             dd='0'+dd;
+         } 
 
-			if(mm<10) {
-			    mm='0'+mm;
-			}  
-			
-			var to = yy+"/"+mm+"/"+dd;
-			var date2 = to;
-			
-			var Ago = new Date(sysdate);
-	
-			Ago.setMonth(Ago.getMonth() - 6);
-			
-			dd = Ago.getDate();
-			mm = Ago.getMonth()+1; //January is 0!
-			yy = Ago.getFullYear(); 
-			
-			/* if(yy>100){
-				yy=yy-100;
-			} */
-			 if(dd<10) {
-				    dd='0'+dd
-				} 
+         if(mm<10) {
+             mm='0'+mm;
+         }  
+         
+         var to = yy+"/"+mm+"/"+dd;
+         var date2 = to;
+         
+         var Ago = new Date(sysdate);
+   
+         Ago.setMonth(Ago.getMonth() - 6);
+         
+         dd = Ago.getDate();
+         mm = Ago.getMonth()+1; //January is 0!
+         yy = Ago.getFullYear(); 
+         
+         /* if(yy>100){
+            yy=yy-100;
+         } */
+          if(dd<10) {
+                dd='0'+dd
+            } 
 
-				if(mm<10) {
-				    mm='0'+mm
-				}  
-				
-			
-			var from = ""+yy+"/"+mm+"/"+dd;
-			var date1 = from;
+            if(mm<10) {
+                mm='0'+mm
+            }  
+            
+         
+         var from = ""+yy+"/"+mm+"/"+dd;
+         var date1 = from;
 
 
-		 location.href="termSearch.do?date3="+date1+"&date4="+date2; 
-		 
-	 }
-	 
-	 
+       location.href="termSearch.do?date3="+date1+"&date4="+date2; 
+       
+    }
+    
+    
 </script>
 
 <footer>
-	<jsp:include page ="../common/footer.jsp"/>
+   <jsp:include page ="../common/footer.jsp"/>
 </footer>
 </html>

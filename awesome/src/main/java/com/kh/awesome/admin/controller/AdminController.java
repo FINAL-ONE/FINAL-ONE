@@ -29,6 +29,7 @@ import com.kh.awesome.admin.model.vo.Admin;
 import com.kh.awesome.admin.model.vo.Category;
 import com.kh.awesome.admin.model.vo.Goods;
 import com.kh.awesome.admin.model.vo.PageInfo;
+import com.kh.awesome.cart.model.vo.Cart;
 import com.kh.awesome.common.Pagination;
 import com.kh.awesome.member.model.exception.MemberException;
 import com.kh.awesome.member.model.vo.Member;
@@ -46,10 +47,10 @@ public class AdminController {
 	@RequestMapping("adminMain.do")
 	public String nWriterView() {
 		
-		return "admin/adminListView";	
+		return "admin/adminHome";	
 	}
 	
-	// 메뉴바에서 상품조회 클릭시 관리자용 상품조회 테이블 조회--준배
+	// 메뉴바에 서 상품조회 클릭시 관리자용 상품조회 테이블 조회--준배
 	@RequestMapping("sell_goodsList.do")
 	public ModelAndView sell_goodsList(ModelAndView mv) {
 		
@@ -74,7 +75,7 @@ public class AdminController {
 		
 		ArrayList<Admin> list = aService.selectList();
 		// System.out.println(list);
-		
+	
 		if(list != null) {
 			mv.addObject("list", list);
 			mv.setViewName("shop/shopGoodsListView");
@@ -85,7 +86,7 @@ public class AdminController {
 		
 		return mv;
 	}
-	// 메뉴바에서 shop으로 뿌려질 리스트 조회 -- 준배
+	// 메뉴바에서 shop으로 뿌려질 리 스트 조회 -- 준배
 	
 	
 	// 상품등록 페이지에서 상품버튼 클릭시 -- 준배
@@ -190,8 +191,10 @@ public class AdminController {
 	
 	// 상품메인 페이지에서 상품 클릭시 디테일페이지 보여줄 리스트 불러오기 --준배 (동복 list 추가)
 	@RequestMapping("adetail.do")
-	public ModelAndView shopgoodsDetail(ModelAndView mv, int sellNum, 
+	public ModelAndView shopgoodsDetail(ModelAndView mv, int sellNum, int gId,
 					@RequestParam(value="page", required=false) Integer page) {
+		
+		System.out.println("shop gId ::: " + gId);
 		
 		int rCurrentPage = 1;
 		if(page != null) {
@@ -210,6 +213,8 @@ public class AdminController {
 		ArrayList<Admin> list = aService.selectshopgoods(sellNum);
 		ArrayList<Admin> replylist = aService.selectreply(sellNum, pi);
 		
+		ArrayList<Admin> sAvgList = aService.sAvgListSelect(gId);
+		
 		System.out.println("상품디테일 list : "+ list);
 		System.out.println("pi :" + pi);
 		
@@ -218,6 +223,7 @@ public class AdminController {
 			mv.addObject("list", list)
 			.addObject("replylist", replylist)
 			.addObject("pi", pi)
+			.addObject("sAvgList", sAvgList)
 			.setViewName("shop/shopGoodsDetail");
 		
 		} else {
@@ -295,11 +301,27 @@ public class AdminController {
 		}
 				
 			
-	
-
+		
+		// 후기 중복체크
+		@RequestMapping("selectafterCheck.do")
+		public ModelAndView selectafterCheck(HttpServletResponse response,  int mId, int gId,  ModelAndView mv, Admin a ) throws JsonIOException, IOException {
+			Map map = new HashMap();
+				
+			a.setmId(mId);
+			a.setgId(gId);
 			
-	
-	
+			
+			boolean isUsable = aService.selectafterCheck(a) == 0? true : false;
+			
+System.out.println("isUsable : " + isUsable);
+			map.put("isUsable", isUsable);
+			
+			mv.addAllObjects(map);
+			
+			mv.setViewName("jsonView");
+			
+			return mv;
+		}
 	
 
 		
