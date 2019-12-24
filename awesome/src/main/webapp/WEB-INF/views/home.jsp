@@ -9,56 +9,16 @@
 
 <meta charset="UTF-8">
 	<title>Home</title>
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
-<script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+ 	
 
-<!-- 
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery.waitforimages/2.2.0/jquery.waitforimages.min.js"></script>
- -->
-<!-- 3D text tag css -->
-<!-- <link href="https://www.cssscript.com/wp-includes/css/sticky.css" rel="stylesheet" type="text/css">
- -->
-
-
-<!-- jQuery Bootstrap News Box Plugin Demos -->
-<!--  <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap-theme.min.css">
-<link href="js/Responsive-jQuery-News-Ticker-Plugin-with-Bootstrap-3-Bootstrap-News-Box/css/site.css" rel="stylesheet" type="text/css" />
+<script src="js/parallax_content-master/demo/build/app.js"></script>
+ 
+ <!-- 메인이미지 비디오 슬라이더 -->
+<link rel="stylesheet" href="js/image-video-slideshow-bo/style.min.css">
 <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-<script src="js/Responsive-jQuery-News-Ticker-Plugin-with-Bootstrap-3-Bootstrap-News-Box/scripts/jquery.bootstrap.newsbox.min.js" type="text/javascript"></script>
- -->
 <style>
-
-/* 3D text tag css*/
-/* 
-.tagcloud {
-     font-size: 16px;
- }
- .tagcloud--item {
-     padding: 2px 4px;
-     background-color: transparent;
-     border: 1px solid transparent;
-     cursor: pointer;
- }
- .tagcloud--item:hover {
-     background-color: rgba(0,0,0,.1);
-     border: 1px solid #333;
-     -webkit-border-radius: 2px;
-     -moz-border-radius: 2px;
-     border-radius: 2px;
-     opacity: 1 !important;
-     z-index: 100 !important;
- }
- .light .tagcloud--item {
-     color: #fff;
- }
- .light .tagcloud--item:hover {
-     background-color: rgba(255,255,255,.1);
-     border: 1px solid #fff;
- }
- */ 
- @import "color-schemer";
+@import "color-schemer";
 @import "compass";
 @import "compass/css3/animation";
 
@@ -70,7 +30,14 @@ body {
 	margin: 0;
 	padding: 0;
 	font-family: 'Raleway', sans-serif;
+	
+
 }
+
+.footer{
+	line-height: 18px !important;
+}
+
 .flex-container {
 	position: absolute;
 	height: 100vh;
@@ -313,300 +280,86 @@ textarea {
   }
 }
 
+
+
+
+
+
+
 .conmmunityNav:after {
     top: -44px !important;
     left: -94px !important;
 }
+
+
+.desc{
+	
+	height: 270px !important;
+
+}
+
+.desc div{
+/* 	font-family: 'Yeon Sung', cursive; */
+	font-family: 'Jua', sans-serif;
+}
+
+.title{
+	font-family: 'Jua', sans-serif;
+}
+
+
+
+#layer_popup_area{
+	top: 230;
+	left: 200;
+	z-index: 1;
+	position: absolute;
+}
+
+
 </style>
 
-    
+
+
+
+<link href="https://fonts.googleapis.com/css?family=Jua|Yeon+Sung&display=swap" rel="stylesheet">
+
 </head>
 <body>
-	<%-- <jsp:include page ="common/header.jsp"/>
-	<jsp:include page ="common/mainHome.jsp"/> --%>
+
 
 <jsp:include page ="common/menubar.jsp"/>
 <div id="container" style="overflow: auto; height: auto;" ><!-- container -->
 
+	
+	<!-- 레이어 팝업 -->
+	<div id="layer_popup_area">
+		<div id="layer_popup" style="visibility: visible; width : 450px; height :500px;">
+		   <img src="resources/images/about_popup.jpg"  style = "width : 450px; height : 450px;">
+		    <div class="close">
+		        <form name="pop_form" style="width:450px; background : black;">
+		            <!-- <div id="check" style="width : 360px; height : 5px;"></div> -->
+		            <div id ="closeDiv" style="margin-left : 20px; color: white; padding : 5px 5px 5px 5px; display : inline-block;"><input type="checkbox" name="chkbox" value="checkbox" style="width : 30px;">24시간동안 다시 열람하지 않습니다.</div>
+		            <div id="close" style="margin-left : 30px; display : inline-block; color: white; padding : 5px 5px 5px 5px; text-align : center;"><a href="javascript:closePop();" style="text-decoration: none; color : white;">닫기</a></div>
+		        </form> 
+		    </div>
+		</div>
+	</div>
 	    
 <div class="content">
     <!-- content -->
 </div>
 
-<!-- <script type="text/javascript" src="js/TagCloud-master/dist/TagCloud.min.js"></script>
-	    
-	<script>
-	    var texts = [
-	        '다이어트', '운동', '식단조절',
-	        '칼로리', '홈트레이닝', '꿀팁',
-	        'BMI', '다이어트일지', '비포&애프터',
-	        '요요현상', '헬스', '단백질보충',
-	    ];
-	    var tc = TagCloud('.content', texts);
-	    	console.log(tc);
-	
-	    function toDefault() {
-	        document.body.classList.remove('light');
-	    }
-	    function toLight() {
-	        document.body.classList.add('light');
-	    }
-	    function addTag() {
-	        if (!tc) return;
-	        texts = texts.concat(['MoreTag']);
-	        tc.update(texts);
-	    }
-	    function removeTag() {
-	        if (!tc) return;
-	        texts.pop();
-	        tc.update(texts);
-	    }
-	    var moreTcs = [];
-	    function toCreate() {
-	        var tc = TagCloud('.content', [
-	        	'다이어트', '운동', '식단조절',
-	         '칼로리', '홈트레이닝', '꿀팁',
-	         'BMI', '다이어트일지', '비포&애프터',
-	         '요요현상', '헬스', '단백질보충',
-	        ]);
-	        moreTcs.push(tc);
-	    }
-	    function toDestroy() {
-	        var last = moreTcs[moreTcs.length - 1];
-	        if (!last) return;
-	        last.destroy();
-	        moreTcs.pop();
-	    }
-	</script>
-	<script>
-		try {
-		  fetch(new Request("https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js", { method: 'HEAD', mode: 'no-cors' })).then(function(response) {
-		    return true;
-		  }).catch(function(e) {
-		    var carbonScript = document.createElement("script");
-		    carbonScript.src = "//cdn.carbonads.com/carbon.js?serve=CE7DC2JW&placement=wwwcssscriptcom";
-		    carbonScript.id = "_carbonads_js";
-		    document.getElementById("carbon-block").appendChild(carbonScript);
-		  });
-		} catch (error) {
-		  console.log(error);
-		}
-	</script>
-	<script>
-		  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-		  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-		  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-		
-		  ga('create', 'UA-46156385-1', 'cssscript.com');
-		  ga('send', 'pageview');
-	
-	</script>
- -->
-
-
-<!-- jQuery Bootstrap News Box Plugin Demos -->
-<!-- <h1 style="margin-top:150px" align="center">jQuery Bootstrap News Box Plugin Demos</h1>
 <div class="container">
-	<div class="row">
-		<div class="col-md-4">
-			<div class="panel panel-default">
-			<div class="panel-heading"> <span class="glyphicon glyphicon-list-alt"></span><b>News</b></div>
-				<div class="panel-body">
-					<div class="row">
-						<div class="col-xs-12">
-						<ul class="demo1">
-							<li class="news-item">
-							<table cellpadding="4">
-								<tr>
-									<td><img src="js/Responsive-jQuery-News-Ticker-Plugin-with-Bootstrap-3-Bootstrap-News-Box/images/1.png" width="60" class="img-circle" /></td>
-									<td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in venenatis enim... <a href="#">Read more...</a></td>
-								</tr>
-							</table>
-							</li>
-							<li class="news-item">
-								<table cellpadding="4">
-									<tr>
-										<td><img src="js/Responsive-jQuery-News-Ticker-Plugin-with-Bootstrap-3-Bootstrap-News-Box/images/2.png" width="60" class="img-circle" /></td>
-										<td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in venenatis enim... <a href="#">Read more...</a></td>
-									</tr>
-								</table>
-							</li>
-							<li class="news-item">
-								<table cellpadding="4">
-									<tr>
-										<td><img src="js/Responsive-jQuery-News-Ticker-Plugin-with-Bootstrap-3-Bootstrap-News-Box/images/3.png" width="60" class="img-circle" /></td>
-										<td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in venenatis enim... <a href="#">Read more...</a></td>
-									</tr>
-								</table>
-							</li>
-							<li class="news-item">
-								<table cellpadding="4">
-									<tr>
-										<td><img src="js/Responsive-jQuery-News-Ticker-Plugin-with-Bootstrap-3-Bootstrap-News-Box/images/4.png" width="60" class="img-circle" /></td>
-										<td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in venenatis enim... <a href="#">Read more...</a></td>
-									</tr>
-								</table>
-							</li>
-							<li class="news-item">
-								<table cellpadding="4">
-									<tr>
-										<td><img src="js/Responsive-jQuery-News-Ticker-Plugin-with-Bootstrap-3-Bootstrap-News-Box/images/5.png" width="60" class="img-circle" /></td>
-										<td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in venenatis enim... <a href="#">Read more...</a></td>
-									</tr>
-								</table>
-							</li>
-							<li class="news-item">
-								<table cellpadding="4">
-									<tr>
-										<td><img src="js/Responsive-jQuery-News-Ticker-Plugin-with-Bootstrap-3-Bootstrap-News-Box/images/6.png" width="60" class="img-circle" /></td>
-										<td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in venenatis enim... <a href="#">Read more...</a></td>
-									</tr>
-								</table>
-							</li>
-							<li class="news-item">
-								<table cellpadding="4">
-									<tr>
-										<td><img src="js/Responsive-jQuery-News-Ticker-Plugin-with-Bootstrap-3-Bootstrap-News-Box/images/7.png" width="60" class="img-circle" /></td>
-											<td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in venenatis enim... <a href="#">Read more...</a></td>
-									</tr>
-								</table>
-							</li>
-						</ul>
-						</div>
-					</div>
-				</div>
-				<div class="panel-footer"> </div>
-			</div>
-		</div>
-		<div class="col-md-4">
-			<div class="panel panel-default">
-			<div class="panel-heading"> <span class="glyphicon glyphicon-list-alt"></span><b>News</b></div>
-				<div class="panel-body">
-					<div class="row">
-						<div class="col-xs-12">
-							<ul class="demo2">
-								<li class="news-item">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in venenatis enim... <a href="#">Read more...</a></li>
-								<li class="news-item">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in venenatis enim... <a href="#">Read more...</a></li>
-								<li class="news-item">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in venenatis enim... <a href="#">Read more...</a></li>
-								<li class="news-item">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in venenatis enim... <a href="#">Read more...</a></li>
-								<li class="news-item">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in venenatis enim... <a href="#">Read more...</a></li>
-								<li class="news-item">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in venenatis enim... <a href="#">Read more...</a></li>
-							</ul>
-						</div>
-					</div>
-				</div>
-			<div class="panel-footer"> </div>
-			</div>
-		</div>
-		
-		<div class="col-md-4">
-			<div class="panel panel-default">
-			<div class="panel-heading"> <span class="glyphicon glyphicon-list-alt"></span><b>News</b></div>
-				<div class="panel-body">
-					<div class="row">
-						<div class="col-xs-12">
-							<ul id="demo3">
-								<li class="news-item">Curabitur porttitor ante eget hendrerit adipiscing. Maecenas at magna accumsan,
-																		rhoncus neque id, fringilla dolor. <a href="#">Read more...</a></li>
-								<li class="news-item">Curabitur porttitor ante eget hendrerit adipiscing. Maecenas at magna accumsan,
-																		rhoncus neque id, fringilla dolor. <a href="#">Read more...</a></li>
-								<li class="news-item">Praesent ornare nisl lorem, ut condimentum lectus gravida ut. Ut velit nunc, vehicula
-																		volutpat laoreet vel, consequat eu mauris. <a href="#">Read more...</a></li>
-								<li class="news-item">Nunc ultrices tortor eu massa placerat posuere. Vivamus viverra sagittis nunc. Nunc
-																		et imperdiet magna. Mauris sed eros nulla. <a href="#">Read more...</a></li>
-								<li class="news-item">Morbi sodales tellus sit amet leo congue bibendum. Ut non mauris eu neque fermentum
-																		pharetra. <a href="#">Read more...</a></li>
-								<li class="news-item">In pharetra suscipit orci sed viverra. Praesent at sollicitudin tortor, id sagittis
-																		magna. Fusce massa sem, bibendum id. <a href="#">Read more...</a> </li>
-								<li class="news-item">Maecenas nec ligula sed est suscipit aliquet sed eget ipsum. Suspendisse id auctor
-																		nibh. Ut porttitor volutpat augue, non sodales odio dignissi id. <a href="#">Read more...</a></li>
-								<li class="news-item">Onec bibendum consectetur diam, nec euismod urna venenatis eget. Cras consequat
-																		convallis leo. <a href="#">Read more...</a> </li>
-							</ul>
-						</div>
-					</div>
-				</div>
-			<div class="panel-footer"> </div>
-			</div>
-		</div>
-	</div>
+	<ul class="bo-slider">
+		<li data-url="https://source.unsplash.com/1600x900/?fitness" data-type="image"></li>
+		<li data-url="https://source.unsplash.com/1600x900/?workout" data-type="image"></li>
+		<li data-url="https://source.unsplash.com/1600x900/?yoga" data-type="image"></li>
+		<li data-url="https://www.w3schools.com/html/mov_bbb.mp4" data-type="video">
+		<li data-url="https://source.unsplash.com/1600x900/?gym" data-type="image"></li>
+	</ul>
 </div>
-<script type="text/javascript">
-    $(function () {
-        $(".demo1").bootstrapNews({
-            newsPerPage: 3,
-            autoplay: true,
-			pauseOnHover:true,
-            direction: 'up',
-            newsTickerInterval: 4000,
-            onToDo: function () {
-                //console.log(this);
-            }
-        });
-		
-		$(".demo2").bootstrapNews({
-            newsPerPage: 4,
-            autoplay: true,
-			pauseOnHover: true,
-			navigation: false,
-            direction: 'down',
-            newsTickerInterval: 2500,
-            onToDo: function () {
-                //console.log(this);
-            }
-        });
 
-        $("#demo3").bootstrapNews({
-            newsPerPage: 3,
-            autoplay: false,
-            
-            onToDo: function () {
-                //console.log(this);
-            }
-        });
-    });
-</script>
-
-
-</div>
- -->
-
-
-
-<!-- 
-<div class="flex-container">
-	<div class="flex-slide home">
-		<div class="flex-title flex-title-home">Home</div>
-		<div class="flex-about flex-about-home"><p>Click here to navigate to the home section of the website</p></div>
-	</div>
-	<div class="flex-slide about">
-		<div class="flex-title">Board</div>
-		<div class="flex-about"><p>Click here to navigate to the About section of the website</p></div>
-	</div>
-	<div class="flex-slide work">
-		<div class="flex-title">SHOP</div>
-		<div class="flex-about"><p>Listing relevant snippets of work:</p>
-			<ul>
-				<li>First piece of work</li>
-				<li>Second piece of work</li>
-				<li>Third piece of work</li>
-			</ul>
-		</div>
-	</div>
-	<div class="flex-slide contact">
-		<div class="flex-title">Contact</div>
-				<div class="flex-about">
-					<p>Use the contact form below</p>
-					<form class="contact-form">
-						<p>Email <input type="text" name="email"></p>
-						<p>Comment <textarea type="text" name="comment" row="5"></textarea></p>
-						<p><input type="submit" name="email" value="Send Message"></p>
-					</form>
-
-		</div>
-	</div>
-</div>
 
 
 </div>
@@ -641,16 +394,7 @@ textarea {
 
 
 </script>
- -->
-<section class="section-intro back-img" style="background-image: url(resources/images/Diettext3.jpg)">
-    <div class="container">
-        <div class="content-wrap">
-            <h3 class="title parallax-move" data-parallax-content='{"shift": 40, "duration": 3}'>
-               <!--  jQuery parallaxContent Example -->
-            </h3>
-        </div>
-    </div>
-</section>
+
 <section class="section-features">
 
     <div class="container">
@@ -659,19 +403,23 @@ textarea {
 
             <li class="feature-item">
                 <div class="content-col">
+
                     <div class="title">
-                        Lorem ipsum
+                    	Diet proverb 1
+
                     </div>
                     <div class="desc">
-                        <p>
+                    	<div style="font-size: 30px; margin-left:auto; margin-right: auto; margin-top: 65px; width: 235px"> 인생은 살쪘을 때와<br>안쪘을때로 나뉜다.</div>
+                    
+                     <!--    <p>
                             Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
                             laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto
                             beatae vitae dicta sunt explicabo.
                         </p>
                         <p>
                             Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut
-                            odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
-                        </p>
+                            odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. </p>-->
+                       
                     </div>
                 </div>
                 <div class="img-col">
@@ -682,11 +430,16 @@ textarea {
 
             <li class="feature-item">
                 <div class="content-col">
+
                     <div class="title">
-                        Lorem ipsum
+                     	Diet proverb 2
+
                     </div>
                     <div class="desc">
-                        <p>
+                    
+                    	<div style="font-size: 30px; margin-left:auto; margin-right: auto; margin-top: 90px; width: 246px"> 세끼 다 먹은 세1끼야</div>
+                    
+                      <!--   <p>
                             Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
                             laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto
                             beatae vitae dicta sunt explicabo.
@@ -694,7 +447,7 @@ textarea {
                         <p>
                             Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut
                             odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
-                        </p>
+                        </p> -->
                     </div>
                 </div>
                 <div class="img-col">
@@ -705,20 +458,14 @@ textarea {
             </li>
 
             <li class="feature-item">
+
                 <div class="content-col">
                     <div class="title">
-                        Lorem ipsum
+                      Diet proverb 3
+
                     </div>
                     <div class="desc">
-                        <p>
-                            Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
-                            laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto
-                            beatae vitae dicta sunt explicabo.
-                        </p>
-                        <p>
-                            Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut
-                            odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
-                        </p>
+                        <div style="font-size: 30px; margin-left:auto; margin-right: auto; margin-top: 90px; width: 110px"> 먹.지.마</div>
                     </div>
                 </div>
                 <div class="img-col">
@@ -732,14 +479,70 @@ textarea {
     </div>
 
 </section>
-
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.4/TweenLite.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.4/plugins/CSSPlugin.min.js"></script>
-
-<script src="js/parallax_content-master/demo/build/app.js"></script>
-
 </div>
+
+
+
+
+ <!-- 메인이미지 비디오 슬라이더 -->
+	<script
+	type="text/javascript"
+	src="https://code.jquery.com/jquery-3.4.1.min.js"
+	integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+	crossorigin="anonymous"></script>
+	<script	type="text/javascript" src="js/image-video-slideshow-bo/script.min.js"></script>
+	<script type="text/javascript">
+		$('.bo-slider').boSlider({
+			slideShow: false,
+			interval: 3000,
+			animation: "fade"
+		});
+	</script>
+	
+	<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-36251023-1']);
+  _gaq.push(['_setDomainName', 'jqueryscript.net']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+<!-- 레이어 팝업 -->
+<script language="Javascript">
+    cookiedata = document.cookie;   
+    if ( cookiedata.indexOf("maindiv=done") < 0 ){     
+        document.all['layer_popup'].style.visibility = "visible";
+    }
+    else {
+        document.all['layer_popup'].style.visibility = "hidden";
+    }
+</script>
+
+
+<script language="JavaScript">
+    function setCookie( name, value, expiredays ) {
+            var todayDate = new Date();
+            todayDate.setDate( todayDate.getDate() + expiredays ); 
+            document.cookie = name + "=" + escape( value ) + "; path=/; expires=" + todayDate.toGMTString() + ";"
+        }
+        function closePop() {
+            if ( document.pop_form.chkbox.checked ){
+                setCookie( "maindiv", "done" , 1 );
+            } 
+            document.all['layer_popup'].style.visibility = "hidden";
+        }    
+</script>
+
+
+
 </body>
 <footer>
 	<jsp:include page ="common/footer.jsp"/>

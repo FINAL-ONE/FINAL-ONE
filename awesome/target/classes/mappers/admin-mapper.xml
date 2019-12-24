@@ -84,6 +84,7 @@
 		JOIN SELL_GOODSSELECTVIEW SGV ON (SGV.SELL_NUM = SR.SELL_NUM)
 		JOIN MEMBER M ON(M.MID = SR.MID)
 		WHERE SR.SELL_NUM=#{sellNum}
+		AND SR.STATUS = 'Y'
 		ORDER BY RID DESC 
     </select>
 
@@ -105,6 +106,29 @@
 	ORDER BY RID ASC
   </select>
 
+
+
+	<!-- 상품별 후기 평균 -->
+	<select id ="starAvgCount" parameterType="_int" resultType="_double">
+		SELECT ROUND(AVG(SELL_START),1)
+		FROM SELL_REPLY_AFTERVIEW
+		WHERE GID=#{gId}
+	</select>
+
+
+	<!-- 구매한 상품에서 후기작성 중복 체크 -->
+	<select id="selectafterCheck" resultType="_int">
+	  	SELECT COUNT(*)
+		  FROM SELL_REPLY_AFTERVIEW
+		 WHERE MID = #{mId} 
+		   AND GID = #{gId}
+	</select>
+  	
+  	
+  	
+  	
+  	
+  	
 <!--========================================= INSERT  =========================================-->	
 	
 	<!-- 동복 - 상품 등록 -->
@@ -204,6 +228,7 @@
 		</if>		
 		WHERE GID = #{gId}
 	</update>
+  	
   	
 <!--========================================= SELECT  =========================================-->
 

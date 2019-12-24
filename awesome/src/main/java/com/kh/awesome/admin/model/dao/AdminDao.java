@@ -17,7 +17,8 @@ public class AdminDao {
 	
 	@Autowired
 	SqlSessionTemplate sqlSession;
-
+	
+	// 상품조회
 	public ArrayList<Admin> selectList() {
 		
 		return (ArrayList)sqlSession.selectList("adminMapper.selectList");
@@ -166,6 +167,15 @@ public class AdminDao {
 	// 동복 - 상품 수정 (중)카테고리 조회
 	public ArrayList<Category> detailCategoryList() {
 		return (ArrayList)sqlSession.selectList("adminMapper.detailCategoryList");
+	}
+
+	public ArrayList<Admin> sAvgListSelect(int gId) {
+		return (ArrayList)sqlSession.selectList("adminMapper.starAvgCount", gId);
+	}
+	
+	// 구매한 상품에서 후기작성 중복 체크
+	public int selectafterCheck(Admin a) {
+		return sqlSession.selectOne("adminMapper.selectafterCheck", a);
 	}
 
 }

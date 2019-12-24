@@ -2,7 +2,6 @@
     pageEncoding="UTF-8"%>
     
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,10 +14,10 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" href="js/switch-master/css/style.css">
 
-<!-- Excel 다운받기 -->
+<!-- Excel 다운받기 (크롤링 기법) -->
  <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
         <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
-      <script src="js/Export-Html-Table-To-Excel-Spreadsheet-using-jQuery-table2excel/src/jquery.table2excel.js"></script>
+		<script src="js/Export-Html-Table-To-Excel-Spreadsheet-using-jQuery-table2excel/src/jquery.table2excel.js"></script>
 
 
 <style>
@@ -26,11 +25,11 @@
 
 
 #member-content{
-   width : 1400px;
-   margin-top : 50px;
-   /* background : yellow; */
-   margin-left : 200px;
-   margin-bottom: 10px;
+	width : 1400px;
+	margin-top : 20px;
+	/* background : yellow; */
+	margin-left : 180px;
+	margin-bottom: 10px;
 }
 .membertable{
   border-collapse: collapse;
@@ -38,7 +37,7 @@
   width: 1400px;
   border: 1px solid #ddd;
   text-align :center;
-     margin-left : 200px;
+  	margin-left : 180px;
 }
 
 
@@ -133,247 +132,237 @@ tr:nth-child(even) {
   opacity: 1;
   right: 0;
 }
+
+.pagingArea button {
+	  border: 1px solid #dcdcdc;
+	  outline: none;
+	  padding: 6px 12px;
+	  cursor: pointer;
+	  background: white;
+	  font-size: 13px;
+      color: #828282;
+}
 </style>
 
 </head>
 <body>
 
-   <jsp:include page ="../common/menubar.jsp"/>
-   
-   <div id="container" style="overflow: auto; height: auto;" ><!-- container -->
-   
+	<jsp:include page ="../common/menubar.jsp"/>
+		
+		
+	<div id="container" style="overflow: auto; height: auto;" ><!-- container -->
 
-      <div id ="member-content">
-         <span align="left" style ="font-size : 20px; font-weight: bold; margin-right :876px;">
-            총 회원 수 : ${pi.listCount}명
-         </span>
-   
-         <span style ="margin-left : 200px;"><!-- <img src="resources/images/excel.png"> --></span>
-         <button id = "ExportBtn" class="btn btn-success"><img src="resources/images/excel.png" alt="">엑셀로 내려받기</button>
-      </div>   
-      
-            <table align="center" border="1" cellspacing="1" class ="membertable" id="table2excel">
-                  <tr bgcolor ="#fa4a4a" style = "color : white" class="noExl">
-                     <th width = "100px" align="center">회원ID</th>
-                     <!-- <th>회원비밀빈호</th> -->
-                     <th width = "130px">회원이름</th>
-                     <th width = "80px">성별</th>
-                     <th width = "120px">생년월일</th>
-                     <th width = "120px">핸드폰번호</th>
-                     <th>이메일</th>
-                     <th width = "300px">주소</th>
-                     <th width = "120px">포인트</th>
-                     <th width = "160px">가입일</th>
-                     <th width = "160px">수정일</th>
-                     <th width = "140px">탈퇴상태</th>
-                     <!-- <th>탈퇴처리</th> -->
-                  </tr>
-               <c:forEach var="n" items="${list}">
-                  <tr class="active">
-                     <td align="center">${n.userId}</td>
-                     <%-- <td align="center">${n.userPwd}</td> --%>
-                     <td>${n.userName}</td>
-                     <td>${n.gender}</td>
-                     <td>${n.birthday}</td>
-                     <td>${n.phone}</td>
-                     <td>${n.email}</td>
-                     <td>${n.address}</td>
-                     <td>
-                        <input type="text" value ="${n.point}" style =" width : 80px; text-align:center;" readonly >
-   
-                        <!-- <input type="button" value="수정" id ="myBtn"> -->
-                        <input type="hidden" value="${n.mid}" name ="mId">
-                        <input type="hidden" value="${n.userId}" name ="userId">
-                        <!-- Trigger/Open The Modal -->
-                        <button  type="button" id="myBtn" class="myBtn success" onclick="showModifyPoint(${n.mid}, '${n.userName}', ${n.point});"><span>수정</span></button>
-                           <!-- The Modal -->
-                        
-                           <div id="myModal" class="modal">
-                             <!-- Modal content -->
-                             <div class="modal-content">
-                               <span class="close">&times;</span>
-                                   <form action="pointUpdate.do" method="post">
-                                     <span><b id=modalUserName> </b>님의 포인트를 추가하시겠습니까?</span>
-                                     <input id="modalMid" type="hidden" value="" name ="mId" >
-                                     <input id="modalPoint" type="number" value="" name ="point" style ="width : 100px;  text-align:center;">
-                                     <input class="myBtn success" type="submit" value="수정하기">&nbsp;
-                                  </form>
-                             </div>
-                           </div>
-                     </td>
-                     <td>${n.enrollDate}</td>
-                     <td>${n.modifyDate}</td>
-                     <%-- <td>${n.status}</td> --%>
-         
-                    <td>
-                          <c:if test="${n.status eq 'Y'}">
-                          <label class="switch">
-                            <input type="checkbox" checked disabled>
-                            <span></span>
-                          </label>
-                          </c:if>
-                          <c:if test="${n.status eq 'N'}">
-                          <label class="switch">
-                            <input type="checkbox" disabled>
-                            <span></span>
-                          </label>
-                          </c:if>
-                    </td>
-                        
-                  </tr>
-                  </c:forEach>
-               
-         
-                  
-               <!-- 페이징 부분 -->
-               <tr align ="center" height ="20">
-                  <td colspan="12">
-                     <!-- [맨처음으로] -->
-                     <c:url var = "blistfirstBack" value ="/memberLookup.do">
-                        <c:param name="page" value="1"/>
-                     </c:url>
-                        <a href ="${blistfirstBack }"> <font color="lightgray">[맨처음으로]</font></a>   
-                        
-                        <!-- [이전] -->
-                     <c:if test="${pi.currentPage <= 1 }">
-                        [이전]&nbsp;
-                     </c:if>
-                     
-                     <c:if test="${pi.currentPage > 1 }">
-                        <c:url var = "blistBack" value ="/memberLookup.do">
-                           <c:param name="page" value="${pi.currentPage - 1 }"/>
-                        </c:url>
-                        <a href ="${blistBack }"> <font color="lightgray">[이전]</font></a>   
-                     </c:if>
-                     
-                     <!-- [번호들 ]-->
-                     <c:forEach var = "p" begin="${pi.startPage }" end= "${pi.endPage }">
-                        <c:if test ="${p eq pi.currentPage }">${pi.startPage }
-                           <font color ="red" size ="4"><b>[${p}]</b></font>
-                        </c:if>
-                     
-                        <c:if test="${p ne pi.currentPage }">
-                           <c:url var ="blistCheck" value="memberLookup.do">
-                              <c:param name="page" value="${p}"/>
-                           </c:url>
-                           <a href ="${blistCheck }"><font color="lightgray">${p }</font></a>
-                        </c:if>
-                     </c:forEach>
-                     
-                     <!-- [다음]  -->
-                     <c:if test="${pi.currentPage >= pi.maxPage }">
-                        &nbsp;[다음]
-                     </c:if>
-                     
-                     <c:if test="${pi.currentPage < pi.maxPage}">
-                        <c:url var ="blistEnd" value ="memberLookup.do">
-                           <c:param name ="page" value = "${pi.currentPage + 1 }"/>
-                        </c:url>
-                        <a href ="${blistEnd }"><font color="lightgray">[다음]</font></a>      
-                     </c:if>
-                     
-                     <!-- [맨끝으로] -->
-                     <c:url var = "blistlastBack" value ="/memberLookup.do">
-                        <c:param name="page" value="${pi.maxPage }"/>
-                     </c:url>
-                        <a href ="${blistlastBack }"><font color="lightgray">[맨끝으로]</font> </a>
-                  </td>
-                        
-               </tr>
-            </table>
-      </div>
-      
-         <!-- switch script -->
-         <script>
-              (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-              (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-              m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-              })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-            
-              ga('create', 'UA-46156385-1', 'cssscript.com');
-              ga('send', 'pageview');
-         </script>
-         
-         
-         <!-- 포인트 수정 script   -->
-         <script>
-            $(function() {
-               
-               var modal = document.getElementById("myModal");
-               
-               $(".close").click(function(){
-                  modal.style.display = "none";
-               });
-               
-               window.onclick = function(event) {
-                    if (event.target == modal) {
-                      modal.style.display = "none";
-                    }
-               }
-            });
-            
-            
-            function showModifyPoint(mId, userName, point){
-               showModal(mId , userName, point );
-               /* modal.style.display = "block"; */
-            }
-            
-            function showModal(mId, userName, point){
-               var modal = document.getElementById("myModal");
-               modal.style.display = "block";
-               $("#modalUserName").html(userName)
-               $("#modalMid").val(mId);
-               $("#modalPoint").val(point);
-            }
-         </script>
-         
-         
-   <!-- 엑셀로 다운받기 -->   
-   <script type="text/javascript" src="https://pagead2.googlesyndication.com/pagead/show_ads.js">
-   </script>
-         
-      <!-- 엑셀로 다운받기 -->
-      <script>
-         $(function() {
-            $("#ExportBtn").click(function(){
-            $("#table2excel").table2excel({
-               exclude: ".noExl",
-               name: "Excel Document Name"
-            }); 
-             });
-         });
-      </script>
-      <script>
-         try {
-           fetch(new Request("https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js", { method: 'HEAD', mode: 'no-cors' })).then(function(response) {
-             return true;
-           }).catch(function(e) {
-             var carbonScript = document.createElement("script");
-             carbonScript.src = "//cdn.carbonads.com/carbon.js?serve=CK7DKKQU&placement=wwwjqueryscriptnet";
-             carbonScript.id = "_carbonads_js";
-             document.getElementById("carbon-block").appendChild(carbonScript);
-           });
-         } catch (error) {
-           console.log(error);
-         }
-      </script>
-      <script>
-      
-        var _gaq = _gaq || [];
-        _gaq.push(['_setAccount', 'UA-36251023-1']);
-        _gaq.push(['_setDomainName', 'jqueryscript.net']);
-        _gaq.push(['_trackPageview']);
-      
-        (function() {
-          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-        })();
-      </script>
-      
-      
-      
-      
+		<div id ="member-content">
+			<span align="left" style ="font-size : 20px; font-weight: bold; margin-right :450px;">
+				총 회원 수 : ${pi.listCount}명
+			</span>
+			<span style ="font-size : 25px; font-weight: bold; margin-right : 318px;"> 회원 관리 </span>
+			<span style ="margin-left : 200px;"></span>
+			<button id = "ExportBtn" class="btn btn-success"><img src="resources/images/excel.png" alt="">엑셀로 내려받기</button>
+		</div>	
+		
+				<table align="center" border="1" cellspacing="1" class ="membertable" id="table2excel">
+						<tr bgcolor ="#fa4a4a" style = "color : white" class="noExl">
+							<th width = "100px" align="center">회원ID</th>
+							<!-- <th>회원비밀빈호</th> -->
+							<th width = "130px">회원이름</th>
+							<th width = "80px">성별</th>
+							<th width = "120px">생년월일</th>
+							<th width = "120px">핸드폰번호</th>
+							<th>이메일</th>
+							<th width = "300px">주소</th>
+							<th width = "120px">포인트</th>
+							<th width = "160px">가입일</th>
+							<th width = "160px">수정일</th>
+							<th width = "140px">탈퇴상태</th>
+							<!-- <th>탈퇴처리</th> -->
+						</tr>
+					<c:forEach var="n" items="${list}">
+						<tr class="active">
+							<td align="center">${n.userId}</td>
+							<%-- <td align="center">${n.userPwd}</td> --%>
+							<td>${n.userName}</td>
+							<td>${n.gender}</td>
+							<td>${n.birthday}</td>
+							<td>${n.phone}</td>
+							<td>${n.email}</td>
+							<td>${n.address}</td>
+							<td>
+								<input type="text" value ="${n.point}" style =" width : 80px; text-align:center;" readonly >
+	
+								<!-- <input type="button" value="수정" id ="myBtn"> -->
+								<input type="hidden" value="${n.mid}" name ="mId">
+								<input type="hidden" value="${n.userId}" name ="userId">
+								<!-- Trigger/Open The Modal -->
+								<button  type="button" id="myBtn" class="myBtn success" onclick="showModifyPoint(${n.mid}, '${n.userName}', ${n.point});"><span>수정</span></button>
+									<!-- The Modal -->
+								
+									<div id="myModal" class="modal">
+									  <!-- Modal content -->
+									  <div class="modal-content">
+									    <span class="close">&times;</span>
+									    	 <form action="pointUpdate.do" method="post">
+										    	<span><b id=modalUserName> </b>님의 포인트를 추가하시겠습니까?</span>
+										    	<input id="modalMid" type="hidden" value="" name ="mId" >
+										    	<input id="modalPoint" type="number" value="" name ="point" style ="width : 100px;  text-align:center;">
+										    	<input class="myBtn success" type="submit" value="수정하기">&nbsp;
+									    	</form>
+									  </div>
+									</div>
+							</td>
+							<td>${n.enrollDate}</td>
+							<td>${n.modifyDate}</td>
+							<%-- <td>${n.status}</td> --%>
+			
+			           <td>
+			           	   <c:if test="${n.status eq 'Y'}">
+					           <label class="switch">
+					             <input type="checkbox" checked disabled>
+					             <span></span>
+					           </label>
+			           	   </c:if>
+			           	   <c:if test="${n.status eq 'N'}">
+					           <label class="switch">
+					             <input type="checkbox" disabled>
+					             <span></span>
+					           </label>
+			           	   </c:if>
+			           </td>
+								
+						</tr>
+						</c:forEach>
+					</table>
+					<br>	
+						
+					<!-- 페이징 부분 -->
+					 <div class="pagingArea" align="center">
+				         <!-- 맨 처음으로(<<) -->
+				         <button onclick="location.href='memberLookup.do?page=1'"> << </button>
+       
+        					<!-- 이전 페이지로(<) -->
+					        <c:if test="${pi.currentPage <= 1 }">
+					            <button disabled> < </button>
+					        </c:if>
+					         <c:if test="${pi.currentPage > 1 }">
+					         
+					            <button onclick="location.href='memberLookup.do?page=${pi.currentPage -1}'"> < </button>
+					        </c:if>
+        
+						<!-- 10개의 페이지 목록 -->
+				         <c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage }">
+				           <c:if test="${pi.currentPage == p }">
+				               <button style="background:#ec434a;color:white" disabled >${p}</button>
+				           </c:if>
+				            <c:if test="${pi.currentPage != p }">
+				               <button onclick="location.href='memberLookup.do?page=${p}'">${p}</button>
+				            </c:if>
+				       </c:forEach>
+				       
+				         <c:if test="${pi.currentPage >= pi.maxPage }">
+			            	<button disabled> > </button>
+			          	</c:if>
+				          <c:if test="${pi.currentPage < pi.maxPage }">
+				            <button onclick="location.href='memberLookup.do?page=${pi.currentPage + 1}'"> > </button>
+				          </c:if>
+					     
+					     <!-- 맨 끝으로(>>) -->
+    					<button onclick="location.href='memberLookup.do?page=${pi.maxPage}'"> >> </button>
+     
+					</div> <!-- 페이징 부분 -->
+			</div> <!-- container -->
+			
+			<!-- switch script -->
+			<script>
+				  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+				  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+				  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+				  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+				
+				  ga('create', 'UA-46156385-1', 'cssscript.com');
+				  ga('send', 'pageview');
+			</script>
+			
+			
+			<!-- 포인트 수정 script   -->
+			<script>
+				$(function() {
+					
+					var modal = document.getElementById("myModal");
+					
+					$(".close").click(function(){
+						modal.style.display = "none";
+					});
+					
+					window.onclick = function(event) {
+						  if (event.target == modal) {
+						    modal.style.display = "none";
+						  }
+					}
+				});
+				
+				
+				function showModifyPoint(mId, userName, point){
+					showModal(mId , userName, point );
+					/* modal.style.display = "block"; */
+				}
+				
+				function showModal(mId, userName, point){
+					var modal = document.getElementById("myModal");
+					modal.style.display = "block";
+					
+					$("#modalUserName").html(userName)
+					$("#modalMid").val(mId);
+					$("#modalPoint").val(point);
+				}
+			</script>
+			
+			
+	<!-- 엑셀로 다운받기 -->	
+	<script type="text/javascript" src="https://pagead2.googlesyndication.com/pagead/show_ads.js">
+	</script>
+			
+		<!-- 엑셀로 다운받기 -->
+		<script>
+			$(function() {
+				$("#ExportBtn").click(function(){
+				$("#table2excel").table2excel({
+					exclude: ".noExl",
+					name: "Excel Document Name"
+				}); 
+				 });
+			});
+		</script>
+		<script>
+			try {
+			  fetch(new Request("https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js", { method: 'HEAD', mode: 'no-cors' })).then(function(response) {
+			    return true;
+			  }).catch(function(e) {
+			    var carbonScript = document.createElement("script");
+			    carbonScript.src = "//cdn.carbonads.com/carbon.js?serve=CK7DKKQU&placement=wwwjqueryscriptnet";
+			    carbonScript.id = "_carbonads_js";
+			    document.getElementById("carbon-block").appendChild(carbonScript);
+			  });
+			} catch (error) {
+			  console.log(error);
+			}
+		</script>
+		<script>
+		
+		  var _gaq = _gaq || [];
+		  _gaq.push(['_setAccount', 'UA-36251023-1']);
+		  _gaq.push(['_setDomainName', 'jqueryscript.net']);
+		  _gaq.push(['_trackPageview']);
+		
+		  (function() {
+		    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		  })();
+		</script>
+		
+		
+		
+		
 </body>
 
 <footer>

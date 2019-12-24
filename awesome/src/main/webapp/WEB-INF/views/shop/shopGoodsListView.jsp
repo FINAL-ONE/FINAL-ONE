@@ -58,7 +58,7 @@
 }
 .goods-list{
 	width : 270px;
-	height : 380px;
+	height : 333px;
 	/* background : yellow; */
 	display : inline-block;
  	margin-left: 17px;
@@ -131,6 +131,10 @@
   	color: orange;
 }
 
+
+.cards__container{
+	cursor : pointer;
+}
 </style>
 </head>
 <body>
@@ -168,7 +172,7 @@
 			        <div class="cards-wrapper">
 			            <ul class="cards__container">
 			                <li class="box" style="background-color:red"><img src="resources/images/3d-bannder1.png"></li>
-			                <li class="box"><img src="resources/images/3d-bannder2.png"></li>
+			                <li class="box"><a href="http://localhost:8888/awesome/adetail.do?sellNum=7&userId=&gId=8"><img src="resources/images/3d-bannder2.png"></a></li>
 			                <li class="box"><img src="resources/images/3d-bannder3.png"></li>
 			                <li class="box"><img src="resources/images/3d-bannder4.png"></li>
 			                <li class="box"><img src="resources/images/3d-bannder5.png"></li>
@@ -184,6 +188,7 @@
 						<c:url var="adetail" value="adetail.do">
 							<c:param name="sellNum" value="${a.sellNum }"/>
 							<c:param name="userId" value="${a.userId }"/>
+							<c:param name="gId" value="${a.gId }"/>
 						</c:url>
 						<a href="${adetail}" style="text-decoration:none">
 							<div class="goods-img" style ="margin-bottom: 10px;">
@@ -193,19 +198,19 @@
 								<span style="font-weight: bold; color:black;">${a.goodsTitle}</span>
 								<img src="resources/images/line.png">
 								<span style="color:gray;">${a.goodsContent}</span>
-								<span style="font-weight: bold; font-size: 18px; color:black;">${a.goodsPrice}원</span><br>
-								<input type="hidden" name ="star" value = "1" style="size : 10px">
-									<span class="fa fa-star checked"></span>
+								<span style="font-weight: bold; font-size: 18px; color:red; text-align: center; color : red;">${a.goodsPrice}원</span><br>
+								<!-- <input type="hidden" name ="star" value = "1" style="size : 10px">
+									<span class="fa fa-star checked"></span> -->	
 							</div>
 						</a>
 				</div>
 			</c:forEach>
 			
-			</div>		
+			</div>	<!--contentArea 끝  -->
 			
-		</div>
+		</div>	<!-- outer 끝 -->
 		
-	</div>
+	</div> <!-- container -->
 	
 	<!-- 롤링 배너  -->
 	<script>

@@ -9,6 +9,17 @@
 <meta charset="UTF-8">
 <link rel="shortcut icon" href="${contextPath}/resources/images/favicon.ico" type="image/x-icon">
 <title>Insert title here</title>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">	<!--  -->
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
+
+<!-- include summernote css/js-->
+<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
+
+
 <style>
  select[multiple]{
      height: 100%;
@@ -84,6 +95,7 @@
 	  right: 0;
 	}
 
+
 </style>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -99,7 +111,6 @@
 <body>
 
 	<jsp:include page ="../common/menubar.jsp"/>
-	<%-- <jsp:include page ="../admin/adminMenu.jsp"/> --%>
 	
 	
 	<div id="container" style="overflow: auto; height: auto;" ><!-- container -->
@@ -146,7 +157,7 @@
 					<input type="hidden" name="idDuplicateCheck" id="idDuplicateCheck" value="0">
 				</td>
 			<tr>
-				<th>상품 내용 <span style = "color:red; font-size : 1.5em;">*</span></th>
+				<th>상품 내용 <span style = "color:red; font-size : 1.5em;">*</span>&nbsp;&nbsp;&nbsp;&nbsp;</th>
 					<td><textarea id ="summernote" name="goodsContent" rows="10" cols ="81" size ="resize:none" required>${n.goodsContent}</textarea>
 				<!-- <td><textarea id ="goodsContent" name="goodsContent" rows="10" cols ="81" size ="resize:none" required></textarea> -->
 				</td>
@@ -223,7 +234,7 @@
 				<script> 
 				$(document).ready(function() {
 				    $('#summernote').summernote({
-				            height: 150,                 // set editor height
+				            height: 144.016,                 // set editor height
 				            minHeight: null,             // set minimum height of editor
 				            maxHeight: null,             // set maximum height of editor
 				            focus: true                  // set focus to editable area after initializing summernote
@@ -350,6 +361,7 @@
 //str 등록버튼 클릭시----------------------------------------------------------------------------------------------------
 
 	function validate(){
+		
 		if($("#goodsTitle").val()==0){
 			alert("제목을 입력해 주세요");
 		}else if($("#goodsPrice").val()==0){
@@ -363,9 +375,9 @@
 		    $('#summernote').summernote({
 	            focus: true
 	    	});
-		}else if($("#thumbnailImg1").val()==0){
+/* 		}else if($("#thumbnailImg1").val()==0){
 			alert("대표 이미지를 넣어주세요");
-			$("#thumbnailImg1").click();
+			$("#thumbnailImg1").click(); */
 		}else if($("#goodsName").val()==0){
 			alert("사용 가능한 상품명을 입력해 주세요");
 			$("#goodsName").focus();

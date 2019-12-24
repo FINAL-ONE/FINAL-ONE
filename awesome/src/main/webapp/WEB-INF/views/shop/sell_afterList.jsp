@@ -12,21 +12,15 @@
 <!-- Star Rating -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    
 <style>
-.outer{
-	width : 100%;
-	height : 100%;
-}
 
-
-/* 상품 후기  */
 #afterWrite{
   border-collapse: collapse;
   border-spacing: 0;
   width: 1300px;
   border: 1px solid #ddd;
   text-align :center;
+  margin-left : 200px;
 }
 #afterWrite th, td {
   text-align: center;
@@ -107,58 +101,49 @@ tr:nth-child(even) {
 
 </head>
 <body>
-<jsp:include page ="../common/menubar.jsp"/>
-<%-- <jsp:include page ="../admin/adminMenu.jsp"/> --%>
+	<jsp:include page ="../common/menubar.jsp"/>
 
 	
 	<div id="container" style="overflow: auto; height: auto;" ><!-- container -->
-		<div class = "outer">
-			<div id ="afterWriteDiv" style="margin-left : 790px; margin-top : 20px; margin-bottom: 20px;">
-				<span align="center" style="font-size : 30px; font-weight: bold;"> 후기리뷰 </span>
+		<div id ="afterWriteDiv" style= "margin-top : 6px; margin-bottom: 70px;">
+			 <form id = "afterAvgForm" action="stargIdSelect.do" method="post" enctype="Multipart/form-data">
+				
+				<c:forEach var="aflist" items="${aflist}">
+					<input id="aGid" type="hidden" name="gId">
+				</c:forEach>
+					<div style="font-size : 30px; text-align : center; font-weight: bold; width : 300px; margin-left : 700px"> 후기리뷰 리스트 </div>					    
+				<br>
+				<p style="margin-bottom: 3px; margin-left : 690px;  width : 500px;">후기 평점을 보고싶은 상품을 선택해주세요</p>
+				
+				<div id = "sellheaderArea" style="margin-left : 760px; width : 500px;">
+					<select id="goodsList" name="goodsList" style="margin-bottom : 5px; width : 180px; height : 30px;">
+							<option value="0" selected>옵션을 선택하세요</option>
+							<c:forEach var="aflist" items="${aflist}">
+								<option value="${aflist.gId}">${aflist.goodsTitle}</option>
+							</c:forEach>
+					</select>
+				<br>
+				    <button type="button" id="gId-btn" class="myBtn success" onclick="selectTitleList()"><span>확인</span></button>
+					<button type="button" id="myBtn" class="myBtn success" onclick="restList()"><span>리셋</span></button>
+				</div>
 					
-					 <form id = "afterAvgForm" action="stargIdSelect.do" method="post" enctype="Multipart/form-data">
-						<span>상품별 후기 평점 보기</span>
-						<br>
-						<c:forEach var="aflist" items="${aflist}">
-							<input id="aGid" type="hidden" name="gId">
-						</c:forEach>
-											    
-						
-						<div id ="sAvgListArea" style="width:200px; height : 200px; margin-left : 520px;">
-						<select id="goodsList" name="goodsList" style="margin-bottom : 5px; width : 180px; height : 30px;">
-								<option value="0" selected>옵션을 선택하세요</option>
-								<c:forEach var="aflist" items="${aflist}">
-									<option value="${aflist.gId}">${aflist.goodsTitle}</option>
-								</c:forEach>
-						</select>
-						<br>
-						
-						<!-- <input id="gId-btn" type="button" value="확인"> &nbsp; -->
-					    <button id="gId-btn" class="myBtn success" onclick="selectTitleList()"><span>확인</span></button>&nbsp;
-						<button type="button" id="myBtn" class="myBtn success" onclick="restList()"><span>리셋</span></button>
-							<c:forEach var="sAvgList" items="${sAvgList}">
-					      	 		<span style= "margin-left : 73px;"  class="fa fa-star checked"></span>
-					      	 		<span style="width : 400px; height : 200px; font-size : 20px; margin-left : 5px;">${sAvgList}</span>
-				      		</c:forEach>
-						</div>	
-						
-					 </form>
+			 </form>
 			</div>
-			
+				
 			<table align="center" id ="afterWrite" class= "ediTable" border="1" cellspacing="1">
 				<tr bgcolor ="#fa4a4a" style = "color : white">
 					<th width ="200px">후기사진</th>
 					<th width ="200px">상품명</th>
 					<th width ="400px">후기내용</th>
 					<th width ="200px">작성자</th>
-					<th width ="200px">별점</th>
+					<th width ="200px">평균평점 / 별점</th>
 					<th width ="200px">작성일</th>
 					<!-- <th width = "100px">평점</th> -->
 				</tr>
 				<c:forEach var="aflist" items="${aflist}">
 						
 					<tr>
-						<td><img src="resources/afteruploadFiles/${aflist.ref_filePath}" width ="150px" height ="150px"></td>
+						<td><img src="resources/afteruploadFiles/${aflist.ref_filePath}" width ="150px" height ="130px"></td>
 				 		<td>${aflist.goodsTitle}</td>
 						<td>${aflist.rContent}</td>
 						<td>
@@ -168,7 +153,11 @@ tr:nth-child(even) {
 						</td>
 						
 						<td>
-							 <c:if test="${aflist.sellStart eq '1'}">
+						<c:forEach var="sAvgList" items="${sAvgList}">
+				      	 		<span class="fa fa-star checked"></span>
+				      	 		<span style="font-size : 20px;">${sAvgList}</span>
+				      		</c:forEach>
+							<%--  <c:if test="${aflist.sellStart eq '1'}">
 									<span class="fa fa-star checked"></span>
 									<span class="fa fa-star"></span>
 									<span class="fa fa-star"></span>
@@ -203,7 +192,7 @@ tr:nth-child(even) {
 									<span class="fa fa-star checked"></span>
 									<span class="fa fa-star checked"></span>
 									<span class="fa fa-star checked"></span>
-					      	 </c:if>
+					      	 </c:if> --%>
 						</td>
 						<td><c:out value = "${aflist.createDate }"/></td>
 
@@ -215,15 +204,22 @@ tr:nth-child(even) {
 					</tr>
 				</c:forEach>
 			</table>
-		</div>
-
-		</div>
+			
+			
+			<p align="center" style="margin : 50px 0 50px 0;">
+				<c:url var ="adminMain" value="adminMain.do"/>
+				<a href="${adminMain}" style="text-decoration: none;">관리자페이지 이동</a>&nbsp;
+				<c:url var ="sell_goodsList" value="sell_goodsList.do"/>
+				<a href="${sell_goodsList}" style="text-decoration: none;">목록전체보기</a>
+			</p>
+	
+	</div>
+	
 	
 	<script>
 		$("#goodsList").on("change",function(){
 			/* var tex = $("#goodsList option:selected").text(); */
 			var va = $("#goodsList option:selected").val();	
-				alert(va);
 		 	
 			$("#aGid").val(va);
 			
@@ -239,24 +235,16 @@ tr:nth-child(even) {
 	
 	<script>
 		function selectTitleList(){
-			if($("#gId-btn").val()==''){
-				return false;
-			}
+			if($("#goodsList option:selected").val() <= 0){
+				alert("평점을 보실 상품을 리스트에서 선택해주세요");
+			}else {
 				$("#afterAvgForm").submit();
+				
+			}
 		}
 	
 	</script>
 	
-	<!-- 
-		<script>
-			$("#gId-btn").on("click",function(){
-				if($("#gId-btn").val()==''){
-					alert("리스트에서 값을 선택해  주세요");
-					return false;
-				}
-					$("#afterAvgForm").submit();
-			});
-	</script> -->
 </body>
 
 <footer>

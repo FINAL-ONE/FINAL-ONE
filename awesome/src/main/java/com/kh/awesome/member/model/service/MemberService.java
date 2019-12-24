@@ -32,6 +32,11 @@ public interface MemberService {
 	void find_pw(HttpServletResponse response, Member member) throws Exception;
 
 	void send_mail(Member member, String div) throws Exception;
+	
+	String send_mailCheck(String userEmail) throws Exception;
+	
 
 	int checkNickNameDup(String nickName);
+	
+	
 }

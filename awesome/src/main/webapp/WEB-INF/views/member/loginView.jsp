@@ -6,8 +6,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="shortcut icon" href="${contextPath}/resources/images/favicon.ico" type="image/x-icon">
 <title>Insert title here</title>
 </head>
+
 <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
 <style>
 	.loginDiv{
@@ -87,13 +89,13 @@ input:focus { outline: none; }
 	</p>
 	
 	
-	<form id= "loginForm" action="login.do" method="post">
-		<input class= "loginInput" id="userId" name="userId" style="margin-bottom:10px;"placeholder="아이디 입력" > <br>
-		<input class= "loginInput" id="userPwd" type="password" name="userPwd" style="margin-bottom:5px;" placeholder="비밀번호 입력" type="password"><br>
+	
+		<input class= "loginInput" id="userId" style="margin-bottom:10px;"placeholder="아이디 입력" > <br>
+		<input class= "loginInput" id="userPwd" type="password"  style="margin-bottom:5px;" placeholder="비밀번호 입력" type="password"><br>
 		<button class= "loginBtn" type="button" onclick="loginCheck()">로그인</button><br>
 		<button class="findLogin" type="button" id = "find_id_btn" onclick="javascript:popupidOpen();">아이디 찾기</button><br>
 		<button class="findLogin" type="button" id = "find_pw_btn" onclick="javascript:popuppwOpen();">비밀번호 찾기</button><br>
-	</form>
+
 	<br><br>
 		<p style="color:#666666; font-size:12px; margin:0px; line-height:1.5">
 		문제가 있거나 문의 사항이 있으시면 아래의 주소로 문의하시기 바랍니다.<br>
@@ -128,15 +130,39 @@ function loginCheck(){
          }else if($("#userPwd").val() == ""){
             alert("비밀번호를 입력해주세요.");
             $("#userPwd").focus();
-         }else{
-            if(!confirm("로그인에 성공하였습니다.")){
-               console.log("성공");
-               return false;
-            };
-            $("#loginForm").submit();
-         }   
-      }
-      </script>
+         }
+         
+      var userId =  $("#userId").val();
+       var userPwd = $("#userPwd").val();
+         
+   	$.ajax({
+		url : "login.do",
+		type:"post",
+		dataType : "JSON",
+		data : {
+			userId : userId,
+			userPwd : userPwd
+		},
+		success : function(data) {
+			if (data != "실패") {
+				console.log(data);
+				alert(data + "님 환영합니다." );
+				location.href="home.do";
+			}else{ 
+				alert("아이디나 비밀번호를 다시 확인해주세요1 ");
+			}
+			
+			
+		},
+		error : function(request, status, errorData) {
+			alert("아이디나 비밀번호를 다시 확인해주세요 2");
+		}
+	});	
+       
+}
+         
+ 
+</script>
 
 
 <script type="text/javascript">
