@@ -33,7 +33,12 @@ body {
 	
 
 }
-
+.menu2 {
+    color: white !important;
+    line-height: 3 !important;
+    position: relative !important;
+    font-size: 16px !important;
+}
 .footer{
 	line-height: 18px !important;
 }
@@ -287,8 +292,8 @@ textarea {
 
 
 .conmmunityNav:after {
-    top: -44px !important;
-    left: -94px !important;
+    top: -42px !important;
+    left: -49px !important;
 }
 
 

@@ -44,6 +44,17 @@
 	
 	
 	
+	.centerDiv{
+		    width: 1500px;
+    /* border: 1px solid pink; */
+    margin-left: auto;
+    margin-right: auto;
+    height: auto;
+    padding-left: 90px;
+	}
+	
+	
+	
 	/* 모달창 css */
 	/* The Modal (background) */
 	.modal {
@@ -165,6 +176,8 @@
 	
 	<br><br>
 	<c:if test="${!empty loginUser }">
+		
+				
    		<div align ="center">
    		<!--
    			상품 이름 

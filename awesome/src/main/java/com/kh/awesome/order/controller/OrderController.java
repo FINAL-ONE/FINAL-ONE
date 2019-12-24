@@ -46,7 +46,9 @@ public class OrderController {
 	public ModelAndView abc(ModelAndView mv, @RequestParam(value = "page", required = false) Integer page,
 			HttpServletRequest request, HttpSession session) {
 		
-		int currentPage = 1;
+		
+	 System.out.println("들어오니 ");
+	 int currentPage = 1;
 		if(page != null) {
 			currentPage = page;
 		}
@@ -67,10 +69,11 @@ public class OrderController {
 		System.out.println(pi);
 		System.out.println(list);
 		
-		 if(list != null && list.size()>0) {
+		
 			mv.addObject("list", list);
 			mv.addObject("pi", pi);
-		 } 
+
+			System.out.println("야 장난하냐 ");
 			mv.setViewName("order/orderListView");
 		return mv;
 	}

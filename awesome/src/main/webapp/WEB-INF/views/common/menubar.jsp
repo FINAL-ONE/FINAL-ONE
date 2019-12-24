@@ -393,7 +393,7 @@ This class is added to the container
    
    .menu2{
       color: white;
-      line-height: 3;
+      line-height: 2.7;
       position: relative;
    }
    
@@ -421,7 +421,7 @@ This class is added to the container
     border-right: 6px solid transparent;
     border-left: 6px solid transparent;
     border-bottom: 8px solid #fa4a4a;
-    top: -41px;
+    top: -40px;
     left: -55px;
 }
 
@@ -481,7 +481,7 @@ This class is added to the container
          <!-- 로그인했을떄 -->
          <!-- 여기 이 부분은 DB로부터 객체 받아오는거 확인하고 나서 작성하자!!  -->
          <span id ="loginuserInfo">
-            <c:out value = "${loginUser.userName }님 환영 합니다."/>
+            <c:out value = "${loginUser.userNickname }님 환영 합니다."/>
             <!-- 정보 수정용 페이지로 갈 때 쓸 변수와 로그아웃용 경로 변수 지정 -->
             <c:url var ="myinfo" value="myinfo.do"/>
             <c:url var ="logout" value="logout.do"/>
@@ -539,7 +539,9 @@ This class is added to the container
    <div class= "myPageNav">
       <span class= menu2 style="left: 637px;" onclick= "location.href='myinfo.do'">내정보보기</span>
 	  <span class= menu2 style="left: 652px;" onclick= "location.href='cartList.do'">장바구니</span>
+      
       <span class= menu2 style="left: 667px;" onclick= "location.href='orderView.do'" >주문조회</span>
+      
       <span class= menu2 style="left: 682px;">다이어트 일지</span>
       <!-- <span class= menu2 style="left: 702px;" onclick= "location.href='afterdelete.do'">내가 쓴 후기</span> -->
 	    <c:url var="myafterUpdate" value="afterdelete.do">
@@ -710,10 +712,10 @@ $(function(){
              
      });
      
-    $(".communityMenu").mouseleave(function(){
+   $(".communityMenu").mouseleave(function(){
         $(".communityMenubar").css("display","none");
         $(".normalMenubar").css("display","block");
-    });
+    }); 
 
     
      $(".myPageMenu").mouseenter(function(){

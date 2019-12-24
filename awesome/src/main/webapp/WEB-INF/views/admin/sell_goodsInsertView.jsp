@@ -26,7 +26,8 @@
 <style>
 
 #insertTable{
-	margin-left : 300px;
+	margin-left: auto; 
+	margin-right: auto;
 }
 
  select[multiple]{
@@ -102,7 +103,19 @@
 	}
 	
 	
-
+	
+	.centerDiv{
+	
+		  width:1200px;
+		  border:none;
+/* 	 border: 1px solid pink;  */
+	      margin-left:auto;
+	      margin-right:auto;
+	      height: auto;
+	      padding-left: 40px;
+	      
+	
+	}
 
 	
 </style>
@@ -111,6 +124,8 @@
 <body>
 
 	<jsp:include page ="../common/menubar.jsp"/>
+	
+	<div class= "centerDiv">
 	
 	<div id="container" style="overflow: auto; height: auto;" ><!-- container -->
 
@@ -255,7 +270,7 @@
 			<a href="sell_goodsList.do">목록 보기로 이동</a>
 		</p>
 	</div>
-	
+	</div>
 	<script>
 	// 선택한 상품의 가격,수량 조회후 출력 ---------------------------------------------------------
 		$(function(){
