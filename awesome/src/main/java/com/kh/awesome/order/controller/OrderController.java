@@ -451,6 +451,29 @@ public class OrderController {
 		}
 				
 				
-	
+		//구매확정 나혜!!
+		@RequestMapping("orderComplete.do")
+		public void orderComplete(HttpServletResponse response, String orderNum, HttpServletRequest request, int usedPoint, int orderPrice, Order o ) throws JsonIOException, IOException {
+			/*System.out.println("CONTROLLER: " + orderNum);*/
+			int orderComplete = oService.orderComplete(orderNum);
+			
+			HttpSession session = request.getSession(true);
+			Member loginUser = (Member) session.getAttribute("loginUser");
+			int mId = loginUser.getMid();
+			
+			o.setmId(mId);
+			o.setUsedPoint(usedPoint);
+			o.setOrderPrice(orderPrice);
+			
+			System.out.println(o);
+			int updatePoint = oService.updateMemberPoint(o);
+			
+			
+			if(orderComplete>0) {
+			Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+			gson.toJson( orderComplete, response.getWriter());
+			}
+		}
+
 	
 }

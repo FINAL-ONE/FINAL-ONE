@@ -535,19 +535,20 @@ This class is added to the container
 </div>   
    
  <c:if test="${sessionScope.loginUser.userId ne 'admin'}">   
+
 <div class="menubar2 myPageMenubar myPageMenu" style="display:none;">
    <div class= "myPageNav">
-      <span class= menu2 style="left: 637px;" onclick= "location.href='myinfo.do'">내정보보기</span>
-	  <span class= menu2 style="left: 652px;" onclick= "location.href='cartList.do'">장바구니</span>
-      
-      <span class= menu2 style="left: 667px;" onclick= "location.href='orderView.do'" >주문조회</span>
-      
-      <span class= menu2 style="left: 682px;">다이어트 일지</span>
+
+      <span class= menu2 style="left: 637px;" onclick= "myPage()">내정보보기</span>
+	  <span class= menu2 style="left: 652px;" onclick= "cart()">장바구니</span>
+      <span class= menu2 style="left: 667px;" onclick= "orderList()" >주문조회</span>
+
+
       <!-- <span class= menu2 style="left: 702px;" onclick= "location.href='afterdelete.do'">내가 쓴 후기</span> -->
 	    <c:url var="myafterUpdate" value="afterdelete.do">
 			<c:param name="mid" value="${sessionScope.loginUser.mid }"/>
 			</c:url>
-	      <span class= "menu2" style="left: 702px;"><a href="${myafterUpdate}" style="text-decoration: none; color : white;">내가 쓴 후기</a></span>
+	      <span class= "menu2" style="left: 702px;"><a onclick= "after()" style="text-decoration: none; color : white;">내가 쓴 후기</a></span>
    </div>
 </div>   
 </c:if>
@@ -734,8 +735,45 @@ $(function(){
    
  });
  
+function myPage(){
+	if($("#loginUserMid").val() >0){
+		location.href='myinfo.do'
+			
+	}else{
+		alert("로그인을 해야지만 이용하실 수 있습니다.")
+		location.href='loginView.do'	
+	}
+}
 
+function cart(){
+	if($("#loginUserMid").val() >0){
+		
+		location.href='cartList.do'
+			
+	}else{
+		alert("로그인을 해야지만 이용하실 수 있습니다.")
+		location.href='loginView.do'	
+	}
+}
+function orderList(){
+	if($("#loginUserMid").val() >0){
+		location.href='orderView.do'
+			
+	}else{
+		alert("로그인을 해야지만 이용하실 수 있습니다.")
+		location.href='loginView.do'	
+	}
+	
+}
 
+function after(){
+	if($("#loginUserMid").val() >0){
+	location.href='${myafterUpdate}'
+	}else{
+		alert("로그인을 해야지만 이용하실 수 있습니다.")
+		location.href='loginView.do'
+	}
+}
 </script>
 
 

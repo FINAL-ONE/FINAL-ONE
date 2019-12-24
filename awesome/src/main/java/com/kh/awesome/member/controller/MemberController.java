@@ -393,5 +393,15 @@ public class MemberController {
          }
          
             
-   
+
+			@RequestMapping("privacy.do")
+			public String privacy() {
+				return "/common/privacyStatement";
+			}
+				
+			@RequestMapping("termsOfUse.do")
+			public String termsOfUse() {
+				return "/common/termsOfUse";
+			}
+
 }

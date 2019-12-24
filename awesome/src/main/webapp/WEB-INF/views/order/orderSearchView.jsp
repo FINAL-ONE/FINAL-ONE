@@ -187,87 +187,87 @@ input::placeholder {
       </div>
       <br>
 
-         <table align="center" cellspacing="0" width="880px" id="orderTable">
-            <tr id="th">
-               <td style="width: 130px">주문일자<br>[주문번호]</td>
-               <td style="width: 200px" align="center">이미지</td>
-               <td style="width: 300px" align="center">상품정보</td>
-               <td style="width: 100px">수량</td>
-               <td style="width: 100px">주문금액</td>
-               <td style="width: 150px">진행상태</td>
-            </tr>
-    <%--          <c:forEach var="t" items="${list }">
-               <c:forEach var="r" items="${rowCount }">
-                     <c:if test="${t.orderNum eq r.orderNum }">
-                        ${r.orderNum }
-                        ${r.rowCount }
-                     </c:if>
-                  </c:forEach>
-               </c:forEach>  --%>
 
-         
-            <c:set var="count" value="0" scope="application"/>
-            <c:set var="orderNum" value="0" scope="application"/>
-            <c:forEach var="o" items="${list}">   
-            <c:if test ="${applicationScope.orderNum ne o.orderNum}"  > 
-                  <c:set var="orderNum" value="0" scope="application"/>
-                  
-               </c:if> 
-               <tr>
-               <c:if test ="${applicationScope.orderNum eq '0'}"  > 
-                     <c:set var="orderNum" value="${o.orderNum }" scope="application"/>
-                      <c:if test ="${applicationScope.orderNum eq o.orderNum}"  >  
-                         <c:forEach var="c" items="${list }">
-                            <c:if test="${c.orderNum eq applicationScope.orderNum }">
-                               <c:set var="count" value="${count+1 }"/>
-                               
-                            </c:if>
-                         </c:forEach>
-                        <td rowspan="${count }">${o.orderDate }<br>
-                           <c:url var="odetail" value="orderDetail.do">
-                              <c:param name="orderNum" value="${o.orderNum}"/>
-                           </c:url>
-                           <a href="${odetail }">[${o.orderNum}]</a>
-                        </td>
-                     </c:if>
-                  <c:set var="count" value="0" />
-                     
-               
-               </c:if>   
-               <c:if test ="${applicationScope.orderNum ne '0'}"  > 
-               <%-- <c:if test="${applicationScope.orderNum ne o.orderNum}"> --%>
-         
-                  <c:if test ="${applicationScope.orderNum eq o.orderNum}"  >  
-               
-                  <td><img src="resources/auploadFiles/${o.filePath }" style="height:200px; width:150px;"></td>
-                  <td><${o.goodsTitle}><br>${o.gName}</td>
-                  <td>${o.orderCount }</td>
-                  <td>${o.gPrice * o.orderCount }</td>
-                  <c:if test = "${o.orderStatus eq 'B'}">
-                  <td>
-                  배송전
-                  </td>
-                  </c:if>
-                  <c:if test = "${o.orderStatus eq 'I'}">
-                  <td>배송중</td>
-                  </c:if>
-                  <c:if test = "${o.orderStatus eq 'C'}">
-                  <td>배송완료</td>
-                  </c:if>
-                  <c:if test = "${o.orderStatus eq 'X'}">
-                  <td>주문취소</td>
-                  </c:if>
-               </c:if>
-               
-               </c:if>
-               </tr>
-               <%-- <c:if test ="${applicationScope.orderNum ne o.orderNum}"  > 
-                  <c:set var="orderNum" value="0" scope="application"/>
-                  
-               </c:if>  --%>
-            </c:forEach>
-            
+			<table align="center" cellspacing="0" width="880px" id="orderTable">
+				<tr id="th">
+					<td style="width: 130px">주문일자<br>[주문번호]</td>
+					<td style="width: 200px" align="center">이미지</td>
+					<td style="width: 300px" align="center">상품정보</td>
+					<td style="width: 100px">수량</td>
+					<td style="width: 100px">주문금액</td>
+					<td style="width: 150px">진행상태</td>
+				</tr>
+ 	<%-- 			<c:forEach var="t" items="${list }">
+					<c:forEach var="r" items="${rowCount }">
+							<c:if test="${t.orderNum eq r.orderNum }">
+								${r.orderNum }
+								${r.rowCount }
+							</c:if>
+						</c:forEach>
+					</c:forEach>  --%>
 
+			
+				<c:set var="count" value="0" scope="application"/>
+				<c:set var="orderNum" value="0" scope="application"/>
+				<c:forEach var="o" items="${list}">	
+				<c:if test ="${applicationScope.orderNum ne o.orderNum}"  > 
+						<c:set var="orderNum" value="0" scope="application"/>
+						
+					</c:if> 
+					<tr>
+					<c:if test ="${applicationScope.orderNum eq '0'}"  > 
+							<c:set var="orderNum" value="${o.orderNum }" scope="application"/>
+							 <c:if test ="${applicationScope.orderNum eq o.orderNum}"  >  
+							 	<c:forEach var="c" items="${list }">
+							 		<c:if test="${c.orderNum eq applicationScope.orderNum }">
+							 			<c:set var="count" value="${count+1 }"/>
+							 			
+							 		</c:if>
+							 	</c:forEach>
+								<td rowspan="${count }">${o.orderDate }<br>
+									<c:url var="odetail" value="orderDetail.do">
+										<c:param name="orderNum" value="${o.orderNum}"/>
+									</c:url>
+									<a href="${odetail }">[${o.orderNum}]</a>
+								</td>
+							</c:if>
+						<c:set var="count" value="0" />
+							
+					
+					</c:if>	
+					<c:if test ="${applicationScope.orderNum ne '0'}"  > 
+					<%-- <c:if test="${applicationScope.orderNum ne o.orderNum}"> --%>
+			
+						<c:if test ="${applicationScope.orderNum eq o.orderNum}"  >  
+					
+						<td><img src="resources/auploadFiles/${o.filePath }" style="height:200px; width:150px;"></td>
+						<td><${o.goodsTitle}><br>${o.gName}</td>
+						<td>${o.orderCount }</td>
+						<td>${o.gPrice * o.orderCount }</td>
+						<c:if test = "${o.orderStatus eq 'B'}">
+						<td>
+						배송전
+						</td>
+						</c:if>
+						<c:if test = "${o.orderStatus eq 'I'}">
+						<td>배송중</td>
+						</c:if>
+						<c:if test = "${o.orderStatus eq 'C'}">
+						<td>배송완료</td>
+						</c:if>
+						<c:if test = "${o.orderStatus eq 'X'}">
+						<td>주문취소</td>
+						</c:if>
+					</c:if>
+					
+					</c:if>
+					</tr>
+					<%-- <c:if test ="${applicationScope.orderNum ne o.orderNum}"  > 
+						<c:set var="orderNum" value="0" scope="application"/>
+						
+					</c:if>  --%>
+				</c:forEach>
+				
 
          </table>
          <br><br><div align="right">
@@ -292,7 +292,9 @@ input::placeholder {
          <!-- 10개의 페이지 목록 -->
          <c:set var="selectP" value="0"/>
          <c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage }">
-           <c:if test="${pi.currentPage == p }">         
+
+           <c:if test="${pi.currentPage == p }">    	  
+
                <button style="background:#ec434a;color:white" disabled >${p}</button>
            </c:if>
             <c:if test="${pi.currentPage != p }">
@@ -311,14 +313,16 @@ input::placeholder {
          <!-- 맨 끝으로(>>) -->
          <button onclick="maxPageSearch()"> >> </button>
             </div>
-         
-         <div>
-              
-         </div>
-         <br><br>
-      </div>
-      </div>
-      <c:set var="to" value="${os.date1 }"/>
+
+			
+			<div>
+				  
+			</div>
+			<br><br>
+		</div>
+		</div>
+		<c:set var="to" value="${os.date1 }"/>
+
 
 </body>
 
@@ -328,68 +332,74 @@ var to  ='${os.date1}';
 var from ='${os.date2}';
 
 $(function() {
-      $( "#date1" ).datepicker({
 
-   dateFormat: "yy-mm-dd",
-   changeMonth: true, 
+	   $( "#date1" ).datepicker({
+
+	dateFormat: "yy-mm-dd",
+	changeMonth: true, 
+
     changeYear: true,
     nextText: '다음 달',
     prevText: '이전 달',
     maxDate: 0
-          });
-      
 
-      });
-   
-   $(function() {
-       $( "#date2" ).datepicker({
-          dateFormat: "yy-mm-dd",
-          changeMonth: true, 
-            changeYear: true,
-            nextText: '다음 달',
-            prevText: '이전 달',
-            maxDate: 0,
-            setDate : 'from'
-       });
-       
-   });
-   
+		 	});
+	   
 
-   function nextPageSearch(){
-       location.href="orderSearch.do?page=${pi.currentPage + 1}&date1="+to+"&date2="+from; 
-   }
-   function maxPageSearch(){
-      location.href="orderSearch.do?page=${pi.maxPage}&date1="+to+"&date2="+from;
-   }
-/*    function selectPageSearch(){
-      location.href="orderSearch.do?page=${selectP}&date1="+to+"&date2="+from;
-   } */
-   function beforePageSearch(){
-      location.href="orderSearch.do?page=${pi.currentPage -1}&date1="+to+"&date2="+from;
-   }
-   function minPageSearch(){
-      location.href="orderSearch.do?page=1&date1="+to+"&date2="+from;
-   }
-   function search2(){
-      
-      var date1 = $("#date1").datepicker({dateFormat : "yy/mm/dd"}).val();
-      var date2 = $("#date2").datepicker({dateFormat : "yy/mm/dd"}).val();
-         
-       if(date1==null || date1<=0){
-          if( date2==null || date2<=0){
-             alert("날짜를 입력하세요");
-          }else{
-             alert("시작날짜를 입력하세요");
-          }
-       }else if(date2==null || date2<=0){
-          alert("마지막날짜를 입력하세요");
-       }else{
-          
-          location.href="orderSearch.do?date1="+date1+"&date2="+date2;
-       }
-       
-      
-   }
+		});
+	
+	$(function() {
+	    $( "#date2" ).datepicker({
+	    	dateFormat: "yy-mm-ddd",
+	    	changeMonth: true, 
+	         changeYear: true,
+	         nextText: '다음 달',
+	         prevText: '이전 달',
+	         maxDate: 0
+	    });
+	    
+	});
+	
+
+
+
+	function nextPageSearch(){
+	 	location.href="orderSearch.do?page=${pi.currentPage + 1}&date1="+to+"&date2="+from; 
+	}
+	function maxPageSearch(){
+		location.href="orderSearch.do?page=${pi.maxPage}&date1="+to+"&date2="+from;
+	}
+/* 	function selectPageSearch(){
+		location.href="orderSearch.do?page=${selectP}&date1="+to+"&date2="+from;
+	} */
+	function beforePageSearch(){
+		location.href="orderSearch.do?page=${pi.currentPage -1}&date1="+to+"&date2="+from;
+	}
+	function minPageSearch(){
+		location.href="orderSearch.do?page=1&date1="+to+"&date2="+from;
+	}
+	function search2(){
+		
+		var date1 = $("#date1").datepicker({dateFormat : "yy/mm/dd"}).val();
+		var date2 = $("#date2").datepicker({dateFormat : "yy/mm/dd"}).val();
+			
+ 		if(date1==null || date1<=0){
+ 			if( date2==null || date2<=0){
+ 				alert("날짜를 입력하세요");
+ 			}else{
+ 				alert("시작날짜를 입력하세요");
+ 			}
+ 		}else if(date2==null || date2<=0){
+ 			alert("마지막날짜를 입력하세요");
+ 		}else{
+ 			
+ 			location.href="orderSearch.do?date1="+date1+"&date2="+date2;
+ 		}
+ 		
+		
+	}
+	
+
    
     function searchWeek(){
          
@@ -398,7 +408,7 @@ $(function() {
          var dd = sysdate.getDate();
          var mm = sysdate.getMonth()+1; //January is 0!
          var yy = sysdate.getFullYear();
-   
+
  
       /*    if(yy>100){
             yy=yy-100;

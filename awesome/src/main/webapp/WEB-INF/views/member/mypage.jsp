@@ -124,7 +124,7 @@ table.type07 td {
             
             <tr>
 				<th scope="row">* 닉네임</th>
-					<td><input type="text" name="userNickname" value="${loginUser.userNickname}"></td>
+					<td><input type="text" name="userNickname" value="${loginUser.userNickname}"  readonly></td>
 				</tr>
             <tr>
                <th scope="row">성별</th>
@@ -144,7 +144,7 @@ table.type07 td {
             </tr>
             <tr>
                <th scope="row">생년월일</th>
-               <td><input type="text" name="birthday" value="${loginUser.birthday}"></td>
+               <td><input type="text" name="birthday" value="${loginUser.birthday}" readonly></td>
             </tr>
             <tr>
                <th scope="row">전화번호</th>

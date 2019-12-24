@@ -140,6 +140,18 @@ height:0px;
 	margin-left: 8px;
 }
 
+#complete  {
+	-webkit-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+	-moz-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+	-ms-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+	-o-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+	transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+	max-width: 65px;
+	text-decoration: none;
+	border-radius: 4px;
+	padding: 5px 10px;
+	margin-left: 8px;
+}
 #view.button {
 	color: gray;
 	box-shadow: gray 0 0px 0px 2px inset;
@@ -183,13 +195,21 @@ height:0px;
 	font-size:50px;
 	font-weight: bolder;
 }
+
+#complete {
+	color: gray;
+	box-shadow: gray 0 0px 0px 2px inset;
+}
+
+#complete:hover{
+	color: rgba(255, 255, 255, 0.85);
+	box-shadow: #fa4a4a 0 80px 0px 2px inset;
+}
 </style>
 <body>
-
 	
 	<jsp:include page="../common/menubar.jsp" />
-	
-	
+
 	<div class="centerDiv">
 	
 
@@ -267,6 +287,7 @@ height:0px;
 		</div>
 		</c:if>
 		<br><br>
+		<h4>수정해야합니당</h4>
 		<h4>배송지정보</h4>
 		<table class="table">
 			<tr>
@@ -417,6 +438,7 @@ height:0px;
 						case "배송중":
 							var $show = $("<td id='st'>").text($status);
 							var $button = $("<a id='view' class='button'>").text("배송조회").attr("onclick","delivery()");	
+							var $button2 = $("<a id='complete' class='button'>").text("구매확정").attr("onclick","complete()");	
 
 						case "배송완료":
 							var $show = $("<td id='st'>").text($status);
@@ -433,6 +455,7 @@ height:0px;
 				
 
 					$show.append($button);
+					$show.append($button2);
 					$tr2.append($title);
 					$tr2.append($show);
 					$tableBody2.append($tr2);
@@ -499,6 +522,31 @@ height:0px;
 		
 		function delivery(){
 			window.open('https://tracker.delivery/#/kr.cjlogistics/355406187216','window_name','width=430,height=500, top = 500, left = 500, location=no,status=no,scrollbars=yes');
+		}
+		
+		function complete(){
+			var orderNum = '${orderNum}';
+			var usedPoint = ${list[0].usedPoint};
+			var	orderPrice = ${list[0].orderPrice};
+
+			if(confirm("구매 확정하시겠습니까 ?") == true){
+				$.ajax({
+					url:"orderComplete.do",
+					dataType:"json",
+					data: {orderNum : orderNum, usedPoint : usedPoint, orderPrice : orderPrice},
+					success:function(data){
+						alert("구매확정되었습니다.")
+						
+					},
+					error:function(request, status, errorData){
+						alert("error code: " + request.status 
+								+"message: " + request.responseText
+								+"error: " + errorData);
+					}
+				})
+			}else{
+				return;
+			}
 		}
 	</script>
 
