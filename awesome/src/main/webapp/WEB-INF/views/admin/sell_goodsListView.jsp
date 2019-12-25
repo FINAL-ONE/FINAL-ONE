@@ -89,7 +89,7 @@ tr:nth-child(even) {
     cursor: pointer;
     margin: 3px;
     position: relative;
-    right: 20px;
+    folat:right;
     margin-bottom: 20px;
 }
 
@@ -147,13 +147,10 @@ tr:nth-child(even) {
    <jsp:include page="../common/menubar.jsp"/>   
 	<div class="centerDiv">
     <div class = "outer">
-      <div id="container" style= "height: auto; overflow: auto;"><!-- container -->
-
-         <c:if test="${!empty loginUser }">
-               <div style="margin-left : 1345px; margin-top : 20px;">
-                  <button class="myBtn success" onclick="location.href='goodsWriterView.do'"><span>상품 등록</span></button>
-               </div>
-         </c:if>
+    	
+      <div id="container" style= "height: auto; overflow: auto; margin-left: auto;margin-right:auto; width: 1300px"><!-- container --><br>
+       <button class="myBtn success" onclick="location.href='goodsWriterView.do'" style="position:relative; float:right;">상품 등록</button>
+         
       <form id = "goodsInsertForm" action="aStatusUpdate.do" method="post">
           <div id="tableLeft1" style= "width:auto;">
             <table align="center" id ="checkboxTestTbl" class = "goodsTable"  style="border: 1; cellspacing:1">

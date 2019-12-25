@@ -175,7 +175,7 @@
 	
 	<br><br>
 	<div>
-	<h2> 상품 판매량  </h2>
+	<div style="margin-left:auto; margin-right: auto; width: 130px;"><h2> 상품 판매량  </h2></div>
 		<table align="center" width="100%" border="1" cellspaction="1" id="surveyListTable"
 			class="table table-bordered table-striped table-hover rowfy">
 			<thead>
@@ -581,7 +581,7 @@
 	
 	
 	
-	
+	<br><br>
 </body>
 
 <footer>

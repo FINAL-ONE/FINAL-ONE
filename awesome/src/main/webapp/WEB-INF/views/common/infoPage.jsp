@@ -20,6 +20,8 @@
  padding-left: 90px !important;
 }
 
+
+
  .container {
  	margin: 70px auto; 
   }
@@ -84,10 +86,12 @@
 	
 	
  .conmmunityNav:after {
-    top: -45px !important;
+    top: -42px !important;
 }
 
-
+.myPageNav:after {
+    top: -42px !important;
+}
 
 
 </style>

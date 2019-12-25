@@ -30,7 +30,7 @@ body{
    /* border : 1px solid red; */
    width : 800px;
    height : 90%;
-   margin-left : 450px;
+   margin-left :0;
 }
 .goods-Area{
    width : 800px;
@@ -424,8 +424,8 @@ p {
 
 
    <jsp:include page ="../common/menubar.jsp"/>
-   <!-- <div id="container" style="overflow: auto; height: 800px;" >container -->
-   <div id="container"><!-- container -->
+   <!-- <div id="container" height: 800px;" >container -->
+   <div id="container" style="overflow: auto; margin-left:auto; margin-right: auto; width: 880px; padding-left: 40px;" ><!-- container -->
     
       <div class = "detailArea"  align="center">
          <c:forEach var="a" items="${list}">
@@ -454,16 +454,15 @@ p {
                         <span>배송방법 : 택배배송 </span><br><br>
                         <span>배송비 : 무료</span><br><br>
                         <input type="hidden" name ="star" value = "1" style="size : 10px">
-                     후기 평균 <span class="fa fa-star checked"></span>
-                     <c:forEach var="sAvgList" items="${sAvgList}">
-                     <%--       <span>: ${sAvgList}</span> --%>
+                    평점: <span class="fa fa-star checked"></span>
+                     <c:if test = "${sAvgList == null}">
+                              <span> 후기없음</span>
+                      </c:if> 
                      
-                         <c:if test = "${sAvg == null}">
-                           <span>: 없음 </span>
+                     <c:forEach var="sAvgList" items="${sAvgList}">
+                         <c:if test = "${sAvgList != null}">
+                           <span>: ${sAvgList}</span>
                         </c:if>
-                     <%--    <c:if test = "${sAvgList lt 0}">
-                              <span>후기 없음</span>
-                        </c:if> --%> 
                      </c:forEach>
                            
                         <hr>

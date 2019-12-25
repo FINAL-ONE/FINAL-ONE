@@ -296,7 +296,12 @@ textarea {
     top: -42px !important;
     left: -49px !important;
 }
+.myPageNav:after {
 
+    top: -42px !important;
+    left: 505px !important;
+
+}
 
 .desc{
 	
