@@ -20,6 +20,8 @@
  padding-left: 90px !important;
 }
 
+
+
  .container {
  	margin: 70px auto; 
   }

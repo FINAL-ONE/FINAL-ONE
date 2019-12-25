@@ -544,7 +544,13 @@ This class is added to the container
 
 <div class="menubar2 myPageMenubar myPageMenu" style="display:none;">
    <div class= "myPageNav">
+<<<<<<< HEAD
 
+
+      <span class= menu2 style="left: 633px;" onclick= "myPage()">내정보보기</span>
+	  <span class= menu2 style="left: 663px;" onclick= "cart()">장바구니</span>
+      <span class= menu2 style="left: 693px;" onclick= "orderList()" >주문조회</span>
+	<span class= "menu2" style="left: 723px;"><a onclick= "after()" style="text-decoration: none; color : white;">내가 쓴 후기</a></span>
 
       <span class= menu2 style="left: 633px;" onclick= "myPage()">내정보보기</span>
 	  <span class= menu2 style="left: 663px;" onclick= "cart()">장바구니</span>
@@ -578,6 +584,7 @@ This class is added to the container
            <div>따라갑시다.</div>  
         </div>  
 </div>  -->
+
 
 	<c:if test="${sessionScope.loginUser.manager eq 'Y' }">
 		<div class="sidebar closed">

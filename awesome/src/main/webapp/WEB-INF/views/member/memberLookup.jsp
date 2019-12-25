@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
+<link rel="shortcut icon" href="${contextPath}/resources/images/favicon.ico" type="image/x-icon">
 
 <!-- switch버튼 css -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css" rel="stylesheet" type="text/css">
@@ -27,9 +27,10 @@
 #member-content{
 	width : 1400px;
 	margin-top : 20px;
-	/* background : yellow; */
-	margin-left : 180px;
-	margin-bottom: 10px;
+	margin-bottom: 30px;
+	margin-left: auto;
+	margin-right: auto;
+	padding-left: 20px;
 }
 .membertable{
   border-collapse: collapse;
@@ -37,7 +38,6 @@
   width: 1400px;
   border: 1px solid #ddd;
   text-align :center;
-  	margin-left : 180px;
 }
 
 
@@ -142,6 +142,11 @@ tr:nth-child(even) {
 	  font-size: 13px;
       color: #828282;
 }
+
+#ExportBtn{
+	position: relative; 
+	float: right;
+}
 </style>
 
 </head>
@@ -150,13 +155,13 @@ tr:nth-child(even) {
 	<jsp:include page ="../common/menubar.jsp"/>
 		
 		
-	<div id="container" style="overflow: auto; height: auto;" ><!-- container -->
+	<div id="container" style="overflow: auto; height: auto; width: 1580px; margin-left: auto;margin-right:auto;" ><!-- container -->
 
 		<div id ="member-content">
-			<span align="left" style ="font-size : 20px; font-weight: bold; margin-right :450px;">
+			<span  style ="font-size : 20px; font-weight: bold; ">
 				총 회원 수 : ${pi.listCount}명
 			</span>
-			<span style ="font-size : 25px; font-weight: bold; margin-right : 318px;"> 회원 관리 </span>
+			<span style ="font-size : 25px; font-weight: bold; margin-left: 450px;">회원 관리 </span>
 			<span style ="margin-left : 200px;"></span>
 			<button id = "ExportBtn" class="btn btn-success"><img src="resources/images/excel.png" alt="">엑셀로 내려받기</button>
 		</div>	
@@ -174,7 +179,7 @@ tr:nth-child(even) {
 							<th width = "120px">포인트</th>
 							<th width = "160px">가입일</th>
 							<th width = "160px">수정일</th>
-							<th width = "140px">탈퇴상태</th>
+							<th width = "140px">회원상태</th>
 							<!-- <th>탈퇴처리</th> -->
 						</tr>
 					<c:forEach var="n" items="${list}">

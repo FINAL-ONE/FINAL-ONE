@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="shortcut icon" href="${contextPath}/resources/images/favicon.ico" type="image/x-icon">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!-- Star Rating -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -124,7 +125,24 @@ tr:nth-child(even) {
 }	
 	
 	
-	
+.adminMain-btn, .adminList-btn {
+    margin: 10px 0px 15px;
+    border: 1px solid #fe6666;
+    background: #fe6666;
+    border-radius: 2px;
+    color: #fff;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    width: 259px;
+    height: 40px;
+    cursor: pointer;
+}
+
+.adminMain-btn:hover, .adminList-btn:hover{
+	background: #fff;
+	color: #fe6666;
+}	
 	
 
 
@@ -220,7 +238,10 @@ tr:nth-child(even) {
 				</c:forEach>
 			</table>
 		</div>
-
+		<p align="center" style="margin : 50px 0 50px 0;">
+				<button class="adminMain-btn" type="button" style="width : 110px; height : 40px;" onclick="location.href='home.do'">HOME 이동</button>
+				<button class="adminList-btn" type="button" style="width : 110px; height : 40px;" onclick="location.href='sell_goodsList.do'">목록전체보기</button>
+			</p>
 	</div>
 	
 	
@@ -240,7 +261,7 @@ tr:nth-child(even) {
 	    	</form>
 	  </div>
 	</div>
-
+	
 	
 	<!-- 포인트 수정 script   -->
 		<script>

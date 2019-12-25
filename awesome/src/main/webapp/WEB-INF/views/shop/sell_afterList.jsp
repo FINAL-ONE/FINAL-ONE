@@ -19,11 +19,9 @@
   border-spacing: 0;
   width: 1300px;
   border: 1px solid #ddd;
-  text-align :center;
-  margin-left : 200px;
+  
 }
 #afterWrite th, td {
-  text-align: center;
   padding: 16px;
   
 }
@@ -94,8 +92,33 @@ tr:nth-child(even) {
   right: 0;
 }
 
+	.centerDiv{
+	  width:1300px;
+/* 	  border:3px solid pink; */
+      margin-left:auto;
+      margin-right:auto;
+      height: auto;
+      padding-left: 60px;
+	}
 
+.adminMain-btn, .adminList-btn {
+    margin: 10px 0px 15px;
+    border: 1px solid #fe6666;
+    background: #fe6666;
+    border-radius: 2px;
+    color: #fff;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    width: 259px;
+    height: 40px;
+    cursor: pointer;
+}
 
+.adminMain-btn:hover, .adminList-btn:hover{
+	background: #fff;
+	color: #fe6666;
+}	
 
 </style>
 
@@ -103,20 +126,20 @@ tr:nth-child(even) {
 <body>
 	<jsp:include page ="../common/menubar.jsp"/>
 
-	
+	<div class="centerDiv ">
 	<div id="container" style="overflow: auto; height: auto;" ><!-- container -->
-		<div id ="afterWriteDiv" style= "margin-top : 6px; margin-bottom: 70px;">
-			 <form id = "afterAvgForm" action="stargIdSelect.do" method="post" enctype="Multipart/form-data">
+		<div id ="afterWriteDiv" style= "margin-top : 6px; margin-bottom: 70px; margin-left:auto; margin-right:auto; width: 1000px;">
+			 <form id = "afterAvgForm" action="stargIdSelect.do" method="post" enctype="Multipart/form-data " style="margin-left:auto; margin-right:auto;">
 				
 				<c:forEach var="aflist" items="${aflist}">
 					<input id="aGid" type="hidden" name="gId">
 				</c:forEach>
-					<div style="font-size : 30px; text-align : center; font-weight: bold; width : 300px; margin-left : 700px"> 후기리뷰 리스트 </div>					    
+					<div style="font-size:30px; font-weight:bold; width:230px; position:relative; left:-20px;"> 후기리뷰 리스트 </div>					    
 				<br>
-				<p style="margin-bottom: 3px; margin-left : 690px;  width : 500px;">후기 평점을 보고싶은 상품을 선택해주세요</p>
+				<div style="margin-bottom: 15px; width:700px; position:relative; left: -60px">후기 평점을 보고싶은 상품을 선택해주세요</div>
 				
-				<div id = "sellheaderArea" style="margin-left : 760px; width : 500px;">
-					<select id="goodsList" name="goodsList" style="margin-bottom : 5px; width : 180px; height : 30px;">
+				<div id = "sellheaderArea" style="width:500px;">
+					<select id="goodsList" name="goodsList" style="margin-bottom : 15px; width : 180px; height : 30px;">
 							<option value="0" selected>옵션을 선택하세요</option>
 							<c:forEach var="aflist" items="${aflist}">
 								<option value="${aflist.gId}">${aflist.goodsTitle}</option>
@@ -126,10 +149,10 @@ tr:nth-child(even) {
 				    <button type="button" id="gId-btn" class="myBtn success" onclick="selectTitleList()"><span>확인</span></button>
 					<button type="button" id="myBtn" class="myBtn success" onclick="restList()"><span>리셋</span></button>
 				</div>
-					
+						
 			 </form>
 			</div>
-				
+				<br>			
 			<table align="center" id ="afterWrite" class= "ediTable" border="1" cellspacing="1">
 				<tr bgcolor ="#fa4a4a" style = "color : white">
 					<th width ="200px">후기사진</th>
@@ -205,12 +228,9 @@ tr:nth-child(even) {
 				</c:forEach>
 			</table>
 			
-			
 			<p align="center" style="margin : 50px 0 50px 0;">
-				<c:url var ="adminMain" value="adminMain.do"/>
-				<a href="${adminMain}" style="text-decoration: none;">관리자페이지 이동</a>&nbsp;
-				<c:url var ="sell_goodsList" value="sell_goodsList.do"/>
-				<a href="${sell_goodsList}" style="text-decoration: none;">목록전체보기</a>
+				<button class="adminMain-btn" type="button" style="width : 110px; height : 40px;" onclick="location.href='home.do'">HOME 이동</button>
+				<button class="adminList-btn" type="button" style="width : 110px; height : 40px;" onclick="location.href='sell_goodsList.do'">목록전체보기</button>
 			</p>
 	
 	</div>
@@ -244,7 +264,7 @@ tr:nth-child(even) {
 		}
 	
 	</script>
-	
+	</div>
 </body>
 
 <footer>

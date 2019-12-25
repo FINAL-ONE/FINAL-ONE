@@ -27,7 +27,7 @@
 		<result property="dAddress" 	column="D_ADDRESS"/>
 		<result property="dPhone" 		column="D_PHONE"/>
 		
-	</resultMap>
+	</resultMap> 
 
 	<select id="selectOrder" resultMap="orderResultSet">
         SELECT OID, O.GID GID,GOODS_NAME, GOODS_PRICE, O.MID MID, O.ORDER_NUM ORDER_NUM, ORDER_COUNT, ORDER_DATE, ORDER_STATUS, ROWCOUNT, GOODS_TITLE, GOODS_FILE_PATH
@@ -170,6 +170,7 @@
 		UPDATE ORDER_LIST
 		SET ORDER_STATUS='I'
 		WHERE ORDER_NUM=#{orderNum}
+		AND ORDER_STATUS='B'
 	</update>
 	
 	

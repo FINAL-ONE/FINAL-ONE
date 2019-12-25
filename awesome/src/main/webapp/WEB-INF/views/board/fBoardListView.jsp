@@ -354,6 +354,7 @@
 			</c:if>
 				<td id="bTitle${b.bId}" align="left" style=" padding-left: 10px;"> ${b.bTitle }&nbsp;
 			     <script> 
+			     	// 이미지태그가 있는지 검사하는 메소드 ( img태그가 있으면 true, 없으면 false )
 				     function checkImgTag(str){ 
 				    	 var content = str;
 				    	 
@@ -363,8 +364,12 @@
 				     		return false 
 				     	}
 				     }
-				     if(checkImgTag(' ${b.bContent}') == true){
+				     
+				     
+				     if(checkImgTag('${b.bContent}') == true){ // 위에 만들어 둔 메소드를 돌려서 true 이면  
+				    	// 제목 옆에 이미지가 있다는 표시 부착
 				    	 $("#bTitle"+${b.bId}).html( "${b.bTitle}&nbsp;<i class='fas fa-image'></i>" );
+				      	
 				     }
 				     
 					</script> 

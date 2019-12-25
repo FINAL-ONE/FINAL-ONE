@@ -15,7 +15,6 @@ body{
     vertical-align: middle;
     line-height: 90px;
     cursor: pointer;
-<<<<<<< HEAD
     width: 450px;
     height: 300px;
     border-radius: 5px;
@@ -36,28 +35,6 @@ body{
     background-color: orange;
     top: 600px;
     left: 150px;
-=======
-    width: 500px;
-    height: 300px;
-    border-radius: 5px;
-    color: white;
-    position: absolute;
-}
-.red{
-    background-color: red;
-    top:250px;
-    left: 800px;
-}
-.blue{
-    background-color: blue;
-    top:250px;
-    left: 200px;
-}
-.orange{
-    background-color: orange;
-    top: 600px;
-    left: 200px;
->>>>>>> refs/remotes/origin/master
 }
 .black{
     background-color: black;

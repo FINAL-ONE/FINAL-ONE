@@ -27,10 +27,10 @@ body{
    background : white;
 }
 .detailArea{
-	/* border : 1px solid red; */
-	width : 800px;
-	height : 90%;
-	margin-left : 450px;
+   /* border : 1px solid red; */
+   width : 800px;
+   height : 90%;
+   margin-left :0;
 }
 .goods-Area{
    width : 800px;
@@ -74,9 +74,9 @@ body{
 }
 
 .Quantity{
-/* 	display : inline-block; */
-	margin-left : 100px;
-	/* background : red; */
+/*    display : inline-block; */
+   margin-left : 100px;
+   /* background : red; */
 }
 
 #increaseQuantity{
@@ -230,10 +230,10 @@ body{
 
 /* 별점  */
 .fa-star{
-	color : dark-gray;
+   color : dark-gray;
 }
 .checked {
-  	color: orange;
+     color: orange;
 }
 
 
@@ -292,18 +292,18 @@ body{
 }
   
 .goodshare-color{
-	width : 200px;
-	height : 100px;
+   width : 200px;
+   height : 100px;
 }  
 
 
 .pagingArea button {
-	  border: 1px solid #dcdcdc;
-	  outline: none;
-	  padding: 6px 12px;
-	  cursor: pointer;
-	  background: white;
-	  font-size: 13px;
+     border: 1px solid #dcdcdc;
+     outline: none;
+     padding: 6px 12px;
+     cursor: pointer;
+     background: white;
+     font-size: 13px;
       color: #828282;
 }
 
@@ -322,26 +322,26 @@ body{
 }
 
 .cartBtn1:hover, #cartBtn2:hover{
-	background: #fff;
-	color: #fe6666;
+   background: #fff;
+   color: #fe6666;
 }
     
     
 
 /* 버튼 css  */
 .myBtn{
-	width :80px;
-	height : 30px;
-	font-size : 13px;
-	border-radius: 4px;
-	background-color: #4CAF50;
-	border: none;
-	color: #FFFFFF;
-	text-align: center;
-	padding: 6px;
-	transition: all 0.5s;
-	cursor: pointer;
-	margin: 3px;
+   width :80px;
+   height : 30px;
+   font-size : 13px;
+   border-radius: 4px;
+   background-color: #4CAF50;
+   border: none;
+   color: #FFFFFF;
+   text-align: center;
+   padding: 6px;
+   transition: all 0.5s;
+   cursor: pointer;
+   margin: 3px;
 }
 
 .myBtn span {
@@ -371,10 +371,10 @@ body{
 
 
 .fa-star{
-	color : dark-gray;
+   color : dark-gray;
 }
 .checked {
-  	color: orange;
+     color: orange;
 }
 
 
@@ -424,8 +424,8 @@ p {
 
 
    <jsp:include page ="../common/menubar.jsp"/>
-   <!-- <div id="container" style="overflow: auto; height: 800px;" >container -->
-   <div id="container"><!-- container -->
+   <!-- <div id="container" height: 800px;" >container -->
+   <div id="container" style="overflow: auto; margin-left:auto; margin-right: auto; width: 880px; padding-left: 40px;" ><!-- container -->
     
       <div class = "detailArea"  align="center">
          <c:forEach var="a" items="${list}">
@@ -454,22 +454,22 @@ p {
                         <span>배송방법 : 택배배송 </span><br><br>
                         <span>배송비 : 무료</span><br><br>
                         <input type="hidden" name ="star" value = "1" style="size : 10px">
-							후기 평균 <span class="fa fa-star checked"></span>
-							<c:forEach var="sAvgList" items="${sAvgList}">
-								<span>: ${sAvgList}</span>
-								<%-- <c:if test = "${sAvgList gt 0}">
-									<span>: ${sAvgList}</span>
-								</c:if>
-								<c:if test = "${sAvgList lt 0}">
-										<span>후기 없음</span>
-								</c:if> --%>
-							</c:forEach>
-									
+                    평점: <span class="fa fa-star checked"></span>
+                     <c:if test = "${sAvgList == null}">
+                              <span> 후기없음</span>
+                      </c:if> 
+                     
+                     <c:forEach var="sAvgList" items="${sAvgList}">
+                         <c:if test = "${sAvgList != null}">
+                           <span>: ${sAvgList}</span>
+                        </c:if>
+                     </c:forEach>
+                           
                         <hr>
                               
                         <div class="number" style= "width : 200px; height : 50px;">
                            <div class="UpDown" style="padding-top: 13px;">
-                             	 수량 선택 : 
+                                 수량 선택 : 
                                <a href="#" id="decreaseQuantity"><span style="font-weight: bold; font-size:40px;" >-</span></a>
                               <span id="numberUpDown">1</span>
                               <a href="#" id="increaseQuantity"><span style="font-weight: bold; font-size:30px;">+</span></a>
@@ -497,11 +497,11 @@ p {
                               <a href="#" class="goodshare" data-type="gp"><img class="socialImg" src="resources/images/g.png" style="width : 30px; height : 30px;"></a> 
                               <a href="#" class="goodshare" data-type="li"><img class="socialImg" src="resources/images/in.png" style="width : 30px; height : 30px;"></a> 
                             </div>
-	                     </div>
-	                  </div>
-	               </div>
-	            </form>
-	         </c:forEach>
+                        </div>
+                     </div>
+                  </div>
+               </form>
+            </c:forEach>
          
          <!-- 장바구니 클릭시 form 경로로 안넘어가고 화면유지  -->
          <iframe src="#" name="iframe" style="width:1px; height:1px; border:0; visibility:hidden;"></iframe>
@@ -514,9 +514,9 @@ p {
             <div class="tab">
                 <div class="content">
                    <c:forEach var="a" items="${list}">
-	               <div id ="goods-img1" class = "goods-img1" style = "margin-bottom: 15px;">
-	                     <img src="resources/auploadFiles/${a.contentFilePath}" width ="800px" height ="4500px">
-	               </div>
+                  <div id ="goods-img1" class = "goods-img1" style = "margin-bottom: 15px;">
+                        <img src="resources/auploadFiles/${a.contentFilePath}" width ="800px" height ="4500px">
+                  </div>
             </c:forEach>
                 </div>
             </div>
@@ -526,7 +526,7 @@ p {
             
             <div class="tab">
                 <div class="content">
-                     	주문/배송 정보<hr>
+                        주문/배송 정보<hr>
                      - 배송방법 : 산지 직접 배송<br><br>
    
                      - 택배사 : CJ 대한통운<br>
@@ -536,12 +536,12 @@ p {
                      - 출고시간 : 평일 오후 1시 이전 결제시 당일 출고<br>
                      * 토요일 배송을 원치 않으실 경우, 배송지시사항에 꼭 기재해주세요.<br>
                      <hr>
-                   	   교환/반품 정보<br><br>
+                         교환/반품 정보<br><br>
                       
                      - 냉동식품으로 단순변심 반품 불가<br>
                      - 수령자 부재, 잘못된 주소, 전화번호 결번으로 반송이 되는 경우 교환, 반품 불가<br>
-                    	 ※ 배송지가 회사 주소인 경우, 토요일 수령 가능 여부를 꼭! 확인후 주문해주세요.<br>
-                       	 수령 불가로 인해 제품 반송시 환불 및 재발송 불가합니다.<br>
+                        ※ 배송지가 회사 주소인 경우, 토요일 수령 가능 여부를 꼭! 확인후 주문해주세요.<br>
+                           수령 불가로 인해 제품 반송시 환불 및 재발송 불가합니다.<br>
                      - 제품에 문제가 있는 경우, 상품 수령 후 7일 이내 1:1 문의게시판 및 고객센터를 통해 접수해주세요.<br>
                      - 증빙 사진을 꼭 첨부해주셔야 접수 가능합니다. (택배박스, 송장, 제품사진 포함 3장 이상) <br>
                      <br>
@@ -549,7 +549,7 @@ p {
                      
                       
                      <hr>
-                    	 환불 정보<br><br>
+                        환불 정보<br><br>
                      
                      - 교환/반품은 배송완료후 7일 이내에만 요청이 가능합니다.<br>
                      - 결제하신 금액의 환불은 반품할 상품이 입고된 후에 7영업일 이내에 처리됩니다.<br>
@@ -565,7 +565,7 @@ p {
             
             <div class="tab">
                 <div class="content">
-					 <h3 align="left"> 후기리스트 </h3>
+                <h3 align="left"> 후기리스트 </h3>
                   
                   <table id ="afterWrite">
                      <tr>
@@ -622,93 +622,93 @@ p {
                            <td></td> -->
                         </tr>
                      </c:forEach>
-				</table>
-					
-                  <div class="pagingArea" align="center">	
-						 <!-- 맨 처음으로(<<) -->
-       						<button onclick="location.href='adetail.do'"> << </button>
-						<!-- [이전] -->
-						<c:if test="${pi.currentPage <= 1 }">
-							<button disabled> < </button>
-						</c:if>
-						
-						<c:if test="${pi.currentPage > 1 }">
-							<button onclick="location.href='adetail.do?page=${pi.currentPage -1}'"> < </button>	
-						</c:if>
-						
-						 <!-- 10개의 페이지 목록 -->
-				         <c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage }">
-				           <c:if test="${pi.currentPage == p }">
-				               <button style="background:#ec434a;color:white" disabled >${p}</button>
-				           </c:if>
-				            <c:if test="${pi.currentPage != p }">
-				               <button onclick="location.href='adetail.do?page=${p}'">${p}</button>
-				            </c:if>
-				       </c:forEach>
+            </table>
+               
+                  <div class="pagingArea" align="center">   
+                   <!-- 맨 처음으로(<<) -->
+                         <button onclick="location.href='adetail.do'"> << </button>
+                  <!-- [이전] -->
+                  <c:if test="${pi.currentPage <= 1 }">
+                     <button disabled> < </button>
+                  </c:if>
+                  
+                  <c:if test="${pi.currentPage > 1 }">
+                     <button onclick="location.href='adetail.do?page=${pi.currentPage -1}'"> < </button>   
+                  </c:if>
+                  
+                   <!-- 10개의 페이지 목록 -->
+                     <c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage }">
+                       <c:if test="${pi.currentPage == p }">
+                           <button style="background:#ec434a;color:white" disabled >${p}</button>
+                       </c:if>
+                        <c:if test="${pi.currentPage != p }">
+                           <button onclick="location.href='adetail.do?page=${p}'">${p}</button>
+                        </c:if>
+                   </c:forEach>
        
-						<!-- [다음]  -->
-						<c:if test="${pi.currentPage >= pi.maxPage }">
-				            <button disabled> > </button>
-				          </c:if>
-				          <c:if test="${pi.currentPage < pi.maxPage }">
-				            <button onclick="location.href='adetail.do?page=${pi.currentPage + 1}'"> > </button>
-				          </c:if>
-						          
-		                   <!-- 맨 끝으로(>>) -->
-         					<button onclick="location.href='adetail.do?page=${pi.maxPage}'"> >> </button>
-         					<c:if test="${empty sessionScope.loginUser}">
-									<button style="border:none; background: #585858; height: 30px; color:white;padding-bottom:3px; position:relative; float:right;" onclick="notLogin()">후기작성</button>
-					        </c:if>
-         					 <c:if test="${sessionScope.loginUser.userId eq 'admin'}">
-						         	<button style="border:none; background: #585858; height: 30px; color:white;padding-bottom:3px; position:relative; float:right;" onclick="alertAdmin()">후기작성</button>
-							</c:if>
-							 <c:if test="${!empty sessionScope.loginUser and sessionScope.loginUser.userId ne 'admin'}">
-         						<c:forEach var="a" items="${list}">
-         						<input id="sellNum" type="hidden" name="sellNum" value="${a.sellNum}">
-                  				<input id="gId" type="hidden" name="gId" value="${a.gId }">
-                  				<input id="mId" type="hidden" name="mId" value="${sessionScope.loginUser.mid }">
-<%-- 									<button style="border:none; background: #585858; height: 30px; color:white;padding-bottom:3px; position:relative; float:right;" onclick = "location.href='afterWrite.do?sellNum=${a.sellNum}&mId=${sessionScope.loginUser.mid }'">후기작성</button> --%>
-									<button style="border:none; background: #585858; height: 30px; color:white;padding-bottom:3px; position:relative; float:right;" onclick = "checkWrite();">후기작성</button>
-								</c:forEach>
-							</c:if>
-						</div>	<!-- 페이징 끝  -->
+                  <!-- [다음]  -->
+                  <c:if test="${pi.currentPage >= pi.maxPage }">
+                        <button disabled> > </button>
+                      </c:if>
+                      <c:if test="${pi.currentPage < pi.maxPage }">
+                        <button onclick="location.href='adetail.do?page=${pi.currentPage + 1}'"> > </button>
+                      </c:if>
+                            
+                         <!-- 맨 끝으로(>>) -->
+                        <button onclick="location.href='adetail.do?page=${pi.maxPage}'"> >> </button>
+                        <c:if test="${empty sessionScope.loginUser}">
+                           <button style="border:none; background: #585858; height: 30px; color:white;padding-bottom:3px; position:relative; float:right;" onclick="notLogin()">후기작성</button>
+                       </c:if>
+                         <c:if test="${sessionScope.loginUser.userId eq 'admin'}">
+                              <button style="border:none; background: #585858; height: 30px; color:white;padding-bottom:3px; position:relative; float:right;" onclick="alertAdmin()">후기작성</button>
+                     </c:if>
+                      <c:if test="${!empty sessionScope.loginUser and sessionScope.loginUser.userId ne 'admin'}">
+                           <c:forEach var="a" items="${list}">
+                           <input id="sellNum" type="hidden" name="sellNum" value="${a.sellNum}">
+                              <input id="gId" type="hidden" name="gId" value="${a.gId }">
+                              <input id="mId" type="hidden" name="mId" value="${sessionScope.loginUser.mid }">
+<%--                            <button style="border:none; background: #585858; height: 30px; color:white;padding-bottom:3px; position:relative; float:right;" onclick = "location.href='afterWrite.do?sellNum=${a.sellNum}&mId=${sessionScope.loginUser.mid }'">후기작성</button> --%>
+                           <button style="border:none; background: #585858; height: 30px; color:white;padding-bottom:3px; position:relative; float:right;" onclick = "checkWrite();">후기작성</button>
+                        </c:forEach>
+                     </c:if>
+                  </div>   <!-- 페이징 끝  -->
 
-		                </div>
-		            </div>
-		        </div>
+                      </div>
+                  </div>
+              </div>
              </div>
          </div>
             
-  	<button onclick="topFunction()" id="upBtn" title="Go to top">Top</button>
+     <button onclick="topFunction()" id="upBtn" title="Go to top">Top</button>
       
 
-   	<!-- 비회원 장바구니 클릭시 로그인 화면   -->
-	   <div id="loginmodal">
-	       <div class="login_modal_content">
-	         <b style="font-size:36px">LOGIN</b>   
-	          <span class="close">&times;</span>
-	         <br><br>
-	         <p style="font-size: 13px; color:#888888; font-weight: bold;line-height:1.5">
-	            AWESOME의 다양한 서비스를 이용하시려면 로그인을 해주세요.<br>
-	            회원가입을 하시면 다양한 서비스를 받으실 수 있습니다<br><br>
-	         </p>
-	           <form id= "loginForm" action="login.do" method="post">
-	            <input type="hidden" name="mId" value="mId">
-	            <input class= "loginInput" name="userId" style="margin-bottom:10px;"placeholder="아이디 입력   "> <br>
-	            <input class= "loginInput" type="password" name="userPwd" style="margin-bottom:5px;" placeholder="비밀번호 입력" type="password"><br>
-	            <button class= "loginBtn">로그인</button><br>
-	            <button class="findLogin">아이디 / 비밀번호 찾기</button><br>
-	         </form>
-	          <br><br>
-	         <p style="color:#666666; font-size:12px; margin:0px; line-height:1.5">
-	         문제가 있거나 문의 사항이 있으시면 아래의 주소로 문의하시기 바랍니다.<br>
-	         고객지원: <a href="">hokwan92@naver.com</a> 
-	         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	         </p>
-	       </div>
-	      
-	       <div class="login_modal_layer"></div>
-	   </div>
+      <!-- 비회원 장바구니 클릭시 로그인 화면   -->
+      <div id="loginmodal">
+          <div class="login_modal_content">
+            <b style="font-size:36px">LOGIN</b>   
+             <span class="close">&times;</span>
+            <br><br>
+            <p style="font-size: 13px; color:#888888; font-weight: bold;line-height:1.5">
+               AWESOME의 다양한 서비스를 이용하시려면 로그인을 해주세요.<br>
+               회원가입을 하시면 다양한 서비스를 받으실 수 있습니다<br><br>
+            </p>
+              <form id= "loginForm" action="login.do" method="post">
+               <input type="hidden" name="mId" value="mId">
+               <input class= "loginInput" name="userId" style="margin-bottom:10px;"placeholder="아이디 입력   "> <br>
+               <input class= "loginInput" type="password" name="userPwd" style="margin-bottom:5px;" placeholder="비밀번호 입력" type="password"><br>
+               <button class= "loginBtn">로그인</button><br>
+               <button class="findLogin">아이디 / 비밀번호 찾기</button><br>
+            </form>
+             <br><br>
+            <p style="color:#666666; font-size:12px; margin:0px; line-height:1.5">
+            문제가 있거나 문의 사항이 있으시면 아래의 주소로 문의하시기 바랍니다.<br>
+            고객지원: <a href="">hokwan92@naver.com</a> 
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </p>
+          </div>
+         
+          <div class="login_modal_layer"></div>
+      </div>
    
          <!-- 상품 수량 증가 / 감소 -->
                <!-- 상품 수량 증가 / 감소 -->
@@ -902,73 +902,72 @@ p {
       </script>
 
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		 	 <!-- 상품에 작성한 후기 있는지 체크  후 없으면 작성하기로 이동-->
-	  <!--     <script>
-	      function checkWrite(){
-	    	  var mId = $("#mId").val();
-	          var gId = $("#gId").val();
-	          var sellNum = $("#sellNum").val();
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+           <!-- 상품에 작성한 후기 있는지 체크  후 없으면 작성하기로 이동-->
+        <script>
+         function checkWrite(){
+            var mId = $("#mId").val();
+             var gId = $("#gId").val();
+             var sellNum = $("#sellNum").val();
           
-	          $.ajax({
-	              url:"selectafterCheck.do",
-	              data:{mId:mId, gId:gId},
-	              success:function(data){
-	                 
-	                 if(data.isUsable == true){
-	                 // 없다.
-	                   Modal.confirm({
-	                      title: '상품 후기',
-	                      message: '상품 후기 작성으로 이동하시겠습니까?',
-	                      onConfirm: function() {
-	                         location.href="afterWrite.do?sellNum=" + sellNum;
-	                        //alert('장바구니로 이동.');
-	                         },
-	                         onCancel: function() {
-	                           // alert('취소되었습니다.');
-	                         },
-	                    });
-	              
-	                 }else{
-	                 // 있다.
-	                    //var popup = document.getElementById("myPopup");
-	                     //popup.classList.toggle("show");
-	                    Modal.confirm({
-	                         title: '상품 후기',
-	                         message: '작성하신 후기가 있습니다.',
-	                         onConfirm: function() {
-	                            //location.href="cartList.do?";
-	                           //alert('장바구니로 이동.');
-	                            },
-	                            onCancel: function() {
-	                              // alert('취소되었습니다.');
-	                            },
-	                       });
-	                 }
-	              },
-	              error:function(request, status, errorData){
-	                 alert("error code : " + request.status + "\n"
-	                                  + "message : " + request.responseText
-	                                  + "error : " + errorData);
-	              }
-	           });
-	      }
-	      </script>
-       -->
+             $.ajax({
+                 url:"selectafterCheck.do",
+                 data:{mId:mId, gId:gId},
+                 success:function(data){
+                    
+                    if(data.isUsable == true){
+                    // 없다.
+                      Modal.confirm({
+                         title: '상품 후기',
+                         message: '상품 후기 작성으로 이동하시겠습니까?',
+                         onConfirm: function() {
+                            location.href="afterWrite.do?sellNum=" + sellNum;
+                           //alert('장바구니로 이동.');
+                            },
+                            onCancel: function() {
+                              // alert('취소되었습니다.');
+                            },
+                       });
+                 
+                    }else{
+                    // 있다.
+                       //var popup = document.getElementById("myPopup");
+                        //popup.classList.toggle("show");
+                       Modal.confirm({
+                            title: '상품 후기',
+                            message: '작성하신 후기가 있습니다.',
+                            onConfirm: function() {
+                               //location.href="cartList.do?";
+                              //alert('장바구니로 이동.');
+                               },
+                               onCancel: function() {
+                                 // alert('취소되었습니다.');
+                               },
+                          });
+                    }
+                 },
+                 error:function(request, status, errorData){
+                    alert("error code : " + request.status + "\n"
+                                     + "message : " + request.responseText
+                                     + "error : " + errorData);
+                 }
+              });
+         }
+         </script>
       
-		
-		
+      
+      
 
 </body>
 
