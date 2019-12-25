@@ -172,6 +172,21 @@ public class OrderServiceImpl implements OrderService{
 	public int orderComplete(String orderNum) {
 		return oDao.orderComplete(orderNum);
 	}
+
+
+
+	@Override
+	public int insertPoint(Order o) {
+		System.out.println("포인트야 들어가거라");
+		return oDao.insertPoint(o);
+	}
+
+
+
+	@Override
+	public ArrayList<Order> gichanDetail(String orderNum) {
+		return oDao.gichanDetail(orderNum);
+	}
 	
 
 }

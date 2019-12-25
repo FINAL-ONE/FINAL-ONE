@@ -56,7 +56,7 @@ a.button:hover {
 
 </style>
 <body>
-${list }
+
 	<div align="center">
 	<img src="resources/images/logo.png" style="height:20%; width:20%;">
 	<h1>주문취소</h1>
@@ -71,17 +71,17 @@ ${list }
 			<td style="width: 50px">수량</td>
 			<td style="width: 70px">가격</td>
 		</tr>
-		<c:forEach var="o" items="${list }">
+ 		<c:forEach var="o" items="${list }">
 			<tr>
 				<c:if test="${o.orderStatus eq 'B' }">
 					<td><input type="checkbox" class="check checks" value="${o.oId }" ></td>
-					<td><pre>${o.gName }</pre></td>
-					<td>${o.oId }</td>
+					<td><pre>${o.goodsTitle }</pre></td>
+					<td><img src="resources/auploadFiles/${o.filePath }" style="height:180px; width:150px;"></td>
 					<td>${o.orderCount }</td>
 					<td>${o.gPrice * o.orderCount}원</td>
 			</tr>
 			</c:if>
-		</c:forEach>
+		</c:forEach> 
 	</table>
 
 	<div id="button" align="center">

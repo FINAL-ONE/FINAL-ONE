@@ -22,7 +22,7 @@
 		
 		
 		<result property ="userId" column="USER_ID"/>
-		
+		<result property ="userName" column="USER_NAME"/>
 		
 		<result property="goodsPrice"       column="GOODS_PRICE"/>
 		<result property="count"          column="COUNT"/>
@@ -95,21 +95,21 @@
 	</select>
 	
 	<!-- 내 후기 조회  -->
-	
 	<select id ="myafterSelectList" resultMap="sell_After_goodsResultSet">
 		SELECT *
 		FROM SELL_REPLY_AFTERVIEW SRA
 		JOIN MEMBER M ON(M.MID = SRA.MID)
 		WHERE SRA.MID=#{mId}
-		AND M.STATUS='Y'
+		AND SRA.STATUS='Y'
 		ORDER BY RID DESC
 	</select>
 	
-	
+	<!-- 후기 삭제 -->
 	<update id = "myafterDelete" parameterType ="string">
 		UPDATE SELL_REPLY_AFTERVIEW
 		SET	STATUS = 'N'
 		WHERE USER_ID=#{userId}
+		
 	</update>
 	
 	

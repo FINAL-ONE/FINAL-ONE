@@ -244,7 +244,7 @@ input::placeholder {
                   <c:if test ="${applicationScope.orderNum eq o.orderNum}"  >  
                
                   <td><img src="resources/auploadFiles/${o.filePath }" style="height:200px; width:150px;"></td>
-                  <td><${o.goodsTitle}><br>${o.gName}</td>
+                  <td><${o.goodsTitle}><br>${o.goodsContent}</td>
                   <td>${o.orderCount }</td>
                   <td>${o.gPrice * o.orderCount }</td>
                   <c:if test = "${o.orderStatus eq 'B'}">

@@ -18,6 +18,7 @@
 		<result property="usedPoint" column="USERD_POINT"/>
 		<result property="orderPrice" column="ORDER_PRICE"/>
 		
+		<result property="goodsContent" 	column="GOODS_CONTENT"/>
 		<result property="goodsTitle" 	column="GOODS_TITLE"/>
 		<result property="filePath" 	column="GOODS_FILE_PATH"/>
 
@@ -30,7 +31,7 @@
 	</resultMap> 
 
 	<select id="selectOrder" resultMap="orderResultSet">
-        SELECT OID, O.GID GID,GOODS_NAME, GOODS_PRICE, O.MID MID, O.ORDER_NUM ORDER_NUM, ORDER_COUNT, ORDER_DATE, ORDER_STATUS, ROWCOUNT, GOODS_TITLE, GOODS_FILE_PATH
+        SELECT OID, O.GID GID,GOODS_NAME, GOODS_PRICE, O.MID MID, O.ORDER_NUM ORDER_NUM, ORDER_COUNT, ORDER_DATE, ORDER_STATUS, ROWCOUNT, GOODS_TITLE, GOODS_FILE_PATH, GOODS_CONTENT
 		FROM ORDER_LIST O 
 		JOIN (SELECT ORDER_NUM, COUNT(*) ROWCOUNT
 		     FROM ORDER_LIST
@@ -62,11 +63,17 @@
 		WHERE MID=#{mId} AND ORDER_STATUS='X'
 	</select>
 	<select id="orderDetail" resultMap="orderResultSet">
-	SELECT O.OID, O.ORDER_NUM ORDER_NUM, O.ORDER_COUNT ORDER_COUNT, O.ORDER_DATE ORDER_DATE,O.ORDER_STATUS ORDER_STATUS, M.USER_NAME USER_NAME, M.PHONE PHONE, M.ADDRESS ADDRESS,G.GID GID, G.GOODS_NAME GOODS_NAME, 
-        G.GOODS_PRICE GOODS_PRICE, P.USED_POINT USED_POINT, P.ORDER_PRICE ORDER_PRICE, GOODS_TITLE, GOODS_FILE_PATH, D.D_NAME D_NAME, D.D_PHONE D_PHONE, D.D_ADDRESS D_ADDRESS
-		FROM ORDER_LIST O, MEMBER M, GOODS G, PAYMENT P, SELL_GOODS S, D_INFO D
-		WHERE M.MID = O.MID AND G.GID=O.GID AND P.ORDER_NUM=O.ORDER_NUM AND O.ORDER_NUM=#{orderNum} AND S.GID=O.GID and D.ORDER_NUM=O.ORDER_NUM
+		SELECT DISTINCT O.ORDER_NUM ORDER_NUM, O.MID MID, O.GID GID,O.ORDER_DATE, M.USER_NAME, O.ORDER_STATUS, D.D_NAME, D.D_ADDRESS,
+		D.D_PHONE, P.ORDER_PRICE, P.USED_POINT, O.ORDER_COUNT,G.GOODS_PRICE
+		FROM ORDER_LIST O, MEMBER M, PAYMENT P, D_INFO D, GOODS G
+		WHERE O.ORDER_NUM=P.ORDER_NUM AND O.MID=M.MID AND O.ORDER_NUM=D.ORDER_NUM AND O.GID=G.GID AND O.ORDER_NUM=#{orderNum}
 	</select>
+	<select id="gichanDetail" resultMap="orderResultSet">
+		SELECT O.OID OID, O.ORDER_NUM ORDER_NUM, S.GOODS_TITLE, S.GOODS_CONTENT, S.GOODS_FILE_PATH, O.ORDER_COUNT, G.GOODS_PRICE, O.ORDER_STATUS
+		FROM ORDER_LIST O, SELL_GOODS S, GOODS G
+		WHERE O.GID=G.GID AND O.GID=S.GID AND G.GID=S.GID AND O.ORDER_NUM=#{orderNum}
+	</select>
+	
 	<update id="orderCancel" parameterType="Order">
 		UPDATE ORDER_LIST
 		SET ORDER_STATUS='X'
@@ -135,16 +142,13 @@
 	<!-- 가용 포인트 사용시  포인트 테이블 UPDATE (POINT 테이블 사용안함. 결제시 총금액에 1% 적립)-->
 	<update id="updateMemberPoint"  parameterType="Order">
    		UPDATE MEMBER
-   		<if test="usedPoint == '0'">
-			SET POINT = POINT+(#{orderPrice}*0.01)
-		</if>
 		<if test="usedPoint != '0'">
 			SET POINT = (POINT+(#{orderPrice}*0.01))-#{usedPoint}
 		</if>
 		WHERE MID = #{mId}
 	</update>
 	
-	
+
 	
 	<!--========================================= 관리자용  =========================================-->
 	<!-- 관리자용 주문리스트 전체갯수 -->
@@ -199,6 +203,12 @@
 	</select>
 
 		<!-- 구매확정 -->
+		
+	<update id="insertPoint" parameterType="Order">
+		UPDATE MEMBER
+		SET POINT = POINT+(#{orderPrice}*0.01)
+		WHERE MID = #{mId}
+	</update>
 	<update id="orderComplete" parameterType="Order">
 		UPDATE ORDER_LIST
 		SET ORDER_STATUS='C'

@@ -117,7 +117,7 @@ public class OrderController {
 
 	@RequestMapping("cancelList.do")
 	public ModelAndView cancelList(ModelAndView mv, HttpServletRequest request, String orderNum) {
-		ArrayList<Order> list = oService.orderDetail(orderNum);
+		ArrayList<Order> list = oService.gichanDetail(orderNum);
 		if (list != null && list.size() > 0) {
 			mv.addObject("list", list);
 			mv.addObject("orderNum", orderNum);
@@ -161,13 +161,14 @@ public class OrderController {
 	@RequestMapping("gichan.do")
 	public void gichan(HttpServletResponse response, String orderNum) throws JsonIOException, IOException {
 		//System.out.println(orderNum);
-		ArrayList<Order> order = oService.orderDetail(orderNum);
-		
+		ArrayList<Order> order = oService.gichanDetail(orderNum);
+		System.out.println(order);
 		for(Order o :order) {
-			o.setgName(URLEncoder.encode(o.getgName(), "utf-8"));	
+			o.setFilePath(URLEncoder.encode(o.getFilePath(), "utf-8"));
+			o.setGoodsContent(URLEncoder.encode(o.getGoodsContent(), "utf-8"));
 			o.setGoodsTitle(URLEncoder.encode(o.getGoodsTitle(), "utf-8"));	
 		}
-
+		
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		gson.toJson(order, response.getWriter());
 
@@ -237,9 +238,9 @@ public class OrderController {
 		
 		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
 		session = request.getSession(true);
-		/*
-		 * System.out.println("들어오니?"); System.out.println(os);
-		 */
+		
+		 System.out.println("들어오니?"); System.out.println(os);
+		 
 		
 		ArrayList<Order> list = oService.datePicker(os,pi); 
 		
@@ -466,7 +467,7 @@ public class OrderController {
 			o.setOrderPrice(orderPrice);
 			
 			System.out.println(o);
-			int updatePoint = oService.updateMemberPoint(o);
+			int insertPoint = oService.insertPoint(o);
 			
 			
 			if(orderComplete>0) {

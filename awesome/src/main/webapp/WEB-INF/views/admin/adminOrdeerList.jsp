@@ -27,6 +27,10 @@
 <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
 <meta name="viewport" content="width=device-width">
 <link rel="stylesheet" href="js/jQuery-Plugin-To-Print-Any-Part-Of-Your-Page-Print/demo/css/normalize.min.css">
+
+
+<!-- alert창 css -->
+<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <style type='text/css'>
 
 
@@ -101,7 +105,7 @@ tr:nth-child(even) {
 }
 
 /*포인트 수정 버튼 css  */
-.myBtn{
+#myBtn, .myBtn{
    width :100px;
    height : 35px;
    font-size : 13px;
@@ -116,14 +120,14 @@ tr:nth-child(even) {
    margin: 3px;
 }
 
-.myBtn span {
+#myBtn span, .myBtn span {
   cursor: pointer;
   display: inline-block;
   position: relative;
   transition: 0.5s;
 }
 
-.myBtn span:after {
+#myBtn span:after, .myBtn span:after {
   content: '\00bb';
   position: absolute;
   opacity: 0;
@@ -132,11 +136,11 @@ tr:nth-child(even) {
   transition: 0.5s;
 }
 
-.myBtn:hover span {
+#myBtn:hover span, .myBtn:hover span {
   padding-right: 25px;
 }
 
-.myBtn:hover span:after {
+#myBtn:hover span:after, .myBtn:hover span:after {
   opacity: 1;
   right: 0;
 }
@@ -171,7 +175,24 @@ tr:nth-child(even) {
       color: #828282;
 }
 
+.adminMain-btn, .adminList-btn {
+    margin: 10px 0px 15px;
+    border: 1px solid #fe6666;
+    background: #fe6666;
+    border-radius: 2px;
+    color: #fff;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    width: 350px;
+    height: 40px;
+    cursor: pointer;
+}
 
+.adminMain-btn:hover, .adminList-btn:hover{
+	background: #fff;
+	color: #fe6666;
+}	
 </style>
 
 
@@ -229,9 +250,25 @@ tr:nth-child(even) {
 										<span style="color : red; font-size : 14px; font-weight: bold;">주문 취소</span>
 									</c:if>
 								
-								
 								<br>
+								
+								
+								<c:if test="${aol.orderStatus eq 'B'}">
 								<button type="button" id ="orderStatusUpdate-btn" class="myBtn success" onclick="showModifyStatus(${aol.orderNum},'${aol.orderStatus}')"><span>배송변경</span></button>
+								</c:if>
+								
+								 <c:if test="${aol.orderStatus eq 'I'}">
+						         	<button class="btn btn-danger demo-1" id="myBtn"><span>배송변경</span></button>
+								</c:if>
+								
+								<c:if test="${aol.orderStatus eq 'C'}">
+						         	<button class="btn btn-danger demo-2" id="myBtn"><span>배송변경</span></button>
+								</c:if>
+								
+								<c:if test="${aol.orderStatus eq 'X'}">
+						         	<button class="btn btn-danger demo-3" id="myBtn"><span>배송변경</span></button>
+								</c:if>
+								
 								<!-- Trigger/Open The Modal -->
 										<!-- The Modal -->
 										
@@ -291,50 +328,75 @@ tr:nth-child(even) {
 					
 				</div>	<!-- ele1 끝 -->
 			</div>	<!-- content_holder 끝 -->
+			<p align="center" style="margin : 50px 0 50px 0;">
+				<button class="adminMain-btn" type="button" style="width : 180px; height : 40px;" onclick="location.href='adminSalesVolume.do'">관리자 HOME 이동</button>
+			</p>
+	
 		</div>	<!-- member-content 끝 -->
 	</div>	<!-- container -->
 	
 	
-	
-	
-		<!-- 배송 상태 변경 script   -->
-		<script>
-			$(function() {
-				
-				var modal = document.getElementById("myModal");
-				
-				$(".close").click(function(){
-					modal.style.display = "none";
-				});
-				
-				$("#cancel").click(function(){
-					modal.style.display = "none";
-				});
-				window.onclick = function(event) {
-					  if (event.target == modal) {
-					    modal.style.display = "none";
-					  }
-				}
-			});
-			
-			
-			function showModifyStatus(orderNum, orderStatus){
-				/* var orderStatus = document.getElementById("orderStatusUpdate-btn); */
-				showModal(orderNum);
-				/* modal.style.display = "block"; */
-			}
-			
-			function showModal(orderNum){
-				var modal = document.getElementById("myModal");
-				modal.style.display = "block";
-				$("#modalNum").val(orderNum)
-				$("#modalStatus").val(orderStatus);
-				/* $("#modalPoint").val(point); */
-			}
+	<!-- alert 창 script  -->
+<!-- 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script> -->
+	<script src="js/eModal-master/dist/eModal.js"></script>
+	<script>
+		var message1 = "배송이 진행중이라 변경할 수 없습니다.";
+		var title1 = "배송 안내";
+		 
+		
+		var message2 = "배송이 완료되었습니다.";
+		var title2 = "배송 안내";
+		
+		
+		var message3 = "배송이 취소되었습니다.";
+		var title3 = "배송 안내";
+		
+		$(".demo-1").click(function(){
+		    eModal.alert(message1, title1);
+		});
+		
+		$(".demo-2").click(function(){
+		    eModal.alert(message2, title2);
+		});
+		
+		$(".demo-3").click(function(){
+		    eModal.alert(message3, title3);
+	});
+	</script>
+
+
+		
+	<!-- alert 창 script  -->	
+		<script type="text/javascript">
+		
+		  var _gaq = _gaq || [];
+		  _gaq.push(['_setAccount', 'UA-36251023-1']);
+		  _gaq.push(['_setDomainName', 'jqueryscript.net']);
+		  _gaq.push(['_trackPageview']);
+		
+		  (function() {
+		    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		  })();
+		
 		</script>
-			
-			
-			
+		<script type="text/javascript">
+		
+		  var _gaq = _gaq || [];
+		  _gaq.push(['_setAccount', 'UA-36251023-1']);
+		  _gaq.push(['_setDomainName', 'jqueryscript.net']);
+		  _gaq.push(['_trackPageview']);
+		
+		  (function() {
+		    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		  })();
+		
+		</script>
+	
 		<!-- 엑셀로 다운받기 script -->
 		<script>
 			$(function() {
@@ -373,6 +435,43 @@ tr:nth-child(even) {
 		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 		  })();
 		</script>
+		
+			<!-- 배송 상태 변경 script   -->
+		<script>
+			$(function() {
+				
+				var modal = document.getElementById("myModal");
+				
+				$(".close").click(function(){
+					modal.style.display = "none";
+				});
+				
+				$("#cancel").click(function(){
+					modal.style.display = "none";
+				});
+				window.onclick = function(event) {
+					  if (event.target == modal) {
+					    modal.style.display = "none";
+					  }
+				}
+			});
+			
+			
+			function showModifyStatus(orderNum, orderStatus){
+				/* var orderStatus = document.getElementById("orderStatusUpdate-btn); */
+				showModal(orderNum);
+				/* modal.style.display = "block"; */
+			}
+			
+			function showModal(orderNum){
+				var modal = document.getElementById("myModal");
+				modal.style.display = "block";
+				$("#modalNum").val(orderNum)
+				$("#modalStatus").val(orderStatus);
+				/* $("#modalPoint").val(point); */
+			}
+		</script>
+		
 		
 		
 		<!-- 프린트로 출력하기  script -->
@@ -430,7 +529,6 @@ tr:nth-child(even) {
 		  })();
 		
 		</script>
-		
 		
 
 </body>

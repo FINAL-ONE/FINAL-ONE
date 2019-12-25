@@ -780,11 +780,9 @@
 	
 	<br><br><br>
 	
-	<p align="center" style="margin : 50px 0 50px 0;">
-		<button class="adminMain-btn" type="button" style="width : 110px; height : 40px;" onclick="location.href='home.do'">HOME 이동</button>
-		<button class="adminList-btn" type="button" style="width : 110px; height : 40px;" onclick="location.href='goodsList.do'">목록전체보기</button>
-	</p>
-
+		<p align="center" style="margin : 50px 0 50px 0;">
+				<button class="adminMain-btn" type="button" style="width : 180px; height : 40px;" onclick="location.href='adminSalesVolume.do'">관리자 HOME 이동</button>
+		</p>
 	
 
 	<script type="text/javascript">

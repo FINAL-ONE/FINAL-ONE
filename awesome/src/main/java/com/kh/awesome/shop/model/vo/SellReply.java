@@ -19,6 +19,7 @@ public class SellReply {
 	private String status;
 	
 	private String userId;
+	private String userName;
 	
 	private int goodsPrice;
 	private int count;
@@ -32,8 +33,8 @@ public class SellReply {
 
 	public SellReply(int rId, int sellNum, int gId, String cateCd, int mId, String goodsTitle, String rContent,
 			int sellStart, String ref_filePath, String ref_contentFilePath, Date createDate, Date modifyDate,
-			String status, String userId, int goodsPrice, int count, String goodsContent, String filePath,
-			String contentFilePath, Date sellDate) {
+			String status, String userId, String userName, int goodsPrice, int count, String goodsContent,
+			String filePath, String contentFilePath, Date sellDate) {
 		this.rId = rId;
 		this.sellNum = sellNum;
 		this.gId = gId;
@@ -48,6 +49,7 @@ public class SellReply {
 		this.modifyDate = modifyDate;
 		this.status = status;
 		this.userId = userId;
+		this.userName = userName;
 		this.goodsPrice = goodsPrice;
 		this.count = count;
 		this.goodsContent = goodsContent;
@@ -168,6 +170,14 @@ public class SellReply {
 		this.userId = userId;
 	}
 
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
 	public int getGoodsPrice() {
 		return goodsPrice;
 	}
@@ -222,9 +232,11 @@ public class SellReply {
 				+ ", goodsTitle=" + goodsTitle + ", rContent=" + rContent + ", sellStart=" + sellStart
 				+ ", ref_filePath=" + ref_filePath + ", ref_contentFilePath=" + ref_contentFilePath + ", createDate="
 				+ createDate + ", modifyDate=" + modifyDate + ", status=" + status + ", userId=" + userId
-				+ ", goodsPrice=" + goodsPrice + ", count=" + count + ", goodsContent=" + goodsContent + ", filePath="
-				+ filePath + ", contentFilePath=" + contentFilePath + ", sellDate=" + sellDate + "]";
+				+ ", userName=" + userName + ", goodsPrice=" + goodsPrice + ", count=" + count + ", goodsContent="
+				+ goodsContent + ", filePath=" + filePath + ", contentFilePath=" + contentFilePath + ", sellDate="
+				+ sellDate + "]";
 	}
+
 
 	
 	
