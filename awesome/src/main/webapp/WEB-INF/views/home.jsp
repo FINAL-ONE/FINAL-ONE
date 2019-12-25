@@ -11,6 +11,7 @@
 	<title>Home</title>
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
  	
+ 	
 
 <script src="js/parallax_content-master/demo/build/app.js"></script>
  
@@ -33,7 +34,12 @@ body {
 	
 
 }
-
+.menu2 {
+    color: white !important;
+    line-height: 3 !important;
+    position: relative !important;
+    font-size: 16px !important;
+}
 .footer{
 	line-height: 18px !important;
 }
@@ -287,10 +293,14 @@ textarea {
 
 
 .conmmunityNav:after {
-    top: -44px !important;
-    left: -94px !important;
+    top: -42px !important;
+    left: -49px !important;
 }
+.myPageNav:after {
+    top: -42px !important;
+    left: 505px !important;
 
+}
 
 .desc{
 	
@@ -335,7 +345,7 @@ textarea {
 	<!-- 레이어 팝업 -->
 	<div id="layer_popup_area">
 		<div id="layer_popup" style="visibility: visible; width : 450px; height :500px;">
-		   <img src="resources/images/about_popup.jpg"  style = "width : 450px; height : 450px;">
+		   <img src="resources/images/about_popupGif.gif"  style = "width : 450px; height : 450px;">
 		    <div class="close">
 		        <form name="pop_form" style="width:450px; background : black;">
 		            <!-- <div id="check" style="width : 360px; height : 5px;"></div> -->
@@ -351,12 +361,12 @@ textarea {
 </div>
 
 <div class="container" style="overflow:hidden">
-	<ul class="bo-slider">
-		<li data-url="https://source.unsplash.com/1600x900/?fitness" data-type="image"></li>
-		<li data-url="https://source.unsplash.com/1600x900/?workout" data-type="image"></li>
-		<li data-url="https://source.unsplash.com/1600x900/?yoga" data-type="image"></li>
-		<li data-url="https://www.w3schools.com/html/mov_bbb.mp4" data-type="video">
-		<li data-url="https://source.unsplash.com/1600x900/?gym" data-type="image"></li>
+	<ul class="bo-slider" style="overflow:hidden" >
+		<li data-url="https://source.unsplash.com/1600x900/?fitness" data-type="image" style="overflow:hidden"></li>
+		<li data-url="https://source.unsplash.com/1600x900/?workout" data-type="image" style="overflow:hidden"></li>
+		<li data-url="https://source.unsplash.com/1600x900/?yoga" data-type="image" style="overflow:hidden"></li>
+		<li data-url="https://www.w3schools.com/html/mov_bbb.mp4" data-type="video" style="overflow:hidden">
+		<li data-url="https://source.unsplash.com/1600x900/?gym" data-type="image" style="overflow:hidden"></li>
 	</ul>
 </div>
 
@@ -396,17 +406,12 @@ textarea {
 </script>
 
 <section class="section-features">
-
     <div class="container">
-
         <ul class="features-list">
-
             <li class="feature-item">
                 <div class="content-col">
-
                     <div class="title">
                     	Diet proverb 1
-
                     </div>
                     <div class="desc">
                     	<div style="font-size: 30px; margin-left:auto; margin-right: auto; margin-top: 65px; width: 235px"> 인생은 살쪘을 때와<br>안쪘을때로 나뉜다.</div>

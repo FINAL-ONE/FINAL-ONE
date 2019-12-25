@@ -46,7 +46,9 @@ public class OrderController {
 	public ModelAndView abc(ModelAndView mv, @RequestParam(value = "page", required = false) Integer page,
 			HttpServletRequest request, HttpSession session) {
 		
-		int currentPage = 1;
+		
+	 System.out.println("들어오니 ");
+	 int currentPage = 1;
 		if(page != null) {
 			currentPage = page;
 		}
@@ -67,10 +69,11 @@ public class OrderController {
 		System.out.println(pi);
 		System.out.println(list);
 		
-		 if(list != null || !list.isEmpty()) {
+		
 			mv.addObject("list", list);
 			mv.addObject("pi", pi);
-		 } 
+
+			System.out.println("야 장난하냐 ");
 			mv.setViewName("order/orderListView");
 		return mv;
 	}
@@ -129,7 +132,7 @@ public class OrderController {
 		String[] arr;
 		arr = oId.split("/");
 		ArrayList oNum = new ArrayList();
-		System.out.println("나오니 : " + oId);
+
 	
 		if (arr[0].equals("0")) {
 			for (int i = 0; i < arr.length - 1; i++) {
@@ -425,7 +428,7 @@ public class OrderController {
 	
 		// 관리자용 주문리스트 배송 상태 수정
 		@RequestMapping("StatusUpdate.do")	
-		public String updateStatusUpdate(Order o, Model model, int orderNum, String orderStatus) {
+		public String updateStatusUpdate(Order o, Model model, String orderNum, String orderStatus) {
 			
 			/*
 			 	m.setMid(mId);
@@ -448,7 +451,6 @@ public class OrderController {
 		}
 				
 				
-
 		//구매확정 나혜!!
 		@RequestMapping("orderComplete.do")
 		public void orderComplete(HttpServletResponse response, String orderNum, HttpServletRequest request, int usedPoint, int orderPrice, Order o ) throws JsonIOException, IOException {

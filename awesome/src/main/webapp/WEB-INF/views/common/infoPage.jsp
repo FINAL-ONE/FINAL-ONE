@@ -84,9 +84,12 @@
 	
 	
  .conmmunityNav:after {
-    top: -45px !important;
+    top: -42px !important;
 }
 
+.myPageNav:after {
+    top: -42px !important;
+}
 
 
 
