@@ -209,7 +209,7 @@ body{
 .login_modal_content{
       text-align:center; 
       width: 500px;
-      height: 500px;
+      height: 550px;
       margin-top: 100px;
       margin-left: auto;
       margin-right: auto;
@@ -578,7 +578,7 @@ p {
                      <c:forEach var="r" items="${replylist}">
                         <tr>
                            
-                           <td><img src="resources/afteruploadFiles/${r.filePath}" width ="50px" height ="50px"></td>
+                           <td><img src="resources/afteruploadFiles/${r.ref_filePath}" width ="50px" height ="50px"></td>
                            <td>${r.rContent}</td>
                            <td>${r.userId }</td>
                            <td>
@@ -627,14 +627,18 @@ p {
 					
                   <div class="pagingArea" align="center">	
 						 <!-- 맨 처음으로(<<) -->
-       						<button onclick="location.href='adetail.do'"> << </button>
+						 	<c:forEach var="a" items="${list}">
+       							<button onclick="location.href='adetail.do?sellNum=${a.sellNum }&gId=${a.gId }'"> << </button>
+       						</c:forEach>
 						<!-- [이전] -->
 						<c:if test="${pi.currentPage <= 1 }">
 							<button disabled> < </button>
 						</c:if>
 						
 						<c:if test="${pi.currentPage > 1 }">
-							<button onclick="location.href='adetail.do?page=${pi.currentPage -1}'"> < </button>	
+							<c:forEach var="a" items="${list}">
+								<button onclick="location.href='adetail.do?page=${pi.currentPage -1}&sellNum=${a.sellNum }&gId=${a.gId }'"> < </button>	
+							</c:forEach>
 						</c:if>
 						
 						 <!-- 10개의 페이지 목록 -->
@@ -643,7 +647,9 @@ p {
 				               <button style="background:#ec434a;color:white" disabled >${p}</button>
 				           </c:if>
 				            <c:if test="${pi.currentPage != p }">
-				               <button onclick="location.href='adetail.do?page=${p}'">${p}</button>
+				            <c:forEach var="a" items="${list}">
+				               <button onclick="location.href='adetail.do?page=${p}&sellNum=${a.sellNum }&gId=${a.gId }'">${p}</button>
+							</c:forEach>
 				            </c:if>
 				       </c:forEach>
        
@@ -652,11 +658,17 @@ p {
 				            <button disabled> > </button>
 				          </c:if>
 				          <c:if test="${pi.currentPage < pi.maxPage }">
-				            <button onclick="location.href='adetail.do?page=${pi.currentPage + 1}'"> > </button>
+				          	<c:forEach var="a" items="${list}">
+				           	 <button onclick="location.href='adetail.do?page=${pi.currentPage + 1}&sellNum=${a.sellNum }&gId=${a.gId }'"> > </button>
+							</c:forEach>
+							
 				          </c:if>
 						          
 		                   <!-- 맨 끝으로(>>) -->
-         					<button onclick="location.href='adetail.do?page=${pi.maxPage}'"> >> </button>
+		                   	<c:forEach var="a" items="${list}">
+         					<button onclick="location.href='adetail.do?page=${pi.maxPage}&sellNum=${a.sellNum }&gId=${a.gId }'"> >> </button>
+       						</c:forEach>
+         					
          					<c:if test="${empty sessionScope.loginUser}">
 									<button style="border:none; background: #585858; height: 30px; color:white;padding-bottom:3px; position:relative; float:right;" onclick="notLogin()">후기작성</button>
 					        </c:if>
@@ -668,7 +680,6 @@ p {
          						<input id="sellNum" type="hidden" name="sellNum" value="${a.sellNum}">
                   				<input id="gId" type="hidden" name="gId" value="${a.gId }">
                   				<input id="mId" type="hidden" name="mId" value="${sessionScope.loginUser.mid }">
-<%-- 									<button style="border:none; background: #585858; height: 30px; color:white;padding-bottom:3px; position:relative; float:right;" onclick = "location.href='afterWrite.do?sellNum=${a.sellNum}&mId=${sessionScope.loginUser.mid }'">후기작성</button> --%>
 									<button style="border:none; background: #585858; height: 30px; color:white;padding-bottom:3px; position:relative; float:right;" onclick = "checkWrite();">후기작성</button>
 								</c:forEach>
 							</c:if>
@@ -693,23 +704,113 @@ p {
 	            AWESOME의 다양한 서비스를 이용하시려면 로그인을 해주세요.<br>
 	            회원가입을 하시면 다양한 서비스를 받으실 수 있습니다<br><br>
 	         </p>
-	           <form id= "loginForm" action="login.do" method="post">
-	            <input type="hidden" name="mId" value="mId">
-	            <input class= "loginInput" name="userId" style="margin-bottom:10px;"placeholder="아이디 입력   "> <br>
-	            <input class= "loginInput" type="password" name="userPwd" style="margin-bottom:5px;" placeholder="비밀번호 입력" type="password"><br>
-	            <button class= "loginBtn">로그인</button><br>
-	            <button class="findLogin">아이디 / 비밀번호 찾기</button><br>
-	         </form>
-	          <br><br>
-	         <p style="color:#666666; font-size:12px; margin:0px; line-height:1.5">
-	         문제가 있거나 문의 사항이 있으시면 아래의 주소로 문의하시기 바랍니다.<br>
-	         고객지원: <a href="">hokwan92@naver.com</a> 
-	         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	         </p>
-	       </div>
+	           <input class= "loginInput" id="userId" style="margin-bottom:10px;"placeholder="아이디 입력" > <br>
+		<input class= "loginInput" id="userPwd" type="password"  style="margin-bottom:5px;" placeholder="비밀번호 입력" type="password"><br>
+		<button class= "loginBtn" type="button" onclick="loginCheck()">로그인</button><br>
+		<button class="findLogin" type="button" id = "find_id_btn" onclick="javascript:popupidOpen();">아이디 찾기</button><br>
+		<button class="findLogin" type="button" id = "find_pw_btn" onclick="javascript:popuppwOpen();">비밀번호 찾기</button><br>
+
+	<br><br>
+		<p style="color:#666666; font-size:12px; margin:0px; line-height:1.5">
+		문제가 있거나 문의 사항이 있으시면 아래의 주소로 문의하시기 바랍니다.<br>
+		
+		
+		<script type="text/javascript">
+function popupOpen(){
+
+	var popUrl = "email.do";	//팝업창에 출력될 페이지 URL
+
+	var popOption = "top=55, left=600, width=750, height=880, resizable=no, scrollbars=no, status=no, location=no,";    //팝업창 옵션(optoin)
+
+		window.open(popUrl,"",popOption);
+
+	}
+	
+</script>
+
+고객지원: <a href="javascript:popupOpen();" > awesome@naver.com </a>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		</p>
+	
+</div>
+		
+
+</div>
 	      
-	       <div class="login_modal_layer"></div>
-	   </div>
+   	<div class="login_modal_layer"></div>
+	   
+	   
+<script>
+function loginCheck(){
+         if($("#userId").val() == ""){
+            alert("아이디를 입력해주세요.");
+            $("#userId").focus();
+         }else if($("#userPwd").val() == ""){
+            alert("비밀번호를 입력해주세요.");
+            $("#userPwd").focus();
+         }
+         
+      var userId =  $("#userId").val();
+       var userPwd = $("#userPwd").val();
+         
+   	$.ajax({
+		url : "login.do",
+		type:"post",
+		dataType : "JSON",
+		data : {
+			userId : userId,
+			userPwd : userPwd
+		},
+		success : function(data) {
+			if (data.result != "") {
+				console.log(data);
+				alert(decodeURIComponent(data.result)+ "님 환영합니다." );
+				location.href="home.do";
+			}else{ 
+				alert("아이디나 비밀번호를 다시 확인해주세요");
+			}
+			
+			
+		},
+		error : function(request, status, errorData) {
+			alert("아이디나 비밀번호를 다시 확인해주세요");
+		}
+	});	
+       
+}
+         
+ 
+</script>
+
+
+<script type="text/javascript">
+function popupidOpen(){
+
+	var popUrl = "find_id_form.do";	//팝업창에 출력될 페이지 URL
+
+	var popOption = "top=300, left=500, width=900, height=440, resizable=no, scrollbars=no, status=no, location=no,";    //팝업창 옵션(optoin)
+
+		window.open(popUrl,"",popOption);
+
+	}
+	
+</script>
+
+
+<script type="text/javascript">
+function popuppwOpen(){
+
+	var popUrl = "find_pw_form.do";	//팝업창에 출력될 페이지 URL
+
+	var popOption = "top=200, left=500, width=900, height=530, resizable=no, scrollbars=no, status=no, location=no,";    //팝업창 옵션(optoin)
+
+		window.open(popUrl,"",popOption);
+
+	}
+	
+</script>
+
+
    
          <!-- 상품 수량 증가 / 감소 -->
                <!-- 상품 수량 증가 / 감소 -->
@@ -905,17 +1006,7 @@ p {
 
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		 	 <!-- 상품에 작성한 후기 있는지 체크  후 없으면 작성하기로 이동-->
+	 	 <!-- 상품에 작성한 후기 있는지 체크  후 없으면 작성하기로 이동-->
 	     <script>
 	      function checkWrite(){
 	    	  var mId = $("#mId").val();

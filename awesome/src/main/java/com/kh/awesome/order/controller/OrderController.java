@@ -409,7 +409,7 @@ public class OrderController {
 			//System.out.println(listCount);
 			
 			PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
-			
+			System.out.println("관리자용  pi pi pi pi pi" +  pi);
 			ArrayList<Order> adminOrderlist = oService.AdminOrderselectList(pi);
 			
 			System.out.println("관리자용 주문목록 조회" + adminOrderlist);

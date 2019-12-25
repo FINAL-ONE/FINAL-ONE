@@ -151,7 +151,7 @@ tr:nth-child(even) {
       <div id="container" style= "height: auto; overflow: auto;"><!-- container -->
 
          <c:if test="${!empty loginUser }">
-               <div style="margin-left : 1345px; margin-top : 20px;">
+               <div style="margin-left : 1200px; margin-top : 20px;">
                   <button class="myBtn success" onclick="location.href='goodsWriterView.do'"><span>상품 등록</span></button>
                </div>
          </c:if>

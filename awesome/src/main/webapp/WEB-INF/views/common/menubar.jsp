@@ -512,7 +512,7 @@ This class is added to the container
            <div class= "menu myPageMenu">마이페이지</div> 
       </c:if>
       <c:if test="${sessionScope.loginUser.userId eq 'admin' }">
-         <div class= "menu myPageMenu" onclick ="#">관리자페이지</div> 
+         <div class= "menu myPageMenu">관리자페이지</div> 
       </c:if>
       
    </div>
@@ -545,10 +545,9 @@ This class is added to the container
       <span class= menu2 style="left: 667px;" onclick= "orderList()" >주문조회</span>
 
 
-      <!-- <span class= menu2 style="left: 702px;" onclick= "location.href='afterdelete.do'">내가 쓴 후기</span> -->
 	    <c:url var="myafterUpdate" value="afterdelete.do">
 			<c:param name="mid" value="${sessionScope.loginUser.mid }"/>
-			</c:url>
+		</c:url>
 	      <span class= "menu2" style="left: 702px;"><a onclick= "after()" style="text-decoration: none; color : white;">내가 쓴 후기</a></span>
    </div>
 </div>   
