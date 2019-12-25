@@ -544,7 +544,6 @@ This class is added to the container
 
 <div class="menubar2 myPageMenubar myPageMenu" style="display:none;">
    <div class= "myPageNav">
-<<<<<<< HEAD
 
 
       <span class= menu2 style="left: 633px;" onclick= "myPage()">내정보보기</span>
