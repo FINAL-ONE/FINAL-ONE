@@ -117,11 +117,27 @@ public class AdminServiceImpl implements AdminService{
 		return aDao.updateSellGoodsStatus(a);
 	}
 	
-//---------------------------- SELECT ----------------------------	
+//---------------------------- SELECT ----------------------------
+	// 동복- 판매량 많은 상품 조회 페이징처리 
+	@Override
+	public int salesVolumePageCount() {
+		return aDao.salesVolumePageCount();
+	}
 	// 동복- 상품 리스트 조회
 	@Override
 	public ArrayList<Goods> goodsList() {
 		return aDao.goodsList();
+	}
+	// 동복- 판매량 많은 상품 조회
+	@Override
+	public ArrayList<Goods> salesVolumeList() {
+		return aDao.salesVolumeList();
+	}	
+	
+	// 동복 - 판매중인 상품을 제외한 상품 리스트 조회
+	@Override
+	public ArrayList<Goods> sellGoodsList() {
+		return aDao.sellGoodsList();
 	}
 	// 동복 - 상품판매 시 상품리스트 조회
 	@Override

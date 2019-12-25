@@ -31,7 +31,11 @@
 </head>
 
 <style> 
+.myPageNav:after {
+    top: -38px !important;
+    left: 535px !important;
 
+}
 
  #outer{
        width: 100%;
@@ -357,7 +361,11 @@
 
  .conmmunityNav:after {
 	left: -5px !important;
-    top: -35px !important;
+    top: -38px !important;
+}
+
+.menu2 {
+    line-height: 3.2 !important;
 }
 </style>
 

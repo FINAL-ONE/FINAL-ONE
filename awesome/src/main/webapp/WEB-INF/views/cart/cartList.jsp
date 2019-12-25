@@ -275,7 +275,7 @@
          
          <div class="orderInfo">
             <form role="form" method="post" autocomplete="off" id="formform">
-                     on
+                     
                <input type="hidden" name="amount" value="${sum}" />
                      
         <div class="order_detail mt80">
@@ -448,27 +448,11 @@ $(function(){
 
    function pointValidate(userPoint){
       
-      
-      
       if($(".point").val()> userPoint ){
            alert("포인트가 모자랍니다.");
            $(".point").val(0);
            $(".point").focus();
-         return; 
-      
-      }else{
-         var totalPrice2 = totalPrice(); 
-         
-         totalPrice2 = totalPrice2 - $(".point").val();
-         
-           var totalPrice3= comma(totalPrice2); 
-             $("#totalPrice").html(totalPrice3);
-            $("#totalPriceVal").val(totalPrice2);
       }
-      
-      
-      
-      
    }
    
    
@@ -737,11 +721,15 @@ $(function(){
            var newAddress = $("#postcode").val() +"," +  $("#daum_address").val() + $("#daum_extraAddress").val() + "," + $("#daum_detailAddress").val(); 
            
           dAddress = newAddress; 
+           
         } 
+         
+         
          
          var dPhone       = $("#phone").val();
          var orderPrice    = $("#totalPriceVal").val();
          //alert("usedPoint : " + usedPoint);
+         var realOrderPrice = orderPrice - usedPoint;
          //alert("real : " + realOrderPrice);
          
            IMP.request_pay({
@@ -749,7 +737,7 @@ $(function(){
                pay_method : 'card',
                merchant_uid : 'merchant_' + new Date().getTime(),
                name : '결제 TEST',
-               amount : orderPrice,
+               amount : realOrderPrice,
                //amount : '100',
                buyer_email : $("#sdEmail").val(),
                buyer_name : $("#sdname").val(),

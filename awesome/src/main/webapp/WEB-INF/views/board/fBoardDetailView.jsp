@@ -947,7 +947,17 @@
 
  .conmmunityNav:after {
 	left: -5px !important;
-    top: -35px !important;
+    top: -38px !important;
+}
+
+.myPageNav:after {
+    top: -38px !important;
+    left: 535px !important;
+
+}
+
+.menu2 {
+    line-height: 3.2 !important;
 }
 	
 	</style>
@@ -1001,7 +1011,6 @@
 		<h2 style="font-size: 26px; font-weight:bold"> 자유게시판 </h2> 
 		</c:if>
 		
-	
 		<c:if test = "${board.category eq 3 }">
 		<h2 style="font-size: 26px; font-weight:bold"> 팁&노하우 </h2> 
 		</c:if>
@@ -1096,8 +1105,8 @@
 			</table>
 				<br>
 				<br><br>
-				<c:forEach var="bGood" items="${bGoodList}" >
-				<c:if test= "${bGood.mId eq loginUser.mid}"> 
+				<c:forEach var="bGood" items="${bGoodList}" >   <!--해당 게시판을 좋아요 누른 사람들의  목록-->
+				<c:if test= "${bGood.mId eq loginUser.mid}">    <!-- 해당 게시판을 좋아요 누른 사람 중 현재 로그인 사람도 있다면,    -->
 				 		<% 
 							display0 = "none"; 
 						 	display1 = "inline-block"; 

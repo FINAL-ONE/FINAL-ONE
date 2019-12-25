@@ -35,7 +35,7 @@ import com.kh.awesome.member.model.exception.MemberException;
 import com.kh.awesome.member.model.vo.Member;
 import com.kh.awesome.shop.model.serivce.ShopService;
 import com.kh.awesome.shop.model.vo.SellReply;
-
+import com.kh.awesome.admin.model.vo.PageInfo;
 
 @Controller
 public class AdminController {
@@ -398,7 +398,8 @@ System.out.println("isUsable : " + isUsable);
 				// 동복 - 판매상품 등록 화면으로 이동
 				@RequestMapping("goodsWriterView.do")
 				public ModelAndView goodsWriterViewList(ModelAndView mv) {
-					ArrayList<Goods> glist = aService.goodsList();
+					//동복 - 판매중인 상품을 제외한 상품 리스트 조회
+					ArrayList<Goods> glist = aService.sellGoodsList();
 			System.out.println("goodsWriterView_glist : " + glist);
 					
 					if(glist != null) {
@@ -464,7 +465,6 @@ System.out.println("isUsable : " + isUsable);
 				}
 				
 				
-			//-3- 작업중
 				// 동복 - 상품 리스트 조회
 				@RequestMapping("goodsList.do")
 				public ModelAndView goodsList(ModelAndView mv, Category c) {
@@ -479,7 +479,7 @@ System.out.println("isUsable : " + isUsable);
 
 					if(glist != null) {
 						mv.addObject("glist",glist);
-						
+						 
 						//신규 등록시 필요
 						mv.addObject("cateCd", aService.categoryCDselect());
 						
@@ -923,7 +923,6 @@ System.out.println("isUsable : " + isUsable);
 				}	
 				
 				
-			// -3-
 				// 동복 - 상품관리 화면에서 조건 검색
 				@RequestMapping("checkTextSelectGoods.do")
 				public void checkTextSelectGoods(HttpServletResponse response,  String lclCd, String mclCd, String sclCd, String goodsStatus, String soldout, String goodsName, Goods g ) throws JsonIOException, IOException {
@@ -960,6 +959,74 @@ System.out.println("isUsable : " + isUsable);
 					gson.toJson(glist, response.getWriter());	
 					
 				}	
+				
+
+				
+				
+//-3-
+				// 동복 - 관리자 페이지 
+				@RequestMapping("adminSalesVolume.do")
+				public ModelAndView salesVolumeList(ModelAndView mv, Category c,@RequestParam(value="page", required=false) Integer page) {
+			         // 마이바티스 때 했던 PageInfo의 Pagination을 그대로 쓰자.
+			         
+			         // 페이지의 정보 없으면 디폴트 1로
+			         int currentPage = 1; 
+			         
+			         if(page != null) {
+			            currentPage = page;
+			         }
+			         
+			         // 전체글 갯수 조회 
+			         int listCount = aService.salesVolumePageCount();
+
+			         PageInfo pi = Pagination.getPageInfo4(currentPage, listCount);
+
+					
+					String lclCd = "1";
+					String mclCd = "101";
+					c.setLclCd(lclCd);
+					c.setMclCd(mclCd);
+					
+					ArrayList<Goods> glist = aService.salesVolumeList();
+					
+			System.out.println("전체 상품 리스트 : " + glist);
+
+					if(glist != null) {
+						mv.addObject("glist",glist);
+						
+						//신규 등록시 필요
+						mv.addObject("cateCd", aService.categoryCDselect());
+						
+						//공통
+						mv.addObject("gClist", aService.goodsCategoryList()); // 동복 - 상품 수정 카테고리 조회 (카테고리)
+						
+						//조회용
+						mv.addObject("gLlist", aService.goodsLCategoryList(lclCd)); // 동복 - 상품 수정 카테고리 조회 (대)
+						mv.addObject("gMlist", aService.goodsMCategoryList(c)); // 동복 - 상품 수정 카테고리 조회 (중)
+						
+						// 수정용
+						mv.addObject("dLlist", aService.detailLCategoryList()); // 동복 - 상품 수정 카테고리 조회 (대)
+						mv.addObject("dMlist", aService.detailCategoryList()); // 동복 - 상품 수정 카테고리 조회 (중)
+						
+						mv.addObject("pi", pi);
+						
+						mv.setViewName("admin/adminListView");
+					}else {
+						throw new AdminException("상품 목록 보기 실패!!");
+					}
+					return mv;
+				}				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
 				
 				
 				

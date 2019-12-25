@@ -26,6 +26,7 @@
 <style>
 
 #insertTable{
+
 	margin-left: auto; 
 	margin-right: auto;
 }

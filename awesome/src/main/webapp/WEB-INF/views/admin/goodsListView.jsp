@@ -997,6 +997,11 @@
 										'<input id="lclCd" 	type = "hidden" value = "'+ data[i].lclCd +'">' +
 										'<input id="mclCd" 	type = "hidden" value = "'+ data[i].mclCd +'">' +
 										'<input id="sclCd" 	type = "hidden" value = "'+ data[i].sclCd +'">' +
+										'<input id="goodsName" 		type = "hidden" value = "'+ data[i].goodsName +'">' +
+										'<input id="goodsPrice" 	type = "hidden" value = "'+ data[i].goodsPrice +'">' +
+										'<input id="count" 			type = "hidden" value = "'+ data[i].count +'">' +
+										'<input id="goodsStatus" 	type = "hidden" value = "'+ data[i].goodsStatus +'">' +
+										'<input id="soldout" 		type = "hidden" value = "'+ data[i].soldout +'">' +
 	    								'<td width="10%" align="center">'+ data[i].gId +'</td>'+
 	    								'<td width="20%" align="left">'+'&nbsp;'+ data[i].goodsName +'</td>'+
 	    								'<td width="10%" align="center">'+ data[i].goodsPrice +'</td>'+ 
@@ -1157,6 +1162,11 @@
 												'<input id="lclCd" 	type = "hidden" value = "'+ data[i].lclCd +'">' +
 												'<input id="mclCd" 	type = "hidden" value = "'+ data[i].mclCd +'">' +
 												'<input id="sclCd" 	type = "hidden" value = "'+ data[i].sclCd +'">' +
+												'<input id="goodsName" 		type = "hidden" value = "'+ data[i].goodsName +'">' +
+												'<input id="goodsPrice" 	type = "hidden" value = "'+ data[i].goodsPrice +'">' +
+												'<input id="count" 			type = "hidden" value = "'+ data[i].count +'">' +
+												'<input id="goodsStatus" 	type = "hidden" value = "'+ data[i].goodsStatus +'">' +
+												'<input id="soldout" 		type = "hidden" value = "'+ data[i].soldout +'">' +
 			    								'<td width="10%" align="center">'+ data[i].gId +'</td>'+
 			    								'<td width="20%" align="left">'+'&nbsp;'+ data[i].goodsName +'</td>'+
 			    								'<td width="10%" align="center">'+ data[i].goodsPrice +'</td>'+ 
@@ -1226,6 +1236,11 @@
 												'<input id="lclCd" 	type = "hidden" value = "'+ data[i].lclCd +'">' +
 												'<input id="mclCd" 	type = "hidden" value = "'+ data[i].mclCd +'">' +
 												'<input id="sclCd" 	type = "hidden" value = "'+ data[i].sclCd +'">' +
+												'<input id="goodsName" 		type = "hidden" value = "'+ data[i].goodsName +'">' +
+												'<input id="goodsPrice" 	type = "hidden" value = "'+ data[i].goodsPrice +'">' +
+												'<input id="count" 			type = "hidden" value = "'+ data[i].count +'">' +
+												'<input id="goodsStatus" 	type = "hidden" value = "'+ data[i].goodsStatus +'">' +
+												'<input id="soldout" 		type = "hidden" value = "'+ data[i].soldout +'">' +
 			    								'<td width="10%" align="center">'+ data[i].gId +'</td>'+
 			    								'<td width="20%" align="left">'+'&nbsp;'+ data[i].goodsName +'</td>'+
 			    								'<td width="10%" align="center">'+ data[i].goodsPrice +'</td>'+ 
@@ -1295,6 +1310,11 @@
 												'<input id="lclCd" 	type = "hidden" value = "'+ data[i].lclCd +'">' +
 												'<input id="mclCd" 	type = "hidden" value = "'+ data[i].mclCd +'">' +
 												'<input id="sclCd" 	type = "hidden" value = "'+ data[i].sclCd +'">' +
+												'<input id="goodsName" 		type = "hidden" value = "'+ data[i].goodsName +'">' +
+												'<input id="goodsPrice" 	type = "hidden" value = "'+ data[i].goodsPrice +'">' +
+												'<input id="count" 			type = "hidden" value = "'+ data[i].count +'">' +
+												'<input id="goodsStatus" 	type = "hidden" value = "'+ data[i].goodsStatus +'">' +
+												'<input id="soldout" 		type = "hidden" value = "'+ data[i].soldout +'">' +
 			    								'<td width="10%" align="center">'+ data[i].gId +'</td>'+
 			    								'<td width="20%" align="left">'+'&nbsp;'+ data[i].goodsName +'</td>'+
 			    								'<td width="10%" align="center">'+ data[i].goodsPrice +'</td>'+ 
@@ -1356,6 +1376,9 @@
 							$tableBody.html("");
 							
 	  							for(var i in data){  
+	  											
+	  								
+	  								
 								    $("#surveyListTable").append('<tr>'+
 											'<input id="gId" 	type = "hidden" value = "'+ data[i].gId +'">' + 
 											'<input id="cateCd" type = "hidden" value = "'+ data[i].cateCd +'">' +
@@ -1363,6 +1386,11 @@
 											'<input id="lclCd" 	type = "hidden" value = "'+ data[i].lclCd +'">' +
 											'<input id="mclCd" 	type = "hidden" value = "'+ data[i].mclCd +'">' +
 											'<input id="sclCd" 	type = "hidden" value = "'+ data[i].sclCd +'">' +
+											'<input id="goodsName" 		type = "hidden" value = "'+ data[i].goodsName +'">' +
+											'<input id="goodsPrice" 	type = "hidden" value = "'+ data[i].goodsPrice +'">' +
+											'<input id="count" 			type = "hidden" value = "'+ data[i].count +'">' +
+											'<input id="goodsStatus" 	type = "hidden" value = "'+ data[i].goodsStatus +'">' +
+											'<input id="soldout" 		type = "hidden" value = "'+ data[i].soldout +'">' +
 		    								'<td width="10%" align="center">'+ data[i].gId +'</td>'+
 		    								'<td width="20%" align="left">'+'&nbsp;'+ data[i].goodsName +'</td>'+
 		    								'<td width="10%" align="center">'+ data[i].goodsPrice +'</td>'+ 

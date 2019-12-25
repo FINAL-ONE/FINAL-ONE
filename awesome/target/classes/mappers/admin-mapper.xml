@@ -120,8 +120,8 @@
 	<select id="selectafterCheck" resultType="_int">
 	  	SELECT COUNT(*)
 		  FROM SELL_REPLY_AFTERVIEW
-		 WHERE MID = 2
-		   AND GID = 61
+		 	WHERE MID = #{mId} 
+		   AND GID = #{gId}
            AND STATUS = 'Y'
 	</select>
   	
@@ -233,6 +233,42 @@
   	
 <!--========================================= SELECT  =========================================-->
 
+
+	<select id ="salesVolumePageCount" resultType="_int">
+	SELECT COUNT(*)
+	FROM(
+			SELECT  G.GID,
+			        G.CATE_CD,
+			        G.GOODS_NAME,
+			        G.GOODS_PRICE,
+			        G.GOODS_STATUS,
+			        G.SOLDOUT,
+			        G.REGISTER_DATE,
+			        G.MODIFY_DATE,
+			        C.CATE_NM,
+			        C.LCL_CD,
+			        C.MCL_CD,
+			        C.SCL_CD,
+	                SUM(L.ORDER_COUNT)AS COUNT
+			   FROM GOODS G
+	          INNER JOIN ORDER_LIST L ON(G.GID = L.GID)
+			  JOIN CATEGORY C ON(G.CATE_CD = C.CATE_CD)
+	           GROUP BY G.GID,
+			        G.CATE_CD,
+			        G.GOODS_NAME,
+			        G.GOODS_PRICE,
+			        G.COUNT,
+			        G.GOODS_STATUS,
+			        G.SOLDOUT,
+			        G.REGISTER_DATE,
+			        G.MODIFY_DATE,
+			        C.CATE_NM,
+			        C.LCL_CD,
+			        C.MCL_CD,
+			        C.SCL_CD
+			  ORDER BY COUNT DESC)
+	</select>
+
 	<!-- 동복 - 수정(품절처리된 상품도 List에 보여줌(추후에 재판매 가능하도록)) -->
 	<select id ="selectList" resultMap="sell_goodsResultSet">
 		
@@ -249,6 +285,42 @@
         
 		<!-- ORDER BY N_CREATE_DATE DESC -->
 	</select>
+
+
+	<!-- 동복 - 판매량 많은 상품 조회 --> 	
+	<select id="salesVolumeList" resultMap="goodsResultSet">
+		SELECT  G.GID,
+		        G.CATE_CD,
+		        G.GOODS_NAME,
+		        G.GOODS_PRICE,
+		        G.GOODS_STATUS,
+		        G.SOLDOUT,
+		        G.REGISTER_DATE,
+		        G.MODIFY_DATE,
+		        C.CATE_NM,
+		        C.LCL_CD,
+		        C.MCL_CD,
+		        C.SCL_CD,
+                SUM(L.ORDER_COUNT)AS COUNT
+		   FROM GOODS G
+          INNER JOIN ORDER_LIST L ON(G.GID = L.GID)
+		  JOIN CATEGORY C ON(G.CATE_CD = C.CATE_CD)
+           GROUP BY G.GID,
+		        G.CATE_CD,
+		        G.GOODS_NAME,
+		        G.GOODS_PRICE,
+		        G.COUNT,
+		        G.GOODS_STATUS,
+		        G.SOLDOUT,
+		        G.REGISTER_DATE,
+		        G.MODIFY_DATE,
+		        C.CATE_NM,
+		        C.LCL_CD,
+		        C.MCL_CD,
+		        C.SCL_CD
+		  ORDER BY COUNT DESC
+	</select>
+	
 	
 	<!-- 동복 - 상품 리스트 조회 --> 	
 	<select id="goodsList" resultMap="goodsResultSet">
@@ -269,6 +341,28 @@
 		  JOIN CATEGORY C ON(G.CATE_CD = C.CATE_CD)
 		  ORDER BY 1
 	</select>
+	
+	<!-- 동복 - 판매중인 상품을 제외한 상품 리스트 조회 --> 	
+	<select id="sellGoodsList" resultMap="goodsResultSet">
+		SELECT  G.GID,
+		        G.CATE_CD,
+		        G.GOODS_NAME,
+		        G.GOODS_PRICE,
+		        G.COUNT,
+		        G.GOODS_STATUS,
+		        G.SOLDOUT,
+		        G.REGISTER_DATE,
+		        G.MODIFY_DATE,
+		        C.CATE_NM,
+		        C.LCL_CD,
+		        C.MCL_CD,
+		        C.SCL_CD
+		  FROM GOODS G
+		  JOIN CATEGORY C ON(G.CATE_CD = C.CATE_CD)
+         WHERE G.GID NOT IN (SELECT GID FROM SELL_GOODS)
+		  ORDER BY 1
+	</select>	
+	
 	
 	<!-- 동복 - 등록한 상품의 카테고리 코드 조회 (상품등록시 사용 시퀀스로 안함 : 상품등록후 카테고리도 등록해야되서 )--> 	
 	<select id="categoryCDselect" resultMap="CategoryResultSet" parameterType="Goods">

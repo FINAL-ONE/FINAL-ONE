@@ -37,9 +37,8 @@
   width: 1300px;
   border: 1px solid #ddd;
   text-align :center;
-  /* margin-left : 30px; */
 }
-#checkboxTestTbl2{
+#checkboxTestTbl2{ 
   border-collapse: collapse;
   border-spacing: 0;
   width: 100px;

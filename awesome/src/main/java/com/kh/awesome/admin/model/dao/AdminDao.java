@@ -94,9 +94,21 @@ public class AdminDao {
 	}
 	
 //---------------------------- SELECT -------------------------------		
+	// 동복- 판매량 많은 상품 조회 페이징처리 
+	public int salesVolumePageCount() {
+		return sqlSession.selectOne("adminMapper.salesVolumePageCount");
+	}
 	// 동복- 상품 리스트 조회
 	public ArrayList<Goods> goodsList() {
 		return (ArrayList)sqlSession.selectList("adminMapper.goodsList");
+	}
+	// 동복- 판매량 많은 상품 조회
+	public ArrayList<Goods> salesVolumeList() {
+		return (ArrayList)sqlSession.selectList("adminMapper.salesVolumeList");
+	}
+	// 동복 - 판매중인 상품을 제외한 상품 리스트 조회
+	public ArrayList<Goods> sellGoodsList() {
+		return (ArrayList)sqlSession.selectList("adminMapper.sellGoodsList");
 	}
 	// 동복 - 상품판매 시 상품리스트 조회
 	public ArrayList<Goods> checkIdDup(String goodsName) {
