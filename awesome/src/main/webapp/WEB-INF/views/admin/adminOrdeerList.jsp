@@ -329,7 +329,7 @@ tr:nth-child(even) {
 				</div>	<!-- ele1 끝 -->
 			</div>	<!-- content_holder 끝 -->
 			<p align="center" style="margin : 50px 0 50px 0;">
-				<button class="adminMain-btn" type="button" style="width : 180px; height : 40px;" onclick="location.href='home.do'">관리자 HOME 이동</button>
+				<button class="adminMain-btn" type="button" style="width : 180px; height : 40px;" onclick="location.href='adminSalesVolume.do'">관리자 HOME 이동</button>
 			</p>
 	
 		</div>	<!-- member-content 끝 -->

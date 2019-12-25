@@ -224,9 +224,11 @@ public class AdminController {
 		if(list != null) {
 			mv.addObject("list", list)
 			.addObject("replylist", replylist)
-			.addObject("pi", pi)
-			.addObject("sAvgList", sAvgList)
-			.setViewName("shop/shopGoodsDetail");
+			.addObject("pi", pi);
+			if(rListCount >0) {
+			mv.addObject("sAvgList", sAvgList);
+			}
+			mv.setViewName("shop/shopGoodsDetail");
 		
 		} else {
 			throw new AdminException("SHOP 상품 디테일보기 실패!");

@@ -21,23 +21,23 @@
 <style>
 
 .outer{
-	width : 1300px;
- 	margin-left: auto;
-   	margin-right:auto;
+   width : 1300px;
+    margin-left: auto;
+      margin-right:auto;
 }
 .contentArea{
-	width : 90%;
-	/* background : gray; */
- 	margin-left: auto;
-   	margin-right:auto;
+   width : 90%;
+   /* background : gray; */
+    margin-left: auto;
+      margin-right:auto;
     /* margin-top:50px; */
 }
 /* 롤링배너 */
 .rolling-banner{
-	width : 1200px;
-	height : 300px;
-	margin-left: 10px;
-	margin-right:auto;
+   width : 1200px;
+   height : 300px;
+   margin-left: 10px;
+   margin-right:auto;
     margin-top:20px;
     margin-bottom: 50px;
 }
@@ -46,8 +46,8 @@
 .rbanner {position: relative; width: 1455px; height: 300px; margin:0 auto; padding:0; overflow: hidden; cursor : pointer;}
 .rbanner ul {position: absolute; margin: 0px; padding:0; list-style: none; }
 .rbanner ul li {float: left; width: 1455px; height: 300px; margin:0; padding:0;}
-	
-	
+   
+   
 .mini-banner{
    width : 350px;
    height : 200px;
@@ -57,11 +57,11 @@
    
 }
 .goods-list{
-	width : 270px;
-	height : 333px;
-	/* background : yellow; */
-	display : inline-block;
- 	margin-left: 17px;
+   width : 270px;
+   height : 333px;
+   /* background : yellow; */
+   display : inline-block;
+    margin-left: 17px;
     margin-right:auto;
     margin-top:30px;
     cursor : pointer;

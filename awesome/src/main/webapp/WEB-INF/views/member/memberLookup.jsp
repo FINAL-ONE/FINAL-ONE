@@ -148,6 +148,29 @@ tr:nth-child(even) {
 	position: relative; 
 	float: right;
 }
+
+
+.adminMain-btn, .adminList-btn {
+    margin: 10px 0px 15px;
+    border: 1px solid #fe6666;
+    background: #fe6666;
+    border-radius: 2px;
+    color: #fff;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    width: 259px;
+    height: 40px;
+    cursor: pointer;
+}
+
+.adminMain-btn:hover, .adminList-btn:hover{
+	background: #fff;
+	color: #fe6666;
+}	
+	
+	
+	
 </style>
 
 </head>
@@ -274,6 +297,12 @@ tr:nth-child(even) {
     					<button onclick="location.href='memberLookup.do?page=${pi.maxPage}'"> >> </button>
      
 					</div> <!-- 페이징 부분 -->
+					
+				<p align="center" style="margin : 50px 0 50px 0;">
+					<button class="adminMain-btn" type="button" style="width : 180px; height : 40px;" onclick="location.href='adminSalesVolume.do'">관리자 HOME 이동</button>
+				</p>
+		
+		
 			</div> <!-- container -->
 			
 			<!-- switch script -->
