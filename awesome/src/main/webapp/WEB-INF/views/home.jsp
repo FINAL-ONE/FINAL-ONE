@@ -350,7 +350,7 @@ textarea {
     <!-- content -->
 </div>
 
-<div class="container">
+<div class="container" style="overflow:hidden">
 	<ul class="bo-slider">
 		<li data-url="https://source.unsplash.com/1600x900/?fitness" data-type="image"></li>
 		<li data-url="https://source.unsplash.com/1600x900/?workout" data-type="image"></li>

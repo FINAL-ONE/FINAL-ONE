@@ -56,6 +56,7 @@ a.button:hover {
 
 </style>
 <body>
+${list }
 	<div align="center">
 	<img src="resources/images/logo.png" style="height:20%; width:20%;">
 	<h1>주문취소</h1>

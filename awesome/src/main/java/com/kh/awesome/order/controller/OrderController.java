@@ -67,7 +67,7 @@ public class OrderController {
 		System.out.println(pi);
 		System.out.println(list);
 		
-		 if(list != null && list.size()>0) {
+		 if(list != null || !list.isEmpty()) {
 			mv.addObject("list", list);
 			mv.addObject("pi", pi);
 		 } 
@@ -129,7 +129,7 @@ public class OrderController {
 		String[] arr;
 		arr = oId.split("/");
 		ArrayList oNum = new ArrayList();
-
+		System.out.println("나오니 : " + oId);
 	
 		if (arr[0].equals("0")) {
 			for (int i = 0; i < arr.length - 1; i++) {
@@ -448,6 +448,7 @@ public class OrderController {
 		}
 				
 				
+
 		//구매확정 나혜!!
 		@RequestMapping("orderComplete.do")
 		public void orderComplete(HttpServletResponse response, String orderNum, HttpServletRequest request, int usedPoint, int orderPrice, Order o ) throws JsonIOException, IOException {

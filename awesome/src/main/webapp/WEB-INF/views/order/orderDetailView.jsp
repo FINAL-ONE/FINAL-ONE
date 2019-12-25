@@ -207,11 +207,9 @@ height:0px;
 }
 </style>
 <body>
-	
 	<jsp:include page="../common/menubar.jsp" />
 
 	<div class="centerDiv">
-	
 
 
 		<br><br>
@@ -286,24 +284,27 @@ height:0px;
   			<a onclick="cancel()" class="button"  id="cancel">주문취소하기</a>
 		</div>
 		</c:if>
+		
+		
 		<br><br>
-		<h4>수정해야합니당</h4>
+		
 		<h4>배송지정보</h4>
+
 		<table class="table">
 			<tr>
 				<td>받으실분</td>
-				<td>${list[0].userName }</td>
+				<td>${list[0].dName }</td>
 				
 				
 			</tr>
 			<tr>
 				<td>배송지주소</td>
-				<td>${list[0].address }</td>
+				<td>${list[0].dAddress }</td>
 				
 			</tr>
 			<tr>
 				<td>연락처</td>
-				<td>${list[0].phone }</td>	
+				<td>${list[0].dPhone }</td>	
 			</tr>
 		</table>
 		
