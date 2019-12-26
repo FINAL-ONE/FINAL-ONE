@@ -296,7 +296,11 @@ textarea {
     top: -42px !important;
     left: -49px !important;
 }
+.myPageNav:after {
+    top: -42px !important;
+    left: 505px !important;
 
+}
 
 .desc{
 	
@@ -356,13 +360,13 @@ textarea {
     <!-- content -->
 </div>
 
-<div class="container">
-	<ul class="bo-slider">
-		<li data-url="https://source.unsplash.com/1600x900/?fitness" data-type="image"></li>
-		<li data-url="https://source.unsplash.com/1600x900/?workout" data-type="image"></li>
-		<li data-url="https://source.unsplash.com/1600x900/?yoga" data-type="image"></li>
-		<li data-url="https://www.w3schools.com/html/mov_bbb.mp4" data-type="video">
-		<li data-url="https://source.unsplash.com/1600x900/?gym" data-type="image"></li>
+<div class="container" style="overflow:hidden">
+	<ul class="bo-slider" style="overflow:hidden" >
+		<li data-url="https://source.unsplash.com/1600x900/?fitness" data-type="image" style="overflow:hidden"></li>
+		<li data-url="https://source.unsplash.com/1600x900/?workout" data-type="image" style="overflow:hidden"></li>
+		<li data-url="https://source.unsplash.com/1600x900/?yoga" data-type="image" style="overflow:hidden"></li>
+		<li data-url="https://www.w3schools.com/html/mov_bbb.mp4" data-type="video" style="overflow:hidden">
+		<li data-url="https://source.unsplash.com/1600x900/?gym" data-type="image" style="overflow:hidden"></li>
 	</ul>
 </div>
 
@@ -402,17 +406,12 @@ textarea {
 </script>
 
 <section class="section-features">
-
     <div class="container">
-
         <ul class="features-list">
-
             <li class="feature-item">
                 <div class="content-col">
-
                     <div class="title">
                     	Diet proverb 1
-
                     </div>
                     <div class="desc">
                     	<div style="font-size: 30px; margin-left:auto; margin-right: auto; margin-top: 65px; width: 235px"> 인생은 살쪘을 때와<br>안쪘을때로 나뉜다.</div>

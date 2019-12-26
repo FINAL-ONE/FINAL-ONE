@@ -344,20 +344,20 @@
   
   
   <select id="selectBoardOne2" parameterType = "Board" resultMap="boardResultSet">
-  	SELECT *
-  	FROM (	SELECT ROWNUM RNUM, B.BID, B.MID, M.USER_ID, M.USER_NICKNAME, CATEGORY, BTITLE, BTYPE, BCONTENT, BCOUNT, B.CREATE_DATE, B.MODIFY_DATE, B.STATUS, BLEVEL, NVL(BGOOD,0) AS BGOOD, NVL(REPLY,0) AS REPLY
-        	FROM D_BOARD B
+  	SELECT * 
+ FROM ( SELECT ROWNUM RNUM, BID, MID, USER_ID, USER_NICKNAME, CATEGORY, BTITLE, BTYPE, BCONTENT, BCOUNT, CREATE_DATE,MODIFY_DATE, STATUS, BLEVEL, BGOOD, REPLY
+           FROM ( SELECT B.BID, B.MID, M.USER_ID, M.USER_NICKNAME, CATEGORY, BTITLE, BTYPE, BCONTENT, BCOUNT, B.CREATE_DATE, B.MODIFY_DATE, B.STATUS, BLEVEL, NVL(BGOOD,0) AS BGOOD, NVL(REPLY,0) AS REPLY
+            FROM D_BOARD B
             JOIN MEMBER M ON( B.MID = M.MID)
             LEFT OUTER JOIN (SELECT BID, COUNT(*) AS BGOOD
-		                 FROM B_GOOD 
-		                 GROUP BY BID) BGOOD ON (B.BID = BGOOD.BID) 
+                             FROM B_GOOD 
+                             GROUP BY BID) BGOOD ON (B.BID = BGOOD.BID) 
             LEFT OUTER JOIN ( SELECT BID, COUNT(*) AS REPLY
-		                  FROM D_REPLY R
-		                  WHERE R.STATUS = 'Y'
-		                  GROUP BY BID)REPLY ON (B.BID = REPLY.BID)
-            WHERE B.STATUS ='Y' AND CATEGORY = #{category}
-            ORDER BY BLEVEL DESC, BID DESC)
-  	WHERE BID= #{bId}
+                              FROM D_REPLY
+                              GROUP BY BID)REPLY ON (B.BID = REPLY.BID)
+            WHERE B.STATUS ='Y'  AND CATEGORY = #{category}
+            ORDER BY 1 DESC))
+ WHERE bId=#{bId}
   </select>
     
   <select id="selectAttachList" parameterType = "_int" resultMap="attachResultSet">
@@ -426,21 +426,23 @@
   </delete>
   
   
-  <select id ="selectBoardAsRnum"  parameterType ="Board" resultMap="boardResultSet">   	
- 	SELECT *
-  	FROM (	SELECT ROWNUM RNUM, B.BID, B.MID, M.USER_ID, M.USER_NICKNAME, CATEGORY, BTITLE, BTYPE, BCONTENT, BCOUNT, B.CREATE_DATE, B.MODIFY_DATE, B.STATUS, BLEVEL, NVL(BGOOD,0) AS BGOOD, NVL(REPLY,0) AS REPLY
-        	FROM D_BOARD B
+  <select id ="selectBoardAsRnum"  parameterType ="Board" resultMap="boardResultSet">   		
+ SELECT * 
+ FROM ( SELECT ROWNUM RNUM, BID, MID, USER_ID, USER_NICKNAME, CATEGORY, BTITLE, BTYPE, BCONTENT, BCOUNT, CREATE_DATE,MODIFY_DATE, STATUS, BLEVEL, BGOOD, REPLY
+           FROM ( SELECT B.BID, B.MID, M.USER_ID, M.USER_NICKNAME, CATEGORY, BTITLE, BTYPE, BCONTENT, BCOUNT, B.CREATE_DATE, B.MODIFY_DATE, B.STATUS, BLEVEL, NVL(BGOOD,0) AS BGOOD, NVL(REPLY,0) AS REPLY
+            FROM D_BOARD B
             JOIN MEMBER M ON( B.MID = M.MID)
             LEFT OUTER JOIN (SELECT BID, COUNT(*) AS BGOOD
-		                 FROM B_GOOD 
-		                 GROUP BY BID) BGOOD ON (B.BID = BGOOD.BID) 
+                             FROM B_GOOD 
+                             GROUP BY BID) BGOOD ON (B.BID = BGOOD.BID) 
             LEFT OUTER JOIN ( SELECT BID, COUNT(*) AS REPLY
-		                  FROM D_REPLY R
-		                  WHERE R.STATUS = 'Y'
-		                  GROUP BY BID)REPLY ON (B.BID = REPLY.BID)
-            WHERE B.STATUS ='Y' AND CATEGORY = #{category}
-            ORDER BY BLEVEL DESC, BID DESC)
-  	WHERE RNUM=#{rNum}
+                              FROM D_REPLY
+                              GROUP BY BID)REPLY ON (B.BID = REPLY.BID)
+            WHERE B.STATUS ='Y'  AND CATEGORY = #{category}
+            ORDER BY 1 DESC))
+ WHERE RNUM=#{rNum}
+  	
+  	
   	
   	
   </select>

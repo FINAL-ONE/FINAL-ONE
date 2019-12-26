@@ -120,8 +120,9 @@
 	<select id="selectafterCheck" resultType="_int">
 	  	SELECT COUNT(*)
 		  FROM SELL_REPLY_AFTERVIEW
-		 WHERE MID = #{mId} 
+		 	WHERE MID = #{mId} 
 		   AND GID = #{gId}
+           AND STATUS = 'Y'
 	</select>
   	
   	

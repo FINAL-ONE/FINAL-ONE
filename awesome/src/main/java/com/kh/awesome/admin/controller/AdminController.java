@@ -214,15 +214,7 @@ public class AdminController {
 		ArrayList<Admin> list = aService.selectshopgoods(sellNum);
 		ArrayList<Admin> replylist = aService.selectreply(sellNum, pi);
 		
-		ArrayList<Admin> sAvgList= aService.sAvgListSelect(gId);
-		
-		if(sAvgList.isEmpty()) {
-			System.out.println("널이다 임마 ");
-			
-		}else {
-			System.out.println("널 아니다");
-			
-		}
+		ArrayList<Admin> sAvgList = aService.sAvgListSelect(gId);
 		
 		
 		System.out.println("상품디테일 list : "+ list);
@@ -233,9 +225,11 @@ public class AdminController {
 		if(list != null) {
 			mv.addObject("list", list)
 			.addObject("replylist", replylist)
-			.addObject("pi", pi)
-			.addObject("sAvgList", sAvgList)
-			.setViewName("shop/shopGoodsDetail");
+			.addObject("pi", pi);
+			if(rListCount >0) {
+			mv.addObject("sAvgList", sAvgList);
+			}
+			mv.setViewName("shop/shopGoodsDetail");
 		
 		} else {
 			throw new AdminException("SHOP 상품 디테일보기 실패!");

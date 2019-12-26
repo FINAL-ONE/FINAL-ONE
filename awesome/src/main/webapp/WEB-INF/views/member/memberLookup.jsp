@@ -16,10 +16,11 @@
 
 <!-- Excel 다운받기 (크롤링 기법) -->
  <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
-        <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
-		<script src="js/Export-Html-Table-To-Excel-Spreadsheet-using-jQuery-table2excel/src/jquery.table2excel.js"></script>
+ <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+ <script src="js/Export-Html-Table-To-Excel-Spreadsheet-using-jQuery-table2excel/src/jquery.table2excel.js"></script>
 
-
+<!-- alert창 css -->
+<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <style>
 
 
@@ -93,7 +94,7 @@ tr:nth-child(even) {
 }
 
 /*포인트 수정 버튼 css  */
-.myBtn{
+#myBtn{
    width :80px;
    height : 30px;
    font-size : 13px;
@@ -108,14 +109,14 @@ tr:nth-child(even) {
    margin: 3px;
 }
 
-.myBtn span {
+#myBtn span {
   cursor: pointer;
   display: inline-block;
   position: relative;
   transition: 0.5s;
 }
 
-.myBtn span:after {
+#myBtn span:after {
   content: '\00bb';
   position: absolute;
   opacity: 0;
@@ -124,11 +125,11 @@ tr:nth-child(even) {
   transition: 0.5s;
 }
 
-.myBtn:hover span {
+#myBtn:hover span {
   padding-right: 25px;
 }
 
-.myBtn:hover span:after {
+#myBtn:hover span:after {
   opacity: 1;
   right: 0;
 }
@@ -147,6 +148,29 @@ tr:nth-child(even) {
 	position: relative; 
 	float: right;
 }
+
+
+.adminMain-btn, .adminList-btn {
+    margin: 10px 0px 15px;
+    border: 1px solid #fe6666;
+    background: #fe6666;
+    border-radius: 2px;
+    color: #fff;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    width: 259px;
+    height: 40px;
+    cursor: pointer;
+}
+
+.adminMain-btn:hover, .adminList-btn:hover{
+	background: #fff;
+	color: #fe6666;
+}	
+	
+	
+	
 </style>
 
 </head>
@@ -210,7 +234,7 @@ tr:nth-child(even) {
 										    	<span><b id=modalUserName> </b>님의 포인트를 추가하시겠습니까?</span>
 										    	<input id="modalMid" type="hidden" value="" name ="mId" >
 										    	<input id="modalPoint" type="number" value="" name ="point" style ="width : 100px;  text-align:center;">
-										    	<input class="myBtn success" type="submit" value="수정하기">&nbsp;
+										    	<button id="myBtn">수정하기</button>&nbsp;
 									    	</form>
 									  </div>
 									</div>
@@ -222,7 +246,7 @@ tr:nth-child(even) {
 			           <td>
 			           	   <c:if test="${n.status eq 'Y'}">
 					           <label class="switch">
-					             <input type="checkbox" checked disabled>
+					             <input class="btn btn-danger demo-1" type="checkbox" checked>
 					             <span></span>
 					           </label>
 			           	   </c:if>
@@ -238,7 +262,6 @@ tr:nth-child(even) {
 						</c:forEach>
 					</table>
 					<br>	
-						
 					<!-- 페이징 부분 -->
 					 <div class="pagingArea" align="center">
 				         <!-- 맨 처음으로(<<) -->
@@ -274,6 +297,12 @@ tr:nth-child(even) {
     					<button onclick="location.href='memberLookup.do?page=${pi.maxPage}'"> >> </button>
      
 					</div> <!-- 페이징 부분 -->
+					
+				<p align="center" style="margin : 50px 0 50px 0;">
+					<button class="adminMain-btn" type="button" style="width : 180px; height : 40px;" onclick="location.href='adminSalesVolume.do'">관리자 HOME 이동</button>
+				</p>
+		
+		
 			</div> <!-- container -->
 			
 			<!-- switch script -->
@@ -318,10 +347,63 @@ tr:nth-child(even) {
 					$("#modalUserName").html(userName)
 					$("#modalMid").val(mId);
 					$("#modalPoint").val(point);
+					
 				}
+				
+			/* 	function updateBtnSubmit(){
+					alert('변경되었습니다');
+				} */
 			</script>
 			
-			
+				<!-- alert 창 script  -->
+<!-- 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script> 
+	<script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>-->
+	<script src="js/eModal-master/dist/eModal.js"></script>
+	<script>
+		var message1 = "변경할 수 없습니다";
+		var title1 =  "회원 관리 안내";
+		 
+		
+		$(".demo-1").click(function(){
+		    eModal.alert(message1, title1);
+		    
+		    return false;
+		});
+		
+		
+	</script>
+	
+		<!-- alert 창 script  -->	
+		<script type="text/javascript">
+		
+		  var _gaq = _gaq || [];
+		  _gaq.push(['_setAccount', 'UA-36251023-1']);
+		  _gaq.push(['_setDomainName', 'jqueryscript.net']);
+		  _gaq.push(['_trackPageview']);
+		
+		  (function() {
+		    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		  })();
+		
+		</script>
+		<script type="text/javascript">
+		
+		  var _gaq = _gaq || [];
+		  _gaq.push(['_setAccount', 'UA-36251023-1']);
+		  _gaq.push(['_setDomainName', 'jqueryscript.net']);
+		  _gaq.push(['_trackPageview']);
+		
+		  (function() {
+		    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		  })();
+		
+		</script>
+		
+		
 	<!-- 엑셀로 다운받기 -->	
 	<script type="text/javascript" src="https://pagead2.googlesyndication.com/pagead/show_ads.js">
 	</script>

@@ -89,7 +89,7 @@ tr:nth-child(even) {
     cursor: pointer;
     margin: 3px;
     position: relative;
-    right: 20px;
+    folat:right;
     margin-bottom: 20px;
 }
 
@@ -147,6 +147,7 @@ tr:nth-child(even) {
    <jsp:include page="../common/menubar.jsp"/>   
 	<div class="centerDiv" style="width: 100%">
     <div class = "outer">
+<<<<<<< HEAD
       <div id="container" style= "height: auto; overflow: auto;"><!-- container -->
 
          <c:if test="${!empty loginUser }">
@@ -155,6 +156,12 @@ tr:nth-child(even) {
                   <button class="myBtn success" onclick="location.href='goodsWriterView.do'"><span>상품 등록</span></button>
                </div>
          </c:if>
+=======
+    	
+      <div id="container" style= "height: auto; overflow: auto; margin-left: auto;margin-right:auto; width: 1300px"><!-- container --><br>
+       <button class="myBtn success" onclick="location.href='goodsWriterView.do'" style="position:relative; float:right;">상품 등록</button>
+         
+>>>>>>> refs/remotes/origin/master
       <form id = "goodsInsertForm" action="aStatusUpdate.do" method="post">
           <div id="tableLeft1" style= "width:auto;">
             <table align="center" id ="checkboxTestTbl" class = "goodsTable"  style="border: 1; cellspacing:1">
@@ -255,9 +262,8 @@ tr:nth-child(even) {
    
          </div>
          
-         	<p align="center" style="margin : 50px 0 50px 0;">
-				<button class="adminMain-btn" type="button" style="width : 110px; height : 40px;" onclick="location.href='home.do'">HOME 이동</button>
-				<button class="adminList-btn" type="button" style="width : 110px; height : 40px;" onclick="location.href='sell_goodsList.do'">목록전체보기</button>
+       		<p align="center" style="margin : 50px 0 50px 0;">
+				<button class="adminMain-btn" type="button" style="width : 180px; height : 40px;" onclick="location.href='adminSalesVolume.do'">관리자 HOME 이동</button>
 			</p>
 	
          </div>		

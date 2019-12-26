@@ -198,9 +198,9 @@
                         <span style="font-weight: bold; color:black;">${a.goodsTitle}</span>
                         <img src="resources/images/line.png">
                         <span style="color:gray;">${a.goodsContent}</span>
-                        <span style="font-weight: bold; font-size: 18px; color:red; text-align: center; color : red;">${a.goodsPrice}원</span><br>
-                        <!-- <input type="hidden" name ="star" value = "1" style="size : 10px">
-                           <span class="fa fa-star checked"></span> -->   
+                        <span style="font-weight: bold; font-size: 18px; color:red; text-align: center; color : red;">${a.goodsPrice}원</span>
+                <!--       <input type="hidden" name ="star" value = "1" style="size : 10px">
+                           <span class="fa fa-star checked"></span>   --> 
                      </div>
                   </a>
             </div>
@@ -275,7 +275,7 @@
 
 
 
-   
+   <br><br>
 </body>
 
 <footer>

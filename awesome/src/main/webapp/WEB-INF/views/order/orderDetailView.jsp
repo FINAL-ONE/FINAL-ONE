@@ -160,6 +160,7 @@ height:0px;
 #view.button:hover {
 	color: rgba(255, 255, 255, 0.85);
 	box-shadow: #fa4a4a 0 80px 0px 2px inset;
+	cursor: pointer;
 }
 
 #view2.button {
@@ -180,6 +181,7 @@ height:0px;
 #back:hover{
 	color: rgba(255, 255, 255, 0.85);
 	box-shadow: #fa4a4a 0 80px 0px 2px inset;
+	cursor: pointer;
 }
 
 #cancel {
@@ -190,6 +192,7 @@ height:0px;
 #cancel:hover{
 	color: rgba(255, 255, 255, 0.85);
 	box-shadow: #fa4a4a 0 80px 0px 2px inset;
+	cursor: pointer;
 }
 #font{
 	font-size:50px;
@@ -207,11 +210,9 @@ height:0px;
 }
 </style>
 <body>
-	
 	<jsp:include page="../common/menubar.jsp" />
 
 	<div class="centerDiv">
-	
 
 
 		<br><br>
@@ -286,37 +287,41 @@ height:0px;
   			<a onclick="cancel()" class="button"  id="cancel">주문취소하기</a>
 		</div>
 		</c:if>
+		
+		
 		<br><br>
-		<h4>수정해야합니당</h4>
+		
 		<h4>배송지정보</h4>
+	
 		<table class="table">
 			<tr>
 				<td>받으실분</td>
-				<td>${list[0].userName }</td>
+				<td>${list[0].dName }</td>
 				
 				
 			</tr>
 			<tr>
 				<td>배송지주소</td>
-				<td>${list[0].address }</td>
+				<td>${list[0].dPhone }</td>
 				
 			</tr>
 			<tr>
 				<td>연락처</td>
-				<td>${list[0].phone }</td>	
+				<td>${list[0].dAddress }</td>	
 			</tr>
 		</table>
 		
 		
 		<br> <br>
 		<h4>결제정보</h4>
+
 		<table class="table">
 			<tr>
 				<td style="font-weight: bold">총 주문 금액</td>
-				<c:set var="total" value="0" />
-				<c:forEach var="o" items="${list}">
-					<c:set var="total" value="${total + o.gPrice*o.orderCount}" />
-				</c:forEach>
+					<c:set var="total" value="0" />
+					<c:forEach var="o" items="${list}">
+						<c:set var=	"total" value="${total + o.gPrice*o.orderCount}" />
+					</c:forEach>
 				<td style="font-weight: bold">${total }</td>
 
 
@@ -335,6 +340,7 @@ height:0px;
 		</table>
 
 		<br> <br>
+
 		<h4>상품정보</h4>
 		<table class="table" id="tb" text-align="center">
 			<thead>
@@ -379,14 +385,15 @@ height:0px;
 					$tableBody.html("");
 
 					for ( var i in data) {
+						
     					var filePath = data[i].filePath;
 						var $tr = $("<tr>");
 						var $image = $("<td>");
 						var $br = $("<br>");
-						var $path=$("<img src='resources/auploadFiles/"+filePath  + "'  style='height:200px; width:150px;'>")
+						var $path=$("<img src='resources/auploadFiles/"+filePath+"'style='height:200px; width:150px;'>")
 						var $gInfo = $("<td>");
 						var $gTitle = decodeURIComponent(data[i].goodsTitle).replace(/\+/g, " ");
-						var $gName = decodeURIComponent(data[i].gName).replace(/\+/g, " ");
+						var $gContent = decodeURIComponent(data[i].goodsContent).replace(/\+/g, " ");;
 						var $orderCount = $("<td>").text(data[i].orderCount);
 						var $orderPrice = $("<td>").text(data[i].gPrice*data[i].orderCount);
 						if (data[i].orderStatus == 'B') {
@@ -406,7 +413,7 @@ height:0px;
 						$tr.append($image);
 						$gInfo.append("<"+$gTitle+">");
 						$gInfo.append($br);
-						$gInfo.append($gName);
+						$gInfo.append($gContent);
 						$tr.append($gInfo);
 						$tr.append($orderCount);
 						$tr.append($orderPrice);
@@ -521,7 +528,7 @@ height:0px;
 		};
 		
 		function delivery(){
-			window.open('https://tracker.delivery/#/kr.cjlogistics/355406187216','window_name','width=430,height=500, top = 500, left = 500, location=no,status=no,scrollbars=yes');
+			window.open('https://tracker.delivery/#/kr.cjlogistics/627454932365','window_name','width=430,height=500, top = 500, left = 500, location=no,status=no,scrollbars=yes');
 		}
 		
 		function complete(){

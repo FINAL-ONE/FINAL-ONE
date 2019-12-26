@@ -155,4 +155,14 @@ public class OrderDao {
 			return sqlSession.update("orderMapper.orderComplete", orderNum);
 		}
 
+
+		public int insertPoint(Order o) {
+			return sqlSession.update("orderMapper.insertPoint", o);
+		}
+
+
+		public ArrayList<Order> gichanDetail(String orderNum) {
+			return (ArrayList)sqlSession.selectList("orderMapper.gichanDetail", orderNum);
+		}
+
 }

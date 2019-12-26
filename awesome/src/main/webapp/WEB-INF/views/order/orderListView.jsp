@@ -1,8 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
+	<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+	<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-   <%@ page session="false" %>
-   <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-   <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <link href="https://fonts.googleapis.com/css?family=Do+Hyeon&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />  
@@ -245,7 +244,7 @@ input::placeholder {
                   <c:if test ="${applicationScope.orderNum eq o.orderNum}"  >  
                
                   <td><img src="resources/auploadFiles/${o.filePath }" style="height:200px; width:150px;"></td>
-                  <td><${o.goodsTitle}><br>${o.gName}</td>
+                  <td><${o.goodsTitle}><br>${o.goodsContent}</td>
                   <td>${o.orderCount }</td>
                   <td>${o.gPrice * o.orderCount }</td>
                   <c:if test = "${o.orderStatus eq 'B'}">

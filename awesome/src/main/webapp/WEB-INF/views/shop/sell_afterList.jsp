@@ -153,13 +153,13 @@ tr:nth-child(even) {
 			 </form>
 			</div>
 				<br>			
-			<table align="center" id ="afterWrite" class= "ediTable" border="1" cellspacing="1">
+			<table align="center" id ="afterWrite" class= "ediTable" border="1" cellspacing="1" style ="text-align: center;">
 				<tr bgcolor ="#fa4a4a" style = "color : white">
 					<th width ="200px">후기사진</th>
 					<th width ="200px">상품명</th>
 					<th width ="400px">후기내용</th>
 					<th width ="200px">작성자</th>
-					<th width ="200px">평균평점 / 별점</th>
+					<th width ="200px">평균평점 / 내 점수</th>
 					<th width ="200px">작성일</th>
 					<!-- <th width = "100px">평점</th> -->
 				</tr>
@@ -170,16 +170,18 @@ tr:nth-child(even) {
 				 		<td>${aflist.goodsTitle}</td>
 						<td>${aflist.rContent}</td>
 						<td>
-							<c:if test="${sessionScope.loginUser.userId eq 'admin' }">
+							${aflist.userName }
+							<%-- <c:if test="${sessionScope.loginUser.userId eq 'admin' }">
 								<c:out value = "${loginUser.userName }"/>
-							</c:if>
+							</c:if> --%>
 						</td>
 						
 						<td>
-						<c:forEach var="sAvgList" items="${sAvgList}">
+							<c:forEach var="sAvgList" items="${sAvgList}">
 				      	 		<span class="fa fa-star checked"></span>
 				      	 		<span style="font-size : 20px;">${sAvgList}</span>
 				      		</c:forEach>
+				      		/ ${aflist.sellStart}
 							<%--  <c:if test="${aflist.sellStart eq '1'}">
 									<span class="fa fa-star checked"></span>
 									<span class="fa fa-star"></span>
@@ -229,8 +231,7 @@ tr:nth-child(even) {
 			</table>
 			
 			<p align="center" style="margin : 50px 0 50px 0;">
-				<button class="adminMain-btn" type="button" style="width : 110px; height : 40px;" onclick="location.href='home.do'">HOME 이동</button>
-				<button class="adminList-btn" type="button" style="width : 110px; height : 40px;" onclick="location.href='sell_goodsList.do'">목록전체보기</button>
+				<button class="adminMain-btn" type="button" style="width : 180px; height : 40px;" onclick="location.href='adminSalesVolume.do'">관리자 HOME 이동</button>
 			</p>
 	
 	</div>

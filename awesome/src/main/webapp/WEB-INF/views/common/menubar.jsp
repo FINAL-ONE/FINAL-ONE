@@ -432,8 +432,8 @@ This class is added to the container
     border-right: 6px solid transparent;
     border-left: 6px solid transparent;
     border-bottom: 8px solid #fa4a4a;
-    top: -41px;
-    left: 550px;   /* 상위 메뉴바 마우스오버시 화살표 위치   */
+    top: -40px;
+    left: 505px;   /* 상위 메뉴바 마우스오버시 화살표 위치   */
 }
 
 
@@ -508,20 +508,23 @@ This class is added to the container
       <div class= "menu normalMenu"><a href="${shopGoodsListView}" style="text-decoration: none; color : black;">SHOP</a></div>
       <%-- <a href="${shopGoodsListView}"><div>SHOP</div></a> --%>
                      
-        <c:if test="${sessionScope.loginUser.userId ne 'admin'}">
+        <c:if test="${sessionScope.loginUser.manager eq 'N'}">
            <div class= "menu myPageMenu">마이페이지</div> 
       </c:if>
-      <c:if test="${sessionScope.loginUser.userId eq 'admin' }">
-         <div class= "menu myPageMenu" onclick="location.href='adminSalesVolume.do'">관리자페이지</div> 
-         
-         
+      <c:if test="${sessionScope.loginUser.manager eq 'Y' }">
+         <div class= "menu adminMenu" onclick="location.href='adminSalesVolume.do'">관리자페이지</div> 
       </c:if>
+      
+      <c:if test="${sessionScope.loginUser == null}">
+      	<div class= "menu loginGoMenu" onclick= "location.href='loginView.do'">LOGIN</div>
+      </c:if>
+      
       
    </div>
 </div> 
 
 <div class="menubar2 normalMenubar">
-	<c:if test="${sessionScope.loginUser.userId eq 'admin' }">
+	<c:if test="${sessionScope.loginUser.manager eq 'Y' }">
          <div id="trigger" class="entypo-menu" style="height: 45px;"></div>
 	</c:if>
 </div>  
@@ -536,35 +539,24 @@ This class is added to the container
    </div>
 </div>   
    
- <c:if test="${sessionScope.loginUser.userId ne 'admin'}">   
+ <c:if test="${sessionScope.loginUser.manager ne 'Y'}">   
 
 <div class="menubar2 myPageMenubar myPageMenu" style="display:none;">
    <div class= "myPageNav">
 
 
-      <span class= menu2 style="left: 637px;" onclick= "myPage()">내정보보기</span>
-	  <span class= menu2 style="left: 652px;" onclick= "cart()">장바구니</span>
-      <span class= menu2 style="left: 667px;" onclick= "orderList()" >주문조회</span>
+      <span class= menu2 style="left: 633px;" onclick= "myPage()">내정보보기</span>
+	  <span class= menu2 style="left: 663px;" onclick= "cart()">장바구니</span>
+      <span class= menu2 style="left: 693px;" onclick= "orderList()" >주문조회</span>
+	<span class= "menu2" style="left: 723px;"><a onclick= "after()" style="text-decoration: none; color : white;">내가 쓴 후기</a></span>
 
-
+  
       <!-- <span class= menu2 style="left: 702px;" onclick= "location.href='afterdelete.do'">내가 쓴 후기</span> -->
 	    <c:url var="myafterUpdate" value="afterdelete.do">
 			<c:param name="mid" value="${sessionScope.loginUser.mid }"/>
 			</c:url>
-	      <span class= "menu2" style="left: 702px;"><a onclick= "after()" style="text-decoration: none; color : white;">내가 쓴 후기</a></span>
+	      
    </div>
-</div>   
-</c:if>
-<c:if test="${sessionScope.loginUser.userId eq 'admin' }">
-<div class="menubar2 myPageMenubar myPageMenu" style="display:none;">
-   <div class= "myPageNav">
-	  <!-- <span class= menu2 style="left: 612px;" onclick= "location.href='categoryView.do'">카테고리 관리</span> -->
-      <span class= menu2 style="left: 647px;" onclick= "location.href='goodsWriterView.do'">상품판매</span>
-      <span class= menu2 style="left: 682px;" onclick= "location.href='sell_goodsList.do'">판매상품조회</span>
-      <span class= menu2 style="left: 717px;" onclick= "location.href='goodsList.do'">상품관리</span>
-      <span class= menu2 style="left: 752px;" onclick= "location.href='memberLookup.do'">회원조회</span>
-      <span class= menu2 style="left: 745px;" onclick= "location.href='sellafterlistViewAdmin.do'">상품후기 조회</span>
-   </div>	
 </div>   
 </c:if>
 
@@ -575,7 +567,8 @@ This class is added to the container
         </div>  
 </div>  -->
 
-	<c:if test="${sessionScope.loginUser.userId eq 'admin' }">
+
+	<c:if test="${sessionScope.loginUser.manager eq 'Y' }">
 		<div class="sidebar closed">
 			<div align="center" id="scroll">
 			<!--   <div class="sidebar closed" style="position:relative;">
@@ -715,23 +708,23 @@ $(function(){
              
      });
      
-   $(".communityMenu").mouseleave(function(){
+    $(".communityMenu").mouseleave(function(){
         $(".communityMenubar").css("display","none");
         $(".normalMenubar").css("display","block");
     }); 
 
-    
+   
      $(".myPageMenu").mouseenter(function(){
          $(".myPageMenubar").css("display","block");
        $(".normalMenubar").css("display","none");
             
     });
-   
+     
    $(".myPageMenu").mouseleave(function(){
        $(".myPageMenubar").css("display","none");
        $(".normalMenubar").css("display","block");
-   });
-    
+   }); 
+
     
     
    
