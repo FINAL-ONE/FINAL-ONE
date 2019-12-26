@@ -141,8 +141,8 @@ tr:nth-child(even) {
 				<div id = "sellheaderArea" style="width:500px;">
 					<select id="goodsList" name="goodsList" style="margin-bottom : 15px; width : 180px; height : 30px;">
 							<option value="0" selected>옵션을 선택하세요</option>
-							<c:forEach var="aflist" items="${aflist}">
-								<option value="${aflist.gId}">${aflist.goodsTitle}</option>
+							<c:forEach var="sellReply" items="${sessionScope.selectAflist}">
+								<option value="${sellReply.gId}">${sellReply.goodsTitle}</option>
 							</c:forEach>
 					</select>
 				<br>

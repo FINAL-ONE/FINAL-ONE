@@ -144,13 +144,33 @@ public class ShopController {
 	
 	// 메뉴바에서 관리자가 후기 리뷰 조회 클릭하면 select로 목록 뿌려주기 
 	@RequestMapping("sellafterlistViewAdmin.do")
-	public ModelAndView sellafterlistViewAdmin(ModelAndView mv) {
+	public ModelAndView sellafterlistViewAdmin(ModelAndView mv, HttpSession session) {
 		
 		ArrayList<SellReply> aflist = ShopService.sellafterSelectList();
 		System.out.println("관리자용 후기리스트 : " + aflist);
 		
+		ArrayList<SellReply> selectAflist = new ArrayList<SellReply>(); 
+		session.setAttribute("selectAflist", selectAflist);
+		
+		int flag = 0; 
+		
+		for( SellReply a : aflist) {
+			for( SellReply s : selectAflist) {
+				if(a.getgId() == s.getgId()) {
+					flag = 1;
+					break;
+				}
+			}
+			if(flag == 0) {
+				selectAflist.add(a);
+			}
+		}
+		
+		System.out.println(selectAflist);
+		
 		if(aflist != null) {
-			mv.addObject("aflist", aflist);
+			mv.addObject("aflist", aflist)
+			  .addObject("selectAflist", selectAflist);
 			
 			mv.setViewName("shop/sell_afterList");
 		}else {
