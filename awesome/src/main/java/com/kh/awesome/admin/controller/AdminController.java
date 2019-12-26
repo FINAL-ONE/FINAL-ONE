@@ -63,7 +63,7 @@ public class AdminController {
 			mv.setViewName("admin/sell_goodsListView");
 		}else {
 			throw new AdminException("상품 목록 보기 실패!!");
-				// RuntimeException을 받으면 에러 처리 안해도된다
+				// RuntimeException을 받 으면 에러 처리 안해도된다
 		}
 		
 		return mv;
