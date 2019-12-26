@@ -53,8 +53,8 @@ public class ShopDao {
 	}
 	
 	// 내후기 삭제
-	public int myafterDelete(String userId) {
-		return sqlSession.update("shopMapper.myafterDelete", userId);
+	public int myafterDelete(int rId) {
+		return sqlSession.update("shopMapper.myafterDelete", rId);
 	}
 
 

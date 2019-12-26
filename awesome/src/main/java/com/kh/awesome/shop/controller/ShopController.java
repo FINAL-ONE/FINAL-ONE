@@ -210,25 +210,27 @@ public class ShopController {
 	
 	// 내가 쓴 후기 삭제하기
 	@RequestMapping("myafterDelete.do")
-	public String myafterDelete(HttpSession session, String userId) {
-		System.out.println("del ++++ userId:::" + userId);
+	public String myafterDelete(HttpSession session, int rId, int mId) {
+		System.out.println("del ++++ rId:::" + rId);
 		
-		int result = ShopService.myafterDelete(userId);
+		int result = ShopService.myafterDelete(rId);
 		System.out.println("result del ___ : " + result );
+		
 		if(result > 0) {
-			
-			return "redirect:moveafterdelete.do";
-			// 알아서 로그아웃을 해주는 메소드를 활용하자!!
+			return "redirect:afterdelete.do?mid=" + mId;
+			// 알아서 로그아웃을 해주는 메소드를 활용하자 !!
 		}else {
 			throw new ShopException("내가 쓴 후기 삭제 실패!");
 		}
 		
 	}
 	
+
 	@RequestMapping("moveafterdelete.do") 
 	public String moveafterdeleteView() {
 		return "shop/myafterView"; 
 	}
+	
 	
 
 }
