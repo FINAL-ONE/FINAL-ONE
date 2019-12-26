@@ -147,27 +147,27 @@
 
         <div class="testimonial-contents">
           <div class="testimonial active" id="test-1">
-              <p>Lorem  similique, eum tenetur, numquam eligendi aliquid. Nulla sit, cupiditate corporis labore, modi natus officiis asperiores!</p>
+              <p>영화관 미술관 아니고 조호관 스키타러 사바사바</p>
             <span class="description">조호관 / 조장</span>
           </div>
 
           <div class="testimonial" id="test-2">
-              <p>Lorem  similique, eum tenetur, numquam eligendi aliquid. Nulla sit, cupiditate corporis labore, modi natus officiis asperiores!</p>
+              <p>우린 거북선 이준배는 통통</p>
             <span class="description">이준배 / 부조장</span>
           </div>
 
           <div class="testimonial" id="test-3">
-            <p>Lorem  similique, eum tenetur, numquam eligendi aliquid. Nulla sit, cupiditate corporis labore, modi natus officiis asperiores!</p>
+            <p>Dobby is free!!!</p>
             <span class="description">손동복 / 팀원</span>
           </div>
 
           <div class="testimonial" id="test-4">
-            <p>Lorem ipsum dolorng elit. Ab consequatur et adipisci ut, impedit cumque, similique, eum tenetur, numquam eligendi aliquid. Nulla sit, cupiditate corporis labore, modi natus officiis asperiores!</p>
+            <p>박신혜 닮은꼴</p>
             <span class="description">박나혜 / 팀원</span>
           </div>
           
            <div class="testimonial" id="test-5">
-            <p>Lorem ipsum dolorng elit. Ab consequatur et adipisci ut, impedit cumque, similique, eum tenetur, numquam eligendi aliquid. Nulla sit, cupiditate corporis labore, modi natus officiis asperiores!</p>
+            <p>하정언니... 잘있니..? </p>
             <span class="description">김미진 / 팀원</span>
           </div>
           

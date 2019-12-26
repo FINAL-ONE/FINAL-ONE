@@ -23,7 +23,11 @@ public class AdminDao {
 		
 		return (ArrayList)sqlSession.selectList("adminMapper.selectList");
 	}
-
+	// 상품조회
+	public ArrayList<Admin> selectListShop() {
+		
+		return (ArrayList)sqlSession.selectList("adminMapper.selectListShop");
+	}
 	public int insertSell_goods(Admin a) {
 		
 		return sqlSession.insert("adminMapper.insertSellgoods", a);

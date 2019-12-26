@@ -23,7 +23,12 @@ public class AdminServiceImpl implements AdminService{
 		
 		return aDao.selectList();
 	}
-	
+	// 상품 조회
+	@Override
+	public ArrayList<Admin> selectListShop() {
+		
+		return aDao.selectListShop();
+	}	
 	// 상품등록
 	@Override
 	public int insertSell_goods(Admin a) {

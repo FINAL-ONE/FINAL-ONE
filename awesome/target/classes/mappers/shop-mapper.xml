@@ -24,9 +24,6 @@
 		<result property ="userId" column="USER_ID"/>
 		<result property ="userName" column="USER_NAME"/>
 		
-		
-		
-		
 		<result property="goodsPrice"       column="GOODS_PRICE"/>
 		<result property="count"          column="COUNT"/>
 		<result property ="goodsContent"    column ="GOODS_CONTENT"/>

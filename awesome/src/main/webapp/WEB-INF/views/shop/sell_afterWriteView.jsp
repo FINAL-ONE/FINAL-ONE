@@ -32,18 +32,18 @@
 }
 
 .afterTable tr{
-	margin-bottom: 5px;
+   margin-bottom: 5px;
 }
 .afterTable td{
-	width : 700px;
+   width : 700px;
 }
 
 
 .fa-star{
-	color : dark-gray;
+   color : dark-gray;
 }
 .checked {
-  	color: orange;
+     color: orange;
 }
 
 
