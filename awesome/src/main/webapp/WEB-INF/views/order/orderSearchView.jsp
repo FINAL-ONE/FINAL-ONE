@@ -324,6 +324,7 @@ input::placeholder {
 		<c:set var="to" value="${os.date1 }"/>
 
 
+
 </body>
 
 <script>
@@ -337,10 +338,13 @@ $(function() {
 
 	dateFormat: "yy-mm-dd",
 	changeMonth: true, 
+
     changeYear: true,
     nextText: '다음 달',
     prevText: '이전 달',
     maxDate: 0
+
+
 		 	});
 	   
 
@@ -407,6 +411,7 @@ $(function() {
          var dd = sysdate.getDate();
          var mm = sysdate.getMonth()+1; //January is 0!
          var yy = sysdate.getFullYear();
+
  
       /*    if(yy>100){
             yy=yy-100;

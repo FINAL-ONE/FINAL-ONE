@@ -145,10 +145,11 @@ tr:nth-child(even) {
 </head>
 <body>
    <jsp:include page="../common/menubar.jsp"/>   
-	<div class="centerDiv">
+	<div class="centerDiv" style="width: 100%">
     <div class = "outer">
-    	
+
       <div id="container" style= "height: auto; overflow: auto; margin-left: auto;margin-right:auto; width: 1300px"><!-- container --><br>
+      <h1 align="center"> 판매 상품 리스트 </h1>
        <button class="myBtn success" onclick="location.href='goodsWriterView.do'" style="position:relative; float:right;">상품 등록</button>
          
       <form id = "goodsInsertForm" action="aStatusUpdate.do" method="post">

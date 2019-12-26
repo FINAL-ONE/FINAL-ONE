@@ -130,8 +130,8 @@ public class AdminServiceImpl implements AdminService{
 	}
 	// 동복- 판매량 많은 상품 조회
 	@Override
-	public ArrayList<Goods> salesVolumeList() {
-		return aDao.salesVolumeList();
+	public ArrayList<Goods> salesVolumeList(PageInfo pi) {
+		return aDao.salesVolumeList(pi);
 	}	
 	
 	// 동복 - 판매중인 상품을 제외한 상품 리스트 조회
@@ -214,7 +214,11 @@ public class AdminServiceImpl implements AdminService{
 	public ArrayList<Goods> checkTextSelectGoods(Goods g) {
 		return aDao.checkTextSelectGoods(g);
 	}
-	
+	// 동복 - 상품관리 화면에서 조건 검색(카운트)
+	@Override
+	public int checkTextSelectGoodsCount(Goods g) {
+		return aDao.checkTextSelectGoodsCount(g);
+	}	
 	
 	// 동복 - 상품 수정 (대)카테고리 조회
 	@Override
