@@ -94,6 +94,7 @@
 }
 
 
+
 </style>
     		<link rel="shortcut icon" href="${contextPath}/resources/images/favicon.ico" type="image/x-icon">
 <body>
@@ -107,34 +108,28 @@
 		
 		<div id ="content-area-awesome1" style="height : 500px; padding-bottom: -600px;">
 			<div id="content-img1">
-				<img src="resources/images/main_image_content1.jpg" style="width : 370px; height : 450px;">
+				<img src="resources/images/handsome.jpg" style="width : 420px; height : 450px;">
 			</div>
 			
 			<div id = "center-box1">
-				<b>SONGS REPREND LA ROUTE</b><br><br>
-				Songs, spectacle créé en octobre 2018 au Théâtre de La Croix-Rousse, repart en tournée à partir du mardi 10 décembre 2019 à La Roche-sur-Yon, Niort, Poitiers, Blois, Genève et Dijon.
-				
-				Retrouvez le teaser de l’enregistrement Perpetual Night paru chez harmonia mundi, dont sont extraits les chants anglais interprétés par Lucile Richardot et l’ensemble Correspondances, plongés dans l’univers poétique et burlesque du metteur en scène Samuel Achache.
-				
-				« En partant d’un très beau disque d’airs anglais du XVIIe siècle, le metteur en scène Samuel Achache et le chef baroque Sébastien Daucé ont construit un conte semi-fantastique au charme fou, où théâtre et musique s’accordent pour le meilleur. » Télérama • janvier 2019
-				
-				Retrouvez toutes les dates des représentations
+				<b>저희는 건강한 다이어트를 지향합니다.</b><br><br>
+				건강한 음식과 꾸준한 운동, 이 두 가지가 여러분의 건강을 좌우합니다.<br><br>
+				저희 AWESOME은 회원님들의 활기차고 건강한 생활을 위해 연구합니다.<br><br>
+				건강한 음식을 엄선하여 판매합니다. 맛있고 건강한 음식으로 여러분들의 식단을 책임지는겠습니다.<br><br>
+				건강한 운동생활을 위한 회원님들의 커뮤니티를 올바르게 관리합니다.<br><br>
+				다이어트 정보들을 공유하며 건강한 생활을 만들도록 돕겠습니다.
 			</div>
 		</div>
 		<div id ="content-area-awesome1" style="height : 520px; padding-bottom: -600px; margin-top: 50px; ">
 			<div id="content-img2">
-					<img src="resources/images/main_image_content2.jpg" style="width : 370px; height : 450px;">
+					<img src="resources/images/health.jpg" style="width : 370px; height : 450px;">
 				</div>
 				
 			<div id = "center-box2">
-				<b>SONGS REPREND LA ROUTE</b><br><br>
-				Songs, spectacle créé en octobre 2018 au Théâtre de La Croix-Rousse, repart en tournée à partir du mardi 10 décembre 2019 à La Roche-sur-Yon, Niort, Poitiers, Blois, Genève et Dijon.
+				<b>맛있고 신선한 식품</b><br><br>
+				저희 AWESOME은 신선한 다이어트 식품만을 연구하고 엄선하여 런칭합니다.<br><br>
+				다이어트 식품은 전부 다 맛없다는 편견을 깨고,<br><br> 맛있는 식품으로 여러분들의 다이어트를 응원합니다.<br><br>
 				
-				Retrouvez le teaser de l’enregistrement Perpetual Night paru chez harmonia mundi, dont sont extraits les chants anglais interprétés par Lucile Richardot et l’ensemble Correspondances, plongés dans l’univers poétique et burlesque du metteur en scène Samuel Achache.
-				
-				« En partant d’un très beau disque d’airs anglais du XVIIe siècle, le metteur en scène Samuel Achache et le chef baroque Sébastien Daucé ont construit un conte semi-fantastique au charme fou, où théâtre et musique s’accordent pour le meilleur. » Télérama • janvier 2019
-				
-				Retrouvez toutes les dates des représentations
 			</div>
 		</div>
 	
@@ -142,11 +137,11 @@
       <div class="inner-width">
         <h1>What Our Clients Say</h1>
         <div class="testimonial-pics">
-          <img src="css/Our Clients/img/p1.png" alt="test-1" class="active">
-          <img src="css/Our Clients/img/p2.png" alt="test-2">
-          <img src="css/Our Clients/img/p3.png" alt="test-3">
-          <img src="css/Our Clients/img/p4.png" alt="test-4">
-          <img src="css/Our Clients/img/p4.png" alt="test-5">
+          <img src="resources/images/peng1.png" alt="test-1" class="active">
+          <img src="resources/images/peng2.jpg" alt="test-2">
+          <img src="resources/images/peng3.png" alt="test-3">
+          <img src="resources/images/peng4.jpeg" alt="test-4">
+          <img src="resources/images/peng5.PNG" alt="test-5">
         </div>
 
         <div class="testimonial-contents">
