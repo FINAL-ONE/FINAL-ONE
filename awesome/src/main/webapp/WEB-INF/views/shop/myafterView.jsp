@@ -254,7 +254,12 @@ tr:nth-child(even) {
 		    	<span>해당 상품 후기를 삭제하시겠습니까?</span>
 		    	<%-- <c:forEach var="mflist" items="${mflist}"> --%>
 		    		<input id="modaluserId" type="hidden" name="userId" value="">
-			    	<input type="hidden" name="mId" value="${sessionScope.loginUser.mid }">
+			    	
+			    	<c:forEach var="mflist" items="${mflist}">
+				    	<input type="hidden" name="mId" value="${mflist.mId }">
+			    		<input type="hidden" name="rId" value="${mflist.rId }">
+			    	</c:forEach>
+			    	
 		    	<%-- </c:forEach> --%>
 		    	<input class="myupdate-btn" type="submit" value="삭제하기">&nbsp;
 	    	</form>

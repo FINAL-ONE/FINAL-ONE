@@ -3,6 +3,7 @@ package com.kh.awesome.admin.controller;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -62,7 +63,7 @@ public class AdminController {
 			mv.setViewName("admin/sell_goodsListView");
 		}else {
 			throw new AdminException("상품 목록 보기 실패!!");
-				// RuntimeException을 받으면 에러 처리 안해도된다
+				// RuntimeException을 받 으면 에러 처리 안해도된다
 		}
 		
 		return mv;
@@ -469,7 +470,7 @@ System.out.println("isUsable : " + isUsable);
 				
 				// 동복 - 상품 리스트 조회
 				@RequestMapping("goodsList.do")
-				public ModelAndView goodsList(ModelAndView mv, Category c) {
+				public ModelAndView goodsList(ModelAndView mv, Category c, Goods g) {
 					
 					String lclCd = "1";
 					String mclCd = "101";
@@ -496,7 +497,9 @@ System.out.println("isUsable : " + isUsable);
 						mv.addObject("dLlist", aService.detailLCategoryList()); // 동복 - 상품 수정 카테고리 조회 (대)
 						mv.addObject("dMlist", aService.detailCategoryList()); // 동복 - 상품 수정 카테고리 조회 (중)
 						
-						
+						int glist2 = aService.checkTextSelectGoodsCount(g);
+						System.out.println("처음 화면 뿌려줄때 : " + glist2);
+						mv.addObject("listCount", glist2); // 동복 - 클릭한 상품의  (중)카테고리 조회(전체)
 						
 						mv.setViewName("admin/goodsListView");
 					}else {
@@ -948,13 +951,24 @@ System.out.println("isUsable : " + isUsable);
 					g.setSclCd(sclCd);
 					g.setGoodsStatus(goodsStatus);
 					g.setSoldout(soldout);
-
+ 
 					g.setWhereNum(whereNum);
 
 			System.out.println("g 값 : " + g);
 					
 					ArrayList<Goods> glist = aService.checkTextSelectGoods(g);
-			System.out.println("결과값 : " + glist);		
+					
+					System.out.println("결과값 : " + glist);
+					
+					int glist2 = aService.checkTextSelectGoodsCount(g);
+					System.out.println("glist2 : " + glist2);						
+
+					
+			         for(Goods gl : glist) {
+			             
+			        	 gl.setListCount(glist2);
+			          }
+					
 					//Gson gson = new GsonBuilder().create();
 					Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 					
@@ -989,7 +1003,7 @@ System.out.println("isUsable : " + isUsable);
 					c.setLclCd(lclCd);
 					c.setMclCd(mclCd);
 					
-					ArrayList<Goods> glist = aService.salesVolumeList();
+					ArrayList<Goods> glist = aService.salesVolumeList(pi);
 					
 			System.out.println("전체 상품 리스트 : " + glist);
 
@@ -997,18 +1011,18 @@ System.out.println("isUsable : " + isUsable);
 						mv.addObject("glist",glist);
 						
 						//신규 등록시 필요
-						mv.addObject("cateCd", aService.categoryCDselect());
+						//mv.addObject("cateCd", aService.categoryCDselect());
 						
 						//공통
 						mv.addObject("gClist", aService.goodsCategoryList()); // 동복 - 상품 수정 카테고리 조회 (카테고리)
 						
 						//조회용
-						mv.addObject("gLlist", aService.goodsLCategoryList(lclCd)); // 동복 - 상품 수정 카테고리 조회 (대)
-						mv.addObject("gMlist", aService.goodsMCategoryList(c)); // 동복 - 상품 수정 카테고리 조회 (중)
+						//mv.addObject("gLlist", aService.goodsLCategoryList(lclCd)); // 동복 - 상품 수정 카테고리 조회 (대)
+						//mv.addObject("gMlist", aService.goodsMCategoryList(c)); // 동복 - 상품 수정 카테고리 조회 (중)
 						
 						// 수정용
-						mv.addObject("dLlist", aService.detailLCategoryList()); // 동복 - 상품 수정 카테고리 조회 (대)
-						mv.addObject("dMlist", aService.detailCategoryList()); // 동복 - 상품 수정 카테고리 조회 (중)
+						//mv.addObject("dLlist", aService.detailLCategoryList()); // 동복 - 상품 수정 카테고리 조회 (대)
+						//mv.addObject("dMlist", aService.detailCategoryList()); // 동복 - 상품 수정 카테고리 조회 (중)
 						
 						mv.addObject("pi", pi);
 						

@@ -75,12 +75,11 @@
 	.modal-content {
 	  background-color: #fefefe;
 	  /* margin: auto; */
-	  margin-top : 100px;
-	  margin-left : 30%;
+	  margin-top : 10px;
+	  margin-left : 28%;
 	  padding: 40px;
 	  border: 1px solid #888;
 	  width: 40%;
-	
 	}
 	
 	/* The Close Button */
@@ -200,8 +199,11 @@
 	<br><br>
 	<c:if test="${!empty loginUser }">
 		
-				
+
    		<div align ="center">
+   					<span id="listCountSpan" style ="font-size : 20px; font-weight: bold; padding-right: 1200px;  ">
+				 상품 수량 : ${listCount}개 
+			</span>
    		<!--
    			상품 이름 
    			대 분류
@@ -210,7 +212,9 @@
    			상품 상태
    			매진 구분
    		-->
+
    		<table>
+
    					<th><input type="checkbox" name="user_CheckBox" id="categoryCk">카테고리</th>
 		            <td id="Chidden">	    
 						<select id="lclCd" name="lclCd" style="width:100px; height: 20.67px;" class="category">
@@ -263,7 +267,8 @@
 				<th><input type="checkbox" name="user_CheckBox" id="statusCk">상품상태</th>
 				<td id="statushidden" >
 					<select id="goodsStatus" name ="goodsStatus" style="width:100px; height: 20.67px;">
-		                    <option value="Y" selected="selected">사용
+							<option value="" selected="selected">선택하세요</option>
+		                    <option value="Y">사용
 		                    <option value="N">미사용
 	                </select>
 				</td>
@@ -273,8 +278,9 @@
 				<th><input type="checkbox" name="user_CheckBox" id="soldoutCk">매진구분</th> 
 				<td id="soldouthidden" >
 					<select id="soldout" name ="soldout" style="width:100px; height: 20.67px;">
+							<option value="" selected="selected">선택하세요</option>
 							<option value="Y">매진
-							<option value="N" selected="selected">판매
+							<option value="N">판매
 	                </select>
 				</td>
    		
@@ -294,9 +300,12 @@
    		<td>
    			<!-- <button id="goodsListSearch" type="button" onclick="goodsListSearch();">조회</button> -->
    			<!-- <button onclick="location.href='goodsInsertView.do'">상품 등록하기</button> -->
-   			<button id="myBtn" class="myBtn success" type="button" onclick="goodsListSearch();"><span>조회</span></button>
-   			<button id="myBtn" class="myBtn success" onclick="goodsInsert();"><span>등록</span></button>
+   			<!-- <button id="myBtn" class="myBtn success" type="button" onclick="goodsListSearch();"><span>조회</span></button> -->
+   			<div style="margin-left: 100%">
+   				<button id="myBtn" class="myBtn success" onclick="goodsInsert();"><span>등록</span></button>
+   			</div>
    		</td>
+   		
    		</table>
    		
    		
@@ -934,6 +943,486 @@
 		
 // list row 클릭시 ------------------------------------------------------------------------------------------------------------------
 
+	$(function(){
+        // 조회조건 변경후 체크박스 클릭시 바로 조회되게!!!
+        // 카테고리
+        $("#categoryCk").click(function(){
+        	// 클릭한 체크박스가 체크상태인지 체크해제상태인지 판단
+            if( $("#categoryCk").is(":checked") ){
+            
+					var goodsName =$("#goodsName").val().trim();// 공백제거후 담음
+		            // 테이블 헤더에 있는 checkbox 클릭시
+ 	                if( $("#categoryCk").is(":checked") ){
+	    				var lclCd =$("#lclCd").val();
+	    				var mclCd =$("#mclCd").val();
+	    				var sclCd =$("#sclCd").val();
+	                }else{
+	                	var lclCd = null;
+	                	var mclCd = null;
+	                	var sclCd = null;
+	                }
+	                if( $("#statusCk").is(":checked") ){
+	                	var goodsStatus =$("#goodsStatus").val();
+	                }else{
+	                	var goodsStatus = null;
+	                }
+	                if( $("#soldoutCk").is(":checked") ){ 
+	                	var soldout =$("#soldout").val();
+	                }else{
+	                	var soldout = null;
+	                } 
+					
+						$.ajax({
+							url:"checkTextSelectGoods.do",
+							dataType : "json",
+							data:{lclCd:lclCd,
+								  mclCd:mclCd,
+								  sclCd:sclCd,
+								  goodsStatus:goodsStatus,
+								  soldout:soldout, 
+								  goodsName:goodsName},
+								  
+							success:function(data){
+	
+								$tableBody = $("#surveyListTable tbody");
+								$tableBody.html("");
+								
+		  							for(var i in data){  
+									    $("#surveyListTable").append('<tr>'+
+												'<input id="gId" 	type = "hidden" value = "'+ data[i].gId +'">' + 
+												'<input id="cateCd" type = "hidden" value = "'+ data[i].cateCd +'">' +
+												'<input id="cateNm" type = "hidden" value = "'+ data[i].cateNm +'">' +
+												'<input id="lclCd" 	type = "hidden" value = "'+ data[i].lclCd +'">' +
+												'<input id="mclCd" 	type = "hidden" value = "'+ data[i].mclCd +'">' +
+												'<input id="sclCd" 	type = "hidden" value = "'+ data[i].sclCd +'">' +
+												'<input id="goodsName" 		type = "hidden" value = "'+ data[i].goodsName +'">' +
+												'<input id="goodsPrice" 	type = "hidden" value = "'+ data[i].goodsPrice +'">' +
+												'<input id="count" 			type = "hidden" value = "'+ data[i].count +'">' +
+												'<input id="goodsStatus" 	type = "hidden" value = "'+ data[i].goodsStatus +'">' +
+												'<input id="soldout" 		type = "hidden" value = "'+ data[i].soldout +'">' +
+			    								'<td width="10%" align="center">'+ data[i].gId +'</td>'+
+			    								'<td width="20%" align="left">'+'&nbsp;'+ data[i].goodsName +'</td>'+
+			    								'<td width="10%" align="center">'+ data[i].goodsPrice +'</td>'+ 
+			    								'<td width="10%" align="center">'+ data[i].count +'</td>'+
+			    								'<td width="10%" align="center">'+ data[i].goodsStatus +'</td>'+
+			    								'<td width="10%" align="center">'+ data[i].soldout +'</td>'+
+			    								'<td width="10%" align="center">'+ data[i].registerDate +'</td>'+
+			    								'<td width="10%" align="center">'+ data[i].modifyDate +'</td>'+
+			    							 '</tr>');
+									}
+		  							if($("#gId").val() == null){
+		  								$("#listCountSpan").html('상품 수량 : 0개');
+		  							}else{
+		  								$("#listCountSpan").html('상품 수량 : ' + data[0].listCount + '개');
+		  							}	  								
+									
+							},
+							error:function(request, status, errorData){
+								alert("error code : " + request.status + "\n"
+													  + "message : " + request.responseText
+													  + "error : " + errorData);
+							}
+						});
+            }else{
+
+            	$("#lclCd option:eq(0)").prop("selected",true);
+            	$("#mclCd option:eq(0)").prop("selected",true);
+            	$("#sclCd option:eq(0)").prop("selected",true);
+            	
+				var goodsName =$("#goodsName").val().trim();// 공백제거후 담음
+	            // 테이블 헤더에 있는 checkbox 클릭시
+	            if( $("#categoryCk").is(":checked") ){
+    				var lclCd =$("#lclCd").val();
+    				var mclCd =$("#mclCd").val();
+    				var sclCd =$("#sclCd").val();
+                }else{
+                	var lclCd = null;
+                	var mclCd = null;
+                	var sclCd = null;
+                }
+                if( $("#statusCk").is(":checked") ){
+                	var goodsStatus =$("#goodsStatus").val();
+                }else{
+                	var goodsStatus = null;
+                }
+                if( $("#soldoutCk").is(":checked") ){ 
+                	var soldout =$("#soldout").val();
+                }else{
+                	var soldout = null;
+                } 
+				
+					$.ajax({
+						url:"checkTextSelectGoods.do",
+						dataType : "json",
+						data:{lclCd:lclCd,
+							  mclCd:mclCd,
+							  sclCd:sclCd,
+							  goodsStatus:goodsStatus,
+							  soldout:soldout, 
+							  goodsName:goodsName},
+							  
+						success:function(data){
+
+							$tableBody = $("#surveyListTable tbody");
+							$tableBody.html("");
+							
+	  							for(var i in data){  
+								    $("#surveyListTable").append('<tr>'+
+											'<input id="gId" 	type = "hidden" value = "'+ data[i].gId +'">' + 
+											'<input id="cateCd" type = "hidden" value = "'+ data[i].cateCd +'">' +
+											'<input id="cateNm" type = "hidden" value = "'+ data[i].cateNm +'">' +
+											'<input id="lclCd" 	type = "hidden" value = "'+ data[i].lclCd +'">' +
+											'<input id="mclCd" 	type = "hidden" value = "'+ data[i].mclCd +'">' +
+											'<input id="sclCd" 	type = "hidden" value = "'+ data[i].sclCd +'">' +
+											'<input id="goodsName" 		type = "hidden" value = "'+ data[i].goodsName +'">' +
+											'<input id="goodsPrice" 	type = "hidden" value = "'+ data[i].goodsPrice +'">' +
+											'<input id="count" 			type = "hidden" value = "'+ data[i].count +'">' +
+											'<input id="goodsStatus" 	type = "hidden" value = "'+ data[i].goodsStatus +'">' +
+											'<input id="soldout" 		type = "hidden" value = "'+ data[i].soldout +'">' +
+		    								'<td width="10%" align="center">'+ data[i].gId +'</td>'+
+		    								'<td width="20%" align="left">'+'&nbsp;'+ data[i].goodsName +'</td>'+
+		    								'<td width="10%" align="center">'+ data[i].goodsPrice +'</td>'+ 
+		    								'<td width="10%" align="center">'+ data[i].count +'</td>'+
+		    								'<td width="10%" align="center">'+ data[i].goodsStatus +'</td>'+
+		    								'<td width="10%" align="center">'+ data[i].soldout +'</td>'+
+		    								'<td width="10%" align="center">'+ data[i].registerDate +'</td>'+
+		    								'<td width="10%" align="center">'+ data[i].modifyDate +'</td>'+
+		    							 '</tr>');
+								} 
+	  							if($("#gId").val() == null){
+	  								$("#listCountSpan").html('상품 수량 : 0개');
+	  							}else{
+	  								$("#listCountSpan").html('상품 수량 : ' + data[0].listCount + '개');
+	  							}
+								
+						},
+						error:function(request, status, errorData){
+							alert("error code : " + request.status + "\n"
+												  + "message : " + request.responseText
+												  + "error : " + errorData);
+						}
+					});      	
+            	
+            }
+        });
+        
+        
+        // 상품상태
+        $("#statusCk").click(function(){
+        	// 클릭한 체크박스가 체크상태인지 체크해제상태인지 판단
+            if( $("#statusCk").is(":checked") ){
+            
+					var goodsName =$("#goodsName").val().trim();// 공백제거후 담음
+		            // 테이블 헤더에 있는 checkbox 클릭시
+ 	                if( $("#categoryCk").is(":checked") ){
+	    				var lclCd =$("#lclCd").val();
+	    				var mclCd =$("#mclCd").val();
+	    				var sclCd =$("#sclCd").val();
+	                }else{
+	                	var lclCd = null;
+	                	var mclCd = null;
+	                	var sclCd = null;
+	                }
+	                if( $("#statusCk").is(":checked") ){
+	                	var goodsStatus =$("#goodsStatus").val();
+	                }else{
+	                	var goodsStatus = null;
+	                }
+	                if( $("#soldoutCk").is(":checked") ){ 
+	                	var soldout =$("#soldout").val();
+	                }else{
+	                	var soldout = null;
+	                } 
+					
+						$.ajax({
+							url:"checkTextSelectGoods.do",
+							dataType : "json",
+							data:{lclCd:lclCd,
+								  mclCd:mclCd,
+								  sclCd:sclCd,
+								  goodsStatus:goodsStatus,
+								  soldout:soldout, 
+								  goodsName:goodsName},
+								  
+							success:function(data){
+	
+								$tableBody = $("#surveyListTable tbody");
+								$tableBody.html("");
+								
+		  							for(var i in data){  
+									    $("#surveyListTable").append('<tr>'+
+												'<input id="gId" 	type = "hidden" value = "'+ data[i].gId +'">' + 
+												'<input id="cateCd" type = "hidden" value = "'+ data[i].cateCd +'">' +
+												'<input id="cateNm" type = "hidden" value = "'+ data[i].cateNm +'">' +
+												'<input id="lclCd" 	type = "hidden" value = "'+ data[i].lclCd +'">' +
+												'<input id="mclCd" 	type = "hidden" value = "'+ data[i].mclCd +'">' +
+												'<input id="sclCd" 	type = "hidden" value = "'+ data[i].sclCd +'">' +
+												'<input id="goodsName" 		type = "hidden" value = "'+ data[i].goodsName +'">' +
+												'<input id="goodsPrice" 	type = "hidden" value = "'+ data[i].goodsPrice +'">' +
+												'<input id="count" 			type = "hidden" value = "'+ data[i].count +'">' +
+												'<input id="goodsStatus" 	type = "hidden" value = "'+ data[i].goodsStatus +'">' +
+												'<input id="soldout" 		type = "hidden" value = "'+ data[i].soldout +'">' +
+			    								'<td width="10%" align="center">'+ data[i].gId +'</td>'+
+			    								'<td width="20%" align="left">'+'&nbsp;'+ data[i].goodsName +'</td>'+
+			    								'<td width="10%" align="center">'+ data[i].goodsPrice +'</td>'+ 
+			    								'<td width="10%" align="center">'+ data[i].count +'</td>'+
+			    								'<td width="10%" align="center">'+ data[i].goodsStatus +'</td>'+
+			    								'<td width="10%" align="center">'+ data[i].soldout +'</td>'+
+			    								'<td width="10%" align="center">'+ data[i].registerDate +'</td>'+
+			    								'<td width="10%" align="center">'+ data[i].modifyDate +'</td>'+
+			    							 '</tr>');
+									} 
+		  							if($("#gId").val() == null){
+		  								$("#listCountSpan").html('상품 수량 : 0개');
+		  							}else{
+		  								$("#listCountSpan").html('상품 수량 : ' + data[0].listCount + '개');
+		  							}
+							},
+							error:function(request, status, errorData){
+								alert("error code : " + request.status + "\n"
+													  + "message : " + request.responseText
+													  + "error : " + errorData);
+							}
+						});
+            }else{
+				
+            	$("#goodsStatus option:eq(0)").prop("selected",true);
+				var goodsName =$("#goodsName").val().trim();// 공백제거후 담음
+	            // 테이블 헤더에 있는 checkbox 클릭시
+	                if( $("#categoryCk").is(":checked") ){
+    				var lclCd =$("#lclCd").val();
+    				var mclCd =$("#mclCd").val();
+    				var sclCd =$("#sclCd").val();
+                }else{
+                	var lclCd = null;
+                	var mclCd = null;
+                	var sclCd = null;
+                }
+                if( $("#statusCk").is(":checked") ){
+                	var goodsStatus =$("#goodsStatus").val();
+                }else{
+                	var goodsStatus = null;
+                }
+                if( $("#soldoutCk").is(":checked") ){ 
+                	var soldout =$("#soldout").val();
+                }else{
+                	var soldout = null;
+                } 
+				
+					$.ajax({
+						url:"checkTextSelectGoods.do",
+						dataType : "json",
+						data:{lclCd:lclCd,
+							  mclCd:mclCd,
+							  sclCd:sclCd,
+							  goodsStatus:goodsStatus,
+							  soldout:soldout, 
+							  goodsName:goodsName},
+							  
+						success:function(data){
+
+							$tableBody = $("#surveyListTable tbody");
+							$tableBody.html("");
+							
+	  							for(var i in data){  
+								    $("#surveyListTable").append('<tr>'+
+											'<input id="gId" 	type = "hidden" value = "'+ data[i].gId +'">' + 
+											'<input id="cateCd" type = "hidden" value = "'+ data[i].cateCd +'">' +
+											'<input id="cateNm" type = "hidden" value = "'+ data[i].cateNm +'">' +
+											'<input id="lclCd" 	type = "hidden" value = "'+ data[i].lclCd +'">' +
+											'<input id="mclCd" 	type = "hidden" value = "'+ data[i].mclCd +'">' +
+											'<input id="sclCd" 	type = "hidden" value = "'+ data[i].sclCd +'">' +
+											'<input id="goodsName" 		type = "hidden" value = "'+ data[i].goodsName +'">' +
+											'<input id="goodsPrice" 	type = "hidden" value = "'+ data[i].goodsPrice +'">' +
+											'<input id="count" 			type = "hidden" value = "'+ data[i].count +'">' +
+											'<input id="goodsStatus" 	type = "hidden" value = "'+ data[i].goodsStatus +'">' +
+											'<input id="soldout" 		type = "hidden" value = "'+ data[i].soldout +'">' +
+		    								'<td width="10%" align="center">'+ data[i].gId +'</td>'+
+		    								'<td width="20%" align="left">'+'&nbsp;'+ data[i].goodsName +'</td>'+
+		    								'<td width="10%" align="center">'+ data[i].goodsPrice +'</td>'+ 
+		    								'<td width="10%" align="center">'+ data[i].count +'</td>'+
+		    								'<td width="10%" align="center">'+ data[i].goodsStatus +'</td>'+
+		    								'<td width="10%" align="center">'+ data[i].soldout +'</td>'+
+		    								'<td width="10%" align="center">'+ data[i].registerDate +'</td>'+
+		    								'<td width="10%" align="center">'+ data[i].modifyDate +'</td>'+
+		    							 '</tr>');
+								} 
+	  							if($("#gId").val() == null){
+	  								$("#listCountSpan").html('상품 수량 : 0개');
+	  							}else{
+	  								$("#listCountSpan").html('상품 수량 : ' + data[0].listCount + '개');
+	  							}
+						},
+						error:function(request, status, errorData){
+							alert("error code : " + request.status + "\n"
+												  + "message : " + request.responseText
+												  + "error : " + errorData);
+						}
+					});
+            	
+            }
+        });
+        
+        // 매진구분
+        $("#soldoutCk").click(function(){
+        	// 클릭한 체크박스가 체크상태인지 체크해제상태인지 판단
+            if( $("#soldoutCk").is(":checked") ){
+            
+					var goodsName =$("#goodsName").val().trim();// 공백제거후 담음
+		            // 테이블 헤더에 있는 checkbox 클릭시
+ 	                if( $("#categoryCk").is(":checked") ){
+	    				var lclCd =$("#lclCd").val();
+	    				var mclCd =$("#mclCd").val();
+	    				var sclCd =$("#sclCd").val();
+	                }else{
+	                	var lclCd = null;
+	                	var mclCd = null;
+	                	var sclCd = null;
+	                }
+	                if( $("#statusCk").is(":checked") ){
+	                	var goodsStatus =$("#goodsStatus").val();
+	                }else{
+	                	var goodsStatus = null;
+	                }
+	                if( $("#soldoutCk").is(":checked") ){ 
+	                	var soldout =$("#soldout").val();
+	                }else{
+	                	var soldout = null;
+	                } 
+					
+						$.ajax({
+							url:"checkTextSelectGoods.do",
+							dataType : "json",
+							data:{lclCd:lclCd,
+								  mclCd:mclCd,
+								  sclCd:sclCd,
+								  goodsStatus:goodsStatus,
+								  soldout:soldout, 
+								  goodsName:goodsName},
+								  
+							success:function(data){
+	
+								$tableBody = $("#surveyListTable tbody");
+								$tableBody.html("");
+								
+		  							for(var i in data){  
+									    $("#surveyListTable").append('<tr>'+
+												'<input id="gId" 	type = "hidden" value = "'+ data[i].gId +'">' + 
+												'<input id="cateCd" type = "hidden" value = "'+ data[i].cateCd +'">' +
+												'<input id="cateNm" type = "hidden" value = "'+ data[i].cateNm +'">' +
+												'<input id="lclCd" 	type = "hidden" value = "'+ data[i].lclCd +'">' +
+												'<input id="mclCd" 	type = "hidden" value = "'+ data[i].mclCd +'">' +
+												'<input id="sclCd" 	type = "hidden" value = "'+ data[i].sclCd +'">' +
+												'<input id="goodsName" 		type = "hidden" value = "'+ data[i].goodsName +'">' +
+												'<input id="goodsPrice" 	type = "hidden" value = "'+ data[i].goodsPrice +'">' +
+												'<input id="count" 			type = "hidden" value = "'+ data[i].count +'">' +
+												'<input id="goodsStatus" 	type = "hidden" value = "'+ data[i].goodsStatus +'">' +
+												'<input id="soldout" 		type = "hidden" value = "'+ data[i].soldout +'">' +
+			    								'<td width="10%" align="center">'+ data[i].gId +'</td>'+
+			    								'<td width="20%" align="left">'+'&nbsp;'+ data[i].goodsName +'</td>'+
+			    								'<td width="10%" align="center">'+ data[i].goodsPrice +'</td>'+ 
+			    								'<td width="10%" align="center">'+ data[i].count +'</td>'+
+			    								'<td width="10%" align="center">'+ data[i].goodsStatus +'</td>'+
+			    								'<td width="10%" align="center">'+ data[i].soldout +'</td>'+
+			    								'<td width="10%" align="center">'+ data[i].registerDate +'</td>'+
+			    								'<td width="10%" align="center">'+ data[i].modifyDate +'</td>'+
+			    							 '</tr>');
+									} 
+		  							if($("#gId").val() == null){
+		  								$("#listCountSpan").html('상품 수량 : 0개');
+		  							}else{
+		  								$("#listCountSpan").html('상품 수량 : ' + data[0].listCount + '개');
+		  							}
+							},
+							error:function(request, status, errorData){
+								alert("error code : " + request.status + "\n"
+													  + "message : " + request.responseText
+													  + "error : " + errorData);
+							}
+						});
+            }else{
+            	$("#soldout option:eq(0)").prop("selected",true);
+				var goodsName =$("#goodsName").val().trim();// 공백제거후 담음
+	            // 테이블 헤더에 있는 checkbox 클릭시
+	                if( $("#categoryCk").is(":checked") ){
+    				var lclCd =$("#lclCd").val();
+    				var mclCd =$("#mclCd").val();
+    				var sclCd =$("#sclCd").val();
+                }else{
+                	var lclCd = null;
+                	var mclCd = null;
+                	var sclCd = null;
+                }
+                if( $("#statusCk").is(":checked") ){
+                	var goodsStatus =$("#goodsStatus").val();
+                }else{
+                	var goodsStatus = null;
+                }
+                if( $("#soldoutCk").is(":checked") ){ 
+                	var soldout =$("#soldout").val();
+                }else{
+                	var soldout = null;
+                } 
+				
+					$.ajax({
+						url:"checkTextSelectGoods.do",
+						dataType : "json",
+						data:{lclCd:lclCd,
+							  mclCd:mclCd,
+							  sclCd:sclCd,
+							  goodsStatus:goodsStatus,
+							  soldout:soldout, 
+							  goodsName:goodsName},
+							  
+						success:function(data){
+
+							$tableBody = $("#surveyListTable tbody");
+							$tableBody.html("");
+							
+	  							for(var i in data){  
+								    $("#surveyListTable").append('<tr>'+
+											'<input id="gId" 	type = "hidden" value = "'+ data[i].gId +'">' + 
+											'<input id="cateCd" type = "hidden" value = "'+ data[i].cateCd +'">' +
+											'<input id="cateNm" type = "hidden" value = "'+ data[i].cateNm +'">' +
+											'<input id="lclCd" 	type = "hidden" value = "'+ data[i].lclCd +'">' +
+											'<input id="mclCd" 	type = "hidden" value = "'+ data[i].mclCd +'">' +
+											'<input id="sclCd" 	type = "hidden" value = "'+ data[i].sclCd +'">' +
+											'<input id="goodsName" 		type = "hidden" value = "'+ data[i].goodsName +'">' +
+											'<input id="goodsPrice" 	type = "hidden" value = "'+ data[i].goodsPrice +'">' +
+											'<input id="count" 			type = "hidden" value = "'+ data[i].count +'">' +
+											'<input id="goodsStatus" 	type = "hidden" value = "'+ data[i].goodsStatus +'">' +
+											'<input id="soldout" 		type = "hidden" value = "'+ data[i].soldout +'">' +
+		    								'<td width="10%" align="center">'+ data[i].gId +'</td>'+
+		    								'<td width="20%" align="left">'+'&nbsp;'+ data[i].goodsName +'</td>'+
+		    								'<td width="10%" align="center">'+ data[i].goodsPrice +'</td>'+ 
+		    								'<td width="10%" align="center">'+ data[i].count +'</td>'+
+		    								'<td width="10%" align="center">'+ data[i].goodsStatus +'</td>'+
+		    								'<td width="10%" align="center">'+ data[i].soldout +'</td>'+
+		    								'<td width="10%" align="center">'+ data[i].registerDate +'</td>'+
+		    								'<td width="10%" align="center">'+ data[i].modifyDate +'</td>'+
+		    							 '</tr>');
+								} 
+	  							if($("#gId").val() == null){
+	  								$("#listCountSpan").html('상품 수량 : 0개');
+	  							}else{
+	  								$("#listCountSpan").html('상품 수량 : ' + data[0].listCount + '개');
+	  							}
+						},
+						error:function(request, status, errorData){
+							alert("error code : " + request.status + "\n"
+												  + "message : " + request.responseText
+												  + "error : " + errorData);
+						}
+					});
+            
+            }
+        	
+        });      
+        
+        
+        
+	});
+	
 
 
 
@@ -951,7 +1440,7 @@
 				
 	            // 테이블 헤더에 있는 checkbox 클릭시
 	                if( $("#categoryCk").is(":checked") ){
-	    				var lclCd =$("#lclCd").val();
+	                	var lclCd =$("#lclCd").val();
 	    				var mclCd =$("#mclCd").val();
 	    				var sclCd =$("#sclCd").val();
 	                }else{
@@ -1010,7 +1499,12 @@
 	    								'<td width="10%" align="center">'+ data[i].modifyDate +'</td>'+
 	    							 '</tr>');
 							} 
-							
+  							
+  							if($("#gId").val() == null){
+  								$("#listCountSpan").html('상품 수량 : 0개');
+  							}else{
+  								$("#listCountSpan").html('상품 수량 : ' + data[0].listCount + '개');
+  							}
 					},
 					error:function(request, status, errorData){
 						alert("error code : " + request.status + "\n"
@@ -1095,8 +1589,7 @@
 							for(var i=0; i<data.list.length; i++){
 								$("#sclCd").append("<option value='" + data.list[i].cateCd + "'>" + data.list[i].cateNm +'</option>');
 							}
-
-						},
+						}, 
 						error:function(request, status, errorData){
 							alert("error code : " + request.status + "\n"
 												  + "message : " + request.responseText
@@ -1175,7 +1668,11 @@
 			    								'<td width="10%" align="center">'+ data[i].modifyDate +'</td>'+
 			    							 '</tr>');
 									} 
-									
+		  							if($("#gId").val() == null){
+		  								$("#listCountSpan").html('상품 수량 : 0개');
+		  							}else{
+		  								$("#listCountSpan").html('상품 수량 : ' + data[0].listCount + '개');
+		  							}
 							},
 							error:function(request, status, errorData){
 								alert("error code : " + request.status + "\n"
@@ -1249,7 +1746,11 @@
 			    								'<td width="10%" align="center">'+ data[i].modifyDate +'</td>'+
 			    							 '</tr>');
 									} 
-									
+		  							if($("#gId").val() == null){
+		  								$("#listCountSpan").html('상품 수량 : 0개');
+		  							}else{
+		  								$("#listCountSpan").html('상품 수량 : ' + data[0].listCount + '개');
+		  							}
 							},
 							error:function(request, status, errorData){
 								alert("error code : " + request.status + "\n"
@@ -1263,6 +1764,9 @@
 				
 	            // 카테고리 변경시 	
 				$(".category").on("change",function(){
+					
+					if( $("#categoryCk").is(":checked") ){
+					
 					var goodsName =$("#goodsName").val().trim();// 공백제거후 담음
 		            // 테이블 헤더에 있는 checkbox 클릭시
  	                if( $("#categoryCk").is(":checked") ){
@@ -1323,6 +1827,11 @@
 			    								'<td width="10%" align="center">'+ data[i].modifyDate +'</td>'+
 			    							 '</tr>');
 									} 
+		  							if($("#gId").val() == null){
+		  								$("#listCountSpan").html('상품 수량 : 0개');
+		  							}else{
+		  								$("#listCountSpan").html('상품 수량 : ' + data[0].listCount + '개');
+		  							}
 									
 							},
 							error:function(request, status, errorData){
@@ -1331,7 +1840,7 @@
 													  + "error : " + errorData);
 							}
 						});
-						
+					}
 	            });
 	            
 			// 조회버튼 클릭시

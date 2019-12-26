@@ -68,8 +68,8 @@ public class ShopServiceImpl implements ShopService {
 
 	// 내 후기 삭제
 	@Override
-	public int myafterDelete(String userId) {
-		return ShopDao.myafterDelete(userId);
+	public int myafterDelete(int rId) {
+		return ShopDao.myafterDelete(rId);
 	}
 
 
