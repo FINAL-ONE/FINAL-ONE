@@ -164,5 +164,4 @@ public class OrderDao {
 		public ArrayList<Order> gichanDetail(String orderNum) {
 			return (ArrayList)sqlSession.selectList("orderMapper.gichanDetail", orderNum);
 		}
-
 }

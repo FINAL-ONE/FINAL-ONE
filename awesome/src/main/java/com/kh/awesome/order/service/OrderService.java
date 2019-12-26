@@ -93,5 +93,4 @@ public interface OrderService {
 
 
 	ArrayList<Order> gichanDetail(String orderNum);
-
 }
