@@ -481,10 +481,17 @@ p {
                         <br>
                         <c:if test="${empty sessionScope.loginUser }">
                            <button class = "cartBtn1" type="button" style="width : 200px; height : 40px;" onclick="notLogin();">장바구니</button>
-                          </c:if>
-                          <c:if test="${!empty sessionScope.loginUser }">
+                        </c:if>
+                        <c:if test="${!empty sessionScope.loginUser}">
                            <button id="cartBtn2" class="popup" type="button" style="width : 200px; height : 40px;" onclick="goCart();">장바구니 <span class="popuptext" id="myPopup">장바구니에 추가되었습니다.</span></button>
                         </c:if>
+                      <%--   <c:if test="${empty sessionScope.loginUser.userId eq 'admin' }">
+                           <button id="cartBtn2" class="popup" type="button" style="width : 200px; height : 40px;"onclick="goCart();">장바구니 <span class="popuptext" id="myPopup">관리자는 구매불가합니다.</span></button>
+                        </c:if>            --%>           
+                        
+                        
+                        
+                        
                            <!-- <input type="button" value="찜하기" style="width : 110px; height : 40px;"/> -->
                            
                            <!-- 소셜에 공유 -->
@@ -555,7 +562,7 @@ p {
                      - 결제하신 금액의 환불은 반품할 상품이 입고된 후에 7영업일 이내에 처리됩니다.<br>
                      - 쿠폰이나 적립금을 사용하여 결제하신 경우에는, 주문취소 또는 반품 요청시 할인받으신 금액을 제외하고 환불처리됩니다.<br>
                      - 무통장입금(가상계좌)으로 결제하셨거나, 계좌로 환불처리되는 경우에는 주문자 본인의 계좌로만 환불처리됩니다.<br>
-                     - 신용카드, 휴대폰, 실시간계좌이체를 통해 결제하신 경우는 승인을 취소하여 결제 대금이 청구되지 않게 합니다.<br>
+                     - 신용카드,  휴대폰, 실시간계좌이체를 통해 결제하신 경우는 승인을 취소하여 결제 대금이 청구되지 않게 합니다.<br>
                      (단, 신용카드나 휴대폰 결제일자에 따라 대금이 청구될 수 있으며, 이 경우 익월 신용카드 대금 청구시 카드사에서 환급처리 됩니다.)<br>
                 </div>
             </div>
@@ -579,7 +586,7 @@ p {
                            
                            <td><img src="resources/afteruploadFiles/${r.ref_filePath}" width ="50px" height ="50px"></td>
                            <td>${r.rContent}</td>
-                           <td>${r.userId }</td>
+                           <td>${r.userNickname }</td>
                            <td>
                                <c:if test="${r.sellStart eq '1'}">
                                     <span class="fa fa-star checked"></span>
@@ -880,6 +887,16 @@ function popuppwOpen(){
 
       <script>
           function goCart(){
+        	  
+        	if(${sessionScope.loginUser.manager} = 'Y'){
+        		
+        	 alert("관리자는 구매하 	고 싶으면 본사에 문의하세용 ") 
+        	 
+        	 return; 
+        	}
+        	  
+        	 
+          
              var mId = $("#mId").val();
              var gId = $("#gId").val();
              

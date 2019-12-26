@@ -157,7 +157,7 @@
           </div>
 
           <div class="testimonial" id="test-3">
-            <p>손석희 아들</p>
+            <p>Dobby is free!!!</p>
             <span class="description">손동복 / 팀원</span>
           </div>
 

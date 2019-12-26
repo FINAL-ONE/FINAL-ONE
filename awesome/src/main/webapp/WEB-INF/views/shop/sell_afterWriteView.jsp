@@ -28,22 +28,22 @@
 <style>
 
 .afterGoods tr{
-	margin-bottom: 5px;
+   margin-bottom: 5px;
 }
 
 .afterTable tr{
-	margin-bottom: 5px;
+   margin-bottom: 5px;
 }
 .afterTable td{
-	width : 700px;
+   width : 700px;
 }
 
 
 .fa-star{
-	color : dark-gray;
+   color : dark-gray;
 }
 .checked {
-  	color: orange;
+     color: orange;
 }
 
 
@@ -62,8 +62,8 @@
 }
 
 #goodsGobackBtn:hover{
-	background: #fff;
-	color: #fe6666;
+   background: #fff;
+   color: #fe6666;
 }
 
 .adminMain-btn, .adminList-btn {
@@ -81,9 +81,9 @@
 }
 
 .adminMain-btn:hover, .adminList-btn:hover{
-	background: #fff;
-	color: #fe6666;
-}	
+   background: #fff;
+   color: #fe6666;
+}   
 
 
 
@@ -119,9 +119,10 @@
 					<c:forEach var="a" items="${list}">
 						<c:url var="adetail" value="adetail.do">
 							<c:param name="sellNum" value="${a.sellNum }"/>
+							<c:param name="gId" value="${a.gId }"/>
 						</c:url>
 						<br>
-						<button id="goodsGobackBtn"><a href="${adetail}" style="font-size : 20px; text-decoration: none; color : black;">제품 상세보기</a></button>
+						<%-- <button id="goodsGobackBtn"><a href="${adetail}" style="font-size : 20px; text-decoration: none; color : black;">제품 상세보기</a></button> --%>
 					</c:forEach>	
 				</td>
 			</tr>
@@ -147,7 +148,7 @@
 	<!-- 		<td><textarea rows="10"></textarea></td> -->
 			</tr>
 			<tr>
-				<th>첨부파일</th>
+				<th>첨부파일&nbsp;&nbsp;&nbsp;&nbsp;</th>
 				<td>
 					<input type="file" name="afteruploadFiles">
 				</td>
@@ -155,7 +156,7 @@
 			<tr>
 				<th> 만족도 </th>
 				<td>
-            	<div class="icheck-material-deeporange" style = "display : inline-block; margin-left : 20px;">
+            	<div class="icheck-material-deeporange" style = "display : inline-block; margin-left : 2px;">
 					<input type="radio" id="deeporange1" name ="star" value = "1">
 						<label for="deeporange1">
 							<span class="fa fa-star checked"></span>
@@ -165,7 +166,7 @@
 							<span class="fa fa-star"></span>
 						</label>
 				</div>
-				<div class="icheck-material-deeporange" style = "display : inline-block; margin-left : 20px;">
+				<div class="icheck-material-deeporange" style = "display : inline-block; margin-left : 5px;">
 					<input type="radio" id="deeporange2" name ="star" value = "2">
 						<label for="deeporange2">
 							<span class="fa fa-star checked"></span>
@@ -175,7 +176,7 @@
 							<span class="fa fa-star"></span>
 						</label>
 				</div>
-				<div class="icheck-material-deeporange" style = "display : inline-block; margin-left : 20px;">
+				<div class="icheck-material-deeporange" style = "display : inline-block; margin-left : 5px;">
 					<input type="radio" id="deeporange3" name ="star" value = "3">
 						<label for="deeporange3">
 							<span class="fa fa-star checked"></span>
@@ -185,7 +186,7 @@
 							<span class="fa fa-star"></span>
 						</label>
 				</div>
-				<div class="icheck-material-deeporange" style = "display : inline-block; margin-left : 20px;">
+				<div class="icheck-material-deeporange" style = "display : inline-block; margin-left : 5px;">
 					<input type="radio" id="deeporange4" name ="star" value = "4">
 						<label for="deeporange4">
 							<span class="fa fa-star checked"></span>
@@ -195,7 +196,7 @@
 							<span class="fa fa-star"></span>
 						</label>
 				</div>
-				<div class="icheck-material-deeporange" style = "display : inline-block; margin-left : 20px;">
+				<div class="icheck-material-deeporange" style = "display : inline-block; margin-left : 5px;">
 					<input type="radio" id="deeporange5" name ="star" value = "5">
 						<label for="deeporange5">
 							<span class="fa fa-star checked"></span>
@@ -210,7 +211,9 @@
 			<tr>
 				<td colspan="2" align="center">
 					<input class="adminMain-btn" type="submit" style="width : 110px; height : 40px;"  value="등록하기">
-					<input class="adminList-btn" type="reset" style="width : 110px; height : 40px;" value="등록취소">
+					<c:forEach var="a" items="${list}">
+						<button class="adminList-btn" type="button" style="width : 110px; height : 40px;" onclick="location.href='adetail.do?sellNum=${a.sellNum}&gId=${a.gId }'">등록 취소</button>
+					</c:forEach>
 				</td> 
 			</tr>	
 		</table>
@@ -296,7 +299,7 @@
 </script>
 
 
-</body>
+</body> 
 
 <footer>
    <jsp:include page ="../common/footer.jsp"/>

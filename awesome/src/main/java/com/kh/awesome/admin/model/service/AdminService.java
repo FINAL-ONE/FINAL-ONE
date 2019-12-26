@@ -10,7 +10,7 @@ import com.kh.awesome.admin.model.vo.PageInfo;
 public interface AdminService {
 	
 	public ArrayList<Admin> selectList();
-
+	public ArrayList<Admin> selectListShop();
 	public int insertSell_goods(Admin a);
 	
 	// 상품조회

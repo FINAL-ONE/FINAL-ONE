@@ -17,8 +17,9 @@ public class Admin {
 	private Date sellDate;
 	private Date modifyDate;
 	private String status;
-	
+
 	private String userId;
+	private String userNickname;
 	private int rId;
 	private String rContent;
 	private int sellStart;
@@ -30,8 +31,8 @@ public class Admin {
 
 	public Admin(int sellNum, int gId, int mId, String cateCd, String goodsName, String goodsTitle, int goodsPrice,
 			int count, String goodsContent, String filePath, String contentFilePath, Date sellDate, Date modifyDate,
-			String status, String userId, int rId, String rContent, int sellStart, String ref_filePath,
-			Date createDate) {
+			String status, String userId, String userNickname, int rId, String rContent, int sellStart,
+			String ref_filePath, Date createDate) {
 		this.sellNum = sellNum;
 		this.gId = gId;
 		this.mId = mId;
@@ -47,6 +48,7 @@ public class Admin {
 		this.modifyDate = modifyDate;
 		this.status = status;
 		this.userId = userId;
+		this.userNickname = userNickname;
 		this.rId = rId;
 		this.rContent = rContent;
 		this.sellStart = sellStart;
@@ -174,6 +176,14 @@ public class Admin {
 		this.userId = userId;
 	}
 
+	public String getUserNickname() {
+		return userNickname;
+	}
+
+	public void setUserNickname(String userNickname) {
+		this.userNickname = userNickname;
+	}
+
 	public int getrId() {
 		return rId;
 	}
@@ -220,9 +230,11 @@ public class Admin {
 				+ goodsName + ", goodsTitle=" + goodsTitle + ", goodsPrice=" + goodsPrice + ", count=" + count
 				+ ", goodsContent=" + goodsContent + ", filePath=" + filePath + ", contentFilePath=" + contentFilePath
 				+ ", sellDate=" + sellDate + ", modifyDate=" + modifyDate + ", status=" + status + ", userId=" + userId
-				+ ", rId=" + rId + ", rContent=" + rContent + ", sellStart=" + sellStart + ", ref_filePath="
-				+ ref_filePath + ", createDate=" + createDate + "]";
+				+ ", userNickname=" + userNickname + ", rId=" + rId + ", rContent=" + rContent + ", sellStart="
+				+ sellStart + ", ref_filePath=" + ref_filePath + ", createDate=" + createDate + "]";
 	}
+
+	
 
 	
 
