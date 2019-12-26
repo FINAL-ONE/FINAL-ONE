@@ -299,7 +299,7 @@
 </script>
 
 
-</body>
+</body> 
 
 <footer>
    <jsp:include page ="../common/footer.jsp"/>
