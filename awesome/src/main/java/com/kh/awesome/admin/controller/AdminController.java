@@ -74,7 +74,7 @@ public class AdminController {
 	@RequestMapping("shopGoodsListView.do")
 	public ModelAndView shopGoodsList(ModelAndView mv) {
 		
-		ArrayList<Admin> list = aService.selectList();
+		ArrayList<Admin> list = aService.selectListShop();
 		// System.out.println(list);
 	
 		if(list != null) {
@@ -261,17 +261,19 @@ public class AdminController {
 	 
 	// 상품조회 페이지에서 상품 품절 처리 -- 준배(동복 : 판매상품 품절 처리시 상품과 판매가 1:1 이라 상품 상태도 N으로 변경)
 		@RequestMapping("aStatusUpdate.do")
-		public String aStatusUpdate(Admin a, Model model, int sellNum, String status) {
+		public String aStatusUpdate(Admin a, Model model, int sellNum, String status, int gId) {
 		//public String aStatusUpdate(Admin a, Model model, int sellNum, String status, @RequestParam("statusUpdate") String statusUpdate) {
 			//System.out.println("statusUpdate : " + statusUpdate);
 			System.out.println("status : " + status);
 			System.out.println("sellNum : " + sellNum);
-			
+			System.out.println("gId : " + gId);
 			//a.setStatus(statusUpdate);
 			a.setStatus(status);
 			a.setSellNum(sellNum);
+			a.setgId(gId);
 			
-			int gId = a.getgId();	//상품 상태 update를 위해서 추가 
+			
+			//int gId = a.getgId();	//상품 상태 update를 위해서 추가 
 			
 			int result = aService.updateAdminStatus(a);
 			

@@ -285,7 +285,16 @@
         
 		<!-- ORDER BY N_CREATE_DATE DESC -->
 	</select>
+	<!-- 동복 - 수정(품절처리된 상품도 List에 보여줌(추후에 재판매 가능하도록)) -->
+	<select id ="selectListShop" resultMap="sell_goodsResultSet">
+		
+		SELECT *
+        FROM(SELECT * 
+        FROM SELL_GOODSSELECTVIEW 
+        WHERE STATUS='Y')
+        ORDER BY SELL_NUM DESC
 
+	</select>
 
 	<!-- 동복 - 판매량 많은 상품 조회 --> 	
 	<select id="salesVolumeList" resultMap="goodsResultSet">

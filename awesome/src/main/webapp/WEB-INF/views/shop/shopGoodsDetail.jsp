@@ -481,10 +481,17 @@ p {
                         <br>
                         <c:if test="${empty sessionScope.loginUser }">
                            <button class = "cartBtn1" type="button" style="width : 200px; height : 40px;" onclick="notLogin();">장바구니</button>
-                          </c:if>
-                          <c:if test="${!empty sessionScope.loginUser }">
+                        </c:if>
+                        <c:if test="${!empty sessionScope.loginUser}">
                            <button id="cartBtn2" class="popup" type="button" style="width : 200px; height : 40px;" onclick="goCart();">장바구니 <span class="popuptext" id="myPopup">장바구니에 추가되었습니다.</span></button>
                         </c:if>
+                      <%--   <c:if test="${empty sessionScope.loginUser.userId eq 'admin' }">
+                           <button id="cartBtn2" class="popup" type="button" style="width : 200px; height : 40px;"onclick="goCart();">장바구니 <span class="popuptext" id="myPopup">관리자는 구매불가합니다.</span></button>
+                        </c:if>            --%>           
+                        
+                        
+                        
+                        
                            <!-- <input type="button" value="찜하기" style="width : 110px; height : 40px;"/> -->
                            
                            <!-- 소셜에 공유 -->
@@ -880,6 +887,16 @@ function popuppwOpen(){
 
       <script>
           function goCart(){
+        	  
+        	if(${sessionScope.loginUser.manager} = 'Y'){
+        		
+        	 alert("관리자는 구매하 	고 싶으면 본사에 문의하세용 ") 
+        	 
+        	 return; 
+        	}
+        	  
+        	 
+          
              var mId = $("#mId").val();
              var gId = $("#gId").val();
              
