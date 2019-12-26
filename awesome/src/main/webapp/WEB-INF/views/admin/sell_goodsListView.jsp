@@ -147,21 +147,11 @@ tr:nth-child(even) {
    <jsp:include page="../common/menubar.jsp"/>   
 	<div class="centerDiv" style="width: 100%">
     <div class = "outer">
-<<<<<<< HEAD
-      <div id="container" style= "height: auto; overflow: auto;"><!-- container -->
 
-         <c:if test="${!empty loginUser }">
-               <div style="margin-top : 20px;" align="right"; >
-               	  <h1 align="center"> 판매 상품 리스트 </h1>
-                  <button class="myBtn success" onclick="location.href='goodsWriterView.do'"><span>상품 등록</span></button>
-               </div>
-         </c:if>
-=======
-    	
       <div id="container" style= "height: auto; overflow: auto; margin-left: auto;margin-right:auto; width: 1300px"><!-- container --><br>
+      <h1 align="center"> 판매 상품 리스트 </h1>
        <button class="myBtn success" onclick="location.href='goodsWriterView.do'" style="position:relative; float:right;">상품 등록</button>
          
->>>>>>> refs/remotes/origin/master
       <form id = "goodsInsertForm" action="aStatusUpdate.do" method="post">
           <div id="tableLeft1" style= "width:auto;">
             <table align="center" id ="checkboxTestTbl" class = "goodsTable"  style="border: 1; cellspacing:1">
