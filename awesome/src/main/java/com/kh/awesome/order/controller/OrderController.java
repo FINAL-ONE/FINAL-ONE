@@ -195,6 +195,9 @@ public class OrderController {
 		
 		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
 		session = request.getSession(true);
+		
+		
+		System.out.println("써치 컨트롤 listCount: "  + listCount);
 		/*
 		 * System.out.println("들어오니?"); System.out.println(os);
 		 */

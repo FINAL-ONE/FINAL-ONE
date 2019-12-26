@@ -100,7 +100,7 @@
 		<select id="getOrderSearchCount" resultType="_int">
 		SELECT COUNT(*)
 		FROM ORDER_LIST
-		WHERE MID= #{mid} AND ORDER_DATE BETWEEN #{date1} AND #{date2}
+		WHERE MID= #{mid} AND ORDER_DATE BETWEEN #{date1} AND TO_DATE(#{date2},'YY/MM/DD')+1  
 	</select>
 
 
