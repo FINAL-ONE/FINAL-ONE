@@ -352,7 +352,7 @@ $(function() {
 	
 	$(function() {
 	    $( "#date2" ).datepicker({
-	    	dateFormat: "yy-mm-ddd",
+	    	dateFormat: "yy-mm-dd",
 	    	changeMonth: true, 
 	         changeYear: true,
 	         nextText: '다음 달',
