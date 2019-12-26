@@ -20,6 +20,7 @@ table {
 	line-height: 1.5;
 	border-top: 1px solid #d0d0d0;
 	margin: 20px 10px;
+	margin
 }
 
 table td {

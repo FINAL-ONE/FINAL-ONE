@@ -28,7 +28,7 @@
 <style>
 
 .afterGoods tr{
-	margin-bottom: 5px;
+   margin-bottom: 5px;
 }
 
 .afterTable tr{
@@ -62,8 +62,8 @@
 }
 
 #goodsGobackBtn:hover{
-	background: #fff;
-	color: #fe6666;
+   background: #fff;
+   color: #fe6666;
 }
 
 .adminMain-btn, .adminList-btn {
@@ -81,9 +81,9 @@
 }
 
 .adminMain-btn:hover, .adminList-btn:hover{
-	background: #fff;
-	color: #fe6666;
-}	
+   background: #fff;
+   color: #fe6666;
+}   
 
 
 
@@ -148,7 +148,7 @@
 	<!-- 		<td><textarea rows="10"></textarea></td> -->
 			</tr>
 			<tr>
-				<th>첨부파일</th>
+				<th>첨부파일&nbsp;&nbsp;&nbsp;&nbsp;</th>
 				<td>
 					<input type="file" name="afteruploadFiles">
 				</td>
@@ -156,7 +156,7 @@
 			<tr>
 				<th> 만족도 </th>
 				<td>
-            	<div class="icheck-material-deeporange" style = "display : inline-block; margin-left : 5px;">
+            	<div class="icheck-material-deeporange" style = "display : inline-block; margin-left : 2px;">
 					<input type="radio" id="deeporange1" name ="star" value = "1">
 						<label for="deeporange1">
 							<span class="fa fa-star checked"></span>
@@ -166,7 +166,7 @@
 							<span class="fa fa-star"></span>
 						</label>
 				</div>
-				<div class="icheck-material-deeporange" style = "display : inline-block; margin-left : 20px;">
+				<div class="icheck-material-deeporange" style = "display : inline-block; margin-left : 5px;">
 					<input type="radio" id="deeporange2" name ="star" value = "2">
 						<label for="deeporange2">
 							<span class="fa fa-star checked"></span>
@@ -176,7 +176,7 @@
 							<span class="fa fa-star"></span>
 						</label>
 				</div>
-				<div class="icheck-material-deeporange" style = "display : inline-block; margin-left : 20px;">
+				<div class="icheck-material-deeporange" style = "display : inline-block; margin-left : 5px;">
 					<input type="radio" id="deeporange3" name ="star" value = "3">
 						<label for="deeporange3">
 							<span class="fa fa-star checked"></span>
@@ -186,7 +186,7 @@
 							<span class="fa fa-star"></span>
 						</label>
 				</div>
-				<div class="icheck-material-deeporange" style = "display : inline-block; margin-left : 20px;">
+				<div class="icheck-material-deeporange" style = "display : inline-block; margin-left : 5px;">
 					<input type="radio" id="deeporange4" name ="star" value = "4">
 						<label for="deeporange4">
 							<span class="fa fa-star checked"></span>
@@ -196,7 +196,7 @@
 							<span class="fa fa-star"></span>
 						</label>
 				</div>
-				<div class="icheck-material-deeporange" style = "display : inline-block; margin-left : 20px;">
+				<div class="icheck-material-deeporange" style = "display : inline-block; margin-left : 5px;">
 					<input type="radio" id="deeporange5" name ="star" value = "5">
 						<label for="deeporange5">
 							<span class="fa fa-star checked"></span>
@@ -299,7 +299,7 @@
 </script>
 
 
-</body>
+</body> 
 
 <footer>
    <jsp:include page ="../common/footer.jsp"/>
