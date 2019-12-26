@@ -199,7 +199,7 @@
 	<br><br>
 	<c:if test="${!empty loginUser }">
 		
-			<span id="listCountSpan" style ="font-size : 20px; font-weight: bold; ">
+			<span id="listCountSpan" style ="font-size : 20px; font-weight: bold; padding-left: 20px; ">
 				 상품 수량 : ${listCount}개 
 			</span>
    		<div align ="center">

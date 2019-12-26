@@ -130,8 +130,8 @@ public class AdminServiceImpl implements AdminService{
 	}
 	// 동복- 판매량 많은 상품 조회
 	@Override
-	public ArrayList<Goods> salesVolumeList() {
-		return aDao.salesVolumeList();
+	public ArrayList<Goods> salesVolumeList(PageInfo pi) {
+		return aDao.salesVolumeList(pi);
 	}	
 	
 	// 동복 - 판매중인 상품을 제외한 상품 리스트 조회

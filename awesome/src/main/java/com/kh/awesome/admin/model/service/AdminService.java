@@ -58,7 +58,7 @@ public interface AdminService {
 	// 동복- 상품 리스트 조회
 	public ArrayList<Goods> goodsList();
 	// 동복- 판매량 많은 상품 조회
-	public ArrayList<Goods> salesVolumeList();
+	public ArrayList<Goods> salesVolumeList(PageInfo pi);
 	// 동복 - 판매중인 상품을 제외한 상품 리스트 조회
 	public ArrayList<Goods> sellGoodsList();
 	// 동복 - 상품판매 시 상품리스트 조회

@@ -175,11 +175,7 @@
 	
 	<br><br>
 	<div>
-<<<<<<< HEAD
-	<h2 align="center"> 상품 판매량 조회 </h2>
-=======
 	<div style="margin-left:auto; margin-right: auto; width: 130px;"><h2> 상품 판매량  </h2></div>
->>>>>>> refs/remotes/origin/master
 		<table align="center" width="100%" border="1" cellspaction="1" id="surveyListTable"
 			class="table table-bordered table-striped table-hover rowfy">
 			<thead>

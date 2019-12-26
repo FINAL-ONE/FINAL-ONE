@@ -103,8 +103,10 @@ public class AdminDao {
 		return (ArrayList)sqlSession.selectList("adminMapper.goodsList");
 	}
 	// 동복- 판매량 많은 상품 조회
-	public ArrayList<Goods> salesVolumeList() {
-		return (ArrayList)sqlSession.selectList("adminMapper.salesVolumeList");
+	public ArrayList<Goods> salesVolumeList(PageInfo pi) {
+		int offset = (pi.getCurrentPage()-1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());   	
+		return (ArrayList)sqlSession.selectList("adminMapper.salesVolumeList",null,rowBounds);
 	}
 	// 동복 - 판매중인 상품을 제외한 상품 리스트 조회
 	public ArrayList<Goods> sellGoodsList() {

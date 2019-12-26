@@ -1003,7 +1003,7 @@ System.out.println("isUsable : " + isUsable);
 					c.setLclCd(lclCd);
 					c.setMclCd(mclCd);
 					
-					ArrayList<Goods> glist = aService.salesVolumeList();
+					ArrayList<Goods> glist = aService.salesVolumeList(pi);
 					
 			System.out.println("전체 상품 리스트 : " + glist);
 
