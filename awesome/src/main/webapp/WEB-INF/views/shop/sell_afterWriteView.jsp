@@ -119,9 +119,10 @@
 					<c:forEach var="a" items="${list}">
 						<c:url var="adetail" value="adetail.do">
 							<c:param name="sellNum" value="${a.sellNum }"/>
+							<c:param name="gId" value="${a.gId }"/>
 						</c:url>
 						<br>
-						<button id="goodsGobackBtn"><a href="${adetail}" style="font-size : 20px; text-decoration: none; color : black;">제품 상세보기</a></button>
+						<%-- <button id="goodsGobackBtn"><a href="${adetail}" style="font-size : 20px; text-decoration: none; color : black;">제품 상세보기</a></button> --%>
 					</c:forEach>	
 				</td>
 			</tr>
@@ -155,7 +156,7 @@
 			<tr>
 				<th> 만족도 </th>
 				<td>
-            	<div class="icheck-material-deeporange" style = "display : inline-block; margin-left : 20px;">
+            	<div class="icheck-material-deeporange" style = "display : inline-block; margin-left : 5px;">
 					<input type="radio" id="deeporange1" name ="star" value = "1">
 						<label for="deeporange1">
 							<span class="fa fa-star checked"></span>
@@ -210,7 +211,9 @@
 			<tr>
 				<td colspan="2" align="center">
 					<input class="adminMain-btn" type="submit" style="width : 110px; height : 40px;"  value="등록하기">
-					<input class="adminList-btn" type="reset" style="width : 110px; height : 40px;" value="등록취소">
+					<c:forEach var="a" items="${list}">
+						<button class="adminList-btn" type="button" style="width : 110px; height : 40px;" onclick="location.href='adetail.do?sellNum=${a.sellNum}&gId=${a.gId }'">등록 취소</button>
+					</c:forEach>
 				</td> 
 			</tr>	
 		</table>
