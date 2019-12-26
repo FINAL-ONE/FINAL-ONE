@@ -329,13 +329,13 @@ height:0px;
 			<tr>
 				<td>포인트 사용 금액</td>
 				<td>${list[0].usedPoint}</td>
-
+	
 
 			</tr>
 			<tr>
 				<td style="font-weight: bold">총 결제 금액</td>
 
-				<td style="font-weight: bold">${list[0].orderPrice}</td>
+				<td style="font-weight: bold">${list[0].orderPrice-list[0].usedPoint}</td>
 			</tr>
 		</table>
 
@@ -390,7 +390,7 @@ height:0px;
 						var $tr = $("<tr>");
 						var $image = $("<td>");
 						var $br = $("<br>");
-						var $path=$("<img src='resources/auploadFiles/"+filePath+"'style='height:200px; width:150px;'>")
+						var $path=$("<img src='resources/auploadFiles/"+data[i].filePath+"'style='height:200px; width:150px;'>")
 						var $gInfo = $("<td>");
 						var $gTitle = decodeURIComponent(data[i].goodsTitle).replace(/\+/g, " ");
 						var $gContent = decodeURIComponent(data[i].goodsContent).replace(/\+/g, " ");;

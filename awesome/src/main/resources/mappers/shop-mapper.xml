@@ -105,10 +105,10 @@
 	</select>
 	
 	<!-- 후기 삭제 -->
-	<update id = "myafterDelete" parameterType ="string">
+	<update id = "myafterDelete" parameterType ="_int">
 		UPDATE SELL_REPLY_AFTERVIEW
 		SET	STATUS = 'N'
-		WHERE USER_ID=#{userId}
+		WHERE RID=#{rId}
 		
 	</update>
 	

@@ -15,7 +15,7 @@
 		<result property="orderDate" column="ORDER_DATE"/>
 		<result property="orderStatus" column="ORDER_STATUS"/>
 		<result property="rowCount" column="ROWCOUNT"/>
-		<result property="usedPoint" column="USERD_POINT"/>
+		<result property="usedPoint" column="USED_POINT"/>
 		<result property="orderPrice" column="ORDER_PRICE"/>
 		
 		<result property="goodsContent" 	column="GOODS_CONTENT"/>
@@ -31,14 +31,14 @@
 	</resultMap> 
 
 	<select id="selectOrder" resultMap="orderResultSet">
-        SELECT OID, O.GID GID,GOODS_NAME, GOODS_PRICE, O.MID MID, O.ORDER_NUM ORDER_NUM, ORDER_COUNT, ORDER_DATE, ORDER_STATUS, ROWCOUNT, GOODS_TITLE, GOODS_FILE_PATH, GOODS_CONTENT
+       SELECT OID, O.GID, GOODS_NAME, GOODS_PRICE, O.MID MID, O.ORDER_NUM ORDER_NUM, ORDER_COUNT, ORDER_DATE, ORDER_STATUS, ROWCOUNT, GOODS_TITLE, GOODS_FILE_PATH, GOODS_CONTENT
 		FROM ORDER_LIST O 
-		JOIN (SELECT ORDER_NUM, COUNT(*) ROWCOUNT
+		left JOIN (SELECT ORDER_NUM, COUNT(*) ROWCOUNT
 		     FROM ORDER_LIST
 		     GROUP BY ORDER_NUM) R ON (O.ORDER_NUM = R.ORDER_NUM)
-		JOIN GOODS G ON (O.GID=G.GID)
-        JOIN SELL_GOODS S ON (S.GID = G.GID)
-		WHERE O.MID= #{mId}
+		left JOIN GOODS G ON (O.GID=G.GID)
+        left JOIN SELL_GOODS S ON (s.GID = G.GID)
+        where O.MID = #{mId}
 		ORDER BY O.ORDER_NUM DESC
 	</select>
 	
@@ -64,7 +64,7 @@
 	</select>
 	<select id="orderDetail" resultMap="orderResultSet">
 		SELECT DISTINCT O.ORDER_NUM ORDER_NUM, O.MID MID, O.GID GID,O.ORDER_DATE, M.USER_NAME, O.ORDER_STATUS, D.D_NAME, D.D_ADDRESS,
-		D.D_PHONE, P.ORDER_PRICE, P.USED_POINT, O.ORDER_COUNT,G.GOODS_PRICE
+		D.D_PHONE, P.ORDER_PRICE, P.USED_POINT, O.ORDER_COUNT,G.GOODS_PRICE, P.USED_POINT
 		FROM ORDER_LIST O, MEMBER M, PAYMENT P, D_INFO D, GOODS G
 		WHERE O.ORDER_NUM=P.ORDER_NUM AND O.MID=M.MID AND O.ORDER_NUM=D.ORDER_NUM AND O.GID=G.GID AND O.ORDER_NUM=#{orderNum}
 	</select>
@@ -79,7 +79,7 @@
 		SET ORDER_STATUS='X'
 		WHERE OID=#{number}
 	</update>
-		
+	
 		
 	<select id="getOrderListCount" resultType="_int">
 		SELECT COUNT(*)
@@ -143,7 +143,8 @@
 	<update id="updateMemberPoint"  parameterType="Order">
    		UPDATE MEMBER
 		<if test="usedPoint != '0'">
-			SET POINT = (POINT+(#{orderPrice}*0.01))-#{usedPoint}
+			<!-- SET POINT = (POINT+(#{orderPrice}*0.01))-#{usedPoint} -->
+			SET POINT = POINT-#{usedPoint}
 		</if>
 		WHERE MID = #{mId}
 	</update>
