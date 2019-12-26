@@ -888,9 +888,9 @@ function popuppwOpen(){
       <script>
           function goCart(){
         	  
-        	if(${sessionScope.loginUser.manager} = 'Y'){
+        	if(${sessionScope.loginUser.manager =='Y'}){
         		
-        	 alert("관리자는 구매하 	고 싶으면 본사에 문의하세용 ") 
+        	 alert("관리자는 구매하고 싶으면 본사에 문의하세용 ") 
         	 
         	 return; 
         	}

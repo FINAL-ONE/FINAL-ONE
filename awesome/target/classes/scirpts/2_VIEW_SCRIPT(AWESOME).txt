@@ -1,0 +1,59 @@
+--È£°ü view -- 
+
+
+-- ´ñ±Û ºä -- 
+CREATE OR REPLACE VIEW REPLY_VIEW AS (
+SELECT ROWNUM RNUM, R.RID, R.BID, R.MID, M.USER_ID, M.USER_NICKNAME, R.RCONTENT, R.CREATE_DATE, R.MODIFY_DATE, R.STATUS, NVL(RGOOD,0) AS RGOOD
+FROM D_REPLY R 
+JOIN MEMBER M ON (R.MID = M.MID)
+LEFT OUTER JOIN (SELECT RID, COUNT(*) AS RGOOD
+                 FROM R_GOOD 
+                 GROUP BY RID) RG ON (R.RID =RG.RID)
+);
+
+
+-- ´ë´ñ±Û ºä --
+CREATE OR REPLACE VIEW answer_VIEW AS (
+    select a.aid, a.rid, a.mid, m.user_id, m.user_nickname, a.acontent, a.create_date, a.modify_date, a.status
+    from d_answer a 
+    join Member m on(a.mid = m.mid)
+);
+
+
+-- °Ô½ÃÆÇ ºä --
+
+ create or replace view Board_view as(   
+    select ROWNUM rNUm, BID, MID, USER_ID, USER_NICKNAME, CATEGORY, BTITLE, BTYPE, BCONTENT, BCOUNT, CREATE_DATE,MODIFY_DATE, STATUS, BLEVEL, BGOOD, REPLY
+   from ( SELECT B.BID, B.MID, M.USER_ID, M.USER_NICKNAME, CATEGORY, BTITLE, BTYPE, BCONTENT, BCOUNT, B.CREATE_DATE, B.MODIFY_DATE, B.STATUS, BLEVEL, NVL(BGOOD,0) AS BGOOD, NVL(REPLY,0) AS REPLY
+    FROM D_BOARD B
+    JOIN MEMBER M ON( B.MID = M.MID)
+    LEFT OUTER JOIN (SELECT BID, COUNT(*) AS BGOOD
+                     FROM B_GOOD 
+                     GROUP BY BID) BGOOD ON (B.BID = BGOOD.BID) 
+    LEFT OUTER JOIN ( SELECT BID, COUNT(*) AS REPLY
+                      FROM D_REPLY
+                      GROUP BY BID)REPLY ON (B.BID = REPLY.BID)
+    WHERE B.STATUS ='Y'
+    order by 1 desc)
+    );  
+
+
+-- ÁØ¹è VIEW --
+
+-- »óÇ°°ú »óÇ°ÆÇ¸Å Å×ÀÌºí Á¶ÀÎ ºä »ý¼º
+create or replace view sell_goodsSelectView as(
+    SELECT SG.SELL_NUM, SG.GID, SG.GOODS_TITLE, G.GOODS_PRICE, G.COUNT, SG.GOODS_CONTENT, SG.GOODS_FILE_PATH,    SG.GOODS_CONTENT_FILE_PATH, SG.SELL_DATE, SG.MODIFY_DATE, SG.STATUS
+    FROM SELL_GOODS SG
+    JOIN GOODS G ON(SG.GID = G.GID)
+  );
+
+create or replace view SELL_REPLY_AFTERVIEW as
+SELECT SR.RID, SR.SELL_NUM, SR.GID, SR.CATE_CD, SR.MID, M.USER_ID, M.USER_NAME, SG.GOODS_TITLE AS GOODS_TITLE, SR.RCONTENT, SR.SELL_START, SR.REP_FILE_PATH, SR.REP_CONTENT_FILE_PATH, SR.CREATE_DATE, SR.MODIFY_DATE, SR.STATUS
+FROM SELL_REPLY SR
+JOIN SELL_GOODS SG ON (SR.SELL_NUM = SG.SELL_NUM)
+JOIN MEMBER M ON (SR.MID = M.MID)
+ORDER BY RID DESC;
+
+
+commit;
+

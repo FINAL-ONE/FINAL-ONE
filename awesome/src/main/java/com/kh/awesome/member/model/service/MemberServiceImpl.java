@@ -148,7 +148,7 @@ public class MemberServiceImpl implements MemberService {
 		String fromEmail = "hajjjjj2@naver.com";
 		String fromName = "awesome";
 		String subject = "회원님의 임시 비밀번호 입니다.";
-		String msg = "<h1 style='color: red;' align='center'>*** AWESOME ***</h1><br>";
+		String msg = "<h1 style='color: red;' align='center'>*** AWESOME ***</h1><br><br>";
 		
 	 if(div.equals("find_pw")) {
 			subject = "awesome 임시 비밀번호 입니다.";

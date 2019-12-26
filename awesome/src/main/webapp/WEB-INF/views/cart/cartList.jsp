@@ -425,7 +425,7 @@
       </section><!-- </section> -->
       </div> <!-- centerDiv끝 -->   
    </div> <!--  container 끝  -->
-   
+   <br><br>
 </body>
 
 
@@ -689,6 +689,22 @@ $(function(){
     function paymentNow(userPoint ){
        
 
+
+    	if( $("#totalPriceVal").val() == 0 ) {
+    			
+    		alert("선택하고 말하세요 ㅂㄷㅂㄷ")
+    		
+    	}
+    	
+    	
+    	
+    	if( $("#totalPriceVal").val() < 5900 ) {
+    			
+    		alert("배송비 안나와서 안파렵니다.! ")
+    		
+    	}
+    	
+    	
        
       //사용할 포인트가 적립포인트보다 크다면
        var checkArr = new Array();

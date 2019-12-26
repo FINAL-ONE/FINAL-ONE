@@ -180,6 +180,10 @@ function enterkey() {
 <script type="text/javascript">
 function popupidOpen(){
 
+		alert(" 시스템 점검 중입니다. 관리자에게 문의해주세요")
+   		return; 
+	
+	
 	var popUrl = "find_id_form.do";	//팝업창에 출력될 페이지 URL
 
 	var popOption = "top=300, left=500, width=900, height=440, resizable=no, scrollbars=no, status=no, location=no,";    //팝업창 옵션(optoin)
@@ -194,6 +198,10 @@ function popupidOpen(){
 <script type="text/javascript">
 function popuppwOpen(){
 
+	alert(" 시스템 점검 중입니다. 관리자에게 문의해주세요")
+		return; 
+	
+	
 	var popUrl = "find_pw_form.do";	//팝업창에 출력될 페이지 URL
 
 	var popOption = "top=200, left=500, width=900, height=530, resizable=no, scrollbars=no, status=no, location=no,";    //팝업창 옵션(optoin)

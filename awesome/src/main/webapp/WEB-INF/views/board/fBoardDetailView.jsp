@@ -1123,7 +1123,7 @@
 				<br><br><br>
 				<div style="margin-left:auto; width:210px"> 
 					<button id = insertBtn onclick="location.href='fBoardInsertForm.do?category=${board.category}'"> <i class="fas fa-pencil-alt">&nbsp;</i>글쓰기 </button>&nbsp;
-					<button id = listBtn onclick="location.href='fBoardListView.do?page=${currentPage}'" style="display:inline-block"><i class="fas fa-list"></i> &nbsp;목록</button>
+					<button id = listBtn onclick="location.href='boardListView.do?page=${currentPage}&category=${board.category}'" style="display:inline-block"><i class="fas fa-list"></i> &nbsp;목록</button>
 				</div>
 				<br><br>
 				<div class="replyArea" >

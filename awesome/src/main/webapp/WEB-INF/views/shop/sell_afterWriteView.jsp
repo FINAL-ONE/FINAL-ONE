@@ -38,7 +38,20 @@
    width : 700px;
 }
 
+ .conmmunityNav:after {
+	left: -5px !important;
+    top: -38px !important;
+}
 
+.myPageNav:after {
+    top: -38px !important;
+    left: 535px !important;
+
+}
+
+.menu2 {
+    line-height: 3.2 !important;
+}
 .fa-star{
    color : dark-gray;
 }

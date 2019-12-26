@@ -486,7 +486,16 @@ This class is added to the container
             <c:url var ="myinfo" value="myinfo.do"/>
             <c:url var ="logout" value="logout.do"/>
                   <!-- // 쿼리 스트링 방식으로 보내면 GET방식이라 POST- > GET으로  -->
-            <span onclick ="location.href='${myinfo }'">정보수정  &nbsp;|</span>
+            <span onclick ="myPage();">정보수정  &nbsp;|</span>
+            <script> 
+  	          	function modfiyMemberInfo(){
+            		alert(" 시스템 점검 중입니다. 관리자에게 문의해주세요")
+  	          		return; 
+        /*     		location.href='${myinfo }' */
+            	}
+            
+            </script> 
+            
             <span onclick ="location.href='${logout }'">&nbsp;로그아웃</span>
          </span>
          <!-- 이 부분 작성 후 다시 MemberController가서 로그아웃 작성하자 !! -->
@@ -731,6 +740,11 @@ $(function(){
  });
  
 function myPage(){
+	
+	alert("시스템 점검 중입니다. 관리자에게 문의해주세요");
+	
+	return; 
+	
 	if($("#loginUserMid").val() >0){
 		location.href='myinfo.do'
 			
