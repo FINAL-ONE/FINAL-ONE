@@ -175,7 +175,7 @@
 	
 	<br><br>
 	<div>
-	<h2> 상품 판매량  </h2>
+	<h2 align="center"> 상품 판매량 조회 </h2>
 		<table align="center" width="100%" border="1" cellspaction="1" id="surveyListTable"
 			class="table table-bordered table-striped table-hover rowfy">
 			<thead>
@@ -311,7 +311,7 @@
 		<!-- 페이징 부분 -->
 		 <div class="pagingArea" align="center">
 	         <!-- 맨 처음으로(<<) -->
-	         <button onclick="location.href='memberLookup.do?page=1'"> << </button>
+	         <button onclick="location.href='adminSalesVolume.do?page=1'"> << </button>
     
      					<!-- 이전 페이지로(<) -->
 		        <c:if test="${pi.currentPage <= 1 }">
@@ -319,7 +319,7 @@
 		        </c:if>
 		         <c:if test="${pi.currentPage > 1 }">
 		         
-		            <button onclick="location.href='memberLookup.do?page=${pi.currentPage -1}'"> < </button>
+		            <button onclick="location.href='adminSalesVolume.do?page=${pi.currentPage -1}'"> < </button>
 		        </c:if>
      
 			<!-- 10개의 페이지 목록 -->
@@ -328,7 +328,7 @@
 	               <button style="background:#ec434a;color:white" disabled >${p}</button>
 	           </c:if>
 	            <c:if test="${pi.currentPage != p }">
-	               <button onclick="location.href='memberLookup.do?page=${p}'">${p}</button>
+	               <button onclick="location.href='adminSalesVolume.do?page=${p}'">${p}</button>
 	            </c:if>
 	       </c:forEach>
 	       
@@ -336,11 +336,11 @@
             	<button disabled> > </button>
           	</c:if>
 	          <c:if test="${pi.currentPage < pi.maxPage }">
-	            <button onclick="location.href='memberLookup.do?page=${pi.currentPage + 1}'"> > </button>
+	            <button onclick="location.href='adminSalesVolume.do?page=${pi.currentPage + 1}'"> > </button>
 	          </c:if>
 		     
 		     <!-- 맨 끝으로(>>) -->
- 					<button onclick="location.href='memberLookup.do?page=${pi.maxPage}'"> >> </button>
+ 					<button onclick="location.href='adminSalesVolume.do?page=${pi.maxPage}'"> >> </button>
   
 		</div> <!-- 페이징 부분 -->
 

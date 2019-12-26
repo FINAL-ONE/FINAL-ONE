@@ -527,56 +527,6 @@
 	
 	<!-- 동복 - 상품관리 화면에서 조건 검색 -->
 	<select id="checkTextSelectGoods" resultMap="goodsResultSet">
-	
-<!-- 		SELECT  G.GID,
-	        G.CATE_CD,
-	        G.GOODS_NAME,
-	        G.GOODS_PRICE,
-	        G.COUNT,
-	        G.GOODS_STATUS,
-	        G.SOLDOUT,
-	        G.REGISTER_DATE,
-	        G.MODIFY_DATE,
-	        C.CATE_NM,
-	        C.LCL_CD,
-	        C.MCL_CD,
-	        C.SCL_CD,
-	        C.CATE_LVL
-	  FROM GOODS G
-	  JOIN CATEGORY C ON(G.CATE_CD = C.CATE_CD)
-	<if test='whereNum == "4"'> 상품명 들어오면 이거부터 4
-	 WHERE GOODS_NAME LIKE '%'||#{goodsName}||'%'
-	</if> -->
- 
- 
- 
- 
-  		<!-- SELECT  G.GID,
-	        G.CATE_CD,
-	        G.GOODS_NAME,
-	        G.GOODS_PRICE,
-	        G.COUNT,
-	        G.GOODS_STATUS,
-	        G.SOLDOUT,
-	        G.REGISTER_DATE,
-	        G.MODIFY_DATE,
-	        C.CATE_NM,
-	        C.LCL_CD,
-	        C.MCL_CD,
-	        C.SCL_CD,
-	        C.CATE_LVL
-	  FROM GOODS G
-	  JOIN CATEGORY C ON(G.CATE_CD = C.CATE_CD)
-	<if test='whereNum == "2"'> 상태 들어오면 2
-	 WHERE GOODS_STATUS = #{goodsStatus}
-		<if test='goodsName != "null"'>
-		   AND G.GOODS_NAME LIKE '%'||#{goodsName}||'%'
-		</if>
-	</if> -->
- 
- 
- 
- 
  		SELECT  G.GID,
 	        G.CATE_CD,
 	        G.GOODS_NAME,
@@ -672,7 +622,89 @@
  
 	</select>
 	
+	<!-- 동복 - 상품관리 화면에서 조건 검색 -->
+	<select id="checkTextSelectGoodsCount" resultType="_int">
+ 		SELECT  COUNT(*)
+	  FROM GOODS G
+	  JOIN CATEGORY C ON(G.CATE_CD = C.CATE_CD)
+	<if test='whereNum == "1"'> <!-- 카테고리 들어오면 이거 1 -->
+	 WHERE C.LCL_CD = #{lclCd}
+		<if test="mclCd != ''">
+		   AND C.MCL_CD = #{mclCd}
+		</if>   
+		<if test="sclCd != ''">
+		   AND C.SCL_CD = #{sclCd}
+		</if>
+		<if test="goodsName != ''">
+		   AND G.GOODS_NAME LIKE '%'||#{goodsName}||'%'
+		</if>
+		<if test="goodsStatus != ''">
+		   AND G.GOODS_STATUS = #{goodsStatus}
+		</if>
+		<if test="soldout != ''">
+		   AND G.SOLDOUT = #{soldout}
+		</if>
+	</if>
+
+	<if test='whereNum == "2"'> <!-- 상태 들어오면 2 -->
+	 WHERE GOODS_STATUS = #{goodsStatus}
+	    <if test="soldout != ''">
+	      AND SOLDOUT = #{soldout}
+	    </if>
+	    <if test="lclCd != ''">
+	      AND C.LCL_CD = #{lclCd}
+	    </if>
+	    <if test="mclCd != ''">
+	      AND C.MCL_CD = #{mclCd}
+	    </if>
+	    <if test="sclCd != ''">
+	      AND C.SCL_CD = #{sclCd}
+	    </if>
+	    <if test="goodsName != ''">
+	      AND G.GOODS_NAME LIKE '%'||#{goodsName}||'%'
+	    </if>
+	</if>
+
+	<if test='whereNum == "3"'> <!-- 매진 구분 들어오면 3 -->
+	 WHERE SOLDOUT = #{soldout}
+		<if test="goodsStatus != ''">
+		   AND GOODS_STATUS = #{goodsStatus}
+		</if>   
+		<if test="lclCd != ''">
+		   AND C.LCL_CD = #{lclCd}
+		</if>  
+		<if test="mclCd != ''">
+		   AND C.MCL_CD = #{mclCd}
+		</if>  
+		<if test="sclCd != ''">
+		   AND C.SCL_CD = #{sclCd}
+		</if>  
+		<if test="goodsName != ''">
+		   AND G.GOODS_NAME LIKE '%'||#{goodsName}||'%'
+		</if>  
+	</if>
 	
+	<if test='whereNum == "4"'> <!-- 상품명 들어오면 이거부터 4 -->
+	 WHERE GOODS_NAME LIKE '%'||#{goodsName}||'%'
+		<if test="goodsStatus != ''">
+		   AND GOODS_STATUS = #{goodsStatus}
+		</if> 
+		<if test="soldout != ''">
+		   AND SOLDOUT = #{soldout}
+		</if> 
+		<if test="lclCd != ''">
+		   AND C.LCL_CD = #{lclCd}
+		</if> 
+		<if test="mclCd != ''">
+		   AND C.MCL_CD = #{mclCd}
+		</if> 
+		<if test="sclCd != ''">
+		   AND C.SCL_CD = #{sclCd} 
+		</if> 
+	</if>
+ 
+ 
+	</select>	
 	
 	
 	

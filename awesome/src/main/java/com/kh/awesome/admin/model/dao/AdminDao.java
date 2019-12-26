@@ -170,7 +170,10 @@ public class AdminDao {
 	public ArrayList<Goods> checkTextSelectGoods(Goods g) {
 		return (ArrayList)sqlSession.selectList("adminMapper.checkTextSelectGoods",g);
 	}
-
+	// 동복 - 상품관리 화면에서 조건 검색 (카운트)
+	public int checkTextSelectGoodsCount(Goods g) {
+		return sqlSession.selectOne("adminMapper.checkTextSelectGoodsCount",g);
+	}
 	
 	// 동복 - 상품 수정 (대)카테고리 조회
 	public ArrayList<Category> detailLCategoryList() {
