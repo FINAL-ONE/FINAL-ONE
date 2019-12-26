@@ -20,6 +20,7 @@ table {
 	line-height: 1.5;
 	border-top: 1px solid #d0d0d0;
 	margin: 20px 10px;
+	margin
 }
 
 table td {
@@ -75,7 +76,7 @@ a.button:hover {
 			<tr>
 				<c:if test="${o.orderStatus eq 'B' }">
 					<td><input type="checkbox" class="check checks" value="${o.oId }" ></td>
-					<td><pre>${o.goodsTitle }</pre></td>
+					<td style="margin-top : 100px"><pre>${o.goodsTitle }</pre></td>
 					<td><img src="resources/auploadFiles/${o.filePath }" style="height:180px; width:150px;"></td>
 					<td>${o.orderCount }</td>
 					<td>${o.gPrice * o.orderCount}원</td>
